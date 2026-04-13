@@ -1,0 +1,10 @@
+{
+  "name": "Bassel Mazhar",
+  "github": "basselmazhar1",
+  "program": "B.Tech CSE",
+  "campus": "Amity",
+  "skills": ["javascript", "typescript", "node", "ai", "test"],
+  "interests": ["ai agents", "digital twins", "health tech"],
+  "track": "A",
+  "my_twin": "If I had a personal digital twin, it would track my daily energy levels, sleep quality, and caffeine intake because I often experience random drops in focus and want to understand what patterns cause it so I can optimize my productivity."
+}
