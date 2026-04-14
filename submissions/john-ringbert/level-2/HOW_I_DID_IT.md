@@ -2,7 +2,7 @@
 
 I first ran the sandbox the normal way just to see that everything worked before I started messing with it.
 
-After that I used the test client and changed the inputs to see how the different tools would react to unusual or invalid input.
+After that I used the test client and changed the inputs to see how the different tools reacted when I sent unusual or clearly wrong input.
 
 I tried things I have come across in earlier courses like empty values, spaces only, wrong values, special characters, emojis, and long strings.
 
