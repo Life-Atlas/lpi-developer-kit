@@ -22,6 +22,6 @@ It also recommends building a minimal viable twin first, focusing on key data po
 
 ## What surprised me about SMILE
 
-1. It prioritizes defining real-world context before working with data or AI.
+1. It prioritizes defining real-world context before working with data or AI. test
 2. The idea of a minimal viable twin as a starting point stood out as very practical.
 3. The structured phases make it easier to approach building AI systems step by step.
