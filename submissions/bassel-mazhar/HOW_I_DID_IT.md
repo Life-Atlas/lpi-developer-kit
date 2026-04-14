@@ -21,4 +21,4 @@
 ## What I learned
 - How MCP servers expose structured tools
 - How to use a local LLM alongside API-like tools
-- That small formatting details can break automation pipelines
+- That small formatting details can break automation pipelines.
