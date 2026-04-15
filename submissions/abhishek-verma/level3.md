@@ -31,3 +31,12 @@ python my-agent.py "What is SMILE methodology?"
 ## Explainability
 
 The agent lists which tools were used (smile_overview, query_knowledge, get_insights) to ensure transparency and reduce hallucination.
+
+## Error Handling
+
+The agent includes basic error handling:
+
+- Handles missing or invalid inputs by defaulting to general SMILE queries
+- Detects connection issues with Ollama and returns an error message
+- Prevents hallucination by restricting responses to tool-based data
+- Uses timeout handling to avoid infinite waits from the local LLM
