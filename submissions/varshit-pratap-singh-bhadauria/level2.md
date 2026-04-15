@@ -1,17 +1,10 @@
-# Level 2 Submission
+# How I Did It - Level 2
 
-## Test Client Output
-Passed: 8/8 — All tools working.
+### What I did, step by step
+First, I cloned my fork and ran `npm install` followed by `npm run build` to get the TypeScript environment set up. Then I ran `npm run test-client` to make sure all tests are passing and not throwing errors. After that setup the Ollama local model(`qwen2.5:1.5b`), and prompted it about the framework to generate the LLM output for my submission.
 
-## LLM Output
-Model: qwen2.5:1.5b
-Query: "What is the SMILE methodology in digital twins?"
-Output: The SMILE methodology stands for Simulation, Model, Input, 
-Output, Execution — used in digital twin development.
+### What problems I hit and how I solved them
+I did a mistake right at the beginning because I typed `node -version` instead of `node -v` or `--version` and briefly thought my Node installation was broken. After getting past that, the build ran smoothly. Later, I realized I needed to make sure the Ollama app was actively running in the background before trying to run the model in the terminal, otherwise it just hangs.
 
-## What surprised me about SMILE
-1. Local LLM hallucinated SMILE's full form — proving domain-specific 
-tools like LPI are critical for accurate knowledge.
-2. Actual SMILE (Sustainable Methodology for Impact Lifecycle 
-Enablement) has 6 structured phases — far more nuanced than LLM output.
-3. RAG with LPI tools is essential for reliable AI agents in specialized domains.
+### What I learned that I didn't know before
+In normal software projects, my brain usually goes straight to setting up the backend logic and figuring out API routes. Reading up on the SMILE framework made me realize that for digital twins, you have to think about the entire lifecycle and predictive simulation first. It was a good lesson that building AI agents isn't just about fetching data, but designing a system that can actually anticipate future scenarios over time.
