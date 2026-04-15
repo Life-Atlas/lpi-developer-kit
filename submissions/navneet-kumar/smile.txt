@@ -1,0 +1,1 @@
+The SMILE methodology is a structured framework for building digital twins using multiple phases. It helps organise data, insights, and AI systems into a clear lifecycle. What surprised me is how it connects tools, knowledge, and agents into one unified approach.
