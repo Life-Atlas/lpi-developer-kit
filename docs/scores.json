@@ -37,7 +37,7 @@
     "score": 5,
     "max": 5,
     "pct": 100,
-    "updated": "2026-04-15T15:47:32.682Z"
+    "updated": "2026-04-15T17:45:48.236Z"
   },
   "shourya-solanki": {
     "name": "Shourya Solanki",
@@ -54,5 +54,21 @@
     "max": 11,
     "pct": 82,
     "updated": "2026-04-15T15:54:22.661Z"
+  },
+  "aditya-pratap-singh": {
+    "name": "Aditya Pratap Singh",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-15T18:07:23.154Z"
+  },
+  "track-a-agent-submission": {
+    "name": "Track A Agent Submission",
+    "level": 3,
+    "score": 9,
+    "max": 11,
+    "pct": 82,
+    "updated": "2026-04-15T19:06:37.562Z"
   }
 }
