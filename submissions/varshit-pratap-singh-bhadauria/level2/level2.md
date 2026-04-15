@@ -5,32 +5,22 @@ Level: level-2
 
 \## LPI Test Output
 
-
-
 Command:
-
 npm run test-client
-
-
 
 Output:
 
+[PASS] smile_overview({})
+[PASS] smile_phase_detail({"phase":"reality-emulation"})
+[PASS] list_topics({})
+[PASS] query_knowledge({"query":"explainable AI"})
+[PASS] get_case_studies({})
+[PASS] get_case_studies({"query":"smart buildings"})
+[PASS] get_insights({"scenario":"personal health digital twin","tier":"free"})
+[PASS] get_methodology_step({"phase":"concurrent-engineering"})
 
-
-smile\_overview: passed
-
-query\_knowledge: passed
-
-get\_case\_studies: passed
-
-get\_insights: passed
-
-list\_topics: passed
-
-get\_methodology\_step: passed
-
-smile\_phase\_detail: passed
-
+Passed: 8/8
+Failed: 0/8
 
 
 \## LLM Output
