@@ -4,6 +4,6 @@
   "program": "B.Tech CSE",
   "campus": "Amity Noida",
   "skills": ["python", "Numpy", "Pandas", "Seaborn", "Scikit Learn", "Tensorflow", "LLM's", "Agents", "C++", "Java" ],
-  "interests": ["Data Science", "ML models", AI Agnets],
+  "interests": ["Data Science", "ML models", "AI Agnets"],
   "my_twin": "I would track how many hours I spend on everything in a day, because when I start my day there are like 10 tasks I am supposed to do and I end up procastinating so bad that I only do like 3-4 of them and then I wonder where did all of time go, so this is the one thing that I would like to track."
 }
