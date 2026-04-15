@@ -1,0 +1,10 @@
+{
+  "name": "Varshit Pratap Singh Bhadauria",
+  "github": "temporalzone",
+  "program": "B.Tech CSE",
+  "campus": "Amity Noida",
+  "skills": ["python", "java", "javascript", "react", "django", "flask", "rest-apis", "sqlite", "mysql", "git", "dsa", "jwt-auth"],
+  "interests": ["agents", "AI", "api-integration", "backend", "automation"],
+  "track": "A: Agent Builders",
+  "my_twin": "My digital twin would correlate sleep cycles, screen time, and focus sessions to detect productivity patterns I can't see manually. I want it to predict low-performance windows before they happen — not just track, but intervene with data-backed recommendations. This is exactly the kind of agent I want to build."
+}
