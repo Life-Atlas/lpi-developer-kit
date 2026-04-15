@@ -7,7 +7,7 @@ on:
       - 'submissions/**'
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
   issues: write
 
@@ -111,6 +111,38 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
               body: `## 🤖 Automated Level 2 Evaluation\n\n**Score: ${score}/${max}** ${stars} (${pct}%)\n\n### Checklist\n${feedback}\n\n### Verdict\n${verdict}\n\n---\n*This evaluation was performed automatically. A human reviewer may follow up on outstanding submissions.*`
+            });
+
+      - name: Save score
+        if: steps.eval.outputs.score != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const score = parseInt('${{ steps.eval.outputs.score }}') || 0;
+            const max = parseInt('${{ steps.eval.outputs.max }}') || 5;
+            const name = context.payload.pull_request.title.replace(/^level-2:\s*/i, '').trim();
+
+            // Read existing scores
+            let scores = {};
+            try {
+              const { data } = await github.rest.repos.getContent({ owner: context.repo.owner, repo: context.repo.repo, path: 'docs/scores.json' });
+              scores = JSON.parse(Buffer.from(data.content, 'base64').toString());
+              scores._sha = data.sha;
+            } catch(e) { /* file doesn't exist yet */ }
+
+            const sha = scores._sha;
+            delete scores._sha;
+
+            // Update score for this person
+            const key = name.toLowerCase().replace(/\s+/g, '-');
+            scores[key] = { name, level: 2, score, max, pct: Math.round((score/max)*100), updated: new Date().toISOString() };
+
+            // Write back
+            const content = Buffer.from(JSON.stringify(scores, null, 2)).toString('base64');
+            await github.rest.repos.createOrUpdateFileContents({
+              owner: context.repo.owner, repo: context.repo.repo,
+              path: 'docs/scores.json', message: `score: ${name} L2 ${score}/${max} [automated]`,
+              content, ...(sha ? { sha } : {})
             });
 
   evaluate-level3:
@@ -296,4 +328,35 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
               body: `## 🤖 Automated Level 3 Evaluation\n\n**Score: ${totalScore}/${totalMax}** ${stars} (${pct}%)\n\n### Submission Document\n${docFeedback}\n\n### Repo Analysis\n${cloneFeedback}\n\n### Verdict\n${verdict}\n\n---\n*This evaluation was performed automatically. Scores feed the [contributor leaderboard](https://life-atlas.github.io/lpi-developer-kit/).*`
+            });
+
+      - name: Save score
+        if: steps.eval_doc.outputs.score != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const docScore = parseInt('${{ steps.eval_doc.outputs.score }}') || 0;
+            const cloneScore = parseInt('${{ steps.clone_test.outputs.clone_score }}') || 0;
+            const totalScore = docScore + cloneScore;
+            const totalMax = 11;
+            const name = context.payload.pull_request.title.replace(/^level-3:\s*/i, '').trim();
+
+            let scores = {};
+            try {
+              const { data } = await github.rest.repos.getContent({ owner: context.repo.owner, repo: context.repo.repo, path: 'docs/scores.json' });
+              scores = JSON.parse(Buffer.from(data.content, 'base64').toString());
+              scores._sha = data.sha;
+            } catch(e) {}
+
+            const sha = scores._sha;
+            delete scores._sha;
+
+            const key = name.toLowerCase().replace(/\s+/g, '-');
+            scores[key] = { name, level: 3, score: totalScore, max: totalMax, pct: Math.round((totalScore/totalMax)*100), updated: new Date().toISOString() };
+
+            const content = Buffer.from(JSON.stringify(scores, null, 2)).toString('base64');
+            await github.rest.repos.createOrUpdateFileContents({
+              owner: context.repo.owner, repo: context.repo.repo,
+              path: 'docs/scores.json', message: `score: ${name} L3 ${totalScore}/${totalMax} [automated]`,
+              content, ...(sha ? { sha } : {})
             });

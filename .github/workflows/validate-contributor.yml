@@ -25,15 +25,29 @@ jobs:
           FILES=$(git diff --name-only origin/master...${{ github.event.pull_request.head.sha }} 2>/dev/null || echo "")
 
           LEVEL=""
+          TITLE="${{ github.event.pull_request.title }}"
+
+          # Detect from file paths first
           if echo "$FILES" | grep -q "^contributors/"; then
             LEVEL="1"
           fi
-          if echo "$FILES" | grep -q "^submissions/.*level2"; then
+          if echo "$FILES" | grep -qi "submissions.*level.2\|submissions.*level-2\|submissions.*/level2"; then
             LEVEL="2"
           fi
-          if echo "$FILES" | grep -q "^submissions/.*level3"; then
+          if echo "$FILES" | grep -qi "submissions.*level.3\|submissions.*level-3\|submissions.*/level3"; then
             LEVEL="3"
           fi
+
+          # PR title overrides — most reliable signal
+          if echo "$TITLE" | grep -qi "level.3\|level-3"; then
+            LEVEL="3"
+          elif echo "$TITLE" | grep -qi "level.2\|level-2"; then
+            LEVEL="2"
+          elif echo "$TITLE" | grep -qi "level.1\|level-1"; then
+            # Only set to 1 if not already higher
+            if [ -z "$LEVEL" ]; then LEVEL="1"; fi
+          fi
+
           echo "level=$LEVEL" >> $GITHUB_OUTPUT
 
       - name: Validate Level 1 — Contributor JSON
@@ -106,7 +120,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: '✅ **Welcome to the LifeAtlas Contributor Program!** Your registration is valid. You are now part of the program.\n\nNext steps:\n1. Run the LPI sandbox (`npm install && npm run build && npm run test-client`)\n2. Pick your track and start Level 2\n3. Check the README for your track-specific challenge\n\nSee you in the standups!'
+              body: '✅ **Registration received!** You are now on the board.\n\nThis is Level 1 — you\'ve signed up. To secure your place on the team:\n\n**Level 2** → Run the LPI sandbox and prove your dev environment works (`npm install && npm run build && npm run test-client`)\n\n**Level 3** → Build something real. **Completing Level 3 guarantees you a place on the WINNIIO / LifeAtlas contributor team.**\n\nCheck the README for your track-specific challenge. The leaderboard is live: https://life-atlas.github.io/lpi-developer-kit/\n\nGood luck — Level 3 is where it counts.'
             });
 
             // Merge the PR directly (no approval needed — validation passed)
@@ -139,7 +153,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `Level 2 submission received. An agent will review your output shortly. In the meantime, consider starting Level 3 if you haven't already.`
+              body: `📡 **Level 2 received.** Your dev environment is running — nice.\n\nAn agent will score your submission shortly.\n\nBut Level 2 is not the finish line. **Level 3 is what guarantees your place on the team.** Build something real — an agent, a case study, a design, a security audit. Check the README for your track.\n\nThe leaderboard is watching: https://life-atlas.github.io/lpi-developer-kit/`
             });
 
       - name: Comment on Level 3 submissions
@@ -151,5 +165,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `Level 3 submission received. An agent will clone your repo, attempt to run it, and evaluate your agent. You will receive a detailed review as a comment on this PR.`
+              body: `🏆 **Level 3 submission received.** This is the one that counts.\n\nAn agent will clone your repo, attempt to run it, and evaluate your work. You'll receive a detailed score and feedback as a comment on this PR.\n\n**Completing Level 3 guarantees your place on the WINNIIO / LifeAtlas contributor team.** Welcome to the real work.`
             });

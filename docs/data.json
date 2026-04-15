@@ -1,0 +1,200 @@
+{
+  "contributors": [
+    {
+      "name": "Abhishek Verma",
+      "github": "https://github.com/abhishekverma2323",
+      "skills": [
+        "python",
+        "machine learning",
+        "C/C++",
+        "sql",
+        "data analysis"
+      ],
+      "interests": [
+        "ai agents",
+        "nlp",
+        "real-world ai systems",
+        "automation"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Amaan Khan",
+      "github": "amaankhan6828",
+      "skills": [
+        "c++",
+        "python",
+        "numpy",
+        "machine learning"
+      ],
+      "interests": [
+        "ai agents",
+        "automation",
+        "data science",
+        "real world problem solving"
+      ],
+      "track": "",
+      "level": 1
+    },
+    {
+      "name": "Anupaul Saikia",
+      "github": "Saikia05",
+      "skills": [
+        "python",
+        "SQL",
+        "C/C++",
+        "javascript",
+        "blender",
+        "fusion 360",
+        "inventor"
+      ],
+      "interests": [
+        "agents",
+        "3D",
+        "large-scale machines",
+        "manufacturing",
+        "generative design",
+        "robotics",
+        "agrotechnology"
+      ],
+      "track": "",
+      "level": 1
+    },
+    {
+      "name": "Bassel Mazhar",
+      "github": "basselmazhar1",
+      "skills": [
+        "python",
+        "javascript"
+      ],
+      "interests": [
+        "AI agents",
+        "LLMs"
+      ],
+      "track": "",
+      "level": 1
+    },
+    {
+      "name": "John Ringbert",
+      "github": "laserkavaj1",
+      "skills": [
+        "Networking",
+        "Cybersecurity",
+        "Troubleshooting"
+      ],
+      "interests": [
+        "F1",
+        "Soccer",
+        "Fishing",
+        "Skiing"
+      ],
+      "track": "E: QA & Security",
+      "level": 1
+    },
+    {
+      "name": "Kailash Narayana Prasad",
+      "github": "KailashNp",
+      "skills": [
+        "C++",
+        "Python",
+        "Java",
+        "SQL",
+        "Cybersecurity (Network Security, Web Security, OWASP Top 10, Vulnerability Assessment, Penetration Testing basics)",
+        "Cryptography (Encryption/Decryption, Hashing, Digital Signatures, Public Key Infrastructure)",
+        "Blockchain (Decentralization, Consensus Mechanisms, Smart Contracts basics)",
+        "Secure Data Storage",
+        "HTML/CSS",
+        "Android Development (Kotlin, Jetpack Compose)",
+        "Git & GitHub",
+        "Problem Solving",
+        "Analytical Thinking",
+        "Technical Troubleshooting",
+        "Team Collaboration"
+      ],
+      "interests": [
+        "AI Agents & Autonomous Systems",
+        "Agent Security & Adversarial Attacks",
+        "Cybersecurity & Ethical Hacking",
+        "Network & Web Security",
+        "Cryptography & Secure Communication",
+        "Blockchain & Decentralized Systems",
+        "Natural Language Processing (NLP)",
+        "Intelligent Systems & Automation"
+      ],
+      "track": "E: QA & Security",
+      "level": 1
+    },
+    {
+      "name": "Vineet Sharma",
+      "github": "vineetsharma18",
+      "skills": [
+        "javascript",
+        "react",
+        "MySQL",
+        "PostgreSQL",
+        "Next.js",
+        "C",
+        "C++",
+        "html",
+        "css"
+      ],
+      "interests": [
+        "ai",
+        "agents",
+        "web dev",
+        "NLP",
+        "3D",
+        "security"
+      ],
+      "track": "",
+      "level": 1
+    },
+    {
+      "name": "Yash Maheshwari",
+      "github": "yashm0910",
+      "skills": [
+        "Python",
+        "FastAPI",
+        "RAG",
+        "LLMs",
+        "Langchain",
+        "LangGraph",
+        "Machine Learning",
+        "NLP",
+        "SQL",
+        "Streamlit"
+      ],
+      "interests": [
+        "AI systems",
+        "agent workflows",
+        "retrieval-augmented generation",
+        "backend engineering",
+        "system reliability",
+        "evaluation and feedback loops"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "bhavesh",
+      "github": "bhavesh4323",
+      "skills": [
+        "c++",
+        "python",
+        "numpy",
+        "machine learning",
+        "mongodb"
+      ],
+      "interests": [
+        "ai agents",
+        "blockchain",
+        "cryptocurrencies",
+        "real world problem solving"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    }
+  ],
+  "generated": true
+}

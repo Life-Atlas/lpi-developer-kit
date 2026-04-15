@@ -124,7 +124,11 @@ Five metrics. Weighted equally. Assessed continuously.
 
 ## The Screening Challenge
 
-Complete as many levels as you can. Your highest completed level determines your starting position. **Everyone who completes Level 1 is in the program.**
+Complete as many levels as you can. Each level brings you closer to a guaranteed place on the team.
+
+- **Level 1** — You're registered and on the leaderboard
+- **Level 2** — You've proven you can set up and run the tools
+- **Level 3** — **You're in. Completing Level 3 guarantees your place on the WINNIIO / LifeAtlas contributor team.**
 
 **Deadline:** 7 days from receiving this.
 

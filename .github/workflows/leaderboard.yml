@@ -6,6 +6,7 @@ on:
     paths:
       - 'contributors/**'
       - 'submissions/**'
+      - 'docs/scores.json'
   workflow_dispatch:
 
 permissions:
@@ -61,7 +62,29 @@ jobs:
               except:
                   continue
 
-          contributors.sort(key=lambda x: (-x["level"], x["name"]))
+          # Merge scores from docs/scores.json if it exists
+          scores = {}
+          try:
+              scores = json.load(open("docs/scores.json"))
+          except:
+              pass
+
+          for c in contributors:
+              slug = os.path.basename(c.get("github", c["name"])).lower().replace(" ", "-")
+              # Try multiple key formats
+              for key in [slug, c["name"].lower().replace(" ", "-")]:
+                  if key in scores:
+                      c["score"] = scores[key].get("score", 0)
+                      c["score_max"] = scores[key].get("max", 0)
+                      c["score_pct"] = scores[key].get("pct", 0)
+                      # Update level from score if higher
+                      scored_level = scores[key].get("level", 0)
+                      if scored_level > c["level"]:
+                          c["level"] = scored_level
+                      break
+
+          # Sort by: level desc, then score desc, then name
+          contributors.sort(key=lambda x: (-x["level"], -x.get("score", 0), x["name"]))
 
           # Write data JSON — the custom index.html reads this
           with open("docs/data.json", "w") as f:

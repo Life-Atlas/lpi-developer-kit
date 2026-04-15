@@ -1,0 +1,10 @@
+{
+  "name": "Vansh Singhal",
+  "github": "vansh09-singhal",
+  "program": "B.Tech Computer Science & Engineering (Data Science)",
+  "campus": "Amity, Noida",
+  "skills": ["Python", "C++", "SQL", "LangChain", "LLMs", "Machine Learning", "NLP", "Streamlit", "Data Cleaning", "Data Preprocessing"],
+  "interests": ["agent workflows", "retrieval-augmented generation", "data analytics", "system scalability", "evaluation and feedback loops", "prompt engineering"],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track how I perform in coding and building systems—like where my logic breaks, bugs I repeat, or where I slow down. Similar to how I analyze my cricket performance and improve weaknesses, it would help me refine my problem-solving over time. It would also observe how I stay motivated and lead in team projects, so I can improve both my technical decisions and teamwork."
+}
