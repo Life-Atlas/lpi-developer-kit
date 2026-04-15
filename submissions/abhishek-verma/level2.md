@@ -1,0 +1,3 @@
+## Level 2 Submission
+
+Running the LPI sandbox helped me understand how structured tools can expose complex methodologies like SMILE in a modular and accessible way. What surprised me was how each tool performs a specific function, making it easier for an AI agent to combine and reason over multiple sources. Setting up a local LLM using Ollama showed me that powerful AI workflows can run without relying on cloud APIs. Even a small model was able to generate meaningful responses when guided properly. This experience highlighted the importance of tool-integrated AI systems over simple prompt-based approaches.
