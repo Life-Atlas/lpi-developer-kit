@@ -2,23 +2,39 @@
 
 
 
-\## What it does
+\## Overview
 
-This agent analyzes a user query and dynamically selects relevant LPI tools to generate a structured response.
+This project implements a simple intelligent agent that dynamically selects and uses LPI sandbox tools based on user queries.
+
+
+
+\## How It Works
+
+1\. Takes a user query
+
+2\. Identifies relevant tools
+
+3\. Executes tools
+
+4\. Combines outputs into a structured response
 
 
 
 \## Features
 
-\- Dynamic tool selection
+\- Dynamic tool selection based on query intent
 
-\- Real tool execution from LPI sandbox
+\- Multi-tool orchestration
 
-\- Structured output combining multiple tools
+\- Structured response generation
+
+\- CLI-based input support
 
 
 
 \## Example
+
+
 
 Input:
 
@@ -26,11 +42,19 @@ How to implement digital twin with examples?
 
 
 
-Tools used:
+Output:
 
-\- get\_insights
+\- Uses get\_insights for guidance
 
-\- get\_methodology\_step
+\- Uses get\_methodology\_step for steps
 
-\- get\_case\_studies
+\- Uses get\_case\_studies for examples
+
+
+
+\## Tech Stack
+
+\- Node.js
+
+\- LPI Sandbox Tools
 
