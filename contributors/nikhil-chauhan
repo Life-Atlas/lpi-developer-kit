@@ -1,0 +1,10 @@
+{
+  "name": "Nikhil Chauhan",
+  "github": "nik7006",
+  "program": "B.Tech Computer Science & Engineering",
+  "campus": "Amity University, Noida",
+  "skills": ["Python", "Java", "SQL", "Machine Learning", "NLP", "Data Structures", "OOP", "Data Analysis"],
+  "interests": ["machine learning applications", "fraud detection systems", "NLP", "AI in real-world problems", "system design", "problem solving"],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track how I approach problem-solving and coding challenges—identifying where I make logical mistakes, where I take more time, and how I debug errors. It would also analyze patterns in my projects, like my work in machine learning and fraud detection, and suggest improvements in model design and efficiency. Over time, it would help me become faster, more accurate, and better at building scalable and intelligent systems."
+}
