@@ -1,5 +1,5 @@
 Level: level-2
-\# Level 2 Submission
+# Level 2 Submission
 
 
 
@@ -74,3 +74,4 @@ The model attempted to explain SMILE as "Simulation, Model, Input, Output, Execu
 3\. This highlighted the importance of grounding AI systems with domain-specific tools like LPI, as LLMs alone are not reliable for specialized knowledge without proper retrieval and context.
 
 TEST CHANGE
+
