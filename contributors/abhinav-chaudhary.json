@@ -1,10 +1,10 @@
 {
   "name": "Abhinav Chaudhary",
-  "github": "abhichaudhary256-sudo",
+  "github": "abhinavchaudhary256-sudo",
   "program": "B.Tech CSE",
   "campus": "Amity University Noida",
-  "skills": ["python", "git", "rest apis", "basic machine learning", "nlp"],
-  "interests": ["ai agents", "backend systems", "api design", "machine learning", "blockchain"],
+  "skills": ["Python", "Git", "REST APIs", "Machine Learning", "NLP"],
+  "interests": ["AI Agents", "Backend Systems", "API Design", "Machine Learning", "Blockchain"],
   "track": "A: Agent Builders",
-  "my_twin": "I would track my daily energy levels, sleep quality, and focus throughout the day, and try to correlate them with my habits like diet, screen time, and study patterns. I often feel inconsistent in productivity, so understanding these patterns would help me improve my performance."
+  "my_twin": "I track my energy, sleep, and focus daily and correlate them with habits like diet, screen time, and study patterns to improve productivity."
 }
