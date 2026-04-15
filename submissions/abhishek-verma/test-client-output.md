@@ -1,10 +1,11 @@
+## Test Client Output
 === LPI Sandbox Test Client ===
 
 [LPI Sandbox] Server started — 7 read-only tools available
 Connected to LPI Sandbox
 
 Available tools (7):
-  - smile_overview: Get an overview of the S.M.I.L.E. methodology (Sustainable Methodology for Impac...
+  - smile_overview: Get an overview of the S.M.I.L.E. methodology (Sustainable Methodology for Impac...)
   - smile_phase_detail: Deep dive into a specific SMILE phase. Returns activities, deliverables, key que...
   - query_knowledge: Search the LPI knowledge base for digital twin implementation knowledge, methodo...
   - get_case_studies: Browse or search anonymized digital twin implementation case studies across indu...
@@ -25,7 +26,7 @@ Available tools (7):
        # Knowledge Results  40 entries found (showing top 5):  ## Ontology Factories as Foundation for AI Factories  Before dep...
 
 [PASS] get_case_studies({})
-       # Case Studies  10 available:  - **Smart Heating for Municipal Schools — Self-Learning Digital Twins** (Smart Buildings ...
+       # Case Studies  10 available:  - **Smart Heating for Municipal Schools — Self-Learning Digital Twins** (Smart Buildings ...)
 
 [PASS] get_case_studies({"query":"smart buildings"})
        # Case Study Results  ## Smart Heating for Municipal Schools — Self-Learning Digital Twins  **Industry**: Smart Building...
@@ -39,20 +40,3 @@ Available tools (7):
 === Results ===
 Passed: 8/8
 Failed: 0/8
-
-All tools working. Your LPI Sandbox is ready.
-You can now build agents that connect to this server.
-
-## Test Client Output
-## Ollama Output
-
->>> What is SMILE methodology?
-The SMILE methodology stands for "Scaling Your Innovation and Learning Experience." This is an educational approach designed to enhance the learning experience in organizations and help individuals develop new skills and knowledge that can be applied to their professional lives.
-
-Key elements of SMILE include:
-1. Scaling: The process involves scaling up from basic concepts to more complex applications.
-2. Innovative: It encourages innovative thinking and creative problem-solving techniques.
-3. Learning: A focus on continuous learning opportunities and a mindset of "always being open for new information."
-4. Experience: It includes practical experiences through real-world projects, simulations, or case studies that allow learners to apply what they've learned in the classroom.
-
-SMILE is often used in educational settings such as universities, high schools, vocational training programs, and corporate training environments. It aims to transform students into effective problem solvers by providing them with a comprehensive learning experience that integrates theory with practice.
