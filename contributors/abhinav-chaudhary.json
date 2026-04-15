@@ -5,6 +5,6 @@
   "campus": "Amity University Noida",
   "skills": ["python", "git", "rest apis", "basic machine learning", "nlp"],
   "interests": ["ai agents", "backend systems", "api design", "machine learning", "blockchain"],
-  "track": "Agent Builders",
+  "track": "A: Agent Builders",
   "my_twin": "I would track my daily energy levels, sleep quality, and focus throughout the day, and try to correlate them with my habits like diet, screen time, and study patterns. I often feel inconsistent in productivity, so understanding these patterns would help me improve my performance."
 }
