@@ -1,0 +1,9 @@
+{
+  "name": "Vineet Sharma",
+  "github": "vineetsharma18",
+  "program": "B.Tech CSE",
+  "campus": "Amity University Noida",
+  "skills": [ "C", "C++", "javascript", "react", "MySQL", "PostgreSQL", "Next.js", "html", "css"],
+  "interests": ["ai", "agents", "web dev", "NLP", "3D", "security"],
+  "my_twin": "I would track how much time I spend actually building projects vs just watching tutorials, because I sometimes feel productive but don’t make real progress."
+}
