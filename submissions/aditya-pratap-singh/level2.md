@@ -1,42 +1,44 @@
-\# Level 2 Submission – Aditya Pratap Singh
+# Level 2 Submission – Aditya Pratap Singh
 
+## LPI Sandbox Test Output
 
-
-\## LPI Sandbox Test Output
-
-
-
-Successfully ran the LPI sandbox test client using:
-
-
+Command executed:
 
 npm run test-client
 
+Output:
 
+=== LPI Sandbox Test Client ===
 
-The server started and connected to the LPI sandbox.  
+[LPI Sandbox] Server started — 7 read-only tools available
+Connected to LPI Sandbox
 
-All available tools executed successfully and returned valid responses.
+Available tools (7):
+- smile_overview
+- smile_phase_detail
+- query_knowledge
+- get_case_studies
+- get_insights
+- list_topics
+- get_methodology_step
 
+[PASS] smile_overview({})
+[PASS] smile_phase_detail({"phase":"reality-emulation"})
+[PASS] list_topics({})
+[PASS] query_knowledge({"query":"explainable AI"})
+[PASS] get_case_studies({})
+[PASS] get_case_studies({"query":"smart buildings"})
+[PASS] get_insights({"scenario":"personal health digital twin","tier":"free"})
+[PASS] get_methodology_step({"phase":"concurrent-engineering"})
 
+=== Results ===
+Passed: 8/8  
+Failed: 0/8  
 
-Results:
+All tools working. The LPI Sandbox environment is correctly configured.
 
-Passed: 8/8
+---
 
-Failed: 0/8
+## What Surprised Me About SMILE
 
-
-
-This confirms my development environment is correctly configured and the LPI MCP tools are working.
-
-
-
-\## What Surprised Me About SMILE
-
-
-
-The SMILE methodology surprised me because it treats real-world systems as digital twins that can be modeled and improved using structured lifecycle phases. I also found it interesting that the LPI exposes knowledge as MCP tools that AI agents can call dynamically instead of static documentation. This approach could enable intelligent agents to reason about complex systems like healthcare, smart buildings, or personal health using structured lifecycle models.
-
-
-
+The SMILE methodology models real-world systems as digital twins that can be improved using structured lifecycle phases. I found it interesting that the LPI exposes this knowledge through MCP tools that AI agents can call dynamically instead of static documentation. This approach could allow intelligent agents to reason about complex domains such as healthcare, smart buildings, or personal health using structured lifecycle models.
