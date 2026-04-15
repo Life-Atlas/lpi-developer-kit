@@ -17,25 +17,84 @@
         "automation"
       ],
       "track": "A: Agent Builders",
-      "level": 1
+      "level": 3,
+      "score": 9,
+      "score_max": 11,
+      "score_pct": 82
     },
     {
-      "name": "Amaan Khan",
-      "github": "amaankhan6828",
+      "name": "Jahanvi Gupta",
+      "github": "Jahanvi3005",
       "skills": [
-        "c++",
-        "python",
-        "numpy",
-        "machine learning"
+        "Python",
+        "React 19",
+        "Node.js",
+        "Machine Learning",
+        "FAISS",
+        "Next.js",
+        "MongoDB",
+        "RAG"
       ],
       "interests": [
-        "ai agents",
-        "automation",
-        "data science",
-        "real world problem solving"
+        "AI Agents",
+        "Data Engineering",
+        "Full-Stack Architecture",
+        "Knowledge Graphs"
+      ],
+      "track": "A: Agent Builders / D: 3D & Visualization",
+      "level": 3,
+      "score": 9,
+      "score_max": 11,
+      "score_pct": 82
+    },
+    {
+      "name": "Aditya Pratap Singh",
+      "github": "psinghaditya",
+      "skills": [
+        "python",
+        "java",
+        "ai"
+      ],
+      "interests": [
+        "agents",
+        "machine learning",
+        "nlp"
       ],
       "track": "",
-      "level": 1
+      "level": 2,
+      "score": 5,
+      "score_max": 5,
+      "score_pct": 100
+    },
+    {
+      "name": "Ankit Kumar Singh",
+      "github": "ankitsinghh007",
+      "skills": [
+        "Python",
+        "Machine Learning",
+        "Deep Learning",
+        "Computer Vision",
+        "OpenCV",
+        "Face Recognition",
+        "NLP",
+        "Scikit-learn",
+        "Git & GitHub",
+        "VS Code"
+      ],
+      "interests": [
+        "AI Agents",
+        "Computer Vision Systems",
+        "Real-world AI Applications",
+        "Automation using AI",
+        "LLMs and Generative AI",
+        "Backend AI Systems",
+        "Building Scalable AI Solutions"
+      ],
+      "track": "",
+      "level": 2,
+      "score": 5,
+      "score_max": 5,
+      "score_pct": 100
     },
     {
       "name": "Anupaul Saikia",
@@ -58,7 +117,186 @@
         "robotics",
         "agrotechnology"
       ],
+      "track": "D: 3D & Visualization",
+      "level": 2,
+      "score": 5,
+      "score_max": 5,
+      "score_pct": 100
+    },
+    {
+      "name": "Shourya Solanki",
+      "github": "Shourya3113",
+      "skills": [
+        "python",
+        "flask",
+        "nlp",
+        "computer vision",
+        "api-integration",
+        "machine learning"
+      ],
+      "interests": [
+        "ai agents",
+        "digital twins",
+        "health intelligence",
+        "quantum ai",
+        "human optimization"
+      ],
+      "track": "A: Agent Builders",
+      "level": 2,
+      "score": 3,
+      "score_max": 5,
+      "score_pct": 60
+    },
+    {
+      "name": "Varshit Pratap Singh Bhadauria",
+      "github": "temporalzone",
+      "skills": [
+        "python",
+        "java",
+        "javascript",
+        "react",
+        "django",
+        "flask",
+        "rest-apis",
+        "sqlite",
+        "mysql",
+        "git",
+        "dsa",
+        "jwt-auth"
+      ],
+      "interests": [
+        "agents",
+        "AI",
+        "api-integration",
+        "backend",
+        "automation"
+      ],
+      "track": "A: Agent Builders",
+      "level": 2,
+      "score": 2,
+      "score_max": 5,
+      "score_pct": 40
+    },
+    {
+      "name": "Aadyant Sood",
+      "github": "Aadyant-7",
+      "skills": [
+        "python",
+        "html",
+        "css",
+        "javascript",
+        "react basics",
+        "git"
+      ],
+      "interests": [
+        "frontend development",
+        "full stack development",
+        "ui ux design",
+        "building real world applications",
+        "problem solving using technology",
+        "learning new technologies",
+        "ai integrations in web apps",
+        "user experience improvement",
+        "design systems and clean interfaces"
+      ],
+      "track": "C: Design & UX",
+      "level": 1
+    },
+    {
+      "name": "Aditi Mehta",
+      "github": "Dynamic-ctrl",
+      "skills": [
+        "python",
+        "pytorch",
+        "flask",
+        "postgresql",
+        "react",
+        "Java",
+        "Git"
+      ],
+      "interests": [
+        "ai-agents",
+        "machine learning",
+        "deep learning",
+        "backend-development",
+        "full-stack development",
+        "tech-for-social-impact",
+        "ai-safety"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Amaan Khan",
+      "github": "amaankhan6828",
+      "skills": [
+        "c++",
+        "python",
+        "numpy",
+        "machine learning"
+      ],
+      "interests": [
+        "ai agents",
+        "automation",
+        "data science",
+        "real world problem solving"
+      ],
       "track": "",
+      "level": 1
+    },
+    {
+      "name": "Ananyaa M",
+      "github": "ananyaa05",
+      "skills": [
+        "C++",
+        "python",
+        "AI & ML",
+        "deep learning",
+        "computer vision",
+        "AWS cloud",
+        "NLP",
+        "Scikit-Learn",
+        "SQL",
+        "numpy",
+        "tensorflow"
+      ],
+      "interests": [
+        "AI agents",
+        "automation",
+        "mcp development",
+        "eeg signal processing",
+        "edge computing",
+        "quantitative finance logic",
+        "productivity optimization"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Ayush Kumar",
+      "github": "Kaizoku-Ayush",
+      "skills": [
+        "python",
+        "pytorch",
+        "deep learning",
+        "sql",
+        "data analysis",
+        "c++",
+        "javascript",
+        "react",
+        "nodejs",
+        "tensorflow",
+        "scikit-learn",
+        "git",
+        "docker"
+      ],
+      "interests": [
+        "agents",
+        "NLP",
+        "3D",
+        "security"
+      ],
+      "track": "A: Agent Builders",
       "level": 1
     },
     {
@@ -73,6 +311,86 @@
         "LLMs"
       ],
       "track": "",
+      "level": 1
+    },
+    {
+      "name": "Dia Vats",
+      "github": "https://github.com/Diavats",
+      "skills": [
+        "python",
+        "machine learning",
+        "geospatial data",
+        "RAG pipelines",
+        "data structures",
+        "git & github",
+        "data analysis"
+      ],
+      "interests": [
+        "AI agents",
+        "real world problem solving",
+        "biomedical AI",
+        "climate tech"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Gunti Sandeep",
+      "github": "SandeepGunti18",
+      "skills": [
+        "python",
+        "java",
+        "tensorflow",
+        "pytorch",
+        "sql",
+        "nlp",
+        "keras",
+        "scikit-learn"
+      ],
+      "interests": [
+        "AI Agents",
+        "NLP",
+        "automation",
+        "healthcare AI",
+        "deep learning"
+      ],
+      "track": "A: Agent Builders ",
+      "level": 1
+    },
+    {
+      "name": "Harsh srivastava",
+      "github": "Harshgithub321",
+      "skills": [
+        "python",
+        "c++",
+        "DSA",
+        "AI/ML"
+      ],
+      "interests": [
+        "AI agents",
+        "NLP",
+        "Machine learning",
+        "cybersecurity"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Inderjeet Singh Shoker",
+      "github": "inder-1412",
+      "skills": [
+        "MERN",
+        "TypeScript",
+        "React",
+        "Node.js"
+      ],
+      "interests": [
+        "agents",
+        "NLP",
+        "3D",
+        "security"
+      ],
+      "track": "A: Agent Builders",
       "level": 1
     },
     {
@@ -126,6 +444,208 @@
       "level": 1
     },
     {
+      "name": "Khushi Garg",
+      "github": "g-khushi",
+      "skills": [
+        "Java",
+        "Python",
+        "C",
+        "C++ (Basic)",
+        "SQL",
+        "NumPy",
+        "Pandas",
+        "TensorFlow",
+        "HTML",
+        "CSS",
+        "MongoDB",
+        "DSA",
+        "OOP",
+        "DBMS",
+        "Operating Systems"
+      ],
+      "interests": [
+        "Artificial Intelligence & Machine Learning",
+        "AI-based Real-world Applications",
+        "Natural Language Processing (NLP)",
+        "Web Development",
+        "Data Analysis & Insights"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "LAAVANYA MITTAL",
+      "github": "la0808-co",
+      "skills": [
+        "python",
+        "ML",
+        "SQL"
+      ],
+      "interests": [
+        "AI agents",
+        "NLP",
+        "Data Science ",
+        "data analystics",
+        "problem solving"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Naman Anand",
+      "github": "Naman-Playz",
+      "skills": [
+        "Python",
+        "Flask",
+        "Cybersecurity",
+        "Network Scanning",
+        "C++"
+      ],
+      "interests": [
+        "Intrusion Detection Systems",
+        "AI/ML",
+        "Digital Twins",
+        "Ethical Hacking"
+      ],
+      "track": "",
+      "level": 1
+    },
+    {
+      "name": "Navneet Kumar",
+      "github": "Na7neet",
+      "skills": [
+        "python",
+        "pytorch",
+        "react",
+        "computer networks",
+        "dbms",
+        "machine learning"
+      ],
+      "interests": [
+        "agents",
+        "NLP",
+        "movies",
+        "sports"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Nikhil Chauhan",
+      "github": "nik7006",
+      "skills": [
+        "Python",
+        "Java",
+        "SQL",
+        "Machine Learning",
+        "NLP",
+        "Data Structures",
+        "OOP",
+        "Data Analysis"
+      ],
+      "interests": [
+        "machine learning applications",
+        "fraud detection systems",
+        "NLP",
+        "AI in real-world problems",
+        "system design",
+        "problem solving"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Pranu Chandra",
+      "github": "pranu-chandra",
+      "skills": [
+        "python",
+        "ai/ml basics",
+        "tkinter gui",
+        "problem solving",
+        "git basics"
+      ],
+      "interests": [
+        "ai agents",
+        "machine learning",
+        "building real projects",
+        "football",
+        "self improvement"
+      ],
+      "track": "",
+      "level": 1
+    },
+    {
+      "name": "Rahul Bijarnia",
+      "github": "RahulBijarnia1",
+      "skills": [
+        "Python",
+        "C++",
+        "SQL",
+        "Flask",
+        "Machine Learning",
+        "Data Analysis",
+        "Streamlit",
+        "API Development",
+        "MySQL"
+      ],
+      "interests": [
+        "data analytics",
+        "machine learning systems",
+        "web development",
+        "API design",
+        "problem solving",
+        "system reliability"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Ritheeshwar K",
+      "github": "Ritheeshwar",
+      "skills": [
+        "python",
+        "Langchain",
+        "Pytorch",
+        "LangGraph",
+        "Finetuning",
+        "FlaskAPI"
+      ],
+      "interests": [
+        "AI Agents",
+        "Computer Vision",
+        "Multimodal AI",
+        "Full-Stack Development"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Vansh Singhal",
+      "github": "vansh09-singhal",
+      "skills": [
+        "Python",
+        "C++",
+        "SQL",
+        "LangChain",
+        "LLMs",
+        "Machine Learning",
+        "NLP",
+        "Streamlit",
+        "Data Cleaning",
+        "Data Preprocessing"
+      ],
+      "interests": [
+        "agent workflows",
+        "retrieval-augmented generation",
+        "data analytics",
+        "system scalability",
+        "evaluation and feedback loops",
+        "prompt engineering"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
       "name": "Vineet Sharma",
       "github": "vineetsharma18",
       "skills": [
@@ -151,6 +671,21 @@
       "level": 1
     },
     {
+      "name": "Vusala Akanksha",
+      "github": "Chutki319239",
+      "skills": [
+        "python",
+        "llm",
+        "machine learning"
+      ],
+      "interests": [
+        "agents",
+        "genAI"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
       "name": "Yash Maheshwari",
       "github": "yashm0910",
       "skills": [
@@ -172,6 +707,24 @@
         "backend engineering",
         "system reliability",
         "evaluation and feedback loops"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Yash Pundhir",
+      "github": "Yash-04-create",
+      "skills": [
+        "python",
+        "c++",
+        "DSA",
+        "AI/ML"
+      ],
+      "interests": [
+        "AI agents",
+        "NLP",
+        "Machine learning",
+        "cloud computing"
       ],
       "track": "A: Agent Builders",
       "level": 1
