@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 LPI Digital Twin Explorer — Level 3 Submission
 Author: Jahanvi Gupta
@@ -13,7 +13,7 @@ import subprocess
 import sys
 import os
 
-# Define MCP server path
+
 LPI_SERVER_CMD = ["node", "../winnio/dist/src/index.js"]
 LPI_SERVER_CWD = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "winnio"))
 
@@ -27,7 +27,7 @@ def call_mcp_tool(process, tool_name: str, arguments: dict) -> str:
     }
     
     try:
-        # Sanitize arguments basic check
+    
         if not isinstance(arguments, dict):
             raise ValueError("Arguments must be a valid dictionary")
             
@@ -67,7 +67,7 @@ def generate_insights(question: str) -> None:
         print("[ERROR] Could not locate LPI server. Ensure it is built in ../winnio/dist/src/index.js")
         return
 
-    # MCP initialization handshake
+    
     init_req = {
         "jsonrpc": "2.0", "id": 0, "method": "initialize",
         "params": {
@@ -79,17 +79,17 @@ def generate_insights(question: str) -> None:
     proc.stdin.flush()
     proc.stdout.readline()
 
-    # Send initialized notification
+    
     proc.stdin.write(json.dumps({"jsonrpc": "2.0", "method": "notifications/initialized"}) + "\n")
     proc.stdin.flush()
 
     tools_used = []
 
-    print("[1/2] 📚 Harvesting from LPI Knowledge Base...")
+    print("[1/2]  Harvesting from LPI Knowledge Base...")
     knowledge = call_mcp_tool(proc, "query_knowledge", {"query": question})
     tools_used.append(("query_knowledge", {"query": question}))
 
-    print("[2/2] 🏗️ Fetching S.M.I.L.E Methodology Implementation steps...")
+    print("[2/2]  Fetching S.M.I.L.E Methodology Implementation steps...")
     methodology = call_mcp_tool(proc, "smile_overview", {})
     tools_used.append(("smile_overview", {}))
 
@@ -97,7 +97,7 @@ def generate_insights(question: str) -> None:
     proc.wait(timeout=5)
 
     print(f"\n{'='*60}")
-    print("  🧠 EXPLAINABLE AI ANALYSIS & PROVENANCE")
+    print(" EXPLAINABLE AI ANALYSIS & PROVENANCE")
     print(f"{'='*60}\n")
     print("Based on the data retrieved from the LPI architecture, here is the synthesis:\n")
     print(f">> From Knowledge Base (Query: {question}):")
@@ -115,7 +115,7 @@ if __name__ == "__main__":
         print("Usage: python agent.py 'Your query about digital twins'")
         sys.exit(1)
         
-    # Input sanitization
+    
     user_query = str(sys.argv[1]).strip()[:100]
     
     if not user_query:
