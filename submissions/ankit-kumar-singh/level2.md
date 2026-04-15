@@ -2,15 +2,19 @@
 
 ## Test Client Output
 
-All tools working. Your LPI Sandbox is ready.
+[PASS] smile_overview({})
+[PASS] smile_phase_detail({"phase":"reality-emulation"})
+[PASS] list_topics({})
+[PASS] query_knowledge({"query":"explainable AI"})
+[PASS] get_case_studies({})
+[PASS] get_case_studies({"query":"smart buildings"})
+[PASS] get_insights({"scenario":"personal health digital twin","tier":"free"})
+[PASS] get_methodology_step({"phase":"concurrent-engineering"})
 
-* smile_overview
-* smile_phase_detail
-* query_knowledge
-* get_case_studies
-* get_insights
-* list_topics
-* get_methodology_step
+Passed: 8/8  
+Failed: 0/8  
+
+All tools working. Your LPI Sandbox is ready.
 
 (See screenshots/lpi-test.png for full output)
 
