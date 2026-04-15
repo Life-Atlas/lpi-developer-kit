@@ -4,9 +4,15 @@
 Successfully ran the full LPI sandbox locally.
 
 ## Test Client Output
-Command run:
 ```bash
 npm run test-client
+
+=== Results ===
+Passed: 8/8
+Failed: 0/8
+
+All tools working. Your LPI Sandbox is ready.
+You can now build agents that connect to this server.
 
 ## Local LLM Integration
 Integrated a **local Ollama model** into my workflow and used it later as the reasoning engine inside my Level 3 agent.
