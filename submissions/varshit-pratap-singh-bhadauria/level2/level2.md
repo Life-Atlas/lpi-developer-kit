@@ -4,13 +4,49 @@
 
 \## LPI Test Output
 
-Successfully ran npm install and npm run test-client. All 7 tools passed successfully.
+Ran the following command:
+
+
+
+npm run test-client
+
+
+
+Output:
+
+All 7 tools passed successfully:
+
+\- smile\_overview ✅
+
+\- smile\_phase\_detail ✅
+
+\- query\_knowledge ✅
+
+\- get\_case\_studies ✅
+
+\- get\_insights ✅
+
+\- list\_topics ✅
+
+\- get\_methodology\_step ✅
 
 
 
 \## LLM Output
 
-Installed Ollama and ran qwen2.5:1.5b locally. The model generated responses to prompts related to SMILE methodology.
+Used Ollama with qwen2.5:1.5b model.
+
+
+
+Prompt:
+
+"What is SMILE methodology in digital twins?"
+
+
+
+Response:
+
+The model attempted to explain SMILE as "Simulation, Model, Input, Output, Execution", which is incorrect. It failed to correctly describe the actual SMILE methodology used for digital twins.
 
 
 
