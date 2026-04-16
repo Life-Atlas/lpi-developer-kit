@@ -5,5 +5,6 @@
   "campus": "Amity University Delhi-NCR",
   "skills": ["python", "machine-learning", "tensorflow", "computer-vision", "java", "sql", "scikit-learn"],
   "interests": ["agents", "NLP", "AI-pipelines"],
+  "track": "A: Agent Builders",
   "my_twin": "I would track my focus and energy patterns across different times of day and correlate them with my sleep, diet, and the type of work I was doing — because I notice I write cleaner code some days versus others and I genuinely don't know why. I'd want the twin to flag when I'm likely to make mistakes so I can schedule reviews at better times."
 }

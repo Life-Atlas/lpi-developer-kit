@@ -1,10 +1,8 @@
-# Level 2 Submission - Shubham Kumar
+Level 2 Submission - Sonal Yadav
+Tracks Selected
+Track A: Agent Builders
 
-## Tracks Selected
-**Track A:** Agent Builders
-
-## LPI Sandbox Execution
-```
+LPI Sandbox Execution
 
 === LPI Sandbox Test Client ===
 
@@ -50,16 +48,12 @@ Failed: 0/8
 
 All tools working. Your LPI Sandbox is ready.
 You can now build agents that connect to this server.
-```
+Local LLM Output (Ollama - qwen3.5:35b )
+Prompt: What is S.M.I.L.E. in three lines ?
 
-### Local LLM Output (Ollama - qwen3.5:35b )
-Prompt:
-What is a digital twin in one paragraph?
+Response: S.M.I.L.E. is an acronym for **Sustainable Methodology for Impact Lifecycle Enablement**. It refers to a process through which the creation and use of digital twins are made effective.
+It revolves around the determination of the expected result before finding out what data will be required.
+This model stresses learning about the past, simulation of the future, and better decision-making in the current period.
 
-Response:
-A digital twin is an exact replica or virtual representation of a physical object, system, process, or location that exists in the real world. It enables continuous monitoring and simulation of these objects to facilitate better
-decision-making, optimize performance, predict failures before they occur, and improve overall operational efficiency.
-### Reflection on SMILE
-Smile is an outcome-driven first framework. It works like a reward-based system, and it doesn't ask, "What do you build?" Instead, it asks, "What outcome do you want?"
-Its phases go from reality emulation to concurrent engineering. This means the model identifies what exists before designing what should exist. This approach is the opposite of how software projects usually work.
-The knowledge base includes PK/PD modeling.
+Reflection on SMILE
+Knowledge is crucial for ideas and ambition to come into fruition, and S.M.I.L.E. is the process through which you can start-up businesses using digital twins that allow experimentation and learning.

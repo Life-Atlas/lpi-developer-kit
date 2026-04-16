@@ -1,0 +1,9 @@
+{
+  "name": "Khushbu Kumari",
+  "github": "your-github-username",
+  "program": "M.Tech AI",
+  "campus": "Amity University Noida",
+  "skills": ["java", "spring boot", "react", "node.js", "sql", "docker", "kubernetes"],
+  "interests": ["AI", "RAG", "full-stack", "cloud", "cybersecurity"],
+  "my_twin": "I would track how my focus and productivity change throughout the day and correlate it with my work type (coding, meetings, learning) and sleep patterns, because I notice I am highly productive at certain hours but lose energy suddenly without understanding why."
+}

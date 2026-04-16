@@ -5,7 +5,7 @@
     "score": 9,
     "max": 11,
     "pct": 82,
-    "updated": "2026-04-15T12:07:13.426Z"
+    "updated": "2026-04-16T19:20:22.441Z"
   },
   "anupaul-saikia": {
     "name": "Anupaul Saikia",
@@ -29,7 +29,7 @@
     "score": 5,
     "max": 5,
     "pct": 100,
-    "updated": "2026-04-15T13:23:21.005Z"
+    "updated": "2026-04-16T17:24:12.295Z"
   },
   "level-1-and-level-2:-jahanvi-gupta": {
     "name": "level-1 and level-2: Jahanvi Gupta",
@@ -58,10 +58,10 @@
   "aditya-pratap-singh": {
     "name": "Aditya Pratap Singh",
     "level": 3,
-    "score": 6,
+    "score": 9,
     "max": 11,
-    "pct": 55,
-    "updated": "2026-04-16T07:39:21.082Z"
+    "pct": 82,
+    "updated": "2026-04-16T20:03:19.281Z"
   },
   "track-a-agent-submission": {
     "name": "Track A Agent Submission",
@@ -85,7 +85,7 @@
     "score": 9,
     "max": 11,
     "pct": 82,
-    "updated": "2026-04-16T07:12:35.867Z"
+    "updated": "2026-04-16T20:14:29.522Z"
   },
   "level:-level-2-varshit-pratap-singh-bhadauria-(final-fix)": {
     "name": "Level: level-2 Varshit Pratap Singh Bhadauria (FINAL FIX)",
@@ -170,9 +170,49 @@
   "aadyant-sood": {
     "name": "Aadyant Sood",
     "level": 3,
-    "score": 1,
+    "score": 9,
     "max": 11,
-    "pct": 9,
-    "updated": "2026-04-16T17:01:12.933Z"
+    "pct": 82,
+    "updated": "2026-04-16T17:17:52.213Z"
+  },
+  "aman-gupta": {
+    "name": "Aman Gupta",
+    "level": 3,
+    "score": 9,
+    "max": 11,
+    "pct": 82,
+    "updated": "2026-04-16T17:53:53.259Z"
+  },
+  "sonal-yadav": {
+    "name": "Sonal Yadav",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-16T18:21:17.127Z"
+  },
+  "harsh-srivastava": {
+    "name": "Harsh Srivastava",
+    "level": 3,
+    "score": 7,
+    "max": 11,
+    "pct": 64,
+    "updated": "2026-04-16T19:37:21.625Z"
+  },
+  "level-2-:-sania-gurung": {
+    "name": "Level-2 : Sania Gurung",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-16T18:53:05.882Z"
+  },
+  "priyanshu-bhardwaj": {
+    "name": "Priyanshu Bhardwaj",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-16T20:13:33.121Z"
   }
 }

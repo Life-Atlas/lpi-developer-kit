@@ -1,4 +1,4 @@
-# Level 2 Submission - Shubham Kumar
+# Level 2 Submission - Shishir Chaudhary
 
 ## Tracks Selected
 **Track A:** Agent Builders
@@ -52,14 +52,39 @@ All tools working. Your LPI Sandbox is ready.
 You can now build agents that connect to this server.
 ```
 
+
+### llama
+
+LLaMA (Large Language Model Meta AI) is an AI model series developed by Meta and made open-source.  
+
+This model possesses qualities such as a scalable transformer architecture, multilinguality, and the capability to be fine-tuned. 
+
+The benefits of using this model include efficiency, flexibility, and openness, thereby facilitating innovation without any restrictions.
+
+
+
 ### Local LLM Output (Ollama - qwen3.5:35b )
 Prompt:
+what is S.M.I.L.E.
+
+Response:
+Used lpi-sandbox integration
+Used lpi-sandbox integration
+S.M.I.L.E. stands for Sustainable Methodology for Impact Lifecycle Enablement — it's a structured, benefits-driven framework for implementing digital twins across any industry, at any scale. The core philosophy can be summed up in one line:
+
+"Absorb the past, simulate the future, to transcend the now."
+
+What makes SMILE distinctive is its radical reversal of the conventional approach. Most organizations start by collecting data and then figure out what to do with it. SMILE does the opposite — start with the impact you want to achieve, then work backwards to identify what data you actually need.Prompt:
 What is a digital twin in one paragraph?
 
 Response:
 A digital twin is an exact replica or virtual representation of a physical object, system, process, or location that exists in the real world. It enables continuous monitoring and simulation of these objects to facilitate better
 decision-making, optimize performance, predict failures before they occur, and improve overall operational efficiency.
+
 ### Reflection on SMILE
-Smile is an outcome-driven first framework. It works like a reward-based system, and it doesn't ask, "What do you build?" Instead, it asks, "What outcome do you want?"
-Its phases go from reality emulation to concurrent engineering. This means the model identifies what exists before designing what should exist. This approach is the opposite of how software projects usually work.
-The knowledge base includes PK/PD modeling.
+
+Being an aspiring leader goes beyond simply coming up with revolutionary ideas; it involves knowing things, which serves as the wings that give these ideas lift. If you have dreams of starting your own venture and solving some problems through your initiative, the S.M.I.L.E. technique can help guide you on how to do it.
+
+This model allows you to see what you need to do at each step along the way, particularly when you are experiencing uncertainties and confusion regarding your present location and the next stage. The digital twin can assist you even further.
+
+This technology allows for testing and learning from results within a virtual setting without any risks. It helps you change, develop, and create innovative ideas in preparation for the real world.
