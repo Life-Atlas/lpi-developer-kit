@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+// 🥚 Easter egg #2: Query "query_knowledge" with the exact phrase "impact first data last"
+// and count how many results mention "ontology". Put the number in your HOW_I_DID_IT.md
+// for bonus points. There's one more egg hidden in the data files.
+
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {

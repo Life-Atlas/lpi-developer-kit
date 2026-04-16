@@ -1,0 +1,13 @@
+{
+  "name": "Kailash Narayana Prasad",
+  "github": "KailashNp",
+  "program": "B.Tech CSE",
+  "campus": "Amity Noida",
+  "skills": ["C++","Python","Java","SQL","Cybersecurity (Network Security, Web Security, OWASP Top 10, Vulnerability Assessment, Penetration Testing basics)",
+  "Cryptography (Encryption/Decryption, Hashing, Digital Signatures, Public Key Infrastructure)","Blockchain (Decentralization, Consensus Mechanisms, Smart Contracts basics)",
+  "Secure Data Storage","HTML/CSS","Android Development (Kotlin, Jetpack Compose)","Git & GitHub","Problem Solving","Analytical Thinking","Technical Troubleshooting","Team Collaboration"],
+  "interests": ["AI Agents & Autonomous Systems","Agent Security & Adversarial Attacks","Cybersecurity & Ethical Hacking","Network & Web Security",
+  "Cryptography & Secure Communication","Blockchain & Decentralized Systems","Natural Language Processing (NLP)","Intelligent Systems & Automation"],
+  "track": "E: QA & Security",
+  "my_twin": "I would want to track how I make decisions while solving problems, especially in situations involving security and logical reasoning. Sometimes I notice that I either overthink and delay action or act quickly without fully analyzing risks. I want to understand what triggers these patterns—whether it's pressure, complexity, or uncertainty. I’m also curious about how I approach identifying vulnerabilities, both in systems and in my own thinking. By observing this, I want to improve my ability to think like both a builder and an attacker, making my decisions more precise, balanced, and effective over time."
+}

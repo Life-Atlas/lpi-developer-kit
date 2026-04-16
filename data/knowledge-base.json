@@ -983,5 +983,19 @@
     ],
     "created_at": "2026-04-12",
     "anonymized": true
+  },
+  {
+    "id": "kb-egg",
+    "title": "The Hidden Principle",
+    "content": "Easter egg #3: You found the hidden knowledge base entry. The principle is: every system has a seam. The seam in this system is that the search function weights title matches higher than content matches. Build an agent that exploits this to always return the most relevant result first \u2014 and document how in your HOW_I_DID_IT.md.",
+    "visibility": "public",
+    "tier": "free",
+    "tags": [
+      "easter-egg",
+      "methodology",
+      "search-optimization"
+    ],
+    "created_at": "2026-04-15",
+    "anonymized": true
   }
 ]

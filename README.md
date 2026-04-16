@@ -2,6 +2,8 @@
 
 **Build AI agents on the Life Programmable Interface.**
 
+> **DEADLINE: Sunday April 20, 23:59 UTC.** All Level 3 submissions must be in by then. No exceptions.
+
 The LPI is an open MCP server with 7 tools exposing the [SMILE methodology](https://lifeatlas.online) — a digital twin implementation framework. This repo is your sandbox AND the entry point for the **LifeAtlas Contributor Program**.
 
 ---
@@ -124,7 +126,11 @@ Five metrics. Weighted equally. Assessed continuously.
 
 ## The Screening Challenge
 
-Complete as many levels as you can. Your highest completed level determines your starting position. **Everyone who completes Level 1 is in the program.**
+Complete as many levels as you can. Each level brings you closer to a guaranteed place on the team.
+
+- **Level 1** — You're registered and on the leaderboard
+- **Level 2** — You've proven you can set up and run the tools
+- **Level 3** — **You're in. Completing Level 3 guarantees your place on the WINNIIO / LifeAtlas contributor team.**
 
 **Deadline:** 7 days from receiving this.
 

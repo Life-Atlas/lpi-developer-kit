@@ -25,16 +25,59 @@ jobs:
           FILES=$(git diff --name-only origin/master...${{ github.event.pull_request.head.sha }} 2>/dev/null || echo "")
 
           LEVEL=""
+          TITLE="${{ github.event.pull_request.title }}"
+
+          # Detect from file paths first
           if echo "$FILES" | grep -q "^contributors/"; then
             LEVEL="1"
           fi
-          if echo "$FILES" | grep -q "^submissions/.*level2"; then
+          if echo "$FILES" | grep -qi "submissions.*level.2\|submissions.*level-2\|submissions.*/level2"; then
             LEVEL="2"
           fi
-          if echo "$FILES" | grep -q "^submissions/.*level3"; then
+          if echo "$FILES" | grep -qi "submissions.*level.3\|submissions.*level-3\|submissions.*/level3"; then
             LEVEL="3"
           fi
+
+          # PR title overrides — most reliable signal
+          if echo "$TITLE" | grep -qi "level.3\|level-3"; then
+            LEVEL="3"
+          elif echo "$TITLE" | grep -qi "level.2\|level-2"; then
+            LEVEL="2"
+          elif echo "$TITLE" | grep -qi "level.1\|level-1"; then
+            # Only set to 1 if not already higher
+            if [ -z "$LEVEL" ]; then LEVEL="1"; fi
+          fi
+
+          # Check if PR includes a contributors/ JSON file
+          HAS_CONTRIBUTOR="false"
+          if echo "$FILES" | grep -q "^contributors/.*\.json"; then
+            HAS_CONTRIBUTOR="true"
+          fi
+
+          # Safety: check if PR deletes existing files (block destructive PRs)
+          DELETIONS=$(git diff --diff-filter=D --name-only origin/master...${{ github.event.pull_request.head.sha }} 2>/dev/null || echo "")
+          HAS_DELETIONS="false"
+          if [ -n "$DELETIONS" ]; then
+            HAS_DELETIONS="true"
+            echo "::warning::PR deletes files: $DELETIONS"
+          fi
+
           echo "level=$LEVEL" >> $GITHUB_OUTPUT
+          echo "has_contributor=$HAS_CONTRIBUTOR" >> $GITHUB_OUTPUT
+          echo "has_deletions=$HAS_DELETIONS" >> $GITHUB_OUTPUT
+
+      - name: Block PRs that delete existing files
+        if: steps.level.outputs.has_deletions == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `⛔ **This PR deletes existing files from the repo.** That's not allowed — your PR should only ADD your own files.\n\nPlease:\n1. Re-fork the repo (or sync your fork with upstream)\n2. Only add your contributor JSON to \`contributors/\`\n3. Don't delete or modify other people's files\n\nThis PR will NOT be auto-merged. Fix it and push again.`
+            });
+            core.setFailed('PR deletes existing files — blocked for safety');
 
       - name: Validate Level 1 — Contributor JSON
         id: validate_l1
@@ -96,6 +139,56 @@ jobs:
               });
             }
 
+      - name: Validate contributor JSON (for bundled PRs)
+        id: validate_contributor
+        if: steps.level.outputs.level != '1' && steps.level.outputs.has_contributor == 'true'
+        run: |
+          VALID=true
+          for f in $(git diff --name-only origin/master...${{ github.event.pull_request.head.sha }} | grep "^contributors/" | grep ".json$" | grep -v TEMPLATE); do
+            echo "Validating $f..."
+            if ! python3 -c "import json; json.load(open('$f'))"; then
+              VALID=false
+              continue
+            fi
+            python3 -c "
+          import json, sys
+          data = json.load(open('$f'))
+          required = ['name', 'github', 'program', 'campus', 'skills', 'interests', 'my_twin']
+          missing = [k for k in required if k not in data]
+          if missing:
+              print(f'::error::$f missing fields: {missing}')
+              sys.exit(1)
+          if not isinstance(data['skills'], list) or not isinstance(data['interests'], list):
+              sys.exit(1)
+          if len(data['my_twin'].strip()) < 20:
+              sys.exit(1)
+          if data['name'] == 'Your Full Name' or data['github'] == 'your-github-username':
+              sys.exit(1)
+          print(f'VALID: {data[\"name\"]}')
+          " || VALID=false
+          done
+          echo "valid=$VALID" >> $GITHUB_OUTPUT
+
+      - name: Auto-merge bundled PRs with valid contributor JSON
+        if: steps.level.outputs.level != '1' && steps.level.outputs.has_contributor == 'true' && steps.validate_contributor.outputs.valid == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const level = '${{ steps.level.outputs.level }}';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `✅ **Registration + Level ${level} received!** You're now on the board.\n\n⚠️ **Tip for next time:** Submit each level as a separate PR — it makes tracking easier and ensures you get credit immediately.\n\nThe leaderboard is live: https://life-atlas.github.io/lpi-developer-kit/\n\nLevel 3 is what guarantees your place on the team.`
+            });
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              merge_method: 'squash',
+              commit_title: `contributor: ${context.payload.pull_request.title}`,
+            });
+
       - name: Auto-merge valid Level 1 PRs
         if: steps.level.outputs.level == '1' && steps.validate_l1.outputs.valid == 'true'
         uses: actions/github-script@v7
@@ -106,7 +199,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: '✅ **Welcome to the LifeAtlas Contributor Program!** Your registration is valid. You are now part of the program.\n\nNext steps:\n1. Run the LPI sandbox (`npm install && npm run build && npm run test-client`)\n2. Pick your track and start Level 2\n3. Check the README for your track-specific challenge\n\nSee you in the standups!'
+              body: '✅ **Registration received!** You are now on the board.\n\nThis is Level 1 — you\'ve signed up. To secure your place on the team:\n\n**Level 2** → Run the LPI sandbox and prove your dev environment works (`npm install && npm run build && npm run test-client`)\n\n**Level 3** → Build something real. **Completing Level 3 guarantees you a place on the WINNIIO / LifeAtlas contributor team.**\n\nCheck the README for your track-specific challenge. The leaderboard is live: https://life-atlas.github.io/lpi-developer-kit/\n\nGood luck — Level 3 is where it counts.'
             });
 
             // Merge the PR directly (no approval needed — validation passed)
@@ -139,7 +232,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `Level 2 submission received. An agent will review your output shortly. In the meantime, consider starting Level 3 if you haven't already.`
+              body: `📡 **Level 2 received.** Your dev environment is running — nice.\n\nAn agent will score your submission shortly.\n\nBut Level 2 is not the finish line. **Level 3 is what guarantees your place on the team.** Build something real — an agent, a case study, a design, a security audit. Check the README for your track.\n\nThe leaderboard is watching: https://life-atlas.github.io/lpi-developer-kit/`
             });
 
       - name: Comment on Level 3 submissions
@@ -151,5 +244,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `Level 3 submission received. An agent will clone your repo, attempt to run it, and evaluate your agent. You will receive a detailed review as a comment on this PR.`
+              body: `🏆 **Level 3 submission received.** This is the one that counts.\n\nAn agent will clone your repo, attempt to run it, and evaluate your work. You'll receive a detailed score and feedback as a comment on this PR.\n\n**Completing Level 3 guarantees your place on the WINNIIO / LifeAtlas contributor team.** Welcome to the real work.`
             });

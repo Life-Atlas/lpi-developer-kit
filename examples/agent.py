@@ -24,8 +24,10 @@ import sys
 import requests
 
 # --- Configuration ---
-LPI_SERVER_CMD = ["node", "dist/src/index.js"]
-LPI_SERVER_CWD = "."  # path to lpi-developer-kit root
+import os as _os
+_REPO_ROOT = _os.path.abspath(_os.path.join(_os.path.dirname(__file__), ".."))
+LPI_SERVER_CMD = ["node", _os.path.join(_REPO_ROOT, "dist", "src", "index.js")]
+LPI_SERVER_CWD = _REPO_ROOT  # always resolves to repo root regardless of where you run from
 OLLAMA_URL = "http://localhost:11434/api/generate"
 OLLAMA_MODEL = "qwen2.5:1.5b"
 

@@ -1,0 +1,28 @@
+{
+  "name": "Ankit Kumar Singh",
+  "github": "ankitsinghh007",
+  "program": "M.Tech AI",
+  "campus": "Amity University Noida",
+  "skills": [
+    "Python",
+    "Machine Learning",
+    "Deep Learning",
+    "Computer Vision",
+    "OpenCV",
+    "Face Recognition",
+    "NLP",
+    "Scikit-learn",
+    "Git & GitHub",
+    "VS Code"
+  ],
+  "interests": [
+    "AI Agents",
+    "Computer Vision Systems",
+    "Real-world AI Applications",
+    "Automation using AI",
+    "LLMs and Generative AI",
+    "Backend AI Systems",
+    "Building Scalable AI Solutions"
+  ],
+  "my_twin": "I would build a digital twin to understand my daily working patterns while learning and building AI projects. I spend a lot of time solving problems and debugging, but sometimes I go too deep into a single issue or delay difficult tasks. I want to track when I lose focus, what kind of problems slow me down, and how my energy changes during the day. This would help me work more efficiently, improve consistency, and solve problems faster instead of just spending more time."
+}
