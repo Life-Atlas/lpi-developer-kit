@@ -1,8 +1,8 @@
 <h2> Track A <h2>
 
-<h3> # Test Client Output- <h3>
+### $\color{green}{\text{ Test Client Output-}}$
 
-<sub> G15@G15 MINGW64 ~/lpi-developer-kit (master)
+G15@G15 MINGW64 ~/lpi-developer-kit (master)
 $ npm run test-client
 
 > lpi-developer-kit@1.0.0 test-client
@@ -55,11 +55,11 @@ Passed: 8/8
 Failed: 0/8
 
 All tools working. Your LPI Sandbox is ready.
-You can now build agents that connect to this server.  <sub> 
+You can now build agents that connect to this server.  
 
-<h3> # LLM output- <h3>
+### $\color{green}{\text{LLM output-}}$
 
-<sub> An agentic AI is an AI system that can act autonomously to achieve goals, rather than just responding to prompts. Think of it like the difference between a calculator and
+ An agentic AI is an AI system that can act autonomously to achieve goals, rather than just responding to prompts. Think of it like the difference between a calculator and
 a financial analyst:
 
 - Traditional AI (like chatbots): You ask a question, it answers. It's reactive.
@@ -87,9 +87,9 @@ Your workspace has agents running that:
 - Summarize important messages
 - All without you manually running commands each time
 
-It's like having a team of digital employees working alongside you, not just a single chatbot responding to commands. <sub>
+It's like having a team of digital employees working alongside you, not just a single chatbot responding to commands.
 
-<h3> # What suprised me about SMILE- <h3>
+### $\color{green}{\text{What suprised me about SMILE-}}$
 
 1) I was surprised by the Impact First sequence.
 
@@ -99,7 +99,7 @@ It's like having a team of digital employees working alongside you, not just a s
 
 <h2> Track D <h2>
 
-<sub> A Reality Canvas is a live 3D model of a building. It combines a 3D model with real time sensor data like heat and movement. This gives the AI a 4D foundation to understand the physical world, allowing it to simulate and test facade movements in a virtual environment before actually moving the physical parts. <sub>
+### A Reality Canvas is a live 3D model of a building. It combines a 3D model with real time sensor data like heat and movement. This gives the AI a 4D foundation to understand the physical world, allowing it to simulate and test facade movements in a virtual environment before actually moving the physical parts.
 
 
 
