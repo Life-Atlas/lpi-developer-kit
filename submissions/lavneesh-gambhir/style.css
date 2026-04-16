@@ -1,0 +1,42 @@
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 15px;
+    width: 400px;
+    text-align: center;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+  }
+  
+  button {
+    width: 48%;
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    background: #38bdf8;
+    cursor: pointer;
+  }
+  
+  .day-card {
+    background: #334155;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+  }

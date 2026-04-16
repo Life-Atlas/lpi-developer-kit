@@ -14,6 +14,8 @@
         .hero h1{font-size:2rem;font-weight:700;background:linear-gradient(135deg,#63b3ed,#b794f4,#63b3ed);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 3s ease infinite}
         @keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
         .hero .sub{color:#718096;font-size:0.85rem;margin-top:0.3rem}
+        .deadline-banner{background:linear-gradient(135deg,rgba(245,101,101,0.15),rgba(237,137,54,0.15));border:1px solid rgba(245,101,101,0.4);border-radius:8px;padding:0.6rem 1.2rem;margin:1rem auto 0;max-width:600px;text-align:center;font-size:0.9rem;color:#fc8181;font-weight:600}
+        .deadline-banner .countdown{font-family:'JetBrains Mono',monospace;font-size:1.1rem;color:#f6ad55;margin-top:0.3rem}
         .live-badge{display:inline-block;background:rgba(72,187,120,0.15);color:#68d391;border:1px solid rgba(72,187,120,0.3);border-radius:4px;padding:0.1rem 0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;margin-left:0.5rem;animation:pulse 2s ease infinite}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
 
@@ -74,6 +76,11 @@
     </div>
     <!-- 🥚 -->
     <span style="position:absolute;top:1rem;right:1.5rem;font-size:0.55rem;cursor:default;user-select:none;-webkit-text-fill-color:#131a2e;color:#131a2e" title="You found it. Add found_easter_egg: true to your contributor JSON.">found_easter_egg</span>
+</div>
+
+<div class="deadline-banner">
+    DEADLINE: Sunday April 20, 23:59 UTC
+    <div class="countdown" id="countdown"></div>
 </div>
 
 <div class="stats-row">
@@ -147,6 +154,22 @@
 <div class="footer">Auto-updated on every merge | <a href="https://github.com/Life-Atlas/lpi-developer-kit">Life-Atlas/lpi-developer-kit</a></div>
 
 <script>
+// Countdown timer
+function updateCountdown() {
+    const deadline = new Date('2026-04-20T23:59:00Z');
+    const now = new Date();
+    const diff = deadline - now;
+    const el = document.getElementById('countdown');
+    if (diff <= 0) { el.textContent = 'CLOSED'; return; }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    el.textContent = `${d}d ${h}h ${m}m ${s}s remaining`;
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
 let allData = [];
 let curLevel = 'all';
 let curTrack = 'all';
@@ -159,7 +182,7 @@ const stageClasses = {1:'lv1', 2:'lv2', 3:'lv3'};
 // Add "found_easter_egg": true to your contributor JSON for bonus points.
 // There are more hidden in the LPI server source code. Happy hunting.
 
-fetch('data.json')
+fetch('data.json?v=' + Date.now())
     .then(r => r.json())
     .then(data => {
         allData = (data.contributors || []).sort((a,b) => b.level - a.level || -(a.score||0) + (b.score||0) || a.name.localeCompare(b.name));
@@ -195,10 +218,11 @@ fetch('data.json')
         document.getElementById('badge').className = 'live-badge';
         render();
     })
-    .catch(() => {
+    .catch((err) => {
         document.getElementById('badge').textContent = 'NO DATA YET';
         document.getElementById('badge').style.color = '#718096';
         document.getElementById('tbody').innerHTML = '<tr><td colspan="7" class="empty">No contributors yet. Be the first — <a href="https://github.com/Life-Atlas/lpi-developer-kit">fork the repo</a> and submit Level 1.</td></tr>';
+        console.error('Leaderboard fetch failed:', err);
     });
 
 function setLevel(l, el) {
