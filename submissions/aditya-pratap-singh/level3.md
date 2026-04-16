@@ -1,4 +1,6 @@
-\# Level 3 Submission – Aditya Pratap Singh
+\## Submission Level
+
+Level: level-3
 
 
 
@@ -14,25 +16,27 @@ https://github.com/psinghaditya/digital-twin-advisor-agent-Adi
 
 
 
-\## Description
+\## What I Built
 
-This agent demonstrates a digital twin advisory workflow using the SMILE methodology.
-
-
-
-The agent:
-
-\- Accepts a digital twin question
-
-\- Uses LPI knowledge tools
-
-\- Returns explainable recommendations
+This agent accepts a digital twin question and queries LPI knowledge tools.
 
 
 
-Tools referenced:
+The agent gathers information from:
 
 \- query\_knowledge
 
 \- get\_case\_studies
+
+\- get\_insights
+
+
+
+It processes the results and returns an explainable recommendation using the SMILE methodology.
+
+
+
+\## Explainability
+
+The answer shows which LPI tools were used so the user can trace the reasoning.
 
