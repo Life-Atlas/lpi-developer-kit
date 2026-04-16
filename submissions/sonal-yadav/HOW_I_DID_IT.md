@@ -11,3 +11,8 @@ Initially, I faced issues with navigating folders and setting up the environment
 ## What I Learned
 
 I learned how to run an AI sandbox locally and how tools can be tested using a client. I also observed that the local LLM did not correctly recognize the SMILE methodology, which shows that smaller models may lack domain-specific knowledge without proper context or tool integration.
+
+## Screenshots
+
+![Test Client](test-client.png)
+![Ollama](ollama.png)
