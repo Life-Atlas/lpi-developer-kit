@@ -39,4 +39,4 @@ You can now build agents that connect to this server.
 
     3. I learned how to run local LLMs on my laptop using Ollama.
 
--------
+---
