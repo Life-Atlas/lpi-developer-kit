@@ -1,9 +1,9 @@
 {
-  "name": "Devika Hooda",
-  "github": "devikahooda775",
+  "name": "Amaan Khan",
+  "github": "amaankhan6828",
   "program": "B.Tech Computer Science Engineering",
-  "campus": "Amity University",
-  "skills": ["javascript", "nodejs", "react", "express"],
-  "interests": ["ai agents", "web development", "automation", "health tech"],
-  "my_twin": "I would track the types of bugs I face, time spent fixing them, and how I approach solutions, to identify patterns in my problem-solving and improve my debugging efficiency over time."
-}
+  "campus": "Amity University Noida",
+  "skills": ["c++", "python", "numpy", "machine learning"],
+  "interests": ["ai agents", "automation", "data science", "real world problem solving"],
+  "my_twin": "I would track my energy levels on a daily basis, focus time, and my productivity patterns throughout the day. I often feel a mismatch between when I plan to work and when I actually perform best, so I want to understand how sleep, routine, and distractions affect my efficiency and optimize my schedule accordingly."
+} 
