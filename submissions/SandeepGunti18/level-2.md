@@ -1,58 +1,60 @@
-# \# Level 2 Submission - Gunti Sandeep
+\# Level 2 Submission - Gunti Sandeep
 
-# 
 
-# \## Track
 
-# A: Agent Builders
+\## Track
 
-# 
 
-# \## Completed Tasks
 
-# 
+A: Agent Builders
 
-# Successfully ran the LPI sandbox locally using:
 
-# 
 
-# \- npm install
+\## Completed Tasks
 
-# \- npm run build
 
-# \- npm run test-client
 
-# 
+Successfully ran the LPI sandbox locally using:
 
-# \## Results
 
-# 
 
-# \- Passed: 8/8
+\- npm install
 
-# \- Failed: 0/8
+\- npm run build
 
-# 
+\- npm run test-client
 
-# All tools worked successfully.
 
-# 
 
-# \## What Surprised Me About SMILE
+\## Results
 
-# 
 
-# 1\. It focuses on real business impact before technology.
 
-# 2\. It combines AI, digital twins, and explainability in one framework.
+\- Passed: 8/8
 
-# 3\. It provides practical tools and case studies for implementation.
+\- Failed: 0/8
 
-# 
 
-# \## Status
 
-# 
+All tools worked successfully.
 
-# Level 2 setup completed successfully and ready for Level 3.
+
+
+\## What Surprised Me About SMILE
+
+
+
+1\. It focuses on real business impact before technology.
+
+2\. It combines AI, digital twins, and explainability in one framework.
+
+3\. It provides practical tools and case studies for implementation.
+
+
+
+\## Status
+
+
+
+Level 2 setup completed successfully and ready for Level 3.
 
