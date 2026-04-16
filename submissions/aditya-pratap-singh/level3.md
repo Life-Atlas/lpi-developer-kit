@@ -20,7 +20,25 @@ https://github.com/psinghaditya/digital-twin-advisor-agent-Adi
 
 This agent accepts a digital twin question and queries LPI knowledge tools.
 
+## Setup Instructions
 
+To run the Digital Twin Advisor Agent:
+
+1. Clone the repository
+
+git clone https://github.com/psinghaditya/digital-twin-advisor-agent-Adi
+
+2. Navigate into the project folder
+
+cd digital-twin-advisor-agent-Adi
+
+3. Install dependencies
+
+npm install
+
+4. Run the agent
+
+npm start
 ## LPI Tools Used
 
 The agent queries the LPI knowledge base using these tools:
