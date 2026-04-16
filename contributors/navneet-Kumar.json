@@ -1,0 +1,10 @@
+{
+  "name": "Navneet Kumar",
+  "github": "Na7neet",
+  "program": "B.Tech CSE",
+  "campus": "Amity Noida",
+  "skills": ["python", "pytorch", "react", "computer networks", "dbms", "machine learning"],
+  "interests": ["agents", "NLP", "movies", "sports"],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track my daily energy levels, sleep patterns, and study focus because I often feel low energy during the day and lose concentration while studying, and I want to understand how my habits like sleep, phone usage, and routine affect my productivity so I can optimise my performance."
+}
