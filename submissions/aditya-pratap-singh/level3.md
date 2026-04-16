@@ -41,3 +41,5 @@ It processes the results and returns an explainable recommendation using the SMI
 The answer shows which LPI tools were used so the user can trace the reasoning.
 
 Submission for Level-3 evaluation.
+### Update
+README improved with LPI tools, setup instructions and error handling.
