@@ -23,3 +23,9 @@ console.log("- Deploy concurrent engineering for optimization");
 }
 
 runAgent();
+// Evaluation trigger update
+/*
+Digital Twin Advisor Agent
+Uses LPI tools: query_knowledge, get_case_studies, get_insights
+Provides recommendations using the SMILE methodology
+*/
