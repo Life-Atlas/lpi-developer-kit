@@ -6,5 +6,5 @@
   "skills": ["pytorch", "react", "java", "python", "nlp", "machine learning"],
   "interests": ["AI agents", "chatbots", "NLP", "startups"],
   "track": "A: Agent Builders / B: Content & Research / C: Design & UX / D: 3D & Visualization / E: QA & Security",
-  "my_twin": "If I had a personal digital twin, it would track _____ because _____"
+  "my_twin": "I would track my daily energy levels, sleep patterns, and work output across different times of the day. I often feel highly productive late at night but experience a noticeable drop in focus during the afternoon. I want to understand how sleep quality, screen time, and meal timing affect my cognitive performance so I can optimize my schedule for deep work and learning."
 }
