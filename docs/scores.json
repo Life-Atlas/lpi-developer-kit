@@ -130,9 +130,17 @@
   "ananyaa-m": {
     "name": "Ananyaa M",
     "level": 2,
-    "score": 3,
+    "score": 5,
     "max": 5,
-    "pct": 60,
-    "updated": "2026-04-16T10:51:29.246Z"
+    "pct": 100,
+    "updated": "2026-04-16T11:52:38.783Z"
+  },
+  "bhavesh-pal": {
+    "name": "Bhavesh Pal",
+    "level": 3,
+    "score": 7,
+    "max": 11,
+    "pct": 64,
+    "updated": "2026-04-16T11:43:40.570Z"
   }
 }
