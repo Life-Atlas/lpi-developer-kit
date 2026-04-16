@@ -57,11 +57,11 @@
   },
   "aditya-pratap-singh": {
     "name": "Aditya Pratap Singh",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-15T18:07:23.154Z"
+    "level": 3,
+    "score": 6,
+    "max": 11,
+    "pct": 55,
+    "updated": "2026-04-16T07:39:21.082Z"
   },
   "track-a-agent-submission": {
     "name": "Track A Agent Submission",
@@ -81,11 +81,11 @@
   },
   "aditi-mehta": {
     "name": "Aditi Mehta",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-15T21:57:30.061Z"
+    "level": 3,
+    "score": 9,
+    "max": 11,
+    "pct": 82,
+    "updated": "2026-04-16T07:12:35.867Z"
   },
   "level:-level-2-varshit-pratap-singh-bhadauria-(final-fix)": {
     "name": "Level: level-2 Varshit Pratap Singh Bhadauria (FINAL FIX)",
@@ -118,5 +118,45 @@
     "max": 5,
     "pct": 100,
     "updated": "2026-04-16T03:56:23.094Z"
+  },
+  "pranu-chandra": {
+    "name": "Pranu Chandra",
+    "level": 2,
+    "score": 3,
+    "max": 5,
+    "pct": 60,
+    "updated": "2026-04-16T10:23:05.147Z"
+  },
+  "ananyaa-m": {
+    "name": "Ananyaa M",
+    "level": 3,
+    "score": 6,
+    "max": 11,
+    "pct": 55,
+    "updated": "2026-04-16T15:07:56.633Z"
+  },
+  "bhavesh-pal": {
+    "name": "Bhavesh Pal",
+    "level": 3,
+    "score": 8,
+    "max": 11,
+    "pct": 73,
+    "updated": "2026-04-16T14:20:34.209Z"
+  },
+  "sanskriti": {
+    "name": "Sanskriti",
+    "level": 2,
+    "score": 3,
+    "max": 5,
+    "pct": 60,
+    "updated": "2026-04-16T12:46:09.068Z"
+  },
+  "shubham-kumar": {
+    "name": "Shubham Kumar",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-16T14:20:24.313Z"
   }
 }
