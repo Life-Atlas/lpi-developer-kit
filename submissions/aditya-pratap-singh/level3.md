@@ -21,7 +21,14 @@ https://github.com/psinghaditya/digital-twin-advisor-agent-Adi
 This agent accepts a digital twin question and queries LPI knowledge tools.
 
 
+## LPI Tools Used
 
+The agent queries the LPI knowledge base using these tools:
+
+- query_knowledge
+- get_case_studies
+- get_insights
+- 
 The agent gathers information from:
 
 \- query\_knowledge
