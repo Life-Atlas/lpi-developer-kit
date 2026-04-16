@@ -2,6 +2,17 @@
 
 ---
 
+**Test Client Output: -**
+
+=== Results ===
+Passed: 8/8
+Failed: 0/8
+
+All tools working. Your LPI Sandbox is ready.
+You can now build agents that connect to this server.
+
+---
+
 **What I Did: -**
 
     1. After succesfully completing level-1 and pulling the latest changes, I ran the "npm install" and "npm run build" to ensure that the MCP server was ready.
