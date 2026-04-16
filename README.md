@@ -2,6 +2,8 @@
 
 **Build AI agents on the Life Programmable Interface.**
 
+> **DEADLINE: Sunday April 20, 23:59 UTC.** All Level 3 submissions must be in by then. No exceptions.
+
 The LPI is an open MCP server with 7 tools exposing the [SMILE methodology](https://lifeatlas.online) — a digital twin implementation framework. This repo is your sandbox AND the entry point for the **LifeAtlas Contributor Program**.
 
 ---

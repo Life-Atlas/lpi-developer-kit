@@ -48,7 +48,14 @@ jobs:
             if [ -z "$LEVEL" ]; then LEVEL="1"; fi
           fi
 
+          # Check if PR includes a contributors/ JSON file
+          HAS_CONTRIBUTOR="false"
+          if echo "$FILES" | grep -q "^contributors/.*\.json"; then
+            HAS_CONTRIBUTOR="true"
+          fi
+
           echo "level=$LEVEL" >> $GITHUB_OUTPUT
+          echo "has_contributor=$HAS_CONTRIBUTOR" >> $GITHUB_OUTPUT
 
       - name: Validate Level 1 — Contributor JSON
         id: validate_l1
@@ -109,6 +116,56 @@ jobs:
                 labels: labels,
               });
             }
+
+      - name: Validate contributor JSON (for bundled PRs)
+        id: validate_contributor
+        if: steps.level.outputs.level != '1' && steps.level.outputs.has_contributor == 'true'
+        run: |
+          VALID=true
+          for f in $(git diff --name-only origin/master...${{ github.event.pull_request.head.sha }} | grep "^contributors/" | grep ".json$" | grep -v TEMPLATE); do
+            echo "Validating $f..."
+            if ! python3 -c "import json; json.load(open('$f'))"; then
+              VALID=false
+              continue
+            fi
+            python3 -c "
+          import json, sys
+          data = json.load(open('$f'))
+          required = ['name', 'github', 'program', 'campus', 'skills', 'interests', 'my_twin']
+          missing = [k for k in required if k not in data]
+          if missing:
+              print(f'::error::$f missing fields: {missing}')
+              sys.exit(1)
+          if not isinstance(data['skills'], list) or not isinstance(data['interests'], list):
+              sys.exit(1)
+          if len(data['my_twin'].strip()) < 20:
+              sys.exit(1)
+          if data['name'] == 'Your Full Name' or data['github'] == 'your-github-username':
+              sys.exit(1)
+          print(f'VALID: {data[\"name\"]}')
+          " || VALID=false
+          done
+          echo "valid=$VALID" >> $GITHUB_OUTPUT
+
+      - name: Auto-merge bundled PRs with valid contributor JSON
+        if: steps.level.outputs.level != '1' && steps.level.outputs.has_contributor == 'true' && steps.validate_contributor.outputs.valid == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const level = '${{ steps.level.outputs.level }}';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `✅ **Registration + Level ${level} received!** You're now on the board.\n\n⚠️ **Tip for next time:** Submit each level as a separate PR — it makes tracking easier and ensures you get credit immediately.\n\nThe leaderboard is live: https://life-atlas.github.io/lpi-developer-kit/\n\nLevel 3 is what guarantees your place on the team.`
+            });
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              merge_method: 'squash',
+              commit_title: `contributor: ${context.payload.pull_request.title}`,
+            });
 
       - name: Auto-merge valid Level 1 PRs
         if: steps.level.outputs.level == '1' && steps.validate_l1.outputs.valid == 'true'
