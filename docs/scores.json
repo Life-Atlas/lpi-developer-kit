@@ -129,19 +129,19 @@
   },
   "ananyaa-m": {
     "name": "Ananyaa M",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-16T11:52:38.783Z"
+    "level": 3,
+    "score": 6,
+    "max": 11,
+    "pct": 55,
+    "updated": "2026-04-16T15:07:56.633Z"
   },
   "bhavesh-pal": {
     "name": "Bhavesh Pal",
     "level": 3,
-    "score": 7,
+    "score": 8,
     "max": 11,
-    "pct": 64,
-    "updated": "2026-04-16T11:43:40.570Z"
+    "pct": 73,
+    "updated": "2026-04-16T14:20:34.209Z"
   },
   "sanskriti": {
     "name": "Sanskriti",
@@ -157,6 +157,6 @@
     "score": 5,
     "max": 5,
     "pct": 100,
-    "updated": "2026-04-16T14:19:00.896Z"
+    "updated": "2026-04-16T14:20:24.313Z"
   }
 }
