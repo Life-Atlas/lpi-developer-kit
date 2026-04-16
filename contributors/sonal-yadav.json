@@ -5,5 +5,6 @@
   "campus": "Amity University Noida",
   "skills": ["html", "css", "javascript", "react", "spring boot", "java", "cpp", "data structures & algorithms"],
   "interests": ["AI/ML", "agents", "web development", "problem solving"],
+  "track": "A: Agent Builders",
   "my_twin": "If I had a personal digital twin, it would track my coding practice, learning patterns, and problem solving approach because it could identify my weak areas, optimize my preparation strategy, and help me become placement-ready efficiently."
 }
