@@ -1,0 +1,10 @@
+{
+  "name": "bhavesh",
+  "github": "bhavesh4323",
+  "program": "B.Tech IT",
+  "campus": "Amity University Noida ",
+  "skills": ["c++", "python", "numpy", "machine learning","mongodb"],
+  "interests": ["ai agents", "blockchain", "cryptocurrencies", "real world problem solving"],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track my learning patterns and project progress because I want to continuously improve and build impactful AI solutions."
+}
