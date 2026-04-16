@@ -30,7 +30,7 @@
     },
     {
       "name": "Abhishek Verma",
-      "github": "abhishekverma2323",
+      "github": "https://github.com/abhishekverma2323",
       "skills": [
         "python",
         "machine learning",
@@ -849,10 +849,7 @@
         "Data Analysis & Insights"
       ],
       "track": "A: Agent Builders",
-      "level": 3,
-      "score": 5,
-      "score_max": 5,
-      "score_pct": 100
+      "level": 1
     },
     {
       "name": "LAAVANYA MITTAL",
@@ -1111,78 +1108,6 @@
         "prompt engineering"
       ],
       "track": "A: Agent Builders, B: Content & Research",
-      "level": 1
-    },
-    {
-      "name": "Naman Anand",
-      "github": "Naman-Playz",
-      "skills": [
-        "Python",
-        "Flask",
-        "Cybersecurity",
-        "Network Scanning",
-        "C++"
-      ],
-      "interests": [
-        "Intrusion Detection Systems",
-        "AI/ML",
-        "Digital Twins",
-        "Ethical Hacking"
-      ],
-      "track": "",
-      "level": 1
-    },
-    {
-      "name": "Vansh Singhal",
-      "github": "vansh09-singhal",
-      "skills": [
-        "Python",
-        "C++",
-        "SQL",
-        "LangChain",
-        "LLMs",
-        "Machine Learning",
-        "NLP",
-        "Streamlit",
-        "Data Cleaning",
-        "Data Preprocessing"
-      ],
-      "interests": [
-        "agent workflows",
-        "retrieval-augmented generation",
-        "data analytics",
-        "system scalability",
-        "evaluation and feedback loops",
-        "prompt engineering"
-      ],
-      "track": "A: Agent Builders",
-      "level": 1
-    },
-    {
-      "name": "Varshit Pratap Singh Bhadauria",
-      "github": "temporalzone",
-      "skills": [
-        "python",
-        "java",
-        "javascript",
-        "react",
-        "django",
-        "flask",
-        "rest-apis",
-        "sqlite",
-        "mysql",
-        "git",
-        "dsa",
-        "jwt-auth"
-      ],
-      "interests": [
-        "agents",
-        "AI",
-        "api-integration",
-        "backend",
-        "automation"
-      ],
-      "track": "A: Agent Builders",
       "level": 1
     },
     {
