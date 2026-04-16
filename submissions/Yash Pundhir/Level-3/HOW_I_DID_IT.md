@@ -1,3 +1,5 @@
+**HOW I DID IT :-**
+
 At level 3, I build an AI agent using Python to communicate with the LPI (Learning Pathways Interface) Sandbox and provide answers through the use of a local SLM (Small Language Model) that is a locally-based Language Learning Model.
 
 My first step was to start the LPI server using command-line commands (e.g., cd Notebooks). From there, I created this server process using the subprocess module so that the LPI server could talk to my agent via standard input/output. I also wrote a JSON-RPC function so that I could call the various LPI tools and get their results.
