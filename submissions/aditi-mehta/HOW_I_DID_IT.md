@@ -13,10 +13,29 @@ In normal software projects, my brain usually goes straight to setting up the ba
 # How I Did It - Level 3
 
 ### What I did, step by step
-I decided to keep it simple and write a plain Python script instead of using a heavy agent framework like LangChain. I set up a subprocess to talk to the Node server, handled the stdin/stdout pipes to send the JSON-RPC requests, and used the requests library to send the extracted context over to Ollama. I also added some basic regex to clean the user input and included an `agent.json` file for the A2A requirement.
+
+1. I decided to skip LangChain and all those big libraries and just wrote this in raw Python. I wanted to see how the messages actually move between the script and the MCP server without a framework hiding everything.
+
+2. Connecting to the server: I used subprocess to launch the Node server and kept the connection open. It basically lets my Python script talk directly to the Node backend.
+
+3. Cleaning the input: I added a regex filter at the start. It just sanitizes the user's input from unwanted characters so no one can try to break the logic or run a terminal exploit.
+
+4. Getting the data: My script sends a request to the smile_overview and get_insights tools, grabs the raw data they send back, and stores it as a string.
+
+5. The AI part: I took that string and pushed it into a local Ollama model (qwen2.5:1.5b). I told the model it has to be a "citation engine," meaning it’s not allowed to give an answer without saying exactly which tool the info came from.
+
+6. Agent Card: I created the agent.json file so the agent is officially "discoverable" according to the A2A rules.
 
 ### What problems I hit and how I solved them
-The biggest headache was getting the Node server to actually respond to my Python script. My code kept hanging, and I eventually figured out that the node process was waiting for a newline character (`\n`) at the end of the JSON payload to know the request was finished. Once I appended that to my `json.dumps()` call, it worked perfectly. I also had to tweak my LLM prompt a few times because the model kept blending the information without citing its sources, so I had to make the citation rule very strict.
+
+I spent way too much time trying to figure out why the script kept hanging. It would send a request and then just freeze.
+
+It turns out the Node server won't process a message unless it sees a newline character (\n) at the very end to signal the end of the JSON block. Once I added that and forced the buffer to flush, it worked instantly. I also had to get really strict with the LLM prompt because it kept trying to summarize everything without citing the tools, which would have failed the "Explainable AI" requirement.
 
 ### What I learned that I didn't know before
-I learned a lot about how MCP actually works under the hood. I am used to just hitting standard REST APIs for everything, so passing JSON-RPC data over standard input and output streams locally was a new concept for me. It made me realize how efficiently you can string these tools together entirely on your own machine without needing to deal with web endpoints or network latency.                 
+
+I’m used to using web APIs (REST) where everything happens over the internet, so I never really had to think about how two programs talk to each other on the same machine. This project taught me about stdio pipes, which is basically a direct line between my Python script and the Node server.
+
+I learned the hard way that programs are very literal—if you don't send a "newline" character (\n) at the end of a message, the other program thinks you're still typing and just waits forever. Solving that "hanging" bug taught me a lot about how to manage data streams and how to "flush" a message to make sure it actually moves from one program to the other.
+
+It made me realize that for local tools, you don't need a website or a server. Piping data directly is way faster and more secure because the info never even leaves your computer's memory.
