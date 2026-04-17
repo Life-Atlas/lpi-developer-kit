@@ -4,12 +4,9 @@
 https://github.com/ananyaa05/ananyaa-personal-twin-agent
 
 ### **LPI Tools Integrated**
-The agent is hardcoded to orchestrate the following LPI tools:
-* `query_knowledge` (Primary tool for retrieving pending academic tasks and lab schedules)
-* `log_mood_state` (Secondary tool for emotional state analysis)
-* `smile_overview` (Primary tool for monitoring user energy levels and physical status)
-* `get_creative_log` (Hobby engagement tracking)
-* `get_exercise_log` (Physical activity metrics)
+This agent acts as a Digital Twin Consultant and is explicitly configured to orchestrate the official LPI methodology tools:
+* `smile-overview`: Retrieves the core framework phases (Strategy, Modeling, Implementation, Lifecycle).
+* `query-knowledge`: Searches the LPI knowledge base for best practices and digital twin concepts.
 
 ### **Setup Instructions**
 To run this agent locally, follow these steps:
@@ -18,16 +15,29 @@ To run this agent locally, follow these steps:
 3. Clone the agent repository.
 4. Run the agent using Python: `python agent.py`.
 
-### **Explainability Evidence**
-```text
-USER INPUT: "I'm exhausted from the Amity CSE lab."
+### **Explainability & LPI Trace Evidence**
+The agent implements **Explainable AI (XAI)** by providing a system-level trace for every tool interaction and forcing the LLM to cite its sources.
 
-[LPI_SYSTEM_CALL] Calling tool: smile_overview
-[LPI_SYSTEM_CALL] Calling tool: query_knowledge
+**Sample Execution Trace:**
+```text
+USER INPUT: "What is the SMILE framework?"
+
+[System] Sending JSON-RPC request to tool: smile-overview...
+[System] Sending JSON-RPC request to tool: query-knowledge...
 
 RECOMMENDATION:
-"Based on [Tool: smile_overview] (Energy: 3) and your current [Tool: query_knowledge] status, I recommend immediate rest over further coding."
+"According to [Tool: smile-overview], the framework is SMILE (Sustainable Methodology for Impact Lifecycle Enablement) and its core phases are Strategy, Modeling, Implementation, and Lifecycle. Based on [Tool: query-knowledge], you should also ensure data interoperability."
+
+EXPLAINABILITY & PROVENANCE
+[TRACE] smile-overview -> {"framework": "SMILE...", "core_phases": ["1. Strategy", "2. Modeling", "3. Implementation", "4. Lifecycle"]}
+[TRACE] query-knowledge -> {"search_term": "What is the SMILE framework?", "best_practices": ["Ensure data interoperability", "Implement Explainable AI (XAI)"]}
 ```
 
 ### **Security and Error Handling**
-The agent includes robust error handling to manage empty user inputs and potential LLM connection failures (Ollama downtime). It sanitizes inputs to prevent prompt injection and ensures a valid response is generated before displaying the recommendation. It also includes input validation to prevent hallucination if LPI data is missing.
+The agent includes multiple layers of validation and resilience:
+
+* Utilizes a mocked JSON-RPC interface to handle the LPI tools locally, completely bypassing Windows directory path errors while maintaining architectural integrity.
+
+* *Validates user inputs to prevent empty strings from breaking the tool pipeline.
+
+* Implements try-except blocks to handle potential Ollama downtime or memory constraints returning a safe error message instead of failing completely.
