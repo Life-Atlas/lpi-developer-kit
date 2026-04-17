@@ -10,7 +10,7 @@ LPI-Powered Research Agent
 
 \## GitHub Repository
 
-https://github.com/Na7neet/lpi-agent
+https://github.com/Na7neet/level3-agent
 
 
 
