@@ -1,0 +1,13 @@
+{
+  "name": "Devika Hooda",
+  "github": "devikahooda775",
+  "program": "B.Tech CSE",
+  "campus": "Amity Noida",
+  "skills": ["html", "css", "javascript", "react", "nodejs", "express", "python", "flask", "mongodb", "apis", "ai", "nlp"],
+  "interests": ["ai agents", "web development", "health tech"],
+  "program": "B.Tech Computer Science & Business Systems",
+  "campus": "Amity University",
+  "skills": ["html", "css", "javascript", "react", "nodejs", "express", "python", "flask", "mongodb", "rest apis", "api integration", "ai-based recommendation systems", "basic nlp", "sentiment analysis"],
+  "interests": ["AI agents", "web development", "health tech"],
+  "my_twin": "I would track the types of bugs I face, time spent fixing them, and how I approach solutions, to identify patterns in my problem-solving and improve my debugging efficiency over time."
+}

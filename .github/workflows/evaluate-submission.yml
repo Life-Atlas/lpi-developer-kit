@@ -179,62 +179,85 @@ jobs:
         run: |
           FILE="${{ steps.find.outputs.file }}"
           SCORE=0
-          MAX=8
+          MAX=6
           FEEDBACK=""
+          QUESTIONS=""
           CONTENT=$(cat "$FILE")
 
-          # 1: Has a repo link
+          # 1: Has a repo link (hard requirement)
           if [ -n "${{ steps.find.outputs.repo_url }}" ]; then
             SCORE=$((SCORE + 1))
             FEEDBACK="$FEEDBACK\n✅ Agent repo linked: ${{ steps.find.outputs.repo_url }}"
           else
             FEEDBACK="$FEEDBACK\n❌ No GitHub repo URL found in submission"
+            QUESTIONS="$QUESTIONS\n\n❓ Where is the code? A Level 3 submission without a repo is just a document."
           fi
 
-          # 2: Describes what agent does
+          # 2: Word count — but quality matters more
           WORD_COUNT=$(echo "$CONTENT" | wc -w)
-          if [ "$WORD_COUNT" -ge 30 ]; then
+          if [ "$WORD_COUNT" -ge 100 ]; then
             SCORE=$((SCORE + 1))
-            FEEDBACK="$FEEDBACK\n✅ Agent description present ($WORD_COUNT words)"
+            FEEDBACK="$FEEDBACK\n✅ Detailed write-up ($WORD_COUNT words)"
+          elif [ "$WORD_COUNT" -ge 30 ]; then
+            FEEDBACK="$FEEDBACK\n⚠️ Write-up is thin ($WORD_COUNT words)"
+            QUESTIONS="$QUESTIONS\n\n❓ If someone else submitted this exact write-up, what score would you give it? What's missing?"
           else
-            FEEDBACK="$FEEDBACK\n❌ Description too short ($WORD_COUNT words — tell us what your agent does)"
+            FEEDBACK="$FEEDBACK\n❌ Write-up too short ($WORD_COUNT words)"
+            QUESTIONS="$QUESTIONS\n\n❓ Can you explain your work to a teammate in 30 words? That's what this section is for."
           fi
 
-          # 3: Mentions LPI tools
-          if echo "$CONTENT" | grep -qi "smile_overview\|query_knowledge\|get_case_studies\|get_insights\|list_topics\|smile_phase_detail\|get_methodology_step"; then
+          # 3: LPI tools — mentioning is NOT enough, check for actual usage evidence
+          TOOL_MENTIONS=$(echo "$CONTENT" | grep -oic "smile_overview\|query_knowledge\|get_case_studies\|get_insights\|list_topics\|smile_phase_detail\|get_methodology_step" || true)
+          HAS_ACTUAL_OUTPUT=$(echo "$CONTENT" | grep -ci "result\|response\|output\|returned\|json\|data.*from\|retrieved" || true)
+          if [ "$TOOL_MENTIONS" -ge 2 ] && [ "$HAS_ACTUAL_OUTPUT" -ge 2 ]; then
             SCORE=$((SCORE + 1))
-            FEEDBACK="$FEEDBACK\n✅ LPI tools referenced"
+            FEEDBACK="$FEEDBACK\n✅ LPI tools referenced with evidence of actual output"
+          elif [ "$TOOL_MENTIONS" -ge 1 ]; then
+            FEEDBACK="$FEEDBACK\n⚠️ LPI tools mentioned but no evidence they were actually called"
+            QUESTIONS="$QUESTIONS\n\n❓ You mention the tools — but did your code actually call them? Paste a real response from the LPI. If you can't, that's a red flag."
           else
-            FEEDBACK="$FEEDBACK\n❌ No LPI tool names mentioned — which tools does your agent call?"
+            FEEDBACK="$FEEDBACK\n❌ No LPI tools referenced"
+            QUESTIONS="$QUESTIONS\n\n❓ The challenge requires querying at least 2 LPI tools. Which ones did you use, and what did they return?"
           fi
 
-          # 4: Setup instructions present
-          if echo "$CONTENT" | grep -qi "install\|setup\|run\|pip\|npm\|clone\|python"; then
+          # 4: Explainability — does the agent explain WHY, not just WHAT
+          if echo "$CONTENT" | grep -qi "because\|reason\|explains\|traces\|cited.*source\|from tool\|the agent chose\|decision"; then
             SCORE=$((SCORE + 1))
-            FEEDBACK="$FEEDBACK\n✅ Setup instructions present"
+            FEEDBACK="$FEEDBACK\n✅ Explainability present — the agent shows its reasoning"
           else
-            FEEDBACK="$FEEDBACK\n❌ No setup instructions — how do we run your agent?"
+            FEEDBACK="$FEEDBACK\n⚠️ No evidence of explainability"
+            QUESTIONS="$QUESTIONS\n\n❓ If a user asks your agent 'why did you recommend this?' — what does it say? Show us. Explainability isn't a feature, it's a requirement."
           fi
 
-          # 5: Sample interaction / explainability
-          if echo "$CONTENT" | grep -qi "source\|tool.*used\|cited\|provenance\|because\|from tool\|based on"; then
-            SCORE=$((SCORE + 1))
-            FEEDBACK="$FEEDBACK\n✅ Explainability evidence present"
+          # 5: HOW_I_DID_IT exists and is genuine
+          HOWFILE=""
+          SUBDIR=$(dirname "$FILE")
+          if [ -f "$SUBDIR/HOW_I_DID_IT.md" ]; then
+            HOW_WORDS=$(cat "$SUBDIR/HOW_I_DID_IT.md" | wc -w)
+            if [ "$HOW_WORDS" -ge 50 ]; then
+              SCORE=$((SCORE + 1))
+              FEEDBACK="$FEEDBACK\n✅ HOW_I_DID_IT.md present ($HOW_WORDS words)"
+            else
+              FEEDBACK="$FEEDBACK\n⚠️ HOW_I_DID_IT.md is too brief ($HOW_WORDS words)"
+              QUESTIONS="$QUESTIONS\n\n❓ What was the hardest part? What did you try that didn't work? That's what we want to read — the struggle, not the summary."
+            fi
           else
-            FEEDBACK="$FEEDBACK\n⚠️ No evidence of explainability — show a sample interaction with source citations"
+            FEEDBACK="$FEEDBACK\n❌ Missing HOW_I_DID_IT.md"
+            QUESTIONS="$QUESTIONS\n\n❓ This file is required. We learn more about you from how you solved problems than from what you built."
           fi
 
-          # 6: Security awareness
-          if echo "$CONTENT" | grep -qi "valid\|sanitiz\|injection\|error.handl\|security\|timeout\|limit"; then
+          # 6: Original thinking — not just following instructions
+          if echo "$CONTENT" | grep -qi "my approach\|I decided\|I tried.*but\|alternative\|trade.off\|chose.*because\|different from"; then
             SCORE=$((SCORE + 1))
-            FEEDBACK="$FEEDBACK\n✅ Security awareness detected (bonus!)"
+            FEEDBACK="$FEEDBACK\n✅ Shows independent thinking and decision-making"
           else
-            FEEDBACK="$FEEDBACK\n💡 Tip: mention how your agent handles bad input or errors for bonus points"
+            QUESTIONS="$QUESTIONS\n\n❓ What choices did you make that weren't in the instructions? What would you do differently next time? We're looking for people who think, not people who follow."
           fi
 
           echo "score=$SCORE" >> $GITHUB_OUTPUT
           echo "max=$MAX" >> $GITHUB_OUTPUT
           echo -e "$FEEDBACK" > /tmp/feedback.txt
+          echo -e "$QUESTIONS" > /tmp/questions.txt
 
       - name: Clone and test agent repo
         id: clone_test
@@ -243,11 +266,12 @@ jobs:
         run: |
           CLONE_FEEDBACK=""
           CLONE_SCORE=0
+          CLONE_QUESTIONS=""
 
           # Try to clone
           git clone ${{ steps.find.outputs.repo_url }} /tmp/agent-repo 2>&1 || {
-            echo "clone_feedback=❌ Could not clone repo" >> $GITHUB_OUTPUT
             echo "clone_score=0" >> $GITHUB_OUTPUT
+            echo -e "❌ Could not clone repo\n\n❓ Is the repo public? We can't evaluate what we can't access." > /tmp/clone_feedback.txt
             exit 0
           }
           CLONE_SCORE=$((CLONE_SCORE + 1))
@@ -261,39 +285,52 @@ jobs:
             CLONE_FEEDBACK="$CLONE_FEEDBACK\n✅ README present"
           else
             CLONE_FEEDBACK="$CLONE_FEEDBACK\n❌ No README found"
+            CLONE_QUESTIONS="$CLONE_QUESTIONS\n\n❓ No README? If a teammate cloned this right now, could they figure out how to run it in 2 minutes? That's the bar."
           fi
 
           # Check for agent.json (A2A card)
           if [ -f agent.json ] || [ -f .well-known/agent.json ]; then
-            CLONE_FEEDBACK="$CLONE_FEEDBACK\n⭐ A2A Agent Card found (bonus!)"
-          fi
-
-          # Check for Python or JS entry point
-          if ls *.py agent/*.py src/*.py 2>/dev/null | head -1 > /dev/null; then
-            CLONE_FEEDBACK="$CLONE_FEEDBACK\n✅ Python source files found"
-          elif ls *.js *.ts src/*.ts 2>/dev/null | head -1 > /dev/null; then
-            CLONE_FEEDBACK="$CLONE_FEEDBACK\n✅ JavaScript/TypeScript source files found"
-          else
-            CLONE_FEEDBACK="$CLONE_FEEDBACK\n⚠️ No obvious entry point found"
-          fi
-
-          # Check if code references LPI tools
-          if grep -rq "smile_overview\|query_knowledge\|get_case_studies\|tools/call" . --include="*.py" --include="*.js" --include="*.ts" 2>/dev/null; then
             CLONE_SCORE=$((CLONE_SCORE + 1))
-            CLONE_FEEDBACK="$CLONE_FEEDBACK\n✅ Code references LPI tools"
-          else
-            CLONE_FEEDBACK="$CLONE_FEEDBACK\n❌ Code does not appear to call any LPI tools"
+            CLONE_FEEDBACK="$CLONE_FEEDBACK\n⭐ A2A Agent Card found — you understand agent discovery (bonus point)"
           fi
 
-          # Check for error handling / security
-          if grep -rq "try\|except\|catch\|timeout\|sanitiz\|valid" . --include="*.py" --include="*.js" --include="*.ts" 2>/dev/null; then
-            CLONE_FEEDBACK="$CLONE_FEEDBACK\n✅ Error handling / input validation detected"
+          # CRITICAL: Does the code actually call LPI tools via MCP/subprocess/HTTP?
+          REAL_CALLS=$(grep -rc "tools/call\|CallToolRequest\|subprocess.*index.js\|stdio.*transport\|StdioClientTransport\|mcp\|json_rpc\|jsonrpc" . --include="*.py" --include="*.js" --include="*.ts" 2>/dev/null | awk -F: '{s+=$2}END{print s+0}')
+          PRINT_ONLY=$(grep -rc "print.*smile_overview\|print.*get_insights\|print.*Tools Used" . --include="*.py" --include="*.js" --include="*.ts" 2>/dev/null | awk -F: '{s+=$2}END{print s+0}')
+
+          if [ "$REAL_CALLS" -ge 1 ]; then
+            CLONE_SCORE=$((CLONE_SCORE + 2))
+            CLONE_FEEDBACK="$CLONE_FEEDBACK\n✅ Code makes real MCP/tool calls ($REAL_CALLS references found)"
+          elif [ "$PRINT_ONLY" -ge 1 ]; then
+            CLONE_FEEDBACK="$CLONE_FEEDBACK\n🔴 Code mentions tool names in print statements but does NOT actually call them"
+            CLONE_QUESTIONS="$CLONE_QUESTIONS\n\n❓ **Honest question:** does your agent actually connect to the LPI server and call tools? Or does it print hardcoded text that mentions tool names? There's a big difference. We checked the code — be honest with yourself here."
           else
-            CLONE_FEEDBACK="$CLONE_FEEDBACK\n⚠️ No error handling detected — what happens with bad input?"
+            CLONE_FEEDBACK="$CLONE_FEEDBACK\n❌ No evidence of LPI tool calls in code"
+            CLONE_QUESTIONS="$CLONE_QUESTIONS\n\n❓ Your code doesn't appear to call any LPI tools. The requirement is clear: 'Query at least 2 LPI tools.' How does your agent get data from the LPI?"
+          fi
+
+          # Check for error handling
+          ERROR_HANDLING=$(grep -rc "try:\|except\|catch\|\.catch\|if.*error\|raise\|throw" . --include="*.py" --include="*.js" --include="*.ts" 2>/dev/null | awk -F: '{s+=$2}END{print s+0}')
+          if [ "$ERROR_HANDLING" -ge 3 ]; then
+            CLONE_SCORE=$((CLONE_SCORE + 1))
+            CLONE_FEEDBACK="$CLONE_FEEDBACK\n✅ Error handling present ($ERROR_HANDLING instances)"
+          elif [ "$ERROR_HANDLING" -ge 1 ]; then
+            CLONE_FEEDBACK="$CLONE_FEEDBACK\n⚠️ Minimal error handling ($ERROR_HANDLING instances)"
+            CLONE_QUESTIONS="$CLONE_QUESTIONS\n\n❓ What happens if the LPI server is down? What if the user sends empty input? What if the LLM returns garbage? Try breaking your own agent and see what happens."
+          else
+            CLONE_FEEDBACK="$CLONE_FEEDBACK\n❌ No error handling detected"
+            CLONE_QUESTIONS="$CLONE_QUESTIONS\n\n❓ Zero error handling. In a real system this crashes on first unexpected input. What would you tell a junior dev who submitted code like this?"
+          fi
+
+          # Code complexity — is this real engineering or a toy?
+          TOTAL_LINES=$(find . -name "*.py" -o -name "*.js" -o -name "*.ts" | xargs cat 2>/dev/null | wc -l)
+          if [ "$TOTAL_LINES" -lt 20 ]; then
+            CLONE_QUESTIONS="$CLONE_QUESTIONS\n\n❓ Total code: $TOTAL_LINES lines. If someone else submitted this, what would your honest assessment be? Is this a working agent or a script that prints text?"
           fi
 
           echo "clone_score=$CLONE_SCORE" >> $GITHUB_OUTPUT
           echo -e "$CLONE_FEEDBACK" > /tmp/clone_feedback.txt
+          echo -e "$CLONE_QUESTIONS" >> /tmp/clone_feedback.txt
 
       - name: Post Level 3 evaluation
         uses: actions/github-script@v7
@@ -301,12 +338,13 @@ jobs:
           script: |
             const fs = require('fs');
             const docScore = parseInt('${{ steps.eval_doc.outputs.score }}') || 0;
-            const docMax = parseInt('${{ steps.eval_doc.outputs.max }}') || 8;
+            const docMax = parseInt('${{ steps.eval_doc.outputs.max }}') || 6;
             const cloneScore = parseInt('${{ steps.clone_test.outputs.clone_score }}') || 0;
             const totalScore = docScore + cloneScore;
-            const totalMax = docMax + 3;
+            const totalMax = docMax + 7;
 
             const docFeedback = fs.readFileSync('/tmp/feedback.txt', 'utf8');
+            const questions = fs.readFileSync('/tmp/questions.txt', 'utf8').trim();
             let cloneFeedback = '';
             try {
               cloneFeedback = fs.readFileSync('/tmp/clone_feedback.txt', 'utf8');
@@ -318,16 +356,18 @@ jobs:
             const stars = '⭐'.repeat(Math.min(totalScore, 5)) + '☆'.repeat(Math.max(0, 5 - totalScore));
 
             let verdict = '';
-            if (pct >= 80) verdict = '**Outstanding!** This is a strong Level 3 submission. You are ready to be an Agent Builder.';
-            else if (pct >= 60) verdict = '**Good work!** Solid foundation. Address the items marked ❌ or ⚠️ to strengthen your submission.';
-            else if (pct >= 40) verdict = '**Getting there.** The core is present but needs more work on explainability and/or LPI integration.';
-            else verdict = '**Needs significant work.** Make sure your agent actually calls LPI tools and explains its reasoning.';
+            if (pct >= 80) verdict = '**Strong submission.** You clearly built something real. Nice work.';
+            else if (pct >= 60) verdict = '**Solid foundation.** The core is there, but the questions below matter — answer them honestly and push an update.';
+            else if (pct >= 40) verdict = '**Needs more work.** Read the questions below carefully. We\'re not trying to catch you out — we genuinely want to see you succeed. But we need to see real work, not surface-level output.';
+            else verdict = '**Be honest with yourself.** Does this submission reflect your best effort? If someone else submitted this, what score would you give it? Rework it and push again — the deadline is Sunday.';
+
+            const questionsSection = questions ? `\n\n### Questions for you\nPlease respond to these in a comment on this PR. We read every answer.\n${questions}` : '';
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `## 🤖 Automated Level 3 Evaluation\n\n**Score: ${totalScore}/${totalMax}** ${stars} (${pct}%)\n\n### Submission Document\n${docFeedback}\n\n### Repo Analysis\n${cloneFeedback}\n\n### Verdict\n${verdict}\n\n---\n*This evaluation was performed automatically. Scores feed the [contributor leaderboard](https://life-atlas.github.io/lpi-developer-kit/).*`
+              body: `## 🤖 Level 3 Evaluation\n\n**Score: ${totalScore}/${totalMax}** ${stars} (${pct}%)\n\n### Submission Document\n${docFeedback}\n\n### Repo Analysis\n${cloneFeedback}${questionsSection}\n\n### Verdict\n${verdict}\n\n---\n*This is an automated evaluation. A human reviewer will follow up on all Level 3 submissions. Scores feed the [leaderboard](https://life-atlas.github.io/lpi-developer-kit/).*\n\n*Tip: The best way to improve your score is to answer the questions above honestly and push an updated submission.*`
             });
 
       - name: Save score
@@ -338,7 +378,7 @@ jobs:
             const docScore = parseInt('${{ steps.eval_doc.outputs.score }}') || 0;
             const cloneScore = parseInt('${{ steps.clone_test.outputs.clone_score }}') || 0;
             const totalScore = docScore + cloneScore;
-            const totalMax = 11;
+            const totalMax = 13;
             const name = context.payload.pull_request.title.replace(/^level-3:\s*/i, '').trim();
 
             let scores = {};
