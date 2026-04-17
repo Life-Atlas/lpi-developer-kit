@@ -1,87 +1,54 @@
-import { execSync } from "child_process";
+﻿import { execSync } from "child_process";
 
-// Decide which tools to use based on query
-function chooseTools(query) {
+function chooseTool(query) {
   query = query.toLowerCase();
-
   let tools = [];
 
   if (query.includes("how") || query.includes("implement")) {
-    tools.push("get_insights", "get_methodology_step");
+    tools.push("get_methodology_step", "get_insights");
   }
 
   if (query.includes("example") || query.includes("case")) {
     tools.push("get_case_studies");
   }
 
-  if (query.includes("overview")) {
+  if (query.includes("what") || query.includes("explain") || query.includes("overview")) {
     tools.push("smile_overview");
   }
 
-  if (tools.length === 0) {
-    tools.push("query_knowledge");
+  if (!tools.includes("get_insights")) {
+    tools.push("get_insights");
   }
 
   return [...new Set(tools)];
 }
 
-// Simulate tool execution
 function runTool(tool) {
   try {
-    execSync(`node ../dist/test-client.js`, {
-      encoding: "utf-8"
+    const result = execSync(
+ode ../dist/test-client.js , {
+      encoding: "utf-8",
     });
-
-    return `[${tool}] used to contribute to the final answer`;
+    return result;
   } catch (err) {
-    return `[${tool}] failed to execute`;
+    return Error running ;
   }
 }
 
-// Format final response
-function buildResponse(query, tools) {
-  let response = `Query: ${query}\n\n`;
+function agent(query) {
+  const tools = chooseTool(query);
+  let outputs = {};
 
-  response += `Tools Selected:\n`;
-  tools.forEach(t => {
-    response += `- ${t}\n`;
+  tools.forEach(tool => {
+    outputs[tool] = runTool(tool);
   });
 
-  response += `\nFinal Response:\n`;
-
-  if (tools.includes("get_insights")) {
-    response += "- Provided implementation guidance\n";
-  }
-
-  if (tools.includes("get_methodology_step")) {
-    response += "- Included step-by-step methodology\n";
-  }
-
-  if (tools.includes("get_case_studies")) {
-    response += "- Added real-world examples\n";
-  }
-
-  if (tools.includes("smile_overview")) {
-    response += "- Included SMILE framework overview\n";
-  }
-
-  if (tools.includes("query_knowledge")) {
-    response += "- Retrieved relevant knowledge base information\n";
-  }
-
-  return response;
+  return {
+    query,
+    tools_used: tools,
+    outputs
+  };
 }
 
-// Main agent
-function agent(query) {
-  const tools = chooseTools(query);
-
-  tools.forEach(tool => runTool(tool));
-
-  return buildResponse(query, tools);
-}
-
-// CLI input
-const query = process.argv[2] || "How to implement digital twin with examples?";
-
-console.log(agent(query));
+const query = "How to implement digital twin with examples?";
+console.log(JSON.stringify(agent(query), null, 2));

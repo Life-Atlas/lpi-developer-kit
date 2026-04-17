@@ -1,60 +1,29 @@
-\# LPI Smart Agent
+﻿# LPI Smart Agent
 
+A simple intelligent agent that processes user queries and dynamically selects relevant LPI tools to generate a structured response.
 
+## How It Works
 
-\## Overview
+- `how` / `implement` -> `get_methodology_step` + `get_insights`
+- `example` / `case` -> `get_case_studies`
+- `what` / `explain` / `overview` -> `smile_overview`
+- `get_insights` is always included
 
-This project implements a simple intelligent agent that dynamically selects and uses LPI sandbox tools based on user queries.
+## Features
 
+- Dynamic tool selection based on query intent
+- Multi-tool orchestration
+- Structured JSON output
 
+## Example
 
-\## How It Works
+Input: How to implement digital twin with examples?
 
-1\. Takes a user query
+Tools used:
+- get_methodology_step
+- get_case_studies
+- get_insights
 
-2\. Identifies relevant tools
+## Insights
 
-3\. Executes tools
-
-4\. Combines outputs into a structured response
-
-
-
-\## Features
-
-\- Dynamic tool selection based on query intent
-
-\- Multi-tool orchestration
-
-\- Structured response generation
-
-\- CLI-based input support
-
-
-
-\## Example
-
-
-
-Input:
-
-How to implement digital twin with examples?
-
-
-
-Output:
-
-\- Uses get\_insights for guidance
-
-\- Uses get\_methodology\_step for steps
-
-\- Uses get\_case\_studies for examples
-
-
-
-\## Tech Stack
-
-\- Node.js
-
-\- LPI Sandbox Tools
-
+Tool-based architectures are more reliable than raw LLM prompting for domain-specific tasks.
