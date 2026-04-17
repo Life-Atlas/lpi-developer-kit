@@ -16,43 +16,43 @@ https://github.com/Na7neet/level3-agent
 
 \## What it does
 
-This agent performs structured research on a user-provided topic by combining foundational knowledge and recent academic research.
+This agent performs structured research on a user-provided topic by combining knowledge, insights, and real-world examples using LPI tools.
 
 
 
-It queries two tools:
-
-\- Wikipedia → for background knowledge
-
-\- arXiv → for recent scientific papers
+\## LPI Tools Used
 
 
 
-The results are then synthesised using an LLM to produce a structured research report with proper citations.
+The agent directly queries the following LPI MCP tools:
 
 
 
-\## Tools used
+\- smile\_overview → provides foundational SMILE methodology context  
 
-\- query\_knowledge (implemented using Wikipedia API)
+\- query\_knowledge → retrieves topic-specific knowledge from the LPI knowledge base  
 
-\- get\_insights (implemented using arXiv API)
+\- get\_case\_studies → provides real-world examples and supporting evidence  
+
+
+
+These tools are accessed via the LPI MCP server using JSON-RPC and their outputs are combined for final reasoning.
 
 
 
 \## How it works
 
-1\. Takes a user topic as input
+1\. Takes a user question as input  
 
-2\. Calls Wikipedia API for foundational understanding
+2\. Queries multiple LPI tools (smile\_overview, query\_knowledge, get\_case\_studies)  
 
-3\. Calls arXiv API for recent research papers
+3\. Collects structured outputs from each tool  
 
-4\. Displays explainability (why each tool was used)
+4\. Displays explainability (why each tool was used)  
 
-5\. Sends structured data to an LLM
+5\. Sends combined context to a local LLM (Ollama)  
 
-6\. Generates a cited research report
+6\. Generates a structured, cited response  
 
 
 
@@ -60,27 +60,29 @@ The results are then synthesised using an LLM to produce a structured research r
 
 The agent explicitly explains:
 
-\- Why Wikipedia was used (baseline knowledge)
+\- Why each LPI tool was used  
 
-\- Why arXiv was used (recent research)
+\- What data was retrieved from each tool  
 
-\- How both outputs are combined
+\- How the outputs were combined  
 
-\- What decision steps were taken
+\- How the final answer was generated  
 
 
 
 \## Example
 
-Input: personal health digital twin
+Input: personal health digital twin  
+
+
 
 Output:
 
-\- Wikipedia summary
+\- SMILE methodology context  
 
-\- Research papers
+\- Knowledge base results  
 
-\- Structured report with citations
+\- Case studies  
 
-\- Explanation of reasoning
+\- Structured answer with explanation and sources  
 
