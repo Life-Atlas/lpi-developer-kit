@@ -54,8 +54,30 @@ jobs:
             HAS_CONTRIBUTOR="true"
           fi
 
+          # Safety: check if PR deletes existing files (block destructive PRs)
+          DELETIONS=$(git diff --diff-filter=D --name-only origin/master...${{ github.event.pull_request.head.sha }} 2>/dev/null || echo "")
+          HAS_DELETIONS="false"
+          if [ -n "$DELETIONS" ]; then
+            HAS_DELETIONS="true"
+            echo "::warning::PR deletes files: $DELETIONS"
+          fi
+
           echo "level=$LEVEL" >> $GITHUB_OUTPUT
           echo "has_contributor=$HAS_CONTRIBUTOR" >> $GITHUB_OUTPUT
+          echo "has_deletions=$HAS_DELETIONS" >> $GITHUB_OUTPUT
+
+      - name: Block PRs that delete existing files
+        if: steps.level.outputs.has_deletions == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `⛔ **This PR deletes existing files from the repo.** That's not allowed — your PR should only ADD your own files.\n\nPlease:\n1. Re-fork the repo (or sync your fork with upstream)\n2. Only add your contributor JSON to \`contributors/\`\n3. Don't delete or modify other people's files\n\nThis PR will NOT be auto-merged. Fix it and push again.`
+            });
+            core.setFailed('PR deletes existing files — blocked for safety');
 
       - name: Validate Level 1 — Contributor JSON
         id: validate_l1
