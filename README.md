@@ -221,6 +221,8 @@ Also audit the LPI sandbox server itself (`src/`) for any real issues. Even find
 
 This is not optional. We read these to understand how you think. AI-generated write-ups are easy to spot and will count against you. Write like you're explaining it to a teammate, not a professor.
 
+**Share your achievement on LinkedIn.** When you reach Level 2 or 3, use the **Share** button on the [leaderboard](https://life-atlas.github.io/lpi-developer-kit/) to post about it. This is part of the program — we want to see you communicate what you've built, not just build it. Tag @WINNIIO AB, @LifeAtlas, and @Nicolas Waern.
+
 ### Track A: Level 3 — Detailed Agent Requirements
 
 For Track A specifically, your agent must:
