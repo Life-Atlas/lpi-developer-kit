@@ -59,4 +59,4 @@ Output:
 - sources shown
 
 ## Notes
-The agent demonstrates explainable AI by clearly showing which tools were used.
+The agent demonstrates explainable AI by clearly showing which tools were used. 
