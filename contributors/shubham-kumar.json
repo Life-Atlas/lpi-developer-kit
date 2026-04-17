@@ -1,0 +1,11 @@
+{
+  "name": "Shubham Kumar",
+  "github": "kshubham090",
+  "program": "B.Tech CSE, AI & ML Specialization",
+  "campus": "Amity University Noida",
+  "skills": ["python", "java", "pytorch", "tensorflow", "yolov8", "opencv", "mediapipe", "spring-boot", "langchain", "langgraph", "supabase", "docker", "gcp", "flutter", "sql"],
+  "interests": ["agents", "neuro-symbolic-ai", "computer-vision", "autonomous-systems", "physical-ai", "defence-tech"],
+  "track": "A: Agent Builders",
+  "my_twin": "I'm building Stakrid — a last-mile logistics startup — while simultaneously doing R&D on Symbiote-X, a four-layer neuro-symbolic AI governance architecture for autonomous systems like drones and rovers. I care deeply about making AI that doesn't hallucinate its way into bad decisions, especially in high-stakes environments. When I'm not shipping APIs or training models, I'm at events like AI Impact Summit pitching to defence tech stakeholders or figuring out how to get a grant from iDEX. Final year, builder — doing all of it at once."
+
+}

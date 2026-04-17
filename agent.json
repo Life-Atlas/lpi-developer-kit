@@ -1,0 +1,23 @@
+{
+  "protocol": "A2A/1.0",
+  "identity": {
+    "name": "Jahanvi's LPI Explorer Agent",
+    "developer": "Jahanvi Gupta",
+    "version": "1.0.0",
+    "description": "An AI agent that specializes in querying the Life Programmable Interface (LPI) to extract insights regarding Digital Twin implementations, knowledge graphs, and the S.M.I.L.E. mapping methodology."
+  },
+  "capabilities": {
+    "tools": [
+      {
+        "name": "digital_twin_analyzer",
+        "description": "Generates aggregated implementation analysis by polling primary digital twin architecture sources."
+      }
+    ],
+    "context_window": 4096,
+    "mcp_compatible": true
+  },
+  "communication": {
+    "supported_formats": ["json", "markdown"],
+    "requires_human_approval": false
+  }
+}

@@ -1,0 +1,2 @@
+I first set up the LPI sandbox by installing dependencies and running the test client successfully. After understanding the SMILE framework, I designed a simple visual using Canva to explain the six phases in an easy and clear way. I focused on making it understandable for non-technical users by using icons, colors, and a circular flow. I learned how complex systems can be simplified through good design.
+

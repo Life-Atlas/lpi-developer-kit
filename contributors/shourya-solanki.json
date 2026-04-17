@@ -1,0 +1,10 @@
+{
+  "name": "Shourya Solanki",
+  "github": "Shourya3113",
+  "program": "B.Tech CSE with specialization in Artificial Intelligence and Machine Learning",
+  "campus": "Amity Noida",
+  "skills": ["python", "flask", "nlp", "computer vision", "api-integration", "machine learning"],
+  "interests": ["ai agents", "digital twins", "health intelligence", "quantum ai", "human optimization"],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track sleep quality, daily energy levels, workout consistency, focus depth, and emotional state because I want to understand what habit patterns help me perform at my best academically, physically, and mentally. My goal would be to predict low energy periods, connect them to sleep, nutrition or stress, and proactively recommend recovery actions before my performance drops."
+}
