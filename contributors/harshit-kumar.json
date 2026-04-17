@@ -1,0 +1,10 @@
+{
+    "name": "Harshit Kumar",
+    "github": "hrk0503",
+    "program": "B.Tech CSE",
+    "campus": "Amity University, Noida",
+    "skills": ["python", "javascript", "git", "data-structures", "algorithms", "web-development"],
+    "interests": ["coding", "stock-market", "AI-agents", "fintech"],
+    "track": "A: Agent Builders",
+    "my_twin": "I would track my stock market trades and coding session patterns — because I've noticed I make better investment decisions on days when I've had deep focus coding sessions, and I want to find out if there's actually a correlation between my mental sharpness and my trade outcomes."
+}

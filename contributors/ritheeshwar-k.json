@@ -1,0 +1,10 @@
+{
+  "name": "Ritheeshwar K",
+  "github": "Ritheeshwar",
+  "program": "B.Tech CSE",
+  "campus": "Amity Noida",
+  "skills": ["python", "Langchain", "Pytorch", "LangGraph", "Finetuning", "FlaskAPI"],
+  "interests": ["AI Agents", "Computer Vision", "Multimodal AI", "Full-Stack Development"],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track how I learn, debug, and iterate on ideas because improving my thinking process directly improves the systems I build."
+}

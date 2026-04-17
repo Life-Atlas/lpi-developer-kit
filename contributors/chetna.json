@@ -1,0 +1,10 @@
+{
+  "name": "Chetna",
+  "github": "chetna-04",
+  "program": "B.Tech CSE",
+  "campus": "Amity Noida",
+  "skills": ["python", "sql", "javascript", "node.js", "react", "git", "ai/ml", "cloud computing", "html", "css", "figma"],
+  "interests": ["agents", "NLP", "sentiment analysis"],
+  "track": "A: Agent Builders / C: Design & UX",
+  "my_twin": "If I had a personal digital twin, it would track when I choose not to act, because those decisions often define outcomes more than the actions I take."
+}
