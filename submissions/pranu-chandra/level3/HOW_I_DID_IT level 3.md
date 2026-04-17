@@ -1,4 +1,28 @@
-I designed a personal digital twin dashboard focused on health and productivity. I included sections such as sleep tracking, exercise, nutrition, stress levels, and overall health score. To make the design more meaningful, I added insights and recommendations so that the dashboard not only shows data but also helps in decision-making. I focused on keeping the UI clean, simple, and easy to understand for non-technical users. This helped me understand how UX design can simplify complex AI-driven systems.
+I designed a personal digital twin dashboard focused on health and productivity. I used the SMILE methodology as a conceptual base for structuring the UI.
+
+
+
+I referred to the LPI tools:
+
+\- smile\_overview to understand the lifecycle and phases
+
+\- get\_insights to understand how actionable recommendations are generated
+
+
+
+Based on this, I included sections like health stats, habits, insights, and recommendations so that the system goes beyond displaying data and supports decision-making.
+
+
+
+If a user asks "why this recommendation?", the system explains that it is based on observed patterns such as low sleep leading to reduced focus. This ensures transparency and explainability.
+
+
+
+The hardest part was avoiding a cluttered design. Initially, I added too many metrics which made the UI confusing. I simplified it to focus on clarity and usability.
+
+
+
+I also chose to include insights and recommendations even though they were not explicitly required. If I improve this further, I would make it interactive and connect it with real data.
 
 
 
