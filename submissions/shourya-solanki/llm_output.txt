@@ -1,0 +1,13 @@
+Model: qwen2.5:1.5b (via Ollama, local)
+Question: What is the SMILE methodology and how do I start?
+
+ANSWER:
+The SMILE methodology (Sustainable Methodology for Impact Lifecycle Enablement) is
+centered on "Impact first, data last." Six phases:
+Reality Emulation → Concurrent Engineering → Collective Intelligence →
+Contextual Intelligence → Continuous Intelligence → Perpetual Wisdom.
+
+PROVENANCE:
+[1] smile_overview({})
+[2] query_knowledge({"query": "What is the SMILE methodology and how do I start?"})
+[3] get_case_studies({})
