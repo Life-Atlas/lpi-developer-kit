@@ -144,6 +144,40 @@
       "score_pct": 82
     },
     {
+      "name": "Shubham Kumar",
+      "github": "kshubham090",
+      "skills": [
+        "python",
+        "java",
+        "pytorch",
+        "tensorflow",
+        "yolov8",
+        "opencv",
+        "mediapipe",
+        "spring-boot",
+        "langchain",
+        "langgraph",
+        "supabase",
+        "docker",
+        "gcp",
+        "flutter",
+        "sql"
+      ],
+      "interests": [
+        "agents",
+        "neuro-symbolic-ai",
+        "computer-vision",
+        "autonomous-systems",
+        "physical-ai",
+        "defence-tech"
+      ],
+      "track": "A: Agent Builders",
+      "level": 3,
+      "score": 9,
+      "score_max": 11,
+      "score_pct": 82
+    },
+    {
       "name": "Ananyaa M",
       "github": "ananyaa05",
       "skills": [
@@ -173,6 +207,71 @@
       "score": 7,
       "score_max": 11,
       "score_pct": 64
+    },
+    {
+      "name": "Harsh srivastava",
+      "github": "Harshgithub321",
+      "skills": [
+        "python",
+        "c++",
+        "DSA",
+        "AI/ML"
+      ],
+      "interests": [
+        "AI agents",
+        "NLP",
+        "Machine learning",
+        "cybersecurity"
+      ],
+      "track": "A: Agent Builders",
+      "level": 3,
+      "score": 7,
+      "score_max": 11,
+      "score_pct": 64
+    },
+    {
+      "name": "Peeyush Raj",
+      "github": "Peeyush1010",
+      "skills": [
+        "Python",
+        "Machine Learning",
+        "AI"
+      ],
+      "interests": [
+        "AI",
+        "Deep Learning",
+        "Problem Solving"
+      ],
+      "track": "A: Agent Builders",
+      "level": 3,
+      "score": 7,
+      "score_max": 11,
+      "score_pct": 64
+    },
+    {
+      "name": "Srishti Gusain",
+      "github": "srishtigusainn",
+      "skills": [
+        "python",
+        "pytorch",
+        "react",
+        "node.js",
+        "numpy",
+        "MySQL",
+        "mongodb"
+      ],
+      "interests": [
+        "Sustainable AI",
+        "NLP",
+        "Machine Learning",
+        "DeepNeural Networks",
+        "LLM"
+      ],
+      "track": "B: Content & Research",
+      "level": 3,
+      "score": 2,
+      "score_max": 11,
+      "score_pct": 18
     },
     {
       "name": "Ankit Kumar Singh",
@@ -268,6 +367,28 @@
       "score_pct": 100
     },
     {
+      "name": "Priyanshu Bhardwaj",
+      "github": "PriyanshuBHardwaj20",
+      "skills": [
+        "python",
+        "C#",
+        "Unreal",
+        "Unity"
+      ],
+      "interests": [
+        "agents",
+        "NLP",
+        "3D",
+        "AR VR",
+        "Game Design"
+      ],
+      "track": "A: Agent Builders / D: 3D & Visualization",
+      "level": 2,
+      "score": 5,
+      "score_max": 5,
+      "score_pct": 100
+    },
+    {
       "name": "Shishir Chaudhary",
       "github": "Shishir-DS28",
       "skills": [
@@ -284,40 +405,6 @@
         "NLP",
         "AI Agents",
         "data science"
-      ],
-      "track": "A: Agent Builders",
-      "level": 2,
-      "score": 5,
-      "score_max": 5,
-      "score_pct": 100
-    },
-    {
-      "name": "Shubham Kumar",
-      "github": "kshubham090",
-      "skills": [
-        "python",
-        "java",
-        "pytorch",
-        "tensorflow",
-        "yolov8",
-        "opencv",
-        "mediapipe",
-        "spring-boot",
-        "langchain",
-        "langgraph",
-        "supabase",
-        "docker",
-        "gcp",
-        "flutter",
-        "sql"
-      ],
-      "interests": [
-        "agents",
-        "neuro-symbolic-ai",
-        "computer-vision",
-        "autonomous-systems",
-        "physical-ai",
-        "defence-tech"
       ],
       "track": "A: Agent Builders",
       "level": 2,
@@ -413,27 +500,6 @@
       "score": 5,
       "score_max": 5,
       "score_pct": 100
-    },
-    {
-      "name": "Harsh srivastava",
-      "github": "Harshgithub321",
-      "skills": [
-        "python",
-        "c++",
-        "DSA",
-        "AI/ML"
-      ],
-      "interests": [
-        "AI agents",
-        "NLP",
-        "Machine learning",
-        "cybersecurity"
-      ],
-      "track": "A: Agent Builders",
-      "level": 2,
-      "score": 3,
-      "score_max": 5,
-      "score_pct": 60
     },
     {
       "name": "Navneet Kumar",
@@ -552,7 +618,7 @@
         "NLP",
         "AI-pipelines"
       ],
-      "track": "",
+      "track": "A: Agent Builders",
       "level": 2
     },
     {
@@ -963,38 +1029,25 @@
       "level": 1
     },
     {
-      "name": "Peeyush Raj",
-      "github": "Peeyush1010",
-      "skills": [
-        "Python",
-        "Machine Learning",
-        "AI"
-      ],
-      "interests": [
-        "AI",
-        "Deep Learning",
-        "Problem Solving"
-      ],
-      "track": "",
-      "level": 1
-    },
-    {
-      "name": "Priyanshu Bhardwaj",
-      "github": "PriyanshuBHardwaj20",
+      "name": "RISHIKA RAJPUT",
+      "github": "rishika3089",
       "skills": [
         "python",
-        "C#",
-        "Unreal",
-        "Unity"
+        "html",
+        "CSS",
+        "react",
+        "Node.js",
+        "JavaScript",
+        "Flask",
+        "Express.js "
       ],
       "interests": [
         "agents",
         "NLP",
-        "3D",
-        "AR VR",
-        "Game Design"
+        "AI",
+        "web dev"
       ],
-      "track": "A: Agent Builders / D: 3D & Visualization",
+      "track": "A: Agent Builders",
       "level": 1
     },
     {
