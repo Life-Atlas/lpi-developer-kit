@@ -1,4 +1,4 @@
-# HOW I DID IT - level 2
+# HOW I DID IT  
 
 ## WHAT I DID STEP BY STEP 
 1) I Forked the repository and cloned it to my local system . 
