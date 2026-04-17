@@ -1,16 +1,7 @@
 #!/usr/bin/env python3
 """
-Life-Atlas LPI Digital Twin Agent
----------------------------------
-Track A (Agent Builders) Level 3 Implementation
-
-This module connects to the local Life Programmable Interface (LPI) MCP server
-via stdio. It facilitates dynamic querying of digital twin methodology
-and automatically falls back to deterministic parsing if strict LLM
-backends (like Ollama) are unavailable, guaranteeing fail-safe execution.
-
-Author: Vineet Sharma
-Date: 2026-04-16
+Life-Atlas LPI Digital Twin Advisor Agent (Improved)
+Level 3 - Strong Submission Version
 """
 
 import json
@@ -18,101 +9,82 @@ import subprocess
 import sys
 import os
 import requests
-from typing import Dict, Any, List, Tuple, cast
-
-# --- Configuration & Logging ---
+from typing import Dict, Any, List, Tuple
 import logging
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt="%H:%M:%S"
-)
-logger = logging.getLogger("LPI_Agent")
+# ---------------- CONFIG ----------------
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("LPI_AGENT")
 
 LPI_SERVER_PATH = os.environ.get(
     "LPI_SERVER_PATH",
     os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "lpi-developer-kit", "dist", "src", "index.js"))
 )
+
 LPI_SERVER_CMD = ["node", LPI_SERVER_PATH]
+
 OLLAMA_URL = "http://localhost:11434/api/generate"
 OLLAMA_MODEL = "qwen2.5:1.5b"
 
-
-def call_mcp_tool(process: subprocess.Popen, tool_name: str, arguments: Dict[str, Any]) -> str:
-    """
-    Executes a JSON-RPC method call to the underlying MCP server.
-
-    Args:
-        process: The subprocess.Popen instance representing the MCP server.
-        tool_name: The name of the tool to execute (e.g., 'query_knowledge').
-        arguments: The arguments dictionary expected by the specific tool.
-
-    Returns:
-        str: The extracted text result or an error trace.
-    """
+# ---------------- MCP TOOL CALL ----------------
+def call_mcp_tool(process, tool_name: str, arguments: Dict[str, Any]) -> str:
     request = {
         "jsonrpc": "2.0",
         "id": 1,
         "method": "tools/call",
         "params": {"name": tool_name, "arguments": arguments},
     }
-    if process.stdin:
-        process.stdin.write(json.dumps(request) + "\n")
-        process.stdin.flush()
 
-    if process.stdout:
-        line = process.stdout.readline()
-        if not line:
-            return f"[ERROR] No response from MCP server for {tool_name}"
-        resp = json.loads(line)
-        if "result" in resp and "content" in resp["result"]:
-            # Type hinting assertion for pyre
-            return str(resp["result"]["content"][0].get("text", ""))
-        if "error" in resp:
-            return f"[ERROR] {resp['error'].get('message', 'Unknown error')}"
-        return "[ERROR] Unexpected response format"
-    return "[ERROR] Stdout PIPE not established"
+    process.stdin.write(json.dumps(request) + "\n")
+    process.stdin.flush()
+
+    line = process.stdout.readline()
+    if not line:
+        return "[ERROR] No response"
+
+    resp = json.loads(line)
+
+    if "result" in resp and "content" in resp["result"]:
+        return resp["result"]["content"][0].get("text", "")
+    
+    return "[ERROR] Tool call failed"
 
 
+# ---------------- LLM ----------------
 def query_llm(prompt: str) -> str:
-    """
-    Delegates insight generation to a local Ollama instance.
-    Includes a fail-safe exception handler designed for edge cases.
-
-    Args:
-        prompt: The complete contextual prompt formatted with MCP data.
-
-    Returns:
-        str: The LLM output or a fallback flag.
-    """
     try:
         resp = requests.post(
             OLLAMA_URL,
             json={"model": OLLAMA_MODEL, "prompt": prompt, "stream": False},
-            timeout=3,
+            timeout=5,
         )
         if resp.status_code == 200:
-            return str(resp.json().get("response", "[No response from model]"))
-    except requests.exceptions.RequestException:
-        logger.warning("Ollama API unreachable. Defaulting to gracefully formatted raw extraction.")
-    
+            return resp.json().get("response", "")
+    except:
+        logger.warning("Ollama not running → fallback mode")
+
     return "[FALLBACK]"
 
 
-def run_agent(question: str) -> Dict[str, Any]:
-    """
-    Main orchestration function. Initializes the MCP pipe, polls
-    required tools, routes data to logic engines, and guarantees provenance.
+# ---------------- SMART PHASE SELECTION ----------------
+def detect_phase(question: str) -> str:
+    q = question.lower()
 
-    Args:
-        question: The target methodology inquiry.
+    if "data" in q:
+        return "phase2_data_capture"
+    elif "model" in q:
+        return "phase3_modeling"
+    elif "optimize" in q:
+        return "phase5_optimization"
+    else:
+        return "phase1_reality_emulation"
 
-    Returns:
-        dict: The final explainable answer mapped alongside its exact provenance sources.
-    """
+
+# ---------------- MAIN AGENT ----------------
+def run_agent(question: str):
+
     if not os.path.exists(LPI_SERVER_PATH):
-        logger.error(f"Failed to locate LPI MCP node server at {LPI_SERVER_PATH}. Verify LPI_SERVER_PATH.")
+        print("❌ LPI server not found")
         sys.exit(1)
 
     proc = subprocess.Popen(
@@ -123,84 +95,106 @@ def run_agent(question: str) -> Dict[str, Any]:
         text=True,
     )
 
-    # MCP Phase 1: Negotiation & Handshake
+    # ---- INIT MCP ----
     init_req = {
-        "jsonrpc": "2.0", "id": 0, "method": "initialize",
-        "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "vineet-agent", "version": "1.0.0"}}
+        "jsonrpc": "2.0",
+        "id": 0,
+        "method": "initialize",
+        "params": {
+            "protocolVersion": "2024-11-05",
+            "capabilities": {},
+            "clientInfo": {"name": "advisor-agent", "version": "2.0"}
+        }
     }
-    if proc.stdin:
-        proc.stdin.write(json.dumps(init_req) + "\n")
-        proc.stdin.flush()
-    if proc.stdout:
-        proc.stdout.readline()
 
-    notif = {"jsonrpc": "2.0", "method": "notifications/initialized"}
-    if proc.stdin:
-        proc.stdin.write(json.dumps(notif) + "\n")
-        proc.stdin.flush()
+    proc.stdin.write(json.dumps(init_req) + "\n")
+    proc.stdin.flush()
+    proc.stdout.readline()
 
+    proc.stdin.write(json.dumps({"jsonrpc": "2.0", "method": "notifications/initialized"}) + "\n")
+    proc.stdin.flush()
+
+    # ---- TOOL CALLS ----
     tools_used: List[Tuple[str, Dict[str, Any]]] = []
 
-    logger.info("Extracting general methodology context using 'query_knowledge' tool...")
-    knowledge = str(call_mcp_tool(proc, "query_knowledge", {"query": question}))
+    logger.info("Calling query_knowledge...")
+    knowledge = call_mcp_tool(proc, "query_knowledge", {"query": question})
     tools_used.append(("query_knowledge", {"query": question}))
 
-    logger.info("Extracting structured specifics using 'smile_phase_detail' tool...")
-    phase_detail = str(call_mcp_tool(proc, "smile_phase_detail", {"phase": "phase1_reality_emulation"}))
-    tools_used.append(("smile_phase_detail", {"phase": "phase1_reality_emulation"}))
+    phase = detect_phase(question)
+
+    logger.info(f"Calling smile_phase_detail for {phase}...")
+    phase_detail = call_mcp_tool(proc, "smile_phase_detail", {"phase": phase})
+    tools_used.append(("smile_phase_detail", {"phase": phase}))
+
+    logger.info("Calling smile_overview...")
+    overview = call_mcp_tool(proc, "smile_overview", {})
+    tools_used.append(("smile_overview", {}))
 
     proc.terminate()
-    proc.wait(timeout=5)
 
-    # Formulate Prompt with explicit AI constraints
-    prompt = f"""You are a helpful expert advising on digital twin methodology.
-Answer the user's question concisely using ONLY the provided tools.
-After the answer, cite the sources clearly like "[Tool N: tool_name] - usage details".
+    # ---- PROMPT (STRICT EXPLAINABILITY) ----
+    prompt = f"""
+You are a Digital Twin Advisor.
 
---- Tool 1: query_knowledge("{question}") ---
-{knowledge[:1500]}
+STRICT RULES:
+- Use ONLY given data
+- Every paragraph MUST include source
+- Use format: [SOURCE: tool_name]
+- Be concise and structured
 
---- Tool 2: smile_phase_detail("phase1_reality_emulation") ---
-{phase_detail[:1500]}
+--- TOOL: query_knowledge ---
+{knowledge[:1200]}
 
---- User Question ---
+--- TOOL: smile_phase_detail ({phase}) ---
+{phase_detail[:1200]}
+
+--- TOOL: smile_overview ---
+{overview[:800]}
+
+QUESTION:
 {question}
 """
 
     answer = query_llm(prompt)
+
+    # ---- FALLBACK ----
     if answer == "[FALLBACK]":
-        str_knowledge = knowledge[:800].replace("\n", " ")
-        str_phase = phase_detail[:800].replace("\n", " ")
-        answer = (
-            "**[Fallback Mode]** I noticed you don't have the Ollama LLM running locally! "
-            "That's okay, I have successfully extracted exactly what you need straight from the methodologies:\n\n"
-            f"**1. Knowledge Base Search Result:**\n\"{str_knowledge}...\"\n\n"
-            f"**2. Core Phase Details:**\n\"{str_phase}...\""
-        )
-    
-    return {
-        "answer": answer,
-        "provenance": tools_used
-    }
+        answer = f"""
+### Answer (Fallback Mode)
+
+[SOURCE: query_knowledge]
+{knowledge[:400]}
+
+[SOURCE: smile_phase_detail]
+{phase_detail[:400]}
+
+[SOURCE: smile_overview]
+{overview[:300]}
+"""
+
+    # ---- FINAL OUTPUT ----
+    final_output = f"""
+================== ANSWER ==================
+
+{answer}
+
+================== SOURCES ==================
+
+1. query_knowledge → general knowledge
+2. smile_phase_detail → specific phase ({phase})
+3. smile_overview → full methodology
+"""
+
+    return final_output
 
 
+# ---------------- RUN ----------------
 if __name__ == "__main__":
-    q = sys.argv[1] if len(sys.argv) > 1 else "How do I build a digital twin for an office building?"
-    
-    print(f"\n{'='*80}")
-    print(f"  TRACK A AGENT — Orchestrating methodology inquiry: {q}")
-    print(f"{'='*80}\n")
-    
-    res = run_agent(q)
-    
-    print(f"\n{'='*80}")
-    print("  EXPLAINABLE ANSWER")
-    print(f"{'='*80}\n")
-    print(res["answer"])
+    question = sys.argv[1] if len(sys.argv) > 1 else "How to build a digital twin for a company?"
 
-    print(f"\n{'='*80}")
-    print("  EXACT PROVENANCE / CITATIONS")
-    print(f"{'='*80}")
-    for i, (name, args) in enumerate(res["provenance"], 1):
-        print(f"  [{i}] Source: {name} | Parameters: {json.dumps(args)}")
-    print()
+    print("\n🚀 LPI DIGITAL TWIN ADVISOR\n")
+    print(f"Question: {question}\n")
+
+    result = run_agent(question)
+    print(result)
