@@ -1,11 +1,10 @@
-# Level 2 Submission - Shubham Kumar
+# Level 2 Submission - Suhani Sharma
 
 ## Tracks Selected
 **Track A:** Agent Builders
 
 ## LPI Sandbox Execution
 ```
-
 === LPI Sandbox Test Client ===
 
 [LPI Sandbox] Server started — 7 read-only tools available
@@ -49,17 +48,16 @@ Passed: 8/8
 Failed: 0/8
 
 All tools working. Your LPI Sandbox is ready.
-You can now build agents that connect to this server.
 ```
 
-### Local LLM Output (Ollama - qwen3.5:35b )
+### Local LLM Output (Ollama - tinyllama)
 Prompt:
-What is a digital twin in one paragraph?
+What is a digital twin?
 
 Response:
-A digital twin is an exact replica or virtual representation of a physical object, system, process, or location that exists in the real world. It enables continuous monitoring and simulation of these objects to facilitate better
-decision-making, optimize performance, predict failures before they occur, and improve overall operational efficiency.
+A digital twin is a virtual representation of an object, process, or system that includes its physical and digital components in a single representation. In other words, it's a simulation of the physical system that represents it digitally using computer models. Digital twins allow engineers and analysts to simulate and predict the behavior of systems more accurately, which is essential for decision-making and optimization. They can be used in various industries such as energy, manufacturing, and transportation, among others.
+
+In summary, a digital twin is an immersive representation of a physical system that includes its components such as machines, equipment, and infrastructure in a digital environment.
+
 ### Reflection on SMILE
-Smile is an outcome-driven first framework. It works like a reward-based system, and it doesn't ask, "What do you build?" Instead, it asks, "What outcome do you want?"
-Its phases go from reality emulation to concurrent engineering. This means the model identifies what exists before designing what should exist. This approach is the opposite of how software projects usually work.
-The knowledge base includes PK/PD modeling.
+What surprised me about SMILE was how it focuses on turning personal data into actionable insights rather than just tracking it. I also found it interesting that instead of starting with data collection, it emphasizes understanding the system and its context first. Overall, it feels like a practical approach to building systems that not only mirror reality but actively help improve it.

@@ -1,4 +1,4 @@
-# Level 2 Submission - Shubham Kumar
+# Level 2 Submission - Sania Gurung 
 
 ## Tracks Selected
 **Track A:** Agent Builders
@@ -54,12 +54,11 @@ You can now build agents that connect to this server.
 
 ### Local LLM Output (Ollama - qwen3.5:35b )
 Prompt:
-What is a digital twin in one paragraph?
+What is a digital twin in two sentence?
 
 Response:
-A digital twin is an exact replica or virtual representation of a physical object, system, process, or location that exists in the real world. It enables continuous monitoring and simulation of these objects to facilitate better
-decision-making, optimize performance, predict failures before they occur, and improve overall operational efficiency.
+A digital twin is a virtual replica of a physical object or system, used to simulate its performance and behavior under various conditions.
 ### Reflection on SMILE
-Smile is an outcome-driven first framework. It works like a reward-based system, and it doesn't ask, "What do you build?" Instead, it asks, "What outcome do you want?"
-Its phases go from reality emulation to concurrent engineering. This means the model identifies what exists before designing what should exist. This approach is the opposite of how software projects usually work.
-The knowledge base includes PK/PD modeling.
+Smile is a framework that prioritizes outcomes. It doesn't ask, "What do you build?" and functions similarly to a reward-based system. "What outcome do you want?" is the question it poses instead.
+It progresses from concurrent engineering to reality emulation. In other words, before constructing what ought to exist, the model determines what already exists. The way software projects often operate is completely different from this method.
+PK/PD modeling is part of the knowledge base.

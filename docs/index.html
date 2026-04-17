@@ -25,6 +25,7 @@
         .ld-1{background:#68d391;box-shadow:0 0 4px rgba(72,187,120,0.4)}
         .ld-2{background:#63b3ed;box-shadow:0 0 4px rgba(99,179,237,0.4)}
         .ld-3{background:#b794f4;box-shadow:0 0 4px rgba(183,148,244,0.4)}
+        .ld-4{background:#f6ad55;box-shadow:0 0 6px rgba(246,173,85,0.5)}
 
         .stats-row{position:relative;z-index:1;display:flex;justify-content:center;gap:0.8rem;flex-wrap:wrap;margin:1.5rem auto;max-width:900px}
         .stat{background:rgba(26,32,53,0.8);border:1px solid rgba(99,179,237,0.12);border-radius:10px;padding:0.8rem 1.3rem;min-width:100px;text-align:center;transition:all 0.3s}
@@ -54,6 +55,7 @@
         .lv1{background:rgba(72,187,120,0.12);color:#68d391;border:1px solid rgba(72,187,120,0.3)}
         .lv2{background:rgba(99,179,237,0.12);color:#63b3ed;border:1px solid rgba(99,179,237,0.3)}
         .lv3{background:rgba(183,148,244,0.12);color:#b794f4;border:1px solid rgba(183,148,244,0.3);box-shadow:0 0 8px rgba(183,148,244,0.1)}
+        .lv4{background:rgba(246,173,85,0.15);color:#f6ad55;border:1px solid rgba(246,173,85,0.4);box-shadow:0 0 10px rgba(246,173,85,0.15)}
 
         a{color:#63b3ed;text-decoration:none}
         a:hover{text-decoration:underline}
@@ -73,6 +75,7 @@
         <div class="legend-item"><span class="legend-dot ld-1"></span> Registered — signed up</div>
         <div class="legend-item"><span class="legend-dot ld-2"></span> Running — dev tools working</div>
         <div class="legend-item"><span class="legend-dot ld-3"></span> Shipping — built an agent or deliverable</div>
+        <div class="legend-item"><span class="legend-dot ld-4"></span> Architect — secure agent mesh</div>
     </div>
     <!-- 🥚 -->
     <span style="position:absolute;top:1rem;right:1.5rem;font-size:0.55rem;cursor:default;user-select:none;-webkit-text-fill-color:#131a2e;color:#131a2e" title="You found it. Add found_easter_egg: true to your contributor JSON.">found_easter_egg</span>
@@ -96,6 +99,7 @@
         <input type="text" class="search-box" placeholder="Search by name, skill, or track..." oninput="filter()">
         <button class="fbtn active" onclick="setLevel('all',this)">All</button>
         <button class="fbtn" onclick="setLevel(3,this)">Shipping</button>
+        <button class="fbtn" onclick="setLevel(4,this)">Architect</button>
         <button class="fbtn" onclick="setLevel(2,this)">Running</button>
         <button class="fbtn" onclick="setLevel(1,this)">Registered</button>
         <span style="color:#2d3748;margin:0 0.3rem">|</span>
@@ -128,6 +132,7 @@
                 <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#68d39120;color:#68d391;font-size:0.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid #68d39140">1</span> Registered<br>
                 <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#63b3ed20;color:#63b3ed;font-size:0.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid #63b3ed40">2</span> Running<br>
                 <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#b794f420;color:#b794f4;font-size:0.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid #b794f440">3</span> Shipping<br>
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#f6ad5520;color:#f6ad55;font-size:0.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid #f6ad5540">4</span> Architect<br>
                 <span style="font-size:0.65rem;color:#4a5568;margin-left:20px">L3 = guaranteed place</span><br>
                 <span style="font-size:0.65rem;color:#ed8936;margin-left:20px">2x = multiple tracks</span>
             </div>
@@ -175,8 +180,8 @@ let curLevel = 'all';
 let curTrack = 'all';
 let curSearch = '';
 
-const stageNames = {1:'Registered', 2:'Running', 3:'Shipping'};
-const stageClasses = {1:'lv1', 2:'lv2', 3:'lv3'};
+const stageNames = {1:'Registered', 2:'Running', 3:'Shipping', 4:'Architect'};
+const stageClasses = {1:'lv1', 2:'lv2', 3:'lv3', 4:'lv4'};
 
 // 🥚 If you're reading this source code, you found your first easter egg.
 // Add "found_easter_egg": true to your contributor JSON for bonus points.
@@ -296,7 +301,14 @@ function render() {
         const skills = (d.skills || []).slice(0, 4).map(s => `<span class="tag">${s}</span>`).join('');
         const track = d.track || '—';
         const gh = d.github || '';
-        const contribLinks = gh ? `<a href="https://github.com/${gh}" style="font-size:0.75rem">${gh}</a> · <a href="https://github.com/Life-Atlas/lpi-developer-kit/pulls?q=is%3Apr+author%3A${gh}" style="font-size:0.75rem">PRs</a>` : '—';
+        const shareTexts = {
+            2: `Well on my way \u{1F680}\n\nJust completed Level 2 of the @WINNIIO AB / @LifeAtlas Contributor Program — dev environment running, LPI sandbox live, and working with the SMILE digital twin methodology.\n\nWINNIIO is a Swedish strategy & innovation advisory with a decade of experience in digital twin projects spanning smart buildings, healthcare, manufacturing, and IoT — led by founder @Nicolas Waern. LifeAtlas is their longevity and life sciences platform, building personal digital twins that put people in control of their own data.\n\n${allData.length} applicants in the challenge. Level 3 is next — that's where you earn your place.\n\nLive leaderboard \u{1F4CA}: https://life-atlas.github.io/lpi-developer-kit/\n\nhttps://www.linkedin.com/company/winniio\nhttps://www.linkedin.com/company/lifeatlas\n\n#DigitalTwin #AI #OpenSource #WINNIIO #LifeAtlas #Internship`,
+            3: `I just earned my place at @WINNIIO AB / @LifeAtlas \u{1F389}\n\nStarting May 2026 as a contributor to LifeAtlas — a personal digital twin platform for longevity and life sciences.\n\nWINNIIO is a Swedish advisory with a decade of digital twin projects across smart buildings, healthcare, manufacturing, and IoT. Led by founder @Nicolas Waern, they're now applying that expertise to personal health and longevity through LifeAtlas.\n\n${allData.length} applicants in the challenge and ${allData.filter(x=>x.level>=3).length} are crushing it at Level 3 so far — first to the peak but definitely not the last \u{1F4AA}\n\nI built a real deliverable using the SMILE methodology and the Life Programmable Interface (LPI) — an open-source AI agent framework.\n\nLive leaderboard \u{1F4CA}: https://life-atlas.github.io/lpi-developer-kit/\n\nhttps://www.linkedin.com/company/winniio\nhttps://www.linkedin.com/company/lifeatlas\n\n#DigitalTwin #AI #OpenSource #WINNIIO #LifeAtlas #Longevity #Internship`,
+            4: `Level 4 complete \u{1F525}\n\nBuilt a secure multi-agent mesh for @WINNIIO AB / @LifeAtlas — A2A protocol discovery, structured agent communication, and security hardening.\n\nWINNIIO has a decade of digital twin experience across industries. LifeAtlas is their longevity platform — personal digital twins, explainable AI, data sovereignty. Led by @Nicolas Waern.\n\nNo hand-holding. No templates.\n\nLive leaderboard \u{1F4CA}: https://life-atlas.github.io/lpi-developer-kit/\n\nhttps://www.linkedin.com/company/winniio\nhttps://www.linkedin.com/company/lifeatlas\n\n#DigitalTwin #AI #AgentToAgent #Security #WINNIIO #LifeAtlas #Longevity`
+        };
+        const shareBtn = d.level >= 2 ? `<span class="share-btn" onclick="navigator.clipboard.writeText(\`${(shareTexts[d.level]||shareTexts[3]).replace(/`/g,'\\`')}\`).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Share \u{1F4E3}',2000)});window.open('https://www.linkedin.com/feed/?shareActive=true','_blank')" data-tip="Copy post text + open LinkedIn" style="cursor:pointer;font-size:0.65rem;background:rgba(0,119,181,0.15);color:#0077b5;border:1px solid rgba(0,119,181,0.3);border-radius:4px;padding:0.15rem 0.4rem;margin-left:0.3rem;white-space:nowrap">Share \u{1F4E3}</span>` : '';
+        const certBtn = d.level >= 2 ? `<span onclick="generateCert('${d.name.replace(/'/g,"\\'")}',${d.level},'${(d.track||'General').replace(/'/g,"\\'")}',${d.score||0},${d.score_max||0})" data-tip="Download certificate" style="cursor:pointer;font-size:0.65rem;background:rgba(246,173,85,0.15);color:#f6ad55;border:1px solid rgba(246,173,85,0.3);border-radius:4px;padding:0.15rem 0.4rem;margin-left:0.3rem;white-space:nowrap">\u{1F3C5} Cert</span>` : '';
+        const contribLinks = gh ? `<a href="https://github.com/${gh}" style="font-size:0.75rem">${gh}</a> · <a href="https://github.com/Life-Atlas/lpi-developer-kit/pulls?q=is%3Apr+author%3A${gh}" style="font-size:0.75rem">PRs</a>${shareBtn}${certBtn}` : '—';
 
         const scorePct = d.score_pct || 0;
         const scoreDisplay = d.score != null ? `<span style="display:inline-block;height:5px;width:50px;background:#2d3748;border-radius:3px;vertical-align:middle;margin-right:0.4rem"><span style="display:block;height:100%;width:${scorePct}%;background:linear-gradient(90deg,#63b3ed,#b794f4);border-radius:3px"></span></span><span style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#a0aec0">${d.score}/${d.score_max}</span>` : '<span style="color:#2d3748;font-size:0.75rem">—</span>';
@@ -304,7 +316,7 @@ function render() {
         const badges = (d._badges || []).map(b => `<span data-tip="${b.tip}" style="cursor:help;margin-left:0.2rem">${b.icon}</span>`).join('');
 
         // Level indicator + track count combined
-        const lvColors = {1:'#68d391',2:'#63b3ed',3:'#b794f4'};
+        const lvColors = {1:'#68d391',2:'#63b3ed',3:'#b794f4',4:'#f6ad55'};
         const trackCount = d.track ? d.track.split(/[,\/]/).filter(t => t.trim() && t.trim().match(/^[A-E]/)).length : 0;
         const multiTrack = trackCount > 1 ? `<span style="font-size:0.55rem;color:#ed8936;margin-left:1px" data-tip="${trackCount} tracks">${trackCount}x</span>` : '';
         const lvNum = `<span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:${lvColors[d.level]||'#718096'}20;color:${lvColors[d.level]||'#718096'};font-size:0.65rem;font-weight:700;font-family:'JetBrains Mono',monospace;margin-right:0.3rem;border:1px solid ${lvColors[d.level]||'#718096'}40">${d.level}</span>${multiTrack}`;
@@ -319,6 +331,74 @@ function render() {
             <td style="font-size:0.78rem">${contribLinks}</td>
         </tr>`;
     }).join('');
+}
+
+function generateCert(name, level, track, score, scoreMax) {
+    const levelTitles = {
+        2: 'Level 2 — Running',
+        3: 'Level 3 — Contributor',
+        4: 'Level 4 — Architect'
+    };
+    const levelDescs = {
+        2: 'has successfully completed Level 2 of the LifeAtlas Contributor Program, demonstrating the ability to set up development tools, run the LPI sandbox, and engage with the SMILE digital twin methodology.',
+        3: 'has earned a place on the WINNIIO / LifeAtlas contributor team by completing Level 3 of the LifeAtlas Contributor Program — building a real deliverable using the SMILE methodology and the Life Programmable Interface (LPI).',
+        4: 'has completed Level 4 of the LifeAtlas Contributor Program — designing and building a secure multi-agent mesh with A2A protocol discovery and security hardening. This is the highest achievement in the program.'
+    };
+    const borderColor = {2:'#63b3ed', 3:'#b794f4', 4:'#f6ad55'}[level] || '#63b3ed';
+    const scoreText = score > 0 ? `Score: ${score}/${scoreMax}` : '';
+    const dateStr = new Date().toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+
+    const w = window.open('', '_blank');
+    w.document.write(`<!DOCTYPE html><html><head><title>Certificate — ${name}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        @page{size:landscape;margin:0}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f7f7f7;font-family:'Inter',sans-serif}
+        .cert{width:900px;height:620px;background:#fff;border:3px solid ${borderColor};position:relative;padding:60px 80px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
+        .cert::before{content:'';position:absolute;inset:12px;border:1px solid ${borderColor}40;pointer-events:none}
+        .logo-row{display:flex;justify-content:center;align-items:center;gap:30px;margin-bottom:10px}
+        .org{font-size:13px;color:#718096;letter-spacing:3px;text-transform:uppercase;font-weight:500}
+        h1{font-family:'Playfair Display',serif;font-size:38px;color:#1a202c;margin:15px 0 5px;font-weight:700}
+        .level-badge{display:inline-block;background:${borderColor}18;color:${borderColor};border:1px solid ${borderColor}50;border-radius:6px;padding:4px 16px;font-size:13px;font-weight:600;letter-spacing:1px;margin:8px 0 20px}
+        .name{font-family:'Playfair Display',serif;font-size:30px;color:${borderColor};margin:10px 0;font-weight:700}
+        .desc{font-size:13px;color:#4a5568;line-height:1.7;max-width:650px;margin:0 auto 15px}
+        .track{font-size:12px;color:#718096;margin:5px 0}
+        .score{font-size:12px;color:${borderColor};font-weight:600;margin:5px 0}
+        .footer-row{position:absolute;bottom:40px;left:80px;right:80px;display:flex;justify-content:space-between;align-items:flex-end}
+        .sig{text-align:center}
+        .sig-line{width:180px;border-top:1px solid #cbd5e0;margin-bottom:4px}
+        .sig-name{font-size:11px;color:#4a5568}
+        .sig-title{font-size:10px;color:#a0aec0}
+        .date{font-size:11px;color:#a0aec0}
+        .print-note{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);font-size:11px;color:#a0aec0;font-family:'Inter',sans-serif}
+        @media print{.print-note{display:none}body{background:#fff}}
+    </style></head><body>
+    <div class="cert">
+        <div class="logo-row">
+            <span class="org">WINNIIO AB</span>
+            <span style="color:#cbd5e0">\u{2022}</span>
+            <span class="org">LifeAtlas</span>
+        </div>
+        <h1>Certificate of Achievement</h1>
+        <div class="level-badge">${levelTitles[level] || 'Contributor'}</div>
+        <p style="font-size:14px;color:#718096;margin-bottom:5px">This certifies that</p>
+        <p class="name">${name}</p>
+        <p class="desc">${levelDescs[level] || levelDescs[2]}</p>
+        <p class="track">Track: ${track}</p>
+        ${scoreText ? `<p class="score">${scoreText}</p>` : ''}
+        <div class="footer-row">
+            <div class="date">${dateStr}</div>
+            <div class="sig">
+                <div class="sig-line"></div>
+                <div class="sig-name">Nicolas Waern</div>
+                <div class="sig-title">CEO & Founder, WINNIIO AB</div>
+            </div>
+        </div>
+    </div>
+    <div class="print-note">Press Ctrl+P (or Cmd+P) to save as PDF</div>
+    </body></html>`);
+    w.document.close();
 }
 </script>
 </body>

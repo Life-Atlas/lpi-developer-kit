@@ -1,0 +1,44 @@
+{
+  "name": "<Your Agent Name>",
+  "description": "<One paragraph: what does your agent do? What question does it answer? What LPI tools does it use?>",
+  "url": "<https://github.com/your-username/your-agent-repo>",
+  "version": "0.1.0",
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "MCP-stdio",
+      "url": "local://python agent.py",
+      "comment": "Local subprocess. Requires Ollama running on localhost:11434."
+    }
+  ],
+  "skills": [
+    {
+      "id": "<skill-id>",
+      "name": "<Skill Name>",
+      "description": "<What this skill does. Be specific: what input does it expect, what output does it produce, and what LPI tools does it call?>",
+      "tags": ["<tag1>", "<tag2>"],
+      "examples": [
+        "<Example user query that triggers this skill>",
+        "<Another example>"
+      ]
+    }
+  ],
+  "authentication": {
+    "schemes": ["none"]
+  },
+  "provider": {
+    "organization": "<Your Name>",
+    "url": "<https://github.com/your-username>"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["<tool1>", "<tool2>"],
+    "llmProvider": "ollama",
+    "llmModel": "<qwen2.5:1.5b or whatever you chose>",
+    "explainability": "<How does your agent cite its sources? Describe the provenance chain.>"
+  }
+}

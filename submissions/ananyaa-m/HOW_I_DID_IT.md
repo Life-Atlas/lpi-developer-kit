@@ -1,10 +1,8 @@
-# Level 2 Submission - Shubham Kumar
+**Level 2 Submission — Ananyaa M**
 
-## Tracks Selected
-**Track A:** Agent Builders
+---
 
-## LPI Sandbox Execution
-```
+**Test Client Output: -**
 
 === LPI Sandbox Test Client ===
 
@@ -50,16 +48,33 @@ Failed: 0/8
 
 All tools working. Your LPI Sandbox is ready.
 You can now build agents that connect to this server.
-```
 
-### Local LLM Output (Ollama - qwen3.5:35b )
-Prompt:
-What is a digital twin in one paragraph?
+---
 
-Response:
-A digital twin is an exact replica or virtual representation of a physical object, system, process, or location that exists in the real world. It enables continuous monitoring and simulation of these objects to facilitate better
-decision-making, optimize performance, predict failures before they occur, and improve overall operational efficiency.
-### Reflection on SMILE
-Smile is an outcome-driven first framework. It works like a reward-based system, and it doesn't ask, "What do you build?" Instead, it asks, "What outcome do you want?"
-Its phases go from reality emulation to concurrent engineering. This means the model identifies what exists before designing what should exist. This approach is the opposite of how software projects usually work.
-The knowledge base includes PK/PD modeling.
+**What I Did: -**
+
+    1. After succesfully completing level-1 and pulling the latest changes, I ran the "npm install" and "npm run build" to ensure that the MCP server was ready.
+
+    2. I ran "npm run test-client" to verify that all tools were working and active.
+
+    3. I installed Ollama on Windows 10. This helps in running LLM models locally. Then I started the "qwen2.5:1.5b" model as it is light-weight enough for my laptop.
+
+    4. I used the "query_knowledge" tool to pull data on the SMILE methodology.
+
+---
+
+**Problem I Faced and Solved: -**
+
+    My terminal didn't recognize the ollama command immediately after installation. I had to restart my VS Code to refresh the system path.
+
+---
+
+**What I Learned: -**
+
+    1. I learned that the MCP (Model Context Protocol) is like a bridge which gives the LLM model ability to fetch local data or run scripts.
+
+    2. I learned that the SMILE framework is not just about 3D visual, but also about a 6 phase lifecycle that includes human and social impact. 
+
+    3. I learned how to run local LLMs on my laptop using Ollama.
+
+---
