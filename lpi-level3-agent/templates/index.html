@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeAtlas | Digital Twin Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="glow-text">LPI Agent Explorer</div>
+            <p class="subtitle">SMILE Methodology Insights Engine — Track A Level 3</p>
+        </header>
+
+        <main>
+            <div class="glass-card input-section">
+                <div class="input-group">
+                    <input type="text" id="questionInput" placeholder="E.g., What is Reality Emulation?" value="What is the Reality Emulation Phase?" autocomplete="off" />
+                    <button id="askBtn">
+                        <span>Analyze</span>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="icon" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 2L11 13M22 2L15 22L11 13M11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="loader" class="glass-card hidden">
+                <div class="spinner"></div>
+                <p>Establishing MCP connection & querying tools...</p>
+            </div>
+
+            <div id="results" class="hidden">
+                <div class="glass-card result-section answer-box">
+                    <h2>Explainable Answer</h2>
+                    <div id="answerContent" class="content"></div>
+                </div>
+
+                <div class="glass-card result-section provenance-box">
+                    <h2>Provenance (Tools Used)</h2>
+                    <ul id="provenanceList" class="provenance-list"></ul>
+                </div>
+            </div>
+            
+            <div id="error" class="glass-card error-box hidden">
+                <h2 style="color: #ff6b6b; margin-bottom: 8px;">Agent Error</h2>
+                <div id="errorContent" class="content"></div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Developed for the LifeAtlas Contributor Program.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('askBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('askBtn');
+            const question = document.getElementById('questionInput').value;
+            const loader = document.getElementById('loader');
+            const results = document.getElementById('results');
+            const errorBox = document.getElementById('error');
+            const answerContent = document.getElementById('answerContent');
+            const provenanceList = document.getElementById('provenanceList');
+            const errorContent = document.getElementById('errorContent');
+
+            if (!question.trim()) return;
+
+            // UI transitions
+            btn.disabled = true;
+            results.classList.add('hidden');
+            errorBox.classList.add('hidden');
+            loader.classList.remove('hidden');
+
+            try {
+                const res = await fetch('/api/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question })
+                });
+                
+                const data = await res.json();
+                
+                if (data.error) throw new Error(data.error);
+
+                answerContent.innerText = data.answer;
+                
+                provenanceList.innerHTML = '';
+                data.provenance.forEach((item, idx) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="badge">[${idx + 1}]</span> <strong>${item[0]}</strong> <br /> <span class="args">${JSON.stringify(item[1])}</span>`;
+                    provenanceList.appendChild(li);
+                });
+
+                loader.classList.add('hidden');
+                results.classList.remove('hidden');
+
+            } catch (err) {
+                loader.classList.add('hidden');
+                errorBox.classList.remove('hidden');
+                errorContent.innerText = err.message || "An unknown error occurred.";
+            } finally {
+                btn.disabled = false;
+            }
+        });
+        
+        document.getElementById('questionInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                document.getElementById('askBtn').click();
+            }
+        });
+    </script>
+</body>
+</html>

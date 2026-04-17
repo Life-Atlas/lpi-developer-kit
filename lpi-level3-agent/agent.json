@@ -1,0 +1,11 @@
+{
+  "name": "Vineet's Track A Explorer Agent",
+  "version": "1.0.0",
+  "description": "An AI agent that connects to the LPI MCP server to synthesize recommendations for digital twin methodology, with built-in explanation and provenance.",
+  "author": "Vineet",
+  "capabilities": {
+    "supportedProtocols": ["mcp"],
+    "skills": ["methodology-synthesis", "knowledge-retrieval"]
+  },
+  "endpoints": []
+}
