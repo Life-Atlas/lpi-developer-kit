@@ -42,14 +42,20 @@ jobs:
                   interests = data.get("interests", [])
                   track = data.get("track", "")
 
-                  # Detect level from submissions
+                  # Detect level from submissions (files or directories)
                   level = 1
                   slug = os.path.basename(f).replace(".json", "")
                   sub_dir = f"submissions/{slug}"
-                  if os.path.exists(f"{sub_dir}/level3.md"):
-                      level = 3
-                  elif os.path.exists(f"{sub_dir}/level2.md"):
-                      level = 2
+                  if os.path.exists(sub_dir):
+                      import pathlib
+                      sub_contents = [p.name.lower() for p in pathlib.Path(sub_dir).rglob("*")]
+                      sub_dirs = [p.name.lower() for p in pathlib.Path(sub_dir).iterdir()]
+                      has_l4 = any("level4" in n or "level-4" in n for n in sub_contents + sub_dirs)
+                      has_l3 = any("level3" in n or "level-3" in n for n in sub_contents + sub_dirs)
+                      has_l2 = any("level2" in n or "level-2" in n for n in sub_contents + sub_dirs)
+                      if has_l4: level = 4
+                      elif has_l3: level = 3
+                      elif has_l2: level = 2
 
                   contributors.append({
                       "name": name,

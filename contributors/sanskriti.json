@@ -1,0 +1,29 @@
+{
+    "name": "Sanskriti",
+    "github": "smiling-sanskriti",
+    "program": "M.Tech AI",
+    "campus": "Amity Noida ",
+    "skills": [
+        "python",
+        "ML",
+        "SQL",
+        "GitHub",
+        "Streamlit",
+        "Flask",
+        "Numpy",
+        "Pandas"
+    ],
+    "interests": [
+        "AI agents",
+        "NLP",
+        "Data Science ",
+        "data analystics",
+        "problem solving",
+        "case studies",
+        "course modules",
+        "competitive analysis",
+        "grant writing"
+    ],
+    "track": "Content & Research",
+    "my_twin": "I would track my daily energy levels, focus, sleep quality, study hours, screen time, and mood to understand why some days I feel productive and other days I feel distracted or tired. I’d use the patterns to improve my routine, choose the best time to study difficult subjects, and build habits that help me stay consistent."
+}
