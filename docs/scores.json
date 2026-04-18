@@ -1,155 +1,35 @@
 {
-  "abhishek-verma": {
-    "name": "Abhishek Verma",
+  "john-ringbert": {
+    "name": "John Ringbert",
     "level": 3,
-    "score": 9,
-    "max": 11,
-    "pct": 82,
-    "updated": "2026-04-16T19:20:22.441Z"
-  },
-  "anupaul-saikia": {
-    "name": "Anupaul Saikia",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-15T12:36:41.271Z"
-  },
-  "varshit-pratap-singh-bhadauria": {
-    "name": "Varshit Pratap Singh Bhadauria",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-15T22:02:44.626Z"
-  },
-  "ankit-kumar-singh": {
-    "name": "Ankit Kumar Singh",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-16T17:24:12.295Z"
-  },
-  "level-1-and-level-2:-jahanvi-gupta": {
-    "name": "level-1 and level-2: Jahanvi Gupta",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-15T17:45:48.236Z"
-  },
-  "shourya-solanki": {
-    "name": "Shourya Solanki",
-    "level": 2,
-    "score": 3,
-    "max": 5,
-    "pct": 60,
-    "updated": "2026-04-15T16:04:21.836Z"
-  },
-  "jahanvi-gupta": {
-    "name": "Jahanvi Gupta",
-    "level": 3,
-    "score": 9,
-    "max": 11,
-    "pct": 82,
-    "updated": "2026-04-15T15:54:22.661Z"
-  },
-  "aditya-pratap-singh": {
-    "name": "Aditya Pratap Singh",
-    "level": 3,
-    "score": 9,
-    "max": 11,
-    "pct": 82,
-    "updated": "2026-04-16T20:03:19.281Z"
-  },
-  "track-a-agent-submission": {
-    "name": "Track A Agent Submission",
-    "level": 3,
-    "score": 9,
-    "max": 11,
-    "pct": 82,
-    "updated": "2026-04-15T19:06:37.562Z"
-  },
-  "varshit-pratap-singh-bhadauria-(final-fix)": {
-    "name": "Varshit Pratap Singh Bhadauria (FINAL FIX)",
-    "level": 2,
-    "score": 2,
-    "max": 5,
-    "pct": 40,
-    "updated": "2026-04-15T20:13:20.543Z"
+    "score": 11,
+    "max": 13,
+    "pct": 85,
+    "updated": "2026-04-17T06:00:00.000Z"
   },
   "aditi-mehta": {
     "name": "Aditi Mehta",
     "level": 3,
-    "score": 9,
-    "max": 11,
-    "pct": 82,
-    "updated": "2026-04-16T20:42:12.103Z"
-  },
-  "level:-level-2-varshit-pratap-singh-bhadauria-(final-fix)": {
-    "name": "Level: level-2 Varshit Pratap Singh Bhadauria (FINAL FIX)",
-    "level": 2,
-    "score": 2,
-    "max": 5,
-    "pct": 40,
-    "updated": "2026-04-15T20:33:10.664Z"
+    "score": 11,
+    "max": 13,
+    "pct": 85,
+    "updated": "2026-04-17T17:14:48.876Z"
   },
   "kailash-narayana-prasad": {
     "name": "Kailash Narayana Prasad",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-15T21:16:55.983Z"
-  },
-  "navneet-kumar": {
-    "name": "Navneet Kumar",
-    "level": 2,
-    "score": 3,
-    "max": 5,
-    "pct": 60,
-    "updated": "2026-04-15T23:08:55.542Z"
-  },
-  "suhani-sharma": {
-    "name": "Suhani Sharma",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-16T03:56:23.094Z"
-  },
-  "pranu-chandra": {
-    "name": "Pranu Chandra",
     "level": 3,
-    "score": 1,
+    "score": 11,
     "max": 13,
-    "pct": 8,
-    "updated": "2026-04-17T07:27:54.758Z"
+    "pct": 85,
+    "updated": "2026-04-17T13:56:06.147Z"
   },
-  "ananyaa-m": {
-    "name": "Ananyaa M",
+  "sania-gurung": {
+    "name": "Sania Gurung",
     "level": 3,
-    "score": 7,
-    "max": 11,
-    "pct": 64,
-    "updated": "2026-04-16T15:31:35.572Z"
-  },
-  "bhavesh-pal": {
-    "name": "Bhavesh Pal",
-    "level": 3,
-    "score": 8,
-    "max": 11,
-    "pct": 73,
-    "updated": "2026-04-17T04:21:26.425Z"
-  },
-  "sanskriti": {
-    "name": "Sanskriti",
-    "level": 2,
-    "score": 3,
-    "max": 5,
-    "pct": 60,
-    "updated": "2026-04-16T12:46:09.068Z"
+    "score": 11,
+    "max": 13,
+    "pct": 85,
+    "updated": "2026-04-17T08:21:01.550Z"
   },
   "shubham-kumar": {
     "name": "Shubham Kumar",
@@ -159,6 +39,166 @@
     "pct": 77,
     "updated": "2026-04-17T09:31:11.155Z"
   },
+  "harshit-kumar": {
+    "name": "Harshit Kumar",
+    "level": 3,
+    "score": 10,
+    "max": 13,
+    "pct": 77,
+    "updated": "2026-04-17T05:34:34.358Z"
+  },
+  "ananyaa-m": {
+    "name": "Ananyaa M",
+    "level": 3,
+    "score": 9,
+    "max": 13,
+    "pct": 69,
+    "updated": "2026-04-17T17:21:12.356Z"
+  },
+  "srishti-gusain": {
+    "name": "Srishti Gusain",
+    "level": 3,
+    "score": 9,
+    "max": 13,
+    "pct": 69,
+    "updated": "2026-04-17T06:00:00.000Z"
+  },
+  "varshit-pratap-singh-bhadauria": {
+    "name": "Varshit Pratap Singh Bhadauria",
+    "level": 3,
+    "score": 9,
+    "max": 13,
+    "pct": 69,
+    "updated": "2026-04-17T13:45:45.236Z"
+  },
+  "aadyant-sood": {
+    "name": "Aadyant Sood",
+    "level": 3,
+    "score": 8,
+    "max": 13,
+    "pct": 62,
+    "updated": "2026-04-17T06:00:00.000Z"
+  },
+  "jahanvi-gupta": {
+    "name": "Jahanvi Gupta",
+    "level": 3,
+    "score": 8,
+    "max": 13,
+    "pct": 62,
+    "updated": "2026-04-17T06:00:00.000Z"
+  },
+  "misha-arora": {
+    "name": "Misha Arora",
+    "level": 3,
+    "score": 8,
+    "max": 13,
+    "pct": 62,
+    "updated": "2026-04-17T19:30:01.958Z"
+  },
+  "abhishek-verma": {
+    "name": "Abhishek Verma",
+    "level": 3,
+    "score": 8,
+    "max": 13,
+    "pct": 62,
+    "updated": "2026-04-17T06:00:00.000Z"
+  },
+  "yash-pundhir": {
+    "name": "Yash Pundhir",
+    "level": 3,
+    "score": 7,
+    "max": 13,
+    "pct": 54,
+    "updated": "2026-04-16T22:18:22.692Z"
+  },
+  "bhavesh-pal": {
+    "name": "Bhavesh Pal",
+    "level": 3,
+    "score": 7,
+    "max": 13,
+    "pct": 54,
+    "updated": "2026-04-17T04:21:26.425Z"
+  },
+  "aditya-pratap-singh": {
+    "name": "Aditya Pratap Singh",
+    "level": 3,
+    "score": 7,
+    "max": 13,
+    "pct": 54,
+    "updated": "2026-04-17T06:00:00.000Z"
+  },
+  "navneet-kumar": {
+    "name": "Navneet Kumar",
+    "level": 3,
+    "score": 9,
+    "max": 13,
+    "pct": 69,
+    "updated": "2026-04-17T21:29:02.025Z"
+  },
+  "harsh-srivastava": {
+    "name": "Harsh Srivastava",
+    "level": 3,
+    "score": 6,
+    "max": 13,
+    "pct": 46,
+    "updated": "2026-04-17T06:00:00.000Z"
+  },
+  "peeyush-raj": {
+    "name": "Peeyush Raj",
+    "level": 3,
+    "score": 6,
+    "max": 13,
+    "pct": 46,
+    "updated": "2026-04-16T22:30:26.620Z"
+  },
+  "jahnavi-sharma": {
+    "name": "Jahnavi Sharma",
+    "level": 3,
+    "score": 5,
+    "max": 13,
+    "pct": 38,
+    "updated": "2026-04-17T15:03:47.558Z"
+  },
+  "anupaul-saikia": {
+    "name": "Anupaul Saikia",
+    "level": 3,
+    "score": 5,
+    "max": 13,
+    "pct": 38,
+    "updated": "2026-04-17T11:20:08.396Z"
+  },
+  "aman-gupta": {
+    "name": "Aman Gupta",
+    "level": 3,
+    "score": 3,
+    "max": 13,
+    "pct": 23,
+    "updated": "2026-04-17T06:00:00.000Z"
+  },
+  "pranu-chandra": {
+    "name": "Pranu Chandra",
+    "level": 3,
+    "score": 1,
+    "max": 13,
+    "pct": 8,
+    "updated": "2026-04-17T07:27:54.758Z"
+  },
+  "ankit-kumar-singh": {
+    "name": "Ankit Kumar Singh",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-16T17:24:12.295Z"
+  },
+  "suhani-sharma": {
+    "name": "Suhani Sharma",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-16T03:56:23.094Z"
+  },
   "shishir-chaudhary": {
     "name": "Shishir Chaudhary",
     "level": 2,
@@ -166,22 +206,6 @@
     "max": 5,
     "pct": 100,
     "updated": "2026-04-16T16:12:20.222Z"
-  },
-  "aadyant-sood": {
-    "name": "Aadyant Sood",
-    "level": 3,
-    "score": 9,
-    "max": 11,
-    "pct": 82,
-    "updated": "2026-04-16T17:17:52.213Z"
-  },
-  "aman-gupta": {
-    "name": "Aman Gupta",
-    "level": 3,
-    "score": 9,
-    "max": 11,
-    "pct": 82,
-    "updated": "2026-04-16T17:53:53.259Z"
   },
   "sonal-yadav": {
     "name": "Sonal Yadav",
@@ -191,22 +215,6 @@
     "pct": 100,
     "updated": "2026-04-16T18:21:17.127Z"
   },
-  "harsh-srivastava": {
-    "name": "Harsh Srivastava",
-    "level": 3,
-    "score": 7,
-    "max": 11,
-    "pct": 64,
-    "updated": "2026-04-16T19:37:21.625Z"
-  },
-  "level-2-:-sania-gurung": {
-    "name": "Level-2 : Sania Gurung",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-16T18:53:05.882Z"
-  },
   "priyanshu-bhardwaj": {
     "name": "Priyanshu Bhardwaj",
     "level": 2,
@@ -215,52 +223,52 @@
     "pct": 100,
     "updated": "2026-04-17T09:12:29.330Z"
   },
-  "level-3---yash-pundhir": {
-    "name": "Level-3 - Yash Pundhir",
-    "level": 3,
-    "score": 8,
-    "max": 11,
-    "pct": 73,
-    "updated": "2026-04-16T22:18:22.692Z"
+  "devika-hooda": {
+    "name": "Devika Hooda",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-17T22:33:48.538Z"
   },
-  "peeyush-raj": {
-    "name": "Peeyush Raj",
-    "level": 3,
-    "score": 7,
-    "max": 11,
-    "pct": 64,
-    "updated": "2026-04-16T22:30:26.620Z"
+  "shourya-solanki": {
+    "name": "Shourya Solanki",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-17T23:06:22.432Z"
   },
-  "srishti-gusain": {
-    "name": "Srishti Gusain",
-    "level": 3,
-    "score": 2,
-    "max": 11,
-    "pct": 18,
-    "updated": "2026-04-16T23:11:58.633Z"
+  "sanskriti": {
+    "name": "Sanskriti",
+    "level": 2,
+    "score": 3,
+    "max": 5,
+    "pct": 60,
+    "updated": "2026-04-16T12:46:09.068Z"
   },
-  "harshit-kumar": {
-    "name": "Harshit Kumar",
-    "level": 3,
-    "score": 9,
-    "max": 11,
-    "pct": 82,
-    "updated": "2026-04-17T05:34:34.358Z"
+  "naman-anand": {
+    "name": "Naman Anand",
+    "level": 2,
+    "score": 3,
+    "max": 5,
+    "pct": 60,
+    "updated": "2026-04-17T19:05:20.929Z"
   },
-  "level-3-sania-gurung": {
-    "name": "Level-3 Sania Gurung",
+  "vusala-akanksha": {
+    "name": "Vusala Akanksha",
+    "level": 2,
+    "score": 3,
+    "max": 5,
+    "pct": 60,
+    "updated": "2026-04-17T16:29:22.093Z"
+  },
+  "srishti-gusain-(track-c)": {
+    "name": "Srishti Gusain (Track C)",
     "level": 3,
-    "score": 11,
+    "score": 1,
     "max": 13,
-    "pct": 85,
-    "updated": "2026-04-17T08:21:01.550Z"
-  },
-  "varshit-pratap-(retry-v2)": {
-    "name": "Varshit Pratap (retry v2)",
-    "level": 3,
-    "score": 8,
-    "max": 13,
-    "pct": 62,
-    "updated": "2026-04-17T09:58:00.262Z"
+    "pct": 8,
+    "updated": "2026-04-17T21:48:33.492Z"
   }
 }
