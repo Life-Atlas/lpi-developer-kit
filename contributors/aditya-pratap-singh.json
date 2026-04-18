@@ -22,10 +22,7 @@
 
   "agent_repo": "https://github.com/psinghaditya/digital-twin-advisor-agent-Adi",
 
-  "tracks": [
-    "A: Agent Builders",
-    "E: QA & Security"
-  ],
+  "tracks":  "A: Agent Builders / E: QA & Security" ,
 
   
   "my_twin": "I want to build a digital twin that analyzes my daily productivity, study habits and focus levels to optimize my learning efficiency."
