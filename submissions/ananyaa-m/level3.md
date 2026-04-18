@@ -5,10 +5,10 @@ https://github.com/ananyaa05/ananyaa-personal-twin-agent
 
 ## LPI tools referenced
 The agent queries the official LPI methodology tools using real Inter-Process Communication (IPC) to the Node.js MCP server:
-* smile-overview: Returns baseline framework and safety hazards.
-* query-knowledge: Returns search results for methodology best practices.
-* get-case-studies: Returns past failure metrics.
-* smile-phase-detail: Returns specific emulation gaps.
+* smile_overview
+* query_knowledge
+* get_case_studies
+* smile_phase_detail
 
 ## Setup Instructions
 1. Ensure the `lpi-developer-kit` repository is located in the same parent directory as this agent repository.
