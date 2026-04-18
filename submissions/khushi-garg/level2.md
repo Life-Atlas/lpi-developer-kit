@@ -62,3 +62,4 @@ I used a lightweight local model (via Ollama) because:
 
 Initially, the Ollama command was not recognized in the terminal.  
 I resolved this by restarting the terminal, after which it worked properly.
+
