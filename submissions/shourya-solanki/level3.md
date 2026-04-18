@@ -37,3 +37,26 @@ surprising insight from knowledge base, full tool provenance.
 
 ## A2A Agent Card
 Included as agent.json — describes capabilities, tools used, and example inputs.
+
+## What I built beyond the instructions
+
+I skipped LangChain and CrewAI even though they were suggested. I wanted to
+understand the MCP protocol directly — the JSON-RPC handshake, initialize
+sequence, tool call structure — before abstracting it away. If I can't explain
+what a library does underneath, I don't trust it in production.
+
+I dropped the requests dependency entirely and used stdlib urllib instead.
+This was forced by macOS pip restrictions on campus WiFi, but turned out to
+be the right call — fewer dependencies, fewer failure points.
+
+I focused the agent on personal health optimization rather than a generic
+SMILE explainer. My Level 1 my_twin answer was about tracking afternoon
+energy crashes — so I built the agent to actually answer that question.
+
+## What I'd do differently
+
+Make tool selection dynamic — right now it always calls the same 3 tools
+regardless of the question. A smarter agent would route to different tools
+based on what the question is actually about. I'd also add streaming so
+the LLM response appears token by token, and a multi-turn loop so the
+agent can ask clarifying questions before querying tools.

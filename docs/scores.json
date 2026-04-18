@@ -77,7 +77,7 @@
     "score": 8,
     "max": 13,
     "pct": 62,
-    "updated": "2026-04-17T06:00:00.000Z"
+    "updated": "2026-04-18T07:12:50.848Z"
   },
   "jahanvi-gupta": {
     "name": "Jahanvi Gupta",
@@ -117,7 +117,7 @@
     "score": 7,
     "max": 13,
     "pct": 54,
-    "updated": "2026-04-17T04:21:26.425Z"
+    "updated": "2026-04-18T07:11:46.190Z"
   },
   "aditya-pratap-singh": {
     "name": "Aditya Pratap Singh",
@@ -125,7 +125,7 @@
     "score": 7,
     "max": 13,
     "pct": 54,
-    "updated": "2026-04-17T06:00:00.000Z"
+    "updated": "2026-04-18T07:58:04.607Z"
   },
   "navneet-kumar": {
     "name": "Navneet Kumar",
@@ -233,11 +233,11 @@
   },
   "shourya-solanki": {
     "name": "Shourya Solanki",
-    "level": 3,
-    "score": 11,
-    "max": 13,
-    "pct": 85,
-    "updated": "2026-04-17T22:28:58.845Z"
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-18T07:58:46.729Z"
   },
   "sanskriti": {
     "name": "Sanskriti",
@@ -270,5 +270,21 @@
     "max": 13,
     "pct": 8,
     "updated": "2026-04-17T21:48:33.492Z"
+  },
+  "vineet-sharma": {
+    "name": "Vineet Sharma",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-18T05:59:09.419Z"
+  },
+  "khushi-garg": {
+    "name": "Khushi Garg",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-18T06:03:05.782Z"
   }
 }
