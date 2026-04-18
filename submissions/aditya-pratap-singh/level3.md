@@ -8,9 +8,13 @@ Digital Twin Advisor Agent
 https://github.com/psinghaditya/digital-twin-advisor-agent-Adi
 
 ## What I Built
-This agent accepts a digital twin question and queries LPI knowledge tools to provide implementation guidance.
+I built a Digital Twin Advisor Agent that helps users plan digital twin implementations using the SMILE methodology provided by the LPI sandbox.
 
-The agent retrieves knowledge, case studies, and insights about digital twin systems and processes the information using the SMILE methodology to produce practical recommendations.
+The agent accepts a user question related to digital twins and retrieves relevant knowledge from the LPI knowledge base. It combines knowledge entries, case studies, and implementation insights to generate practical recommendations.
+
+The goal was to demonstrate how an AI agent can query structured knowledge tools and produce explainable recommendations.
+
+---
 
 ## Setup Instructions
 
@@ -32,20 +36,41 @@ npm install
 
 npm start
 
+---
+
 ## LPI Tools Used
 
 The agent queries the LPI knowledge base using the following tools:
 
-- query_knowledge
-- get_case_studies
-- get_insights
+- query_knowledge  
+- get_case_studies  
+- get_insights  
 
-These tools retrieve knowledge entries, real-world case studies, and implementation insights for digital twin systems.
+These tools provide:
+
+• conceptual knowledge about digital twins  
+• real-world case studies  
+• scenario-based implementation insights  
+
+The agent combines the outputs from these tools to generate recommendations using the SMILE methodology.
+
+---
 
 ## Explainability
 
-The agent clearly shows which LPI tools were used when generating the response.  
-This makes the reasoning process transparent so the user can trace how the recommendation was produced.
+The agent explicitly shows which LPI tools were used when generating the response.
+
+This allows the user to trace how the final recommendation was produced and which knowledge sources were used.
+
+Workflow:
+
+User Question  
+→ Agent  
+→ LPI Tool Calls  
+→ Processing using SMILE methodology  
+→ Recommendation Output
+
+---
 
 ## Error Handling
 
@@ -58,12 +83,32 @@ Example:
 User Input: (empty question)
 
 Agent Response:
+
 "Please provide a valid digital twin question."
 
+---
 
+## Design Choices
 
-### Update
-Architecture diagram and documentation improved.
+One design choice I made was focusing on a Digital Twin Advisor use case that combines knowledge, case studies, and insights into a single workflow.
 
+This allowed the agent to demonstrate explainability and multi-source reasoning instead of only returning static answers.
 
+---
 
+## What I Would Improve Next Time
+
+If I extended this project further, I would:
+
+• integrate the agent directly with the MCP server for real-time LPI tool calls  
+• structure outputs as JSON responses  
+• add automated tests  
+• build a simple web interface for interacting with the agent
+
+---
+
+## Additional Documentation
+
+The development process and challenges are documented in:
+
+HOW_I_DID_IT.md
