@@ -38,3 +38,6 @@ What surprised me most about SMILE was how strongly it prioritizes **impact befo
 That inversion feels highly aligned with personal digital twins, where behavior change matters more than data collection alone.
 
 I also found the methodology’s ability to bridge physical and virtual human states especially powerful for future life-operating-system style agents.
+
+## Model
+qwen2.5:1.5b via Ollama — local inference, no API key, M4 Pro
