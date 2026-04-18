@@ -1,22 +1,22 @@
 # Level 3 Submission — Ananyaa M
 
-### Agent GitHub Repository
+## Agent GitHub Repository
 https://github.com/ananyaa05/ananyaa-personal-twin-agent
 
-### LPI tools referenced
+## LPI tools referenced
 The agent queries the official LPI methodology tools using real Inter-Process Communication (IPC) to the Node.js MCP server:
-* `smile-overview`: Returns baseline framework and safety hazards.
-* `query-knowledge`: Returns search results for methodology best practices.
-* `get-case-studies`: Returns past failure metrics.
-* `smile-phase-detail`: Returns specific emulation gaps.
+* smile-overview: Returns baseline framework and safety hazards.
+* query-knowledge: Returns search results for methodology best practices.
+* get-case-studies: Returns past failure metrics.
+* smile-phase-detail: Returns specific emulation gaps.
 
-### Setup Instructions
+## Setup Instructions
 1. Ensure the `lpi-developer-kit` repository is located in the same parent directory as this agent repository.
-2. Ensure Ollama is installed and running locally (`ollama serve`).
+2. Ensure Ollama is isntalled and running locally (`ollama serve`). Also, make sure to download TinyLlama model.
 3. Clone the agent repository.
 4. Run the agent using Python with a concept argument: `python agent.py "I want to build a digital twin of Amity University's CSE lab"`
 
-### Evidence of explainability
+## Evidence of explainability
 The agent implements Explainable AI (XAI) using a two tiered provenance system to ensure the user always understands the reasoning behind every critique:
 
 1. The system prompt enforces strict citation rules. The LLM is forced to begin every critique with the exact tool citation (e.g., `[SOURCE: LPI/smile-overview]`).
@@ -49,7 +49,7 @@ PROVENANCE - Every critique traced to its LPI source:
 ==================================================
 ```
 
-### Security and Error Handling
+## Security and Error Handling
 * Used relative directory referencing (subprocess) to connect directly to the real Node MCP server, completely bypassing WinError 267 path errors without relying on mock APIs.
 * Utilizes Regex (re) to sanitize user inputs to prevent commandline parsing errors and injection vulnerabilities.
 * Implements try-except blocks to handle Ollama connection downtime gracefully without crashing the pipeline.
