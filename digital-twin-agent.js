@@ -19,7 +19,6 @@ console.log("Recommended approach:");
 console.log("- Start with Reality Emulation phase");
 console.log("- Model building systems");
 console.log("- Deploy concurrent engineering for optimization");
-
 }
 
 runAgent();
