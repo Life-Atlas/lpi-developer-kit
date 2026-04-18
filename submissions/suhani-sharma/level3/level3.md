@@ -6,6 +6,9 @@
 ## Project Name
 Focus & Productivity Advisor (SMILE Agent)
 
+## GitHub Repository
+https://github.com/SuhaniSharma1309/lpi-focus-agent 
+
 ## What the Agent Does
 This agent helps users improve their focus and productivity based on their study habits and distractions.  
 It takes user input (study time and main distraction) and generates a personalized, structured plan using the SMILE methodology.
@@ -24,5 +27,3 @@ It takes user input (study time and main distraction) and generates a personaliz
    - 3 actionable suggestions  
    - Sources (for explainability)  
 
-## GitHub Repository
-https://github.com/SuhaniSharma1309/lpi-focus-agent 
