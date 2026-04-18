@@ -23,8 +23,18 @@ function handleInput() {
     output = "Keep going! You are doing great 🚀";
   }
 
+  // ✅ LEVEL 3 FEATURE
+  else if (input.includes("joke")) {
+    output = "Why did the developer go broke? Because he used up all his cache!";
+  }
+
+  // ⭐ EXTRA (optional but looks better for leaderboard)
+  else if (input.includes("quote")) {
+    output = "Small code change = big success 🚀";
+  }
+
   else {
-    output = "I am your AI agent. Ask me about study, time, or calculations.";
+    output = "I am your AI agent. Ask me about study, time, calculation, joke or quote.";
   }
 
   document.getElementById("output").innerText = output;
