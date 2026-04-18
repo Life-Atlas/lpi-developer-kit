@@ -3,11 +3,10 @@
 ## Tracks Selected
 **Track A:** Agent Builders
 
+**GitHub Repository:** https://github.com/SuhaniSharma1309/lpi-focus-agent 
+
 ## Project Name
 Focus & Productivity Advisor (SMILE Agent)
-
-## GitHub Repository
-https://github.com/SuhaniSharma1309/lpi-focus-agent 
 
 ## What the Agent Does
 This agent helps users improve their focus and productivity based on their study habits and distractions.  
