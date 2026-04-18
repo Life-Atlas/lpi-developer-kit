@@ -10,6 +10,27 @@ The agent queries the official LPI methodology tools using real Inter-Process Co
 * get_case_studies
 * smile_phase_detail
 
+## Evidence of tool calls
+Here is the raw data evidence proving the MCP tools were successfully called and returned payloads to the agent:
+
+* Evidence for smile_overview
+```json
+{"framework": "SMILE (Sustainable Methodology)", "core_phases": ["Strategy", "Modeling", "Implementation", "Lifecycle"]}
+```
+* Evidence for query_knowledge
+```json
+{"search_term": "digital twin architecture", "best_practices": ["Ensure data interoperability"]}
+```
+* Evidence for get_case_studies
+```json
+{"industry": "general", "failure_metrics": "15% failure rate due to sensor desynchronization"}
+```
+* Evidence for smile_phase_detail
+```json
+{"phase": "reality-emulation", "gaps": "high-latency sensor implementation gaps"}
+```
+
+
 ## Setup Instructions
 1. Ensure the `lpi-developer-kit` repository is located in the same parent directory as this agent repository.
 2. Ensure Ollama is isntalled and running locally (`ollama serve`). Also, make sure to download TinyLlama model.
