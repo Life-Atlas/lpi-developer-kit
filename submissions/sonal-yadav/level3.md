@@ -4,7 +4,7 @@
 **Track A:** Agent Builders
 
 ## Agent Location
-The agent code is in (https://github.com/sonalydav789/AI-agent-level-3/tree/main) in this repository.
+The agent code is in (https://github.com/sonalydav789/AI-agent-level-3) in this repository.
 
 **'agent.py'**
 
