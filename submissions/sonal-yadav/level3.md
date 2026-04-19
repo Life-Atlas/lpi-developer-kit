@@ -4,9 +4,9 @@
 **Track A:** Agent Builders
 
 ## Agent Repository
-https://github.com/sonalydav789/lpi-developer-kit
+https://github.com/sonalydav789/AI-agent-level-3
 
-Agent source code: https://github.com/sonalydav789/lpi-developer-kit/blob/master/submissions/sonal-yadav/agent.py
+Agent source code: (https://github.com/sonalydav789/AI-agent-level-3)
 
 ## My Approach — What I Built and Why
 
