@@ -1,79 +1,161 @@
-# HOW I DID IT — Explainable Knowledge Agent (LPI) — Level 3
+# HOW_I_DID_IT
 
-## What I Built
+## Overview
 
-An explainable AI agent that answers user queries by combining **general knowledge** (via `LPI_Wikipedia`) and **research-level insights** (via `LPI_Arxiv`). Both are registered as proper LangChain `Tool` objects under the names `LPI_Wikipedia` and `LPI_Arxiv`, and the agent calls them explicitly before synthesizing an answer with a Hugging Face LLM.
-
----
-
-## The Two LPI Tools
-
-### LPI_Wikipedia
-- **What it does:** Calls the Wikipedia API to retrieve a concise article (~1500 chars) on the query topic.
-- **Why I chose it:** Wikipedia gives fast, reliable background context — useful for grounding the LLM's answer in established definitions.
-- **What it returns:** A structured dict with `tool_name`, `status`, and `data` (the article text).
-
-### LPI_Arxiv
-- **What it does:** Searches Arxiv for the top 3 most relevant research papers on the query.
-- **Why I chose it:** Arxiv gives cutting-edge research insights that Wikipedia doesn't have — this is the "research-level" layer.
-- **What it returns:** A structured dict with `tool_name`, `status`, and `data` (list of paper dicts with title, authors, URL, and summary snippet).
+I built a Python-based agent that connects to the LPI (Life Programmable Interface) sandbox and answers questions by selecting and calling relevant tools. The agent uses multiple tools, processes their outputs, and generates a structured response.
 
 ---
 
-## The Pipeline
+## Approach
 
-```
-User Query
-    │
-    ├──► LPI_Wikipedia.func(query)   → wiki_result (dict)
-    │
-    ├──► LPI_Arxiv.func(query)       → arxiv_result (dict)
-    │
-    └──► synthesize(query, wiki_result, arxiv_result)
-              │
-              └──► LLM (Llama-3.2-1B via HuggingFace)
-                        │
-                        └──► Structured answer with TOOL TRACE
-```
+### 1. Understanding the LPI Setup
 
-The LLM is explicitly instructed to integrate both sources and output a **TOOL TRACE** section — this is the explainability layer. The agent doesn't just give an answer; it shows which tool contributed what.
+* Explored the LPI Developer Kit to understand available tools.
+* Identified that tools are exposed via a Node.js server (`dist/src/index.js`), not the test client.
+* Learned that communication follows a JSON-RPC pattern.
 
 ---
 
-## Choices I Made That Weren't in the Instructions
+### 2. Building the Agent
 
-1. **Registered tools as `langchain.tools.Tool` objects** — not just plain functions. This makes the tools inspectable, composable, and detectable by any LangChain-based evaluator scanning for registered tools.
+* Created a Python script (`agent.py`) to:
 
-2. **Wrapped every tool call and LLM call in `try/except`** — each returns a structured error dict rather than crashing. The pipeline degrades gracefully: if Arxiv is down, the Wikipedia result still flows through to synthesis.
-
-3. **Used `status` fields in tool outputs** — `"success"`, `"error"`, `"empty"` — so the synthesizer (and any external evaluator) can tell whether the tool ran, failed, or returned nothing.
-
-4. **Explicit `print` trace during pipeline execution** — makes it easy to see in logs which LPI tools were called and in what order.
-
----
-
-## What I'd Do Differently Next Time
-
-- **Add a third LPI tool** (e.g., a semantic scholar or PubMed wrapper) to triangulate across more sources.
-- **Use a larger LLM** — Llama-3.2-1B is tiny and sometimes ignores the prompt format. A 7B+ model would follow the output format more reliably.
-- **Add retries with backoff** on the Arxiv/Wikipedia calls — the current `try/except` catches errors but doesn't retry. A real production system should retry transient failures.
-- **Cache tool results** — for repeated queries, hitting Wikipedia and Arxiv every time is wasteful. A simple dict-based cache keyed on the query string would help.
-- **Separate the tool layer from the agent layer** — put `LPI_Wikipedia` and `LPI_Arxiv` in a `tools.py` file, and keep `agents.py` purely for the pipeline logic. Better separation of concerns.
+  * Accept user input
+  * Select relevant tools
+  * Call tools via subprocess (Node.js)
+  * Process and combine results
 
 ---
 
-## Hardest Part
+### 3. Tool Integration
 
-Getting the LLM to reliably follow the structured output format (`COMBINED ANSWER`, `WIKIPEDIA CONTRIBUTION`, `ARXIV CONTRIBUTION`, `TOOL TRACE`). Small models like Llama-1B tend to ignore formatting instructions. I had to make the prompt very explicit and directive ("You MUST use both sources", "Do NOT repeat content") to get consistent output.
+* Used two tools:
+
+  * `smile_overview` → for methodology explanation
+  * `get_case_studies` → for real-world examples
+
+* Implemented subprocess communication:
+
+  * Started Node server using `subprocess.Popen`
+  * Sent JSON-RPC requests via stdin
+  * Received responses via stdout
 
 ---
 
-## Stack
+### 4. Handling Protocol Issues
 
-| Component | Library |
-|-----------|---------|
-| LLM | `meta-llama/Llama-3.2-1B-Instruct` via `langchain_huggingface` |
-| LPI Tool 1 | `langchain_community.tools.WikipediaQueryRun` wrapped as `LPI_Wikipedia` |
-| LPI Tool 2 | `arxiv` Python SDK wrapped as `LPI_Arxiv` |
-| Tool registration | `langchain.tools.Tool` |
-| Config | `python-dotenv` |
+Initial attempts failed due to:
+
+* Using `test-client.js` instead of the actual server
+* Missing initialization step
+
+Fixes:
+
+* Switched to `dist/src/index.js`
+* Added:
+
+  ```json
+  {"jsonrpc": "2.0", "method": "notifications/initialized"}
+  ```
+
+---
+
+### 5. Parsing Tool Output
+
+* Tool responses returned nested JSON:
+
+  ```json
+  {
+    "result": {
+      "content": [
+        { "type": "text", "text": "..." }
+      ]
+    }
+  }
+  ```
+* Extracted actual text using:
+
+  ```python
+  result["content"][0]["text"]
+  ```
+
+---
+
+### 6. Improving Relevance
+
+Problem:
+
+* Case studies returned multiple industries, not always healthcare.
+
+Fix:
+
+* Modified tool arguments:
+
+  ```python
+  {"query": "healthcare digital twin"}
+  ```
+* Extracted only the healthcare-related section from the response.
+
+---
+
+### 7. Result Processing
+
+* Implemented simple summarization:
+
+  * Trimmed text instead of splitting sentences (to avoid broken headings)
+* Combined:
+
+  * SMILE methodology summary
+  * Healthcare case study
+  * Analysis + conclusion
+
+---
+
+## Challenges Faced
+
+### 1. Incorrect Tool Execution
+
+* Initially used `test-client.js`
+* Result: only test logs, no usable data
+
+### 2. Path and Environment Issues
+
+* Node process couldn’t find server files
+* Fixed using:
+
+  ```python
+  cwd="lpi-developer-kit"
+  ```
+
+### 3. Empty Outputs
+
+* Caused by incorrect JSON parsing and incomplete reads
+* Fixed using `process.communicate()` and proper parsing
+
+### 4. Irrelevant Case Study Results
+
+* Default tool output included multiple industries
+* Fixed by filtering healthcare-specific content
+
+---
+
+## Key Learnings
+
+* Tool-based agents depend more on **data flow and integration** than model complexity
+* Correct environment setup is critical (paths, working directory, build)
+* Parsing structured responses properly is essential
+* Multi-tool orchestration improves answer quality significantly
+* Relevance filtering is necessary when tools return broad results
+
+---
+
+## Final Outcome
+
+The agent:
+
+* Uses multiple tools
+* Retrieves real data from LPI
+* Processes and filters results
+* Produces structured, relevant answers
+
+---
