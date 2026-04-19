@@ -159,3 +159,17 @@ The agent:
 * Produces structured, relevant answers
 
 ---
+
+## Reflection (Beyond Instructions)
+
+### What I did beyond the instructions
+- Filtered tool output to extract only healthcare-relevant case studies instead of returning full raw results.
+- Modified tool arguments (`"healthcare digital twin"`) to improve relevance instead of directly passing the user query.
+- Implemented manual parsing of nested JSON-RPC responses (`result → content → text`).
+- Used the actual LPI server (`dist/src/index.js`) instead of the test client, and handled initialization explicitly.
+
+### What I would do differently next time
+- Abstract tool-calling logic into a reusable client instead of mixing it with agent logic.
+- Add clearer reasoning traces showing why tools were selected and how outputs were combined.
+- Improve summarization by structuring outputs (Challenge, Approach, Outcome) instead of truncation.
+- Make tool selection adaptive instead of rule-based.
