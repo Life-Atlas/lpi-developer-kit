@@ -349,7 +349,7 @@
     "score": 3,
     "max": 13,
     "pct": 23,
-    "updated": "2026-04-19T16:31:55.111Z"
+    "updated": "2026-04-19T16:53:16.209Z"
   },
   "level-3-sonal-yadav": {
     "name": "level-3 Sonal Yadav",
@@ -362,10 +362,10 @@
   "aryan": {
     "name": "Aryan",
     "level": 3,
-    "score": 7,
+    "score": 10,
     "max": 13,
-    "pct": 54,
-    "updated": "2026-04-19T14:10:13.651Z"
+    "pct": 77,
+    "updated": "2026-04-19T17:31:10.029Z"
   },
   "level-2---farhan-ahmed-siddique": {
     "name": "level-2 - Farhan Ahmed Siddique",
@@ -390,5 +390,13 @@
     "max": 5,
     "pct": 100,
     "updated": "2026-04-19T13:56:00.872Z"
+  },
+  "gunti-sandeep": {
+    "name": "Gunti Sandeep",
+    "level": 2,
+    "score": 3,
+    "max": 5,
+    "pct": 60,
+    "updated": "2026-04-19T17:30:01.171Z"
   }
 }
