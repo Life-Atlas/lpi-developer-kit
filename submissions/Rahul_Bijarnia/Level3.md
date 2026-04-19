@@ -1,6 +1,6 @@
 Level 3 Submission — Rahul Bijarnia
 GitHub Repository
-https://github.com/RahulBijarnia1/lpi-level3-agent
+https://github.com/RahulBijarnia1/lpi-agent-smile-advisor 
 
 Overview
 I built an LPI Agent (SMILE Advisor) that connects to the LPI sandbox and uses multiple tools along with a local LLM (Ollama) to generate structured and explainable answers.
