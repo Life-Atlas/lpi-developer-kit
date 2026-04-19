@@ -1,0 +1,34 @@
+{
+  "protocol": "A2A/1.0",
+  "identity": {
+    "name": "SMILE Digital Twin Advisor",
+    "developer": "Shishir Chaudhary",
+    "version": "1.0.0",
+    "description": "An intelligent AI agent that queries the LPI MCP server to provide explainable answers about digital twin implementations using the SMILE methodology. Dynamically selects relevant tools based on question context and cites all sources."
+  },
+  "capabilities": {
+    "tools": [
+      {
+        "name": "question_answering",
+        "description": "Answers user questions about digital twins, SMILE methodology, and implementation guidance by querying multiple LPI tools and synthesizing results with source citations."
+      },
+      {
+        "name": "methodology_advisor",
+        "description": "Provides phase-specific SMILE implementation advice with step-by-step guidance, relevant case studies, and best practices."
+      },
+      {
+        "name": "case_study_finder",
+        "description": "Finds and analyzes relevant digital twin implementation case studies across industries including healthcare, manufacturing, energy, and smart buildings."
+      }
+    ],
+    "context_window": 4096,
+    "mcp_compatible": true,
+    "llm_backend": "Ollama (qwen2.5:1.5b)",
+    "fallback_mode": true
+  },
+  "communication": {
+    "supported_formats": ["json", "markdown"],
+    "requires_human_approval": false,
+    "interaction_modes": ["single_question", "interactive_conversation"]
+  }
+}
