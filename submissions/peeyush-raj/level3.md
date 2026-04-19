@@ -1,24 +1,54 @@
-# Level 3 Submission - Peeyush Raj
+# Level 3 Submission
 
-## Project
+## Name
+Peeyush Raj
+
+## GitHub Username
+Peeyush1010
+
+## Project Title
 AI Career & University Decision Agent
 
-## GitHub Repo
+## Project Description
+This project is an AI agent that helps students choose the best academic path based on their interests, budget, and preferred location.
+
+The agent processes user input and generates structured recommendations to guide decision-making.
+
+## Repository Link
 https://github.com/Peeyush1010/ai-career-decision-agent
 
-## Description
-I built an AI agent that helps students choose the best academic path based on their interests, budget, and preferred location.
-
-The agent processes user input and uses structured logic along with LPI tools to generate recommendations.
-
 ## How It Uses LPI
-- Uses get_insights to provide decision guidance
-- Uses query_knowledge to fetch structured information
-- Combines both to produce explainable output
+The agent uses the following LPI tools:
 
-## Output Example
-The agent provides:
+- get_insights → to provide guidance and recommendations
+- query_knowledge → to fetch structured information related to user input
+
+The outputs from these tools are combined to generate an explainable final response.
+
+## Features
+- Career recommendations based on user input
+- Budget-aware suggestions
+- Structured and explainable output
+- Uses multiple LPI tools
+
+## Example Input
+Interest: Artificial Intelligence  
+Budget: Medium  
+Location: International  
+
+## Example Output
 - Recommended academic path
 - Suggested countries or options
 - Actionable next steps
-- Sources used (LPI tools)
+- Sources used: get_insights, query_knowledge
+
+## Notes
+- The agent is implemented using Node.js
+- LPI tool calls are structured within the agent logic
+
+## Recent Improvements
+
+- Added input validation for missing fields
+- Added error handling using try/catch
+- Improved reasoning output for explainability
+- Strengthened tool integration evidence
