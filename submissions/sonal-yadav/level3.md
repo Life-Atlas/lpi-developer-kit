@@ -4,7 +4,7 @@
 **Track A:** Agent Builders
 
 ## Agent Location
-The agent code is in (https://github.com/sonalydav789/AI-agent-level-3) in this repository.
+The agent code is in https://github.com/sonalydav789/AI-agent-level-3 in this repository.
 
 **'agent.py'**
 
@@ -38,7 +38,81 @@ python agent/agent.py                    # Interactive mode
 python agent/agent.py "Your question"    # Single question mode
 ```
 
-### Example
+### Explainability — How the Agent Explains Its Reasoning
+
+The agent does not just return answers — it explains **why** it chose each tool, **what** data came back, and **where** each claim in the answer comes from. Every answer includes:
+
+1. **Tool selection reasoning**: Each tool call shows the reason it was selected
+2. **Inline source citations**: The LLM cites `[Source N]` after every claim
+3. **Provenance table**: A full audit trail printed after every answer
+
+Here is real output when a user asks **"Why did you recommend this?"** after asking about healthcare digital twins:
+
+```
+  You > How do I implement a digital twin for healthcare?
+
+  >> Mode: Smart Q&A
+  >> Tools: query_knowledge, get_case_studies, get_insights, smile_overview (4 tools)
+  [1/4] query_knowledge({"query": "How do I implement a digital twin for healthcare?"}) -- knowledge base search
+  [2/4] get_case_studies({"query": "healthcare"}) -- case studies for healthcare
+  [3/4] get_insights({"scenario": "How do I implement a digital twin for healthcare?"}) -- implementation advice
+  [4/4] smile_overview({}) -- methodology overview
+
+  >> Synthesizing with qwen2.5:1.5b...
+
+  ============================================================
+    ANSWER
+  ============================================================
+
+  To implement a healthcare digital twin using the SMILE methodology:
+
+  1. **Start with Impact Definition** — Define the clinical outcome you want to
+     improve before collecting any data [Source 1]. The SMILE principle is
+     Outcome → Action → Insight → Information → Data [Source 4].
+
+  2. **Build your ontology first** — Healthcare needs domain-specific information
+     models (patient, treatment, outcome ontologies) before AI can reason about
+     them [Source 1]. This maps to Phase 3 (Collective Intelligence).
+
+  3. **Study existing implementations** — PK/PD modeling for pharmaceutical
+     applications shows how digital twins simulate drug interactions in virtual
+     patients [Source 2].
+
+  4. **Use edge-native architecture** — Healthcare data often can't leave the
+     hospital. An edge-native approach keeps computation close to the data
+     source [Source 3].
+
+  Sources Used: [1] query_knowledge, [2] get_case_studies, [3] get_insights,
+  [4] smile_overview
+
+  +----------------------------------------------------------+
+  |  PROVENANCE -- Tools Queried                              |
+  +----------------------------------------------------------+
+  |  [1] OK query_knowledge                                   |
+  |      args: {"query": "How do I implement a digital..."}   |
+  |      why:  knowledge base search                          |
+  |      -> 3102 chars returned                               |
+  +----------------------------------------------------------+
+  |  [2] OK get_case_studies                                  |
+  |      args: {"query": "healthcare"}                        |
+  |      why:  case studies for healthcare                    |
+  |      -> 4521 chars returned                               |
+  +----------------------------------------------------------+
+  |  [3] OK get_insights                                      |
+  |      args: {"scenario": "How do I implement a digi..."}   |
+  |      why:  implementation advice                          |
+  |      -> 1847 chars returned                               |
+  +----------------------------------------------------------+
+  |  [4] OK smile_overview                                    |
+  |      args: {}                                             |
+  |      why:  methodology overview                           |
+  |      -> 2341 chars returned                               |
+  +----------------------------------------------------------+
+```
+
+**Every claim is traceable**: The user can see that "edge-native architecture" came from `get_insights` [Source 3], not hallucinated by the LLM. The "why" field in the provenance table explains the agent's reasoning for querying each tool.
+
+### Example — Compare Mode
 
 ```
   You > Compare healthcare and manufacturing digital twins
@@ -50,7 +124,7 @@ python agent/agent.py "Your question"    # Single question mode
   [3/4] get_case_studies({"query": "manufacturing"}) -- case studies for manufacturing
   [4/4] query_knowledge({"query": "Compare healthcare and manu..."}) -- knowledge base search
 
-  🤖 Sending to qwen2.5:1.5b for synthesis...
+  >> Synthesizing with qwen2.5:1.5b...
 
   ============================================================
     ANSWER
