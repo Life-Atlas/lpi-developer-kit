@@ -23,7 +23,6 @@ To run the LPI API Advisor:
 
 2. **Build the LPI Server:**
    ```bash
-   cd yash_lpi
    npm install
    npm run build
 ````
