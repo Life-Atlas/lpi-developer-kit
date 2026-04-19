@@ -2,7 +2,7 @@
 
 ## Project: Explainable Knowledge Agent (LPI)
 
-**Repository:** https://github.com/praveen-singh-007/lpi-smile-agent
+**Repository:** https://github.com/thedgarg31/lpi-life-agent
 
 ---
 
