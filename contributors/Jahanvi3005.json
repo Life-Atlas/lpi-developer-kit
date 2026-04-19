@@ -1,0 +1,10 @@
+{
+  "name": "Jahanvi Gupta",
+  "github": "Jahanvi3005",
+  "program": "B.Tech CSE",
+  "campus": "Amity University Noida",
+  "skills": ["Python", "React 19", "Node.js", "Machine Learning", "FAISS", "Next.js", "MongoDB", "RAG"],
+  "interests": ["AI Agents", "Data Engineering", "Full-Stack Architecture", "Knowledge Graphs"],
+  "track": "A: Agent Builders / D: 3D & Visualization",
+  "my_twin": "I would develop a digital twin of my development environment and learning workflow to track my problem-solving patterns (similar to CodeAtlas). By mapping how I navigate codebases, query documentation, and structure APIs, I could feed this telemetry into an AI agent that proactively fetches context, detects architectural bottlenecks, and suggests optimized data pipelines before I even encounter a blocker."
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Ananyaa M",
+  "github": "ananyaa05",
+  "program": "B.Tech CSE",
+  "campus": "Amity University Noida",
+  "skills": ["C++", "python", "AI & ML", "deep learning", "computer vision", "AWS cloud", "NLP", "Scikit-Learn", "SQL", "numpy", "tensorflow"],
+  "interests": ["AI agents", "automation", "mcp development", "eeg signal processing", "edge computing", "quantitative finance logic", "productivity optimization"],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track the mismatch between my to-do list and my actual energy because I am tired of planning heavy C++ or ML tasks for times when my brain just wants to bake or write poetry. I want a schedule that actually respects how I feel."
+}
