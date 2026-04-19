@@ -119,7 +119,7 @@ This made the agent:
 
 ### 1. Wrong Execution Path
 
-Using `test-client.js` resulted in logs instead of real data.
+Using `test-client.js` resulted in logs instead of real data
 
 Fix:
 
