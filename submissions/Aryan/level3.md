@@ -9,7 +9,7 @@
 ## Overview
 
 This project implements a Level 3 agent using the Life Programmable Interface (LPI).
-The agent answers user queries by selecting and calling multiple tools, processing their outputs, and generating a structured response.
+The agent answers user queries by selecting and calling multiple tools, processing their outputs, and generating a structured response
 
 ---
 
