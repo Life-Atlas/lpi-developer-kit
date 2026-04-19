@@ -68,4 +68,34 @@ I called `smile_overview` to read all 6 phases and 3 perspectives. I also querie
 
 ---
 
+---
+
+# Level 3 — Agent Builders
+
+## What I Did
+
+I built a Python agent (`level3-agent/agent.py`) that:
+1. Starts the LPI MCP server as a subprocess over stdio
+2. Performs the JSON-RPC handshake (initialize + notifications/initialized)
+3. Calls **4 LPI tools** — `smile_overview`, `smile_phase_detail`, `query_knowledge`, `get_case_studies`
+4. Concatenates all tool outputs into a structured prompt with provenance labels
+5. Sends the prompt to `qwen2.5:1.5b` running locally via Ollama
+6. Prints the LLM answer + a provenance table showing exactly which tool contributed what
+
+I also added an `--interactive` flag so the agent can answer multiple questions in a session without restarting.
+
+## Problems I Hit
+
+- **MCP stdio protocol**: The handshake order matters — `initialize` request must come before `notifications/initialized`, otherwise the server silently drops subsequent tool calls. I debugged this by reading the existing `test-client.ts`.
+- **LLM hallucination**: When the prompt was too long, `qwen2.5:1.5b` started ignoring the "cite your sources" instruction. Fixed by trimming each tool result to 2000 chars max.
+- **Windows path issues**: `os.path.join` with `..` didn't resolve correctly when running from a sub-folder. Fixed with `os.path.abspath`.
+
+## What I Learned
+
+- MCP is a thin JSON-RPC layer — far simpler than I expected. Once you understand the handshake, it's just stdin/stdout pipes.
+- Provenance tracking is not just a nice-to-have — it's what makes an AI agent trustworthy. If the agent can't say WHERE its answer came from, it's not safe to ship.
+- Local LLMs like `qwen2.5:1.5b` are fast enough for tool-augmented agents. The bottleneck is the MCP tool calls, not the LLM.
+
+---
+
 Signed-off-by: Farhan Ahmed Siddique <farhan@example.com>
