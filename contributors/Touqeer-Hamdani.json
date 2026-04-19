@@ -1,0 +1,24 @@
+{
+  "name": "Touqeer Hamdani",
+  "github": "TouqeerHamdani",
+  "program": "B.Tech CSE",
+  "campus": "Amity Noida",
+  "skills": [
+    "python",
+    "pytorch",
+    "postgresql",
+    "fastapi",
+    "Git",
+    "Github",
+    "Docker"
+  ],
+  "interests": [
+    "AI Agents",
+    "backend architecture",
+    "vector search",
+    "tool building",
+    "Data Pipelining"
+  ],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track my sleep patterns, my productivity, and my mental health because I want to optimize my life and be the best version of myself."
+}

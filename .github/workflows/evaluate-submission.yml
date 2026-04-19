@@ -133,9 +133,14 @@ jobs:
             const sha = scores._sha;
             delete scores._sha;
 
-            // Update score for this person
+            // Update score — never downgrade a higher-level entry
             const key = name.toLowerCase().replace(/\s+/g, '-');
-            scores[key] = { name, level: 2, score, max, pct: Math.round((score/max)*100), updated: new Date().toISOString() };
+            const existing = scores[key];
+            if (existing && existing.level > 2) {
+              console.log(`Skipping L2 overwrite: ${key} already at L${existing.level} with ${existing.score}/${existing.max}`);
+            } else {
+              scores[key] = { name, level: 2, score, max, pct: Math.round((score/max)*100), updated: new Date().toISOString() };
+            }
 
             // Write back
             const content = Buffer.from(JSON.stringify(scores, null, 2)).toString('base64');

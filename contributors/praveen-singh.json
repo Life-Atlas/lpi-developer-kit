@@ -1,0 +1,10 @@
+{
+  "name": "Praveen Singh",
+  "github": "praveen-singh-007",
+  "program": "B.Tech CSE (Data Science)",
+  "campus": "Amity Noida",
+  "skills": ["python", "pytorch", "react", "langchain", "tensorflow", "scikit-learn", "node", "express", "pandas", "numpy", "javascript", "java", "c++", "c", "langgraph"],
+  "interests": ["agents", "NLP", "3D", "security"],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it could scout job boards 24/7 to apply for roles that match my specific profile, handling repetitive applications so I can focus on interviews."
+}
