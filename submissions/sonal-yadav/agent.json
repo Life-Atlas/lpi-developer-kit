@@ -1,0 +1,50 @@
+{
+  "protocol": "A2A/1.0",
+  "identity": {
+    "name": "SMILE Compass",
+    "developer": "Sonal Yadav",
+    "github": "sonalydav789",
+    "version": "2.0.0",
+    "description": "A multi-mode AI agent that navigates the LPI MCP server with 4 distinct reasoning strategies: Smart Q&A, Compare, Maturity Scan, and Deep Dive. Uses conversation memory, dynamic tool orchestration, and full provenance tracking."
+  },
+  "capabilities": {
+    "tools_used": [
+      "smile_overview",
+      "smile_phase_detail",
+      "query_knowledge",
+      "get_case_studies",
+      "get_insights",
+      "list_topics",
+      "get_methodology_step"
+    ],
+    "skills": [
+      {
+        "name": "smart_qa",
+        "description": "Answers questions about SMILE, digital twins, and implementation by routing to 2-4 relevant LPI tools and synthesizing with citations."
+      },
+      {
+        "name": "compare_analysis",
+        "description": "Compares industries, SMILE phases, or implementation approaches side-by-side using targeted tool queries."
+      },
+      {
+        "name": "maturity_assessment",
+        "description": "Assesses the user's current position on the SMILE journey and recommends next steps based on phase activities and deliverables."
+      },
+      {
+        "name": "deep_dive",
+        "description": "Provides exhaustive analysis of a topic using 4-6+ tools, covering methodology, case studies, knowledge base, and implementation guidance."
+      }
+    ],
+    "context_window": 4096,
+    "mcp_compatible": true,
+    "llm_backend": "Ollama (qwen2.5:1.5b)",
+    "fallback_mode": true,
+    "conversation_memory": true
+  },
+  "communication": {
+    "supported_formats": ["json", "markdown"],
+    "requires_human_approval": false,
+    "interaction_modes": ["single_question", "interactive_conversation"],
+    "provenance_tracking": true
+  }
+}
