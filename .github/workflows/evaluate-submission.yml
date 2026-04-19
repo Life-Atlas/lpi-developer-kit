@@ -133,9 +133,14 @@ jobs:
             const sha = scores._sha;
             delete scores._sha;
 
-            // Update score for this person
+            // Update score — never downgrade a higher-level entry
             const key = name.toLowerCase().replace(/\s+/g, '-');
-            scores[key] = { name, level: 2, score, max, pct: Math.round((score/max)*100), updated: new Date().toISOString() };
+            const existing = scores[key];
+            if (existing && existing.level > 2) {
+              console.log(`Skipping L2 overwrite: ${key} already at L${existing.level} with ${existing.score}/${existing.max}`);
+            } else {
+              scores[key] = { name, level: 2, score, max, pct: Math.round((score/max)*100), updated: new Date().toISOString() };
+            }
 
             // Write back
             const content = Buffer.from(JSON.stringify(scores, null, 2)).toString('base64');
@@ -162,7 +167,8 @@ jobs:
         id: find
         run: |
           git fetch origin master
-          FILE=$(git diff --name-only origin/master...${{ github.event.pull_request.head.sha }} | grep "^submissions/.*level3" | head -1)
+          FILES=$(git diff --name-only origin/master...${{ github.event.pull_request.head.sha }} | grep "^submissions/.*level3\|^submissions/.*/level3" || true)
+          FILE=$(echo "$FILES" | head -1)
           echo "file=$FILE" >> $GITHUB_OUTPUT
 
           if [ -z "$FILE" ]; then
@@ -170,8 +176,23 @@ jobs:
             exit 1
           fi
 
-          # Extract GitHub repo URL from the submission
-          REPO_URL=$(grep -oP 'https://github\.com/[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+' "$FILE" | head -1)
+          # Search ALL changed submission files for a GitHub repo URL
+          REPO_URL=""
+          for f in $FILES; do
+            URL=$(grep -oP 'https://github\.com/[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+' "$f" 2>/dev/null | head -1)
+            if [ -n "$URL" ]; then
+              REPO_URL="$URL"
+              break
+            fi
+          done
+          # Also check HOW_I_DID_IT files in the same submission directory
+          SLUG=$(echo "$FILE" | cut -d/ -f2)
+          for f in submissions/$SLUG/*.md submissions/$SLUG/**/*.md; do
+            if [ -f "$f" ] && [ -z "$REPO_URL" ]; then
+              URL=$(grep -oP 'https://github\.com/[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+' "$f" 2>/dev/null | head -1)
+              if [ -n "$URL" ]; then REPO_URL="$URL"; fi
+            fi
+          done
           echo "repo_url=$REPO_URL" >> $GITHUB_OUTPUT
 
       - name: Evaluate Level 3 submission doc
