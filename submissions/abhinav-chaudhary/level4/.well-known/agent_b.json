@@ -1,0 +1,11 @@
+{
+  "name": "Agent B — SMILE Analyzer",
+  "version": "1.0",
+  "description": "Performs SMILE and LPI analysis using a local LLM (Ollama)",
+  "endpoint": "http://localhost:8001/analyze",
+  "capabilities": [
+    "smile_analysis",
+    "intent_detection"
+  ],
+  "auth": "bearer token"
+}
