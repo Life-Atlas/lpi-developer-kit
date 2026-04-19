@@ -52,3 +52,5 @@ Location: International
 - Added error handling using try/catch
 - Improved reasoning output for explainability
 - Strengthened tool integration evidence
+
+Updated linked project with explicit LPI tool calls, stronger validation, and HOW_I_DID_IT documentation.
