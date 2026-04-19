@@ -14,7 +14,7 @@
 - [x] Installed Ollama and ran `qwen2.5:1.5b` locally
 - [x] Read SMILE methodology via `smile_overview` and `get_case_studies`
 - [x] Wrote 3 sentences on what surprised me about SMILE (see `HOW_I_DID_IT.md`)
-- [x] PR title follows the format: `level-2: Farhan Ahmed Siddique`
+- [x] PR title follows the format: `level-2 - Farhan Ahmed Siddique`
 
 ---
 
