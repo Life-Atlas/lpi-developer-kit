@@ -49,7 +49,7 @@ Real-world problems solved:
 | #2 | Query `"impact first data last"` → count ontology mentions | **6** |
 | #3 | `data/knowledge-base.json` entry `kb-egg` — "The Hidden Principle" | Title match scoring exploited in `_title_boost_query()` |
 
-Full implementation details, reasoning process, and easter egg analysis are documented in `HOW_I_DID_IT.md`.
+Full implementation details, reasoning process, and easter egg analysis are documented in [HOW_I_DID_IT.md](https://github.com/ankitsinghh007/smile-hospital-agent/blob/main/HOW_I_DID_IT.md).
 
 ---
 
