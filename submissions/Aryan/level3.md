@@ -1,4 +1,10 @@
-# LEVEL 3 SUBMISSION
+# Level 3 Submission — Aryan
+
+## Project: Explainable Knowledge Agent (LPI)
+
+*Repository:* https://github.com/iamaryan07/lpi-life-agent
+
+---
 
 ## Overview
 
