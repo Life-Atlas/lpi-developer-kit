@@ -26,13 +26,13 @@ Real-world problems solved:
 
 ---
 
-## LPI Tools Used (all 7)
+## LPI Tools Used (all 7 tools, 8 calls)
 
 | Step | Tool | Why |
 |------|------|-----|
 | 1 | `smile_overview` | SMILE methodology baseline — always first |
 | 2 | `list_topics` | Discover all KB topic areas before searching |
-| 3 | `query_knowledge` | Title-boosted first search |
+| 3 | `query_knowledge` | Title-boosted first search (Easter egg #3 exploit) |
 | 4 | `query_knowledge` | Refined second search based on step 3 findings |
 | 5 | `get_case_studies` | Domain-matched case evidence |
 | 6 | `get_insights` | Scenario-specific SMILE recommendations |
@@ -43,13 +43,13 @@ Real-world problems solved:
 
 ## Easter Eggs Found (all 3)
 
-| Egg | Location | Insight |
+| Egg | Location | Answer |
 |-----|----------|--------|
-| 🥚 #1 | `src/index.ts` (top comment) | Hidden hint pointing to impact-first search strategy |
-| 🥚 #2 | Query `"impact first data last"` | **6 ontology-related entries found** |
-| 🥚 #3 | `knowledge-base.json` (`kb-egg`) | Reveals title-weighted scoring → exploited via `_title_boost_query()` |
+| #1 | `src/index.ts` — comment at top of file | (same clue as #2) |
+| #2 | Query `"impact first data last"` → count ontology mentions | **6** |
+| #3 | `data/knowledge-base.json` entry `kb-egg` — "The Hidden Principle" | Title match scoring exploited in `_title_boost_query()` |
 
-Full working and code in `HOW_I_DID_IT.md` and `agent.py`.
+Full implementation details, reasoning process, and easter egg analysis are documented in `HOW-I-DID-IT.md`.
 
 ---
 
@@ -68,14 +68,14 @@ Full working and code in `HOW_I_DID_IT.md` and `agent.py`.
 
 ---
 
-## How it works (high-level)
+## Example
 
-The agent follows a structured pipeline:
+**Input:**
+"MRI downtime 10h/week"
 
-1. Detects the problem domain (beds, equipment, energy, or patient outcomes)
-2. Discovers available knowledge areas using `list_topics`
-3. Performs a title-optimized search using `query_knowledge`
-4. Refines the query using signals extracted from initial results
-5. Collects supporting evidence from case studies and insights
-6. Selects the most relevant SMILE phase dynamically
-7. Generates a structured implementation roadmap using an LLM
+**Output (summary):**
+- Structured SMILE roadmap (Impact → Phases → KPIs → Roadmap → Pitfalls)
+- 8 tool calls with reasoning (including 2-pass query_knowledge)
+- Cited insights from SMILE knowledge base
+- Provenance tracking for every tool call
+
