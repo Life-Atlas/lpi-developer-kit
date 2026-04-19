@@ -1,6 +1,6 @@
 # Level 3 Submission — Praveen Singh
 ## Project: Explainable Knowledge Agent (LPI)
-**Repository:** https://github.com/praveen-singh-007/lpi-life-agent
+**Repository:** https://github.com/iamaryan07/lpi-life-agent
 
 ---
 
