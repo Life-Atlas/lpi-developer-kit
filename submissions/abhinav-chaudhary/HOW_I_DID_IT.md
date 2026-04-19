@@ -22,21 +22,32 @@
 # HOW I DID IT (Level 3)
 
 ## Steps I followed
-- I first understood the Level 3 requirements and studied the example agent.
-- Instead of copying it directly, I decided to build a simpler version that I could fully understand.
-- I designed a flow where the agent selects tools based on the user’s question.
-- I implemented MCP tool calls and connected them with a local LLM using Ollama.
-- I tested the agent with different questions to make sure it was working correctly.
+- I first read the Level 3 requirements and looked at the example agent to understand what was expected.
+- Instead of copying it directly, I decided to build something simpler that I could actually understand and explain.
+- I planned a basic flow — take a question, decide which tools to use, call them, and combine the results.
+- Then I figured out how MCP works and implemented tool calls using JSON-RPC.
+- After that, I added a simple keyword-based logic to select tools.
+- Finally, I focused on making the output clear — showing reasoning, answer, and sources.
+
+---
 
 ## Problems I faced
-- Initially, I was confused about how MCP communication works.
-- I also struggled a bit with understanding how tool outputs are structured.
+- At the start, MCP was confusing. I didn’t understand how the requests and responses actually work.
+- The structure of tool outputs (content blocks, text extraction) was also not very clear.
+- My earlier version worked, but it didn’t clearly show that tools were being used, which affected the evaluation.
+
+---
 
 ## How I solved them
-- I broke down the example agent step by step and focused on the essential parts.
-- I simplified the logic instead of trying to build something too complex.
+- I broke the example agent into small parts and tried to understand each step instead of copying everything.
+- I simplified the logic a lot and avoided adding anything I didn’t fully understand.
+- I added clear prints/logs so it’s obvious when a tool is being called and what it returns.
+- I also added basic error handling so the agent doesn’t crash on bad input.
+
+---
 
 ## What I learned
-- How to build an AI agent that uses multiple tools
-- The importance of explainability in AI systems
-- How local LLMs can be integrated with external tools
+- How MCP actually works and how tools are called using JSON-RPC
+- How to combine outputs from multiple tools into a single response
+- That explainability is important — not just the answer, but how you got it
+- Keeping things simple is better than overcomplicating, especially when learning something new
