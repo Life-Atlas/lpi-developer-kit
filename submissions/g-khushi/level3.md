@@ -1,44 +1,108 @@
-# Level 3 — AI Agent Submission
+## Level 3 Submission — Khushi Garg
 
-## GitHub Repo
+## GitHub Repository
 
-https://github.com/g-khushi/lpi-agent-smile-advisor
+https://github.com/g-khushi/lpi-level3-agent
 
-## Objective
 
-Built an AI agent that connects to the LPI sandbox and generates explainable responses using multiple tools and a local LLM.
+## Overview
 
-## LPI Tools Used
+I built an LPI Agent (SMILE Advisor) that connects to the LPI sandbox and uses multiple tools along with a local LLM (Ollama) to generate structured and explainable answers.
 
-1. smile_overview  
-Returned an overview of SMILE methodology including its phases and principles.
 
-2. query_knowledge  
-Returned detailed knowledge about digital twins in healthcare including their purpose and benefits.
+## What I Did
 
-3. get_case_studies  
-Returned real-world case studies demonstrating how SMILE is applied in different domains.
+* Connected the agent to the LPI MCP server
+* Used multiple LPI tools to gather structured data
+* Combined tool outputs and passed them to a local LLM (Ollama)
+* Generated final answers using tool-based context
+* Ensured the output includes explainability and provenance
 
-## Example Execution
+## Tools Used
 
-Input:
-"What are digital twins in healthcare?"
+* **smile_overview** → Provides SMILE methodology overview
+* **query_knowledge** → Provides domain-specific knowledge
+* **get_case_studies** → Provides real-world examples
 
-Output:
-The agent retrieved:
-- SMILE overview  
-- Knowledge base results  
-- Case studies  
 
-Then passed the combined data to the LLM (Ollama), which generated a structured and explainable answer.
+## Example
 
-## Explanation
+**Input:**
+What are digital twins in healthcare?
 
-The agent first queries multiple LPI tools to gather structured data.  
-This data is then sent to the LLM, which synthesizes the information into a final response with sources.  
+**Process:**
 
-This ensures both factual grounding and explainability.
+1. Agent calls `smile_overview` for methodology
+2. Calls `query_knowledge` for domain insights
+3. Calls `get_case_studies` for real-world validation
+4. Sends combined data to Ollama
 
-## Conclusion
+**Output:**
 
-The agent successfully integrates multiple LPI tools and produces meaningful, explainable responses using an LLM.
+* SMILE overview
+* Knowledge insights
+* Case studies
+* Final structured answer
+
+## Explainability
+
+The agent provides explainable outputs by clearly showing how each tool contributes to the final answer.
+
+* `smile_overview` → Gives the base methodology
+* `query_knowledge` → Adds supporting technical knowledge
+* `get_case_studies` → Validates with real-world examples
+
+The agent first gathers structured data from these tools and then sends it to the LLM.
+The LLM does not generate answers randomly — it formats and explains the tool-based information.
+
+### Evidence from Output
+
+The agent output includes a **Sources / Provenance section**:
+
+* Tool 1: smile_overview → Methodology explanation
+* Tool 2: query_knowledge → Supporting knowledge
+* Tool 3: get_case_studies → Real-world validation
+
+This ensures transparency and traceability of the answer.
+
+## Example Explainable Output
+
+The agent produces answers along with clear sources:
+
+Sources:
+
+* Tool 1 (smile_overview) → Methodology
+* Tool 2 (query_knowledge) → Concepts
+* Tool 3 (get_case_studies) → Examples
+
+This proves that the response is grounded in actual tool outputs, not just LLM generation.
+
+## How to Run
+
+```bash
+npm run build
+python agent.py "your query"
+```
+
+
+## Tech Stack
+
+* Python
+* Node.js (LPI MCP Server)
+* Ollama (Local LLM)
+
+
+## Requirements Completed
+
+* [x] Accepts user input
+* [x] Uses multiple LPI tools
+* [x] Processes tool results
+* [x] Generates structured answers
+* [x] Provides explainability with sources
+
+
+## Checklist
+
+* [x] I read the README and CONTRIBUTING guide
+* [x] My PR title follows the format: `level-3: Khushi Garg`
+* [x] I tested my changes locally before submitting
