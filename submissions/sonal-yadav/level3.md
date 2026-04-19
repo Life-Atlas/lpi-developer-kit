@@ -1,4 +1,5 @@
-# Level 3 Submission — Sonal Yadav
+# Level 3 Submission —
+## Sonal Yadav | github: sonalydav789
 
 ## Track
 **Track A:** Agent Builders
@@ -202,5 +203,4 @@ Mode-Specific LLM Prompt (Ollama qwen2.5:1.5b)
 Structured Answer with [Source N] citations + Provenance Table
 ```
 
-## A2A Agent Card
-See [`agent.json`](agent.json) for the A2A Agent Card (bonus).
+
