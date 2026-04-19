@@ -1,0 +1,23 @@
+LLM Output (from local qwen/ollama model):
+---------------------------------------------------------
+SMILE methodology prioritizes impact over data in its digital twin implementation process. It involves creating a shared reality canvas for establishing where and when, defining the scope (as is to to be), validating hypotheses virtually, connecting physical sensors, sharing ontologies, and leveraging knowledge across time periods. Key parts include:
+
+- Reality Emulation: Days to Weeks
+- Concurrent Engineering: Weeks to Months
+- Collective Intelligence: Months
+- Contextual Intelligence: Months to Years
+- Continuous Intelligence: Years
+- Perpetual Wisdom: Decades
+
+SMILE's methodology reduces the need for data collection, focusing investments on value generating activities and aligns with the principles of Impact First, Data Last.
+
+PROVENANCE (tools used)
+[1] smile_overview (no args)
+[2] query_knowledge ("query": "What is SMILE methodology?")
+[3] get_case_studies (no args)
+---------------------------------------------------------
+
+My Reflection (3 things that surprised me about SMILE):
+1. I was surprised that SMILE focuses on "Impact First, Data Last", because usually in ML/AI projects, we are taught to collect massive amounts of data first before doing anything.
+2. The concept of breaking down the digital twin process into time-based phases (like Days to Weeks for Reality Emulation vs Decades for Perpetual Wisdom) provides a very structured roadmap.
+3. I didn't expect a methodology to rely so heavily on reducing data collection and instead focusing on simulating hypotheses virtually to optimize real-world processes.
