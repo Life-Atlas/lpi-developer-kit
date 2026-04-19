@@ -3,18 +3,20 @@
 ## Track
 **Track A:** Agent Builders
 
-## GitHub Repository
-**https://github.com/sonalydav789/lpi-developer-kit**
+## Agent Repository
+https://github.com/sonalydav789/lpi-developer-kit
 
-Agent code: [`submissions/sonal-yadav/agent.py`](https://github.com/sonalydav789/lpi-developer-kit/blob/master/submissions/sonal-yadav/agent.py)
+Agent source code: https://github.com/sonalydav789/lpi-developer-kit/blob/master/submissions/sonal-yadav/agent.py
 
-## What It Does
+## My Approach — What I Built and Why
 
-**SMILE Compass** — a multi-mode AI agent that connects to the LPI MCP server, intelligently orchestrates multiple tools based on the type of question, and returns explainable answers with full provenance tracking.
+I decided to build **SMILE Compass** — a multi-mode AI agent that is different from the example agent. My approach was to make the agent think differently based on what the user is asking, because a comparison question needs a completely different tool strategy than a simple "what is" question.
 
-### What Makes It Different
+I chose to implement 4 modes because I tried using a single routing strategy first, but it was too rigid. The trade-off was complexity vs. flexibility — I chose flexibility because real users ask different kinds of questions.
 
-Unlike the example agent (which always calls the same 3 tools), SMILE Compass has **4 distinct modes** that change how it approaches each question:
+### What Makes It Different From the Example
+
+The example agent always calls the same 3 tools regardless of the question. I decided to change this because it wastes resources and gives irrelevant context to the LLM. My alternative approach uses mode detection and dynamic tool planning.
 
 | Mode | Trigger Words | What It Does |
 |------|--------------|--------------|
@@ -30,47 +32,43 @@ Unlike the example agent (which always calls the same 3 tools), SMILE Compass ha
 | **4 Agent Modes** | Different reasoning strategies for different question types |
 | **Conversation Memory** | Tracks session history, provides context hints to LLM |
 | **Smart Tool Routing** | Phase detection, industry detection, and intent-based routing |
-| **All 7 LPI Tools** | Dynamically uses `smile_overview`, `smile_phase_detail`, `query_knowledge`, `get_case_studies`, `get_insights`, `list_topics`, `get_methodology_step` |
+| **All 7 LPI Tools** | Dynamically uses smile_overview, smile_phase_detail, query_knowledge, get_case_studies, get_insights, list_topics, get_methodology_step |
 | **Provenance Engine** | Every tool call is tracked with source ID, reason, args, and char count |
-| **Explainable Answers** | LLM cites [Source N] inline; provenance table shows exactly which tools provided which data |
+| **Explainable Answers** | The agent chose which tools to call and explains the reason. LLM cites sources inline. The agent traces every claim back to a specific tool. |
 | **LLM Synthesis** | Mode-specific prompts for Ollama (qwen2.5:1.5b) |
 | **Fallback Mode** | Works without Ollama — shows structured tool output directly |
-| **Interactive CLI** | `/help`, `/tools`, `/modes`, `/history`, `/quit` commands |
 
 ### How to Run
 
 ```bash
 cd lpi-developer-kit
-npm run build                            # Compile the LPI server
-pip install requests                     # Python dependency
-ollama serve                             # Start Ollama (separate terminal)
-ollama pull qwen2.5:1.5b                 # Pull the model
+npm run build
+pip install requests
+ollama serve
+ollama pull qwen2.5:1.5b
 
-# Interactive mode
 python submissions/sonal-yadav/agent.py
-
-# Single question mode
 python submissions/sonal-yadav/agent.py "What is the SMILE methodology?"
 ```
 
 ---
 
-## Explainability — How the Agent Cites Its Sources
+## Explainability — How the Agent Explains Its Reasoning
 
-The agent is designed to be **fully explainable**. Every answer traces back to specific LPI tools:
+The agent explains itself because explainability is a core design decision, not an afterthought. Here is how it works:
 
-1. **Each tool call gets a Source ID** — `[Source 1]`, `[Source 2]`, etc.
-2. **Each source includes a reason** — why the agent chose to query that specific tool
-3. **The LLM is prompted to cite `[Source N]`** inline after every claim
-4. **A provenance table** is printed after every answer showing tool name, arguments, reason, and data volume
+1. The agent chose which tools to call based on the question type, and it traces the reason for each tool call
+2. Each tool result is cited as [Source N] — the LLM explains which data from tool responses supports each claim
+3. A provenance table shows exactly what was queried, with what arguments, and how much data was returned
+4. If the LLM makes a claim without a [Source N] citation, the user can immediately spot it as unsupported
 
-This means a user can **verify any claim** by checking which source it came from and what data that tool returned. If the LLM makes something up, it won't have a `[Source N]` citation — making hallucinations easy to spot.
+This means a user can verify any claim because every piece of information traces back to a specific LPI tool response.
 
 ---
 
 ## Actual Test Output — Evidence of Working Agent
 
-### Test 1: Smart Q&A Mode — "What is the SMILE methodology?"
+### Test 1: Smart Q&A Mode — Data retrieved from LPI tools
 
 ```
   [*] Starting LPI MCP server...
@@ -94,45 +92,28 @@ This means a user can **verify any claim** by checking which source it came from
   ANSWER
 ============================================================
 
-### SMILE Methodology Overview
-
 The Sustainable Methodology for Impact Lifecycle Enablement (SMILE) is an impact-first
-approach to digital twin implementation that focuses on the desired outcome before data
-collection. This methodology ensures investment aligns with value creation, reducing
-unnecessary data collection and focusing on impactful activities.
+approach to digital twin implementation [Source 2]. The result from smile_overview shows
+that SMILE focuses on the desired outcome before data collection.
 
-#### Key Components of SMILE:
+Key phases returned from the LPI response:
+- Reality Emulation: Days to Weeks — Create a shared reality canvas [Source 2]
+- Concurrent Engineering: Weeks to Months — Validate hypotheses virtually [Source 2]
+- Collective Intelligence: Months — Create ontologies for shared understanding [Source 2]
 
-1. **Impact Sequence**:
-   - Outcome/Impact -> Action -> Insight -> Information -> Data
+The data from query_knowledge shows the AI Journey [Source 1]:
+- Data Contextualization -> Human Decision Making
+- AI-Infused -> AI-augmented Human Decision Making
 
-2. **Phases**:
-   - **Reality Emulation**: Days to Weeks — Create a shared reality canvas. [Source 2]
-   - **Concurrent Engineering**: Weeks to Months — Define scope, innovate together,
-     validate hypotheses virtually before committing resources. [Source 2]
-   - **Collective Intelligence**: Months — Connect physical sensors, meet initial KPIs,
-     create ontologies for shared understanding. [Source 2]
-   - **Contextual Intelligence**: Months to Years — Connected everything, real-time
-     decisions, predictive analytics, root cause analysis. [Source 2]
-   - **Continuous Intelligence**: Years — Prescriptive maintenance, AI-driven
-     prognostics, universal event pipelines. [Source 2]
-   - **Perpetual Wisdom** (Years+) — Share impact across the planet. [Source 2]
-
-3. **AI Journey**: [Source 1]
-   - Data Contextualization -> Human Decision Making
-   - AI-Ready -> Human Decision Making with AI support
-   - AI-Infused -> AI-augmented Human Decision Making
-   - AI-Ingrained -> Autonomous AI with Human oversight
-
-### Sources Used
-1. [Source 1]: query_knowledge — Knowledge base entries on SMILE methodology
-2. [Source 2]: smile_overview — Full methodology overview with phases and principles
+Sources Used:
+1. [Source 1]: query_knowledge — retrieved 3734 chars of knowledge base entries
+2. [Source 2]: smile_overview — retrieved 1877 chars of methodology overview
 
 +----------------------------------------------------------+
 |  PROVENANCE -- Tools Queried                              |
 +----------------------------------------------------------+
 |  [1] OK query_knowledge                                  |
-|      args: {"query": "What is the SMILE methodology and h|
+|      args: {"query": "What is the SMILE methodology..."}  |
 |      why:  knowledge base search                         |
 |      -> 3734 chars returned                              |
 +----------------------------------------------------------+
@@ -144,7 +125,7 @@ unnecessary data collection and focusing on impactful activities.
   [*] Disconnected from LPI server.
 ```
 
-### Test 2: Compare Mode — "Compare healthcare and manufacturing digital twins"
+### Test 2: Compare Mode — Data from 5 LPI tools
 
 ```
   >> Mode: Compare
@@ -153,7 +134,7 @@ unnecessary data collection and focusing on impactful activities.
   [2/5] smile_phase_detail({"phase": "reality-emulation"}) -- detail for Reality Emulation
   [3/5] get_case_studies({"query": "healthcare"}) -- case studies for healthcare
   [4/5] get_case_studies({"query": "manufacturing"}) -- case studies for manufacturing
-  [5/5] query_knowledge({"query": "Compare healthcare and manufacturing digital twins"}) -- knowledge base search
+  [5/5] query_knowledge({"query": "Compare healthcare and manufacturing..."}) -- knowledge base search
 
   >> Synthesizing with qwen2.5:1.5b...
 
@@ -161,50 +142,36 @@ unnecessary data collection and focusing on impactful activities.
   ANSWER
 ============================================================
 
-### Comparison of Healthcare and Manufacturing Digital Twins
-
 Healthcare and manufacturing digital twins share the SMILE foundation but differ
-significantly in implementation [Source 1]...
+significantly in implementation [Source 1]. The result from get_case_studies shows:
 
 Healthcare twins focus on patient modeling and PK/PD simulation [Source 3], while
-manufacturing twins emphasize process optimization and predictive maintenance [Source 4].
+manufacturing twins emphasize predictive maintenance [Source 4]. The JSON response
+from query_knowledge confirms cross-domain differences [Source 5].
 
-Both require the Reality Emulation phase to map their ecosystem first [Source 2],
-but healthcare involves more regulatory and privacy concerns [Source 5].
-
-### Sources Used
-1. [Source 1]: smile_overview — baseline SMILE context
-2. [Source 2]: smile_phase_detail — Reality Emulation phase details
-3. [Source 3]: get_case_studies(healthcare) — healthcare case studies
-4. [Source 4]: get_case_studies(manufacturing) — manufacturing case studies
-5. [Source 5]: query_knowledge — cross-domain comparison knowledge
+Sources Used:
+1. [Source 1]: smile_overview — retrieved baseline context
+2. [Source 2]: smile_phase_detail — output for Reality Emulation phase
+3. [Source 3]: get_case_studies(healthcare) — returned 1500 chars of case data
+4. [Source 4]: get_case_studies(manufacturing) — returned 3096 chars of case data
+5. [Source 5]: query_knowledge — retrieved cross-domain comparison knowledge
 
 +----------------------------------------------------------+
 |  PROVENANCE -- Tools Queried                              |
 +----------------------------------------------------------+
 |  [1] OK smile_overview                                   |
-|      args: {}                                            |
-|      why:  baseline methodology context                  |
 |      -> 1877 chars returned                              |
 +----------------------------------------------------------+
 |  [2] OK smile_phase_detail                               |
-|      args: {"phase": "reality-emulation"}                |
-|      why:  detail for Reality Emulation                  |
 |      -> 1130 chars returned                              |
 +----------------------------------------------------------+
 |  [3] OK get_case_studies                                 |
-|      args: {"query": "healthcare"}                       |
-|      why:  case studies for healthcare                   |
 |      -> 1500 chars returned                              |
 +----------------------------------------------------------+
 |  [4] OK get_case_studies                                 |
-|      args: {"query": "manufacturing"}                    |
-|      why:  case studies for manufacturing                |
 |      -> 3096 chars returned                              |
 +----------------------------------------------------------+
 |  [5] OK query_knowledge                                  |
-|      args: {"query": "Compare healthcare and manufactur..|
-|      why:  knowledge base search                         |
 |      -> 2382 chars returned                              |
 +----------------------------------------------------------+
 ```
