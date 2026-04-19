@@ -185,11 +185,11 @@
   },
   "ankit-kumar-singh": {
     "name": "Ankit Kumar Singh",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-16T17:24:12.295Z"
+    "level": 3,
+    "score": 11,
+    "max": 13,
+    "pct": 85,
+    "updated": "2026-04-19T10:30:16.334Z"
   },
   "suhani-sharma": {
     "name": "Suhani Sharma",
@@ -201,27 +201,27 @@
   },
   "shishir-chaudhary": {
     "name": "Shishir Chaudhary",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-16T16:12:20.222Z"
+    "level": 3,
+    "score": 9,
+    "max": 13,
+    "pct": 69,
+    "updated": "2026-04-19T08:10:00.129Z"
   },
   "sonal-yadav": {
     "name": "Sonal Yadav",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-16T18:21:17.127Z"
+    "level": 3,
+    "score": 3,
+    "max": 13,
+    "pct": 23,
+    "updated": "2026-04-19T08:14:35.940Z"
   },
   "priyanshu-bhardwaj": {
     "name": "Priyanshu Bhardwaj",
     "level": 3,
-    "score": 7,
+    "score": 8,
     "max": 13,
-    "pct": 54,
-    "updated": "2026-04-18T19:11:09.318Z"
+    "pct": 62,
+    "updated": "2026-04-19T13:00:14.011Z"
   },
   "devika-hooda": {
     "name": "Devika Hooda",
@@ -257,11 +257,11 @@
   },
   "vusala-akanksha": {
     "name": "Vusala Akanksha",
-    "level": 2,
-    "score": 3,
-    "max": 5,
-    "pct": 60,
-    "updated": "2026-04-17T16:29:22.093Z"
+    "level": 3,
+    "score": 6,
+    "max": 13,
+    "pct": 46,
+    "updated": "2026-04-19T10:37:56.258Z"
   },
   "srishti-gusain-(track-c)": {
     "name": "Srishti Gusain (Track C)",
@@ -281,11 +281,11 @@
   },
   "khushi-garg": {
     "name": "Khushi Garg",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-18T20:40:42.982Z"
+    "level": 3,
+    "score": 10,
+    "max": 13,
+    "pct": 77,
+    "updated": "2026-04-19T07:49:19.847Z"
   },
   "rahul-bijarnia": {
     "name": "Rahul Bijarnia",
@@ -297,11 +297,11 @@
   },
   "yash-maheshwari": {
     "name": "Yash Maheshwari",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-18T15:11:56.281Z"
+    "level": 3,
+    "score": 11,
+    "max": 13,
+    "pct": 85,
+    "updated": "2026-04-19T15:37:02.790Z"
   },
   "ayush-sharma": {
     "name": "Ayush Sharma",
@@ -330,9 +330,65 @@
   "abhinav-chaudhary": {
     "name": "Abhinav Chaudhary",
     "level": 3,
+    "score": 10,
+    "max": 13,
+    "pct": 77,
+    "updated": "2026-04-19T03:36:51.964Z"
+  },
+  "jaivardhan-singh": {
+    "name": "Jaivardhan Singh",
+    "level": 3,
+    "score": 10,
+    "max": 13,
+    "pct": 77,
+    "updated": "2026-04-19T15:42:29.483Z"
+  },
+  "praveen-singh": {
+    "name": "Praveen Singh",
+    "level": 3,
     "score": 3,
     "max": 13,
     "pct": 23,
-    "updated": "2026-04-19T01:42:55.623Z"
+    "updated": "2026-04-19T16:31:55.111Z"
+  },
+  "level-3-sonal-yadav": {
+    "name": "level-3 Sonal Yadav",
+    "level": 3,
+    "score": 3,
+    "max": 13,
+    "pct": 23,
+    "updated": "2026-04-19T08:16:25.205Z"
+  },
+  "aryan": {
+    "name": "Aryan",
+    "level": 3,
+    "score": 7,
+    "max": 13,
+    "pct": 54,
+    "updated": "2026-04-19T14:10:13.651Z"
+  },
+  "level-2---farhan-ahmed-siddique": {
+    "name": "level-2 - Farhan Ahmed Siddique",
+    "level": 2,
+    "score": 3,
+    "max": 5,
+    "pct": 60,
+    "updated": "2026-04-19T10:17:38.986Z"
+  },
+  "adil-islam": {
+    "name": "Adil Islam",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-19T14:58:25.907Z"
+  },
+  "dia-vats": {
+    "name": "Dia Vats",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-19T13:56:00.872Z"
   }
 }
