@@ -1,0 +1,64 @@
+# Level 2 Submission — Aryan
+
+## LPI Sandbox Setup
+All 7 tools passed successfully, confirming that the LPI sandbox is working as expected. Running the test-client felt like interacting with a modular system where each tool represents a specific capability of the agent. Instead of a single monolithic output, the system exposes structured functionality, which made it clear how agents can operate using tool calls rather than relying purely on raw LLM responses.
+
+---
+
+## Test Client Output
+=== LPI Sandbox Test Client ===
+
+[LPI Sandbox] Server started — 7 read-only tools available
+Connected to LPI Sandbox
+
+Available tools (7):
+
+smile_overview
+smile_phase_detail
+query_knowledge
+get_case_studies
+get_insights
+list_topics
+get_methodology_step
+
+[PASS] smile_overview({})
+[PASS] smile_phase_detail({"phase":"reality-emulation"})
+[PASS] list_topics({})
+[PASS] query_knowledge({"query":"explainable AI"})
+[PASS] get_case_studies({})
+[PASS] get_case_studies({"query":"smart buildings"})
+[PASS] get_insights({"scenario":"personal health digital twin","tier":"free"})
+[PASS] get_methodology_step({"phase":"concurrent-engineering"})
+
+=== Results ===
+Passed: 8/8
+Failed: 0/8
+
+All tools working. Your LPI Sandbox is ready.
+You can now build agents that connect to this server.
+
+```
+
+## Local LLM Setup (Ollama)
+
+**Model:**
+qwen2.5:1.5b
+
+**Prompt:**
+What is SMILE methodology?
+
+**Response (summary):**
+Presented SMILE as a structured approach to managing the full data lifecycle—creation, storage, access, and deletion—with emphasis on automation, compliance, and efficiency. SMILE methodology is not a widely recognized or standardized framework. The response is best interpreted as a generic description of data lifecycle and governance principles, not a formal methodology.
+
+---
+
+**Observation:**  
+
+Running the model locally provides control over execution (latency, hardware, reproducibility), which increases transparency at the system level. However, it does not reveal the model’s internal reasoning—only how it behaves under given conditions.
+
+---
+
+## Reflection on SMILE Methodology
+
+The response aligns with established ideas like data lifecycle management and governance-by-design. The insight about enforcing behavior through system architecture is valid, but attributing it to a specific “SMILE methodology” is unsupported. It’s more accurate to treat this as a general systems design perspective rather than a defined framework.
+```
