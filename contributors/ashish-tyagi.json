@@ -2,9 +2,10 @@
   "name": "Ashish Tyagi",
   "github": "xAshisssh",
   "university": "Amity University",
+  "track": "Content & Research",
   "program": "B.Tech Computer Science",
   "campus": "Noida",
   "skills": ["Content Writing", "Research", "Basic Programming"],
   "interests": ["AI", "Digital Twins", "Startups"],
-  "my_twin": "I want to build a digital twin of my personal productivity and learning system to optimize my daily routines, track progress, and improve decision-making using AI insights."
+  "my_twin": "I want to build a digital twin of my personal productivity and learning system to optimize my daily routines, track progress, and improve decision-making."
 }

@@ -1,0 +1,8 @@
+{
+  "query": "How to implement digital twin with examples?",
+  "tools_used": [
+    "get_methodology_step",
+    "get_case_studies",
+    "get_insights"
+  ]
+}
