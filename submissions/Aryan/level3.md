@@ -1,159 +1,71 @@
-# Level 3 Submission — Aryan
+# LEVEL 3 SUBMISSION
 
-## Project: Explainable Knowledge Agent (LPI)
+## Overview
 
-**Repository:** https://github.com/iamaryan07/lpi-life-agent
+This project implements a Level 3 agent using the Life Programmable Interface (LPI).
+The agent answers user queries by selecting and calling multiple tools, processing their outputs, and generating a structured response.
 
 ---
 
-## Description
+## Tools Used
 
-An explainable AI agent that answers user queries by combining **general knowledge (Wikipedia)** and **research-level insights (Arxiv)**.
+* `smile_overview` → provides SMILE methodology
+* `get_case_studies` → provides real-world implementations
 
-The system ensures that every response is:
+---
 
-- **grounded** in real retrieved data  
-- **synthesized** across multiple sources  
-- **fully traceable** (Explainable AI requirement)  
+## How It Works
+
+1. Takes user input (e.g., healthcare-related query)
+2. Selects two relevant tools
+3. Sends JSON-RPC requests to LPI server
+4. Receives structured responses
+5. Parses and extracts relevant text
+6. Filters healthcare-specific case study
+7. Combines outputs into final answer
 
 ---
 
 ## Key Features
 
-- **Dual-Source Retrieval:** Uses two LPI tools  
-  - LPI_Wikipedia → general understanding  
-  - LPI_Arxiv → research insights  
-
-- **Explainable AI:**  
-  - Explicit tool trace included  
-  - Every part of the answer is mapped to a source  
-
-- **Structured Output:**  
-  - Combined Answer  
-  - Wikipedia Contribution  
-  - Arxiv Contribution  
-  - Tool Trace  
-  - Source details (papers, authors, URLs)  
-
-- **Deterministic Pipeline:**  
-  Tools are explicitly called (not left to LLM randomness)
+* Multi-tool orchestration
+* Dynamic argument handling for tools
+* JSON-RPC communication via subprocess
+* Structured output (summary + analysis + conclusion)
+* Domain-specific filtering (healthcare use case)
 
 ---
 
-## Explainability (Tool Trace)
+## Example Query
 
-The system provides explicit traceability for every answer:
-
-- **LPI_Wikipedia** → provides definition and general explanation  
-- **LPI_Arxiv** → provides research insights and technical findings  
-
-This ensures that every part of the answer can be traced back to its source.
-
----
-
-## LPI Tools Used
-
-1. **LPI_Wikipedia** (via WikipediaQueryRun)  
-   - Provides general knowledge and definitions  
-
-2. **LPI_Arxiv** (via Arxiv Python SDK)  
-   - Provides research papers (title, authors, summary, URL)  
-
----
-
-## Technical Architecture
-
-- **Language:** Python 3  
-- **LLM:** HuggingFace (`meta-llama/Llama-3.2-1B-Instruct`)  
-- **Framework:** LangChain  
-- **Data Sources:**  
-  - Wikipedia API  
-  - Arxiv API  
-
----
-
-
-
-## Agent Pipeline
-User Query
-↓
-Wikipedia Tool (general knowledge)
-↓
-Arxiv Tool (research papers)
-↓
-LLM (Llama) synthesis
-↓
-Structured Answer + Source Attribution
-
-text
-
----
-
-## Example Usage
-
-```bash
-python agent.py "What is machine learning?"
+```text
+How are digital twins used in healthcare?
 ```
----
-
-## Sample Output (Simplified)
-
-COMBINED ANSWER
-
-Machine learning is defined as algorithms that learn from data (Wikipedia).
-Arxiv research extends this by highlighting challenges such as model validation
-and data reliability in real-world applications.
-
-WIKIPEDIA CONTRIBUTION
-
-Definition of machine learning
-Statistical foundation
-
-ARXIV CONTRIBUTION
-
-Paper: DOME → validation standards in ML
-Paper: Data Sources → importance of reliable data
-
-TOOL TRACE
-
-LPI_Wikipedia → definition of machine learning
-LPI_Arxiv → research insights (validation, data reliability)
-
-SOURCES
-
-Wikipedia snippet
-Arxiv paper titles, authors, URLs
-
 
 ---
 
-## What Makes This Correct for Level 3
+## Example Output (Summary)
 
-- ✅ Uses 2 real tools (mandatory requirement)
-- ✅ Performs actual synthesis, not raw output
-- ✅ Provides traceable explanations
-- ✅ Shows clear mapping between sources and answer
-
----
-
-## Files in Repository
-
-- agent.py — main implementation
-- README.md — documentation and setup
-- HOW_I_DID_IT.md — design decisions, challenges, improvements
-- requirements.txt — dependencies
----
-
-## Testing Results
-
-**Tested with:**  
-`"What is machine learning?"`
+* SMILE framework overview
+* Healthcare case study (continuous patient twin)
+* Analysis of methodology + application
 
 ---
 
-**Results:**
+## Level 3 Criteria Met
 
-- Wikipedia data retrieved successfully
-- Arxiv papers retrieved (titles, authors, summaries)
-- LLM combined both sources
-- Output remained structured and traceable
+* ✔ Uses multiple tools
+* ✔ Combines outputs from different tools
+* ✔ Processes and structures responses
+* ✔ Produces a meaningful final answer
+* ✔ Demonstrates reasoning over tool outputs
+
+---
+
+## Notes
+
+* Uses LPI server (`dist/src/index.js`), not test client
+* Filters case studies to match query context
+* Built using Python + Node.js (LPI)
+
+---
