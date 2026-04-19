@@ -369,11 +369,11 @@
   },
   "dia-vats": {
     "name": "Dia Vats",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-19T23:40:03.345Z"
+    "level": 3,
+    "score": 10,
+    "max": 13,
+    "pct": 77,
+    "updated": "2026-04-19T23:54:35.555Z"
   },
   "lavanya-parashar": {
     "name": "Lavanya Parashar",
