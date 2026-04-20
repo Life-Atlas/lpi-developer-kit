@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh api *)",
+      "Bash(python -c \"import json,sys; [print\\(x['name']\\) for x in json.load\\(sys.stdin\\)]\")",
+      "WebFetch(domain:github.com)",
+      "Bash(curl *)",
+      "Bash(mkdir -p \"C:/Users/kshub/lpi-roi-scoper\")",
+      "Bash(cp \"C:/Users/kshub/OneDrive/Documents/Winnio/LPI/lpi-developer-kit/submissions/shubham-kumar/level3/agent.py\" \"C:/Users/kshub/lpi-roi-scoper/\")",
+      "Bash(cp \"C:/Users/kshub/OneDrive/Documents/Winnio/LPI/lpi-developer-kit/submissions/shubham-kumar/level3/agent.json\" \"C:/Users/kshub/lpi-roi-scoper/\")",
+      "Bash(cp \"C:/Users/kshub/OneDrive/Documents/Winnio/LPI/lpi-developer-kit/submissions/shubham-kumar/level3/README.md\" \"C:/Users/kshub/lpi-roi-scoper/\")",
+      "Read(//c/Users/kshub/**)",
+      "Bash(mkdir -p \"C:/Users/kshub/lpi-roi-scoper/.well-known\")",
+      "Bash(cp \"C:/Users/kshub/lpi-roi-scoper/agent.json\" \"C:/Users/kshub/lpi-roi-scoper/.well-known/agent.json\")"
+    ]
+  }
+}
