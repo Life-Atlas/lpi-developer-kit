@@ -6,5 +6,5 @@
   "skills": ["python", "pytorch", "react", "langchain", "tensorflow", "scikit-learn", "django", "django rest framework", "pandas", "numpy", "javascript", "java", "c++", "c", "langgraph"],
   "interests": ["agents", "NLP", "3D", "security"],
   "track": "A: Agent Builders",
-  "my_twin": "If I had a personal digital twin, it could scout job boards 24/7 to apply for roles that match my specific profile, handling repetitive applications so I can focus on interviews."
+  "my_twin": "If I had a personal digital twin, it would act as an intelligent agent that understands my goals, queries multiple knowledge systems, filters relevant insights, and continuously optimizes decisions—similar to how I built my LPI agent to combine methodology and real-world data for meaningful answers."
 }
