@@ -19,8 +19,8 @@ The agent responds to user queries by intelligently selecting multiple tools, ex
 
 ## Tools Used
 
-* `smile_overview` → delivers the SMILE framework and conceptual methodology
-* `get_case_studies` → provides practical, real-world implementations
+* `smile_overview` → delivers the SMILE framework and conceptual methodology.
+* `get_case_studies` → provides practical, real-world implementations.
 
 ---
 
