@@ -42,10 +42,10 @@
   "harshit-kumar": {
     "name": "Harshit Kumar",
     "level": 3,
-    "score": 10,
+    "score": 11,
     "max": 13,
-    "pct": 77,
-    "updated": "2026-04-17T05:34:34.358Z"
+    "pct": 85,
+    "updated": "2026-04-20T02:02:10.208Z"
   },
   "ananyaa-m": {
     "name": "Ananyaa M",
@@ -149,7 +149,7 @@
     "score": 6,
     "max": 13,
     "pct": 46,
-    "updated": "2026-04-16T22:30:26.620Z"
+    "updated": "2026-04-19T23:06:28.033Z"
   },
   "jahnavi-sharma": {
     "name": "Jahnavi Sharma",
@@ -162,10 +162,10 @@
   "anupaul-saikia": {
     "name": "Anupaul Saikia",
     "level": 3,
-    "score": 5,
+    "score": 8,
     "max": 13,
-    "pct": 38,
-    "updated": "2026-04-17T11:20:08.396Z"
+    "pct": 62,
+    "updated": "2026-04-20T08:13:51.567Z"
   },
   "aman-gupta": {
     "name": "Aman Gupta",
@@ -213,15 +213,15 @@
     "score": 10,
     "max": 13,
     "pct": 77,
-    "updated": "2026-04-19T19:25:23.961Z"
+    "updated": "2026-04-20T08:10:28.399Z"
   },
   "priyanshu-bhardwaj": {
     "name": "Priyanshu Bhardwaj",
     "level": 3,
-    "score": 8,
+    "score": 11,
     "max": 13,
-    "pct": 62,
-    "updated": "2026-04-19T13:00:14.011Z"
+    "pct": 85,
+    "updated": "2026-04-20T08:04:14.344Z"
   },
   "devika-hooda": {
     "name": "Devika Hooda",
@@ -282,10 +282,10 @@
   "rahul-bijarnia": {
     "name": "Rahul Bijarnia",
     "level": 3,
-    "score": 3,
+    "score": 6,
     "max": 13,
-    "pct": 23,
-    "updated": "2026-04-18T20:57:07.735Z"
+    "pct": 46,
+    "updated": "2026-04-20T09:37:44.258Z"
   },
   "yash-maheshwari": {
     "name": "Yash Maheshwari",
@@ -333,7 +333,7 @@
     "score": 10,
     "max": 13,
     "pct": 77,
-    "updated": "2026-04-19T15:42:29.483Z"
+    "updated": "2026-04-20T03:25:14.371Z"
   },
   "praveen-singh": {
     "name": "Praveen Singh",
@@ -365,23 +365,23 @@
     "score": 5,
     "max": 5,
     "pct": 100,
-    "updated": "2026-04-19T22:32:51.223Z"
+    "updated": "2026-04-20T09:33:25.975Z"
   },
   "dia-vats": {
     "name": "Dia Vats",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-19T13:56:00.872Z"
+    "level": 3,
+    "score": 10,
+    "max": 13,
+    "pct": 77,
+    "updated": "2026-04-20T00:19:29.510Z"
   },
   "lavanya-parashar": {
     "name": "Lavanya Parashar",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-19T18:27:41.233Z"
+    "level": 3,
+    "score": 11,
+    "max": 13,
+    "pct": 85,
+    "updated": "2026-04-20T09:12:58.973Z"
   },
   "touqeer-hamdani": {
     "name": "Touqeer Hamdani",
@@ -406,5 +406,45 @@
     "max": 13,
     "pct": 69,
     "updated": "2026-04-19T20:02:48.632Z"
+  },
+  "gunti-sandeep": {
+    "name": "Gunti Sandeep",
+    "level": 3,
+    "score": 7,
+    "max": 13,
+    "pct": 54,
+    "updated": "2026-04-20T01:07:25.485Z"
+  },
+  "daksh-garg": {
+    "name": "Daksh Garg",
+    "level": 3,
+    "score": 11,
+    "max": 13,
+    "pct": 85,
+    "note": "Manual score - evaluator missed due to placeholder github username. L2+L3+L4 submitted with agent, security audit, threat model, A2A."
+  },
+  "level-3-:-abhishek-sharma": {
+    "name": "Level-3 : Abhishek Sharma",
+    "level": 3,
+    "score": 9,
+    "max": 13,
+    "pct": 69,
+    "updated": "2026-04-20T04:40:11.466Z"
+  },
+  "bharath-raju": {
+    "name": "Bharath Raju",
+    "level": 3,
+    "score": 11,
+    "max": 13,
+    "pct": 85,
+    "updated": "2026-04-20T09:36:04.533Z"
+  },
+  "vansh-singhal": {
+    "name": "Vansh Singhal",
+    "level": 3,
+    "score": 10,
+    "max": 13,
+    "pct": 77,
+    "updated": "2026-04-20T08:22:27.103Z"
   }
 }
