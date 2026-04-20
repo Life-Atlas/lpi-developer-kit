@@ -1,95 +1,177 @@
 # Level 3 Submission — Praveen Singh
+**Track A: Agent Builders**
 
-## Project: Explainable Knowledge Agent (LPI)
+## Agent: Deployment Strategy Agent (Digital Twin)
 
-**Repository:** https://github.com/praveen-singh-007/lpi-life-agent
-**Code** https://github.com/praveen-singh-007/lpi-life-agent/agent.py
-**A2A Card**  https://github.com/praveen-singh-007/lpi-life-agent/agent.json
+**Repo:** https://github.com/praveen-singh-007/lpi-life-agent
 
----
+**Code:** https://github.com/praveen-singh-007/lpi-life-agent/agent.py
 
-## What This Project Does
-
-This is a Level 3 agent built on the Life Programmable Interface (LPI). Instead of just calling one tool, it picks multiple tools based on the user's question, runs them, processes their results, and then puts together a clean, structured answer.
+**A2A Card:** https://github.com/praveen-singh-007/lpi-life-agent/agent.json
 
 ---
 
-## Tools Integrated
+## What It Does
 
-- `smile_overview` → explains the SMILE methodology  
-- `get_case_studies` → fetches real-world implementation examples  
+I built a **constraint-aware deployment strategy agent** — not a generic digital twin explainer, but a system that generates **realistic implementation plans** based on the user’s constraints.
 
----
+Instead of explaining what digital twins are, the agent answers:
+> *“Given this use case and these constraints, what should we actually build?”*
 
-## Step-by-Step Workflow
-
-1. Accepts a user question (e.g., something about healthcare)  
-2. Chooses two relevant tools to answer it  
-3. Sends JSON-RPC requests to the LPI server  
-4. Gets structured data back from each tool  
-5. Parses the responses and pulls out the useful text  
-6. Filters case studies to keep only healthcare-related ones  
-7. Merges everything into one final answer  
+The output changes significantly depending on the scenario.  
+For example, a hospital with 2 developers and no cloud budget receives a minimal, phased deployment plan, while a larger organization would get a more scalable architecture.
 
 ---
 
-## Key Capabilities
+### Inputs
 
-- Coordinates multiple tools in one flow  
-- Dynamically adjusts tool arguments as needed  
-- Uses JSON-RPC communication via subprocess calls  
-- Produces a structured final response (summary + analysis + conclusion)  
-- Filters results by domain (e.g., healthcare only)  
+- Use case (e.g. ICU patient monitoring)
+- Constraints (e.g. 2 developers, 3 months, no cloud)
 
 ---
 
-## Example Query
+### Output (Structured Deployment Strategy)
 
-```text
-How are digital twins being used in healthcare today?
+1. **Recommended Architecture** — realistic, minimal solution based on constraints  
+2. **SMILE Phases to Prioritize** — selected and justified per scenario  
+3. **Key Risks** — grounded in insights and case context  
+4. **What to Avoid** — what should NOT be done early  
+5. **First 3 Actions** — concrete, actionable steps  
+6. **Decision Reasoning** — clear data → reasoning → decision chain  
+
+The agent is designed to behave like a **deployment consultant**, not a summarizer.
+
+---
+
+## Design Decisions
+
+### Constraint-first design
+
+Most digital twin discussions focus on what’s possible.  
+I designed this agent to focus on:
+
+> *What is feasible under constraints?*
+
+This led to making **minimal viable twin (MVT)** a core concept in the output.
+
+---
+
+### Structured output over free-form text
+
+Early versions produced generic answers.  
+I enforced a fixed structure:
+
+- Architecture  
+- Phases  
+- Risks  
+- Avoid  
+- Actions  
+- Reasoning  
+
+This significantly improved clarity and evaluation.
+
+---
+
+### Multi-tool reasoning
+
+I used four tools to ensure grounding:
+
+- `smile_overview` → methodology baseline  
+- `get_insights` → scenario-specific reasoning  
+- `get_case_studies` → real-world grounding  
+- `query_knowledge` → supporting context  
+
+Using fewer tools led to weaker reasoning and phase confusion.
+
+---
+
+### Hallucination control
+
+Initial outputs included:
+- invented technologies  
+- irrelevant case studies  
+- over-engineered systems  
+
+To fix this, I enforced:
+
+- use ONLY provided data  
+- do NOT invent technologies or tools  
+- ignore cross-domain examples  
+- prefer minimal, realistic solutions  
+
+---
+
+### Relevance filtering
+
+One key issue was the model applying unrelated case studies (e.g. energy systems in healthcare).
+
+I added rules to:
+- ignore mismatched domains  
+- use only context-relevant data  
+
+---
+
+## LPI Tools Used
+
+| Tool | Arguments | Purpose |
+|------|-----------|---------|
+| `smile_overview` | *(no args)* | Provides full SMILE methodology context |
+| `get_insights` | `scenario: "{usecase}"` | Scenario-specific recommendations |
+| `get_case_studies` | `query: "healthcare digital twin"` | Real-world grounding |
+| `query_knowledge` | `query: "{usecase}"` | Supporting technical context |
+
+---
+
+## Sample Behavior (Real)
+
+Input:
+```
+Use case: real-time patient monitoring digital twin in ICU
+
+Constraints: 2 developers, 3 months, no cloud
 ```
 
-## Example Output (Summary)
 
-- Overview of the SMILE framework
+Output highlights:
 
-- A healthcare case study focused on continuous patient twinning
+- Recommends **minimal viable twin (MVT)** instead of full system  
+- Prioritizes **Reality Emulation + Concurrent Engineering**  
+- Avoids complex integrations  
+- Suggests phased rollout  
 
-- Analysis connecting the methodology to the actual application
+This shows the agent is reasoning against constraints, not just summarizing tools.
 
-## Level 3 Requirements Met
-  ✅ Uses more than one tool
-  
-  ✅ Combines outputs from different tools
-  
-  ✅ Processes and restructures tool responses
-  
-  ✅ Delivers a meaningful, final answer
-  
-  ✅ Shows reasoning across tool outputs
+---
 
-## Implementation Notes
-- Talks to the real LPI server (dist/src/index.js), not a mock client
+## Tech Stack
 
-- Filters case studies to match the user's domain
+- Python 3.10+
+- Ollama (local LLM — Qwen2.5)
+- LPI MCP server (Node.js)
+- JSON-RPC over subprocess
+- Standard library + `requests`
 
-- Built with Python + Node.js (LPI runtime)
+---
 
-## Going Beyond the Instructions
-**What I added on my own**
-- Filtered tool outputs to return only healthcare-relevant case studies instead of dumping everything.
+## Run It
 
-- Modified tool arguments (e.g., used "healthcare digital twin") to make results more relevant instead of blindly passing the raw query.
+```bash
+python agent.py
+```
 
-- Manually parsed nested JSON-RPC responses (result → content → text).
+## Example Input
+```
+Real-Time Patient Monitoring Digital Twin in ICU
 
-- Used the actual LPI server with explicit initialization instead of the test client.
+Project Details Developers: 2 Duration: 3 months Cloud Usage: No
+```
+## What I'd Do Differently
 
-**What I'd improve next time**
-- Abstract the tool-calling logic into a reusable client separate from the agent logic.
+The current system calls each tool using a new subprocess, which is simple but inefficient. A better design would:
+- Maintain a persistent MCP connection
+- Cache tool outputs (especially case studies)
+- Reduce repeated calls
 
-- Add explicit reasoning traces to show why each tool was chosen and how outputs were merged.
-
-- Improve summarization with consistent structure (Challenge → Approach → Outcome) instead of truncation.
-
-- Make tool selection adaptive rather than rule-based.
+I would also add:
+- Structured output validation (to detect hallucination)
+- Automatic relevance filtering before passing data to the LLM
