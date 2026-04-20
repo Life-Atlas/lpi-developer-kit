@@ -22,7 +22,6 @@ Tool 6 passed
 Tool 7 passed
 ```
 
-
 Result:
 All 7 tools passed successfully, confirming that the LPI environment is working correctly.
 
