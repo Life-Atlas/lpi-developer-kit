@@ -261,7 +261,7 @@
     "score": 6,
     "max": 13,
     "pct": 46,
-    "updated": "2026-04-19T10:37:56.258Z"
+    "updated": "2026-04-20T10:11:43.051Z"
   },
   "vineet-sharma": {
     "name": "Vineet Sharma",
@@ -282,10 +282,10 @@
   "rahul-bijarnia": {
     "name": "Rahul Bijarnia",
     "level": 3,
-    "score": 6,
+    "score": 9,
     "max": 13,
-    "pct": 46,
-    "updated": "2026-04-20T09:37:44.258Z"
+    "pct": 69,
+    "updated": "2026-04-20T10:50:12.168Z"
   },
   "yash-maheshwari": {
     "name": "Yash Maheshwari",
@@ -349,7 +349,7 @@
     "score": 10,
     "max": 13,
     "pct": 77,
-    "updated": "2026-04-19T18:40:57.840Z"
+    "updated": "2026-04-20T11:08:54.661Z"
   },
   "level-2---farhan-ahmed-siddique": {
     "name": "level-2 - Farhan Ahmed Siddique",
@@ -365,7 +365,7 @@
     "score": 5,
     "max": 5,
     "pct": 100,
-    "updated": "2026-04-20T09:38:09.607Z"
+    "updated": "2026-04-20T09:41:38.188Z"
   },
   "dia-vats": {
     "name": "Dia Vats",
@@ -446,5 +446,21 @@
     "max": 13,
     "pct": 77,
     "updated": "2026-04-20T08:22:27.103Z"
+  },
+  "yashika-vemra": {
+    "name": "Yashika Vemra",
+    "level": 2,
+    "score": 3,
+    "max": 5,
+    "pct": 60,
+    "updated": "2026-04-20T10:17:22.964Z"
+  },
+  "yashika-verma": {
+    "name": "Yashika Verma",
+    "level": 3,
+    "score": 7,
+    "max": 13,
+    "pct": 54,
+    "updated": "2026-04-20T11:08:46.569Z"
   }
 }
