@@ -1,75 +1,92 @@
-# Demo — Level 4 Multi-Agent System
+# Demo — Level 4 Secure Multi-Agent System (LPI)
 
-## Overview
+## Objective
 
-This demo shows a multi-agent system built using LPI with:
-
-* Research Agent → retrieves data from LPI tools
-* Expert Agent → generates structured explanation
-* Orchestrator → coordinates agents
-
----
-
-## How to Run
-
-### 1. Start LPI server
-
-```bash
-node dist/src/index.js
-```
+Demonstrate a secure multi-agent system that:
+- Uses LPI tools for grounded data retrieval
+- Performs constrained reasoning
+- Prevents prompt injection and data leakage
+- Produces structured, explainable answers
 
 ---
 
-### 2. Start Ollama
+## System Components
 
-```bash
-ollama serve
-ollama run qwen2.5:1.5b
-```
+### 1. Orchestrator
+- Accepts user query
+- Applies security checks
+- Coordinates agents
+
+### 2. Agent B (Research Agent)
+- Calls LPI tools:
+  - `smile_overview`
+  - `get_case_studies`
+- Extracts relevant data (healthcare-focused)
+- Returns structured grounding data
+
+### 3. Agent A (Reasoning Agent)
+- Uses ONLY grounded data
+- Applies strict rules (no hallucination)
+- Generates structured answer
+
+### 4. Security Layer
+- Input sanitization
+- Prompt injection blocking
+- Data leak prevention
+- Input length validation
 
 ---
+# Demo Flow
 
-### 3. Run orchestrator
-
-```bash
-python orchestrator.py
-```
-
----
-
-## Example Query
-
-```
+### Step 1 — User Input
+```text
 How are digital twins used in healthcare?
 ```
 
----
+### Step 2 — Security Validation
 
-## Expected Flow
+Input is checked for:
+- Prompt injection patterns
+- Excessive length
 
-1. Orchestrator receives query
-2. Research Agent selects tools:
+If malicious → request is blocked.
 
-   * `smile_overview`
-   * `get_case_studies`
-3. Research Agent fetches and filters data
-4. Expert Agent processes context using LLM
-5. Final structured answer is returned
+### Step 3 — Agent B (Research)
 
----
+Tools Selected:
+- smile_overview
+- get_case_studies
 
-## Sample Output (Summary)
+Output:
+- SMILE methodology data
+- Healthcare case study (Continuous Patient Twin)
 
-* Explanation of digital twins
-* Relevant SMILE phases
-* Healthcare case study
-* Insight + conclusion
+### Step 4 — Agent A (Reasoning)
 
----
+Agent A receives:
+- SMILE framework
+- Healthcare case study
 
-## Key Highlights
+Enforced Constraints:
+- No external knowledge
+- No invented phases
+- Only grounded reasoning
 
-* Multi-agent architecture (Research + Expert)
-* Separation of data retrieval and reasoning
-* Grounded responses using LPI tools
-* Structured, explainable outputs
+### Step 5 — Final Output
+**Understanding:**
+Digital twins are implemented using the SMILE methodology, which focuses on impact-driven lifecycle modeling.
+
+**SMILE Phases:**
+- Reality Emulation 
+- Concurrent Engineering 
+- Collective Intelligence 
+- Contextual Intelligence 
+
+**Real-World Application:**
+*(Healthcare case study output here)*
+
+**Insight:**
+Connection between SMILE phases and real-world implementation.
+
+**Conclusion:**
+Short, grounded summary based on provided data.
