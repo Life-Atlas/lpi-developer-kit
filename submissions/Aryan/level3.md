@@ -8,43 +8,43 @@
 
 ## Overview
 
-This project implements a Level 3 agent using the Life Programmable Interface (LPI).
-The agent answers user queries by selecting and calling multiple tools, processing their outputs, and generating a structured response
+This project presents a Level 3 agent built using the Life Programmable Interface (LPI).
+The agent responds to user queries by intelligently selecting multiple tools, executing them, processing their outputs, and producing a well-structured final response.
 
 ---
 
 ## Tools Used
 
-* `smile_overview` → provides SMILE methodology
-* `get_case_studies` → provides real-world implementations
+* `smile_overview` → delivers the SMILE framework and conceptual methodology
+* `get_case_studies` → provides practical, real-world implementations
 
 ---
 
 ## How It Works
 
-1. Takes user input (e.g., healthcare-related query)
-2. Selects two relevant tools
-3. Sends JSON-RPC requests to LPI server
-4. Receives structured responses
-5. Parses and extracts relevant text
-6. Filters healthcare-specific case study
-7. Combines outputs into final answer
+1. Accepts a user query (for example, a healthcare-related question)
+2. Determines the relevant tools to use
+3. Sends JSON-RPC requests to the LPI server
+4. Receives structured responses from the tools
+5. Parses and extracts meaningful text from the output
+6. Filters results to focus on healthcare-specific case studies
+7. Combines all outputs into a final structured answer
 
 ---
 
 ## Key Features
 
-* Multi-tool orchestration
-* Dynamic argument handling for tools
-* JSON-RPC communication via subprocess
-* Structured output (summary + analysis + conclusion)
-* Domain-specific filtering (healthcare use case)
+* Coordination of multiple tools within a single workflow
+* Dynamic handling of tool input arguments
+* Communication with LPI via JSON-RPC using subprocess
+* Structured output format (summary, analysis, conclusion)
+* Context-aware filtering for domain-specific relevance (healthcare)
 
 ---
 
 ## Example Query
 
-```text
+```text id="w3rj9s"
 How are digital twins used in healthcare?
 ```
 
@@ -52,40 +52,44 @@ How are digital twins used in healthcare?
 
 ## Example Output (Summary)
 
-* SMILE framework overview
-* Healthcare case study (continuous patient twin)
-* Analysis of methodology + application
+* Overview of the SMILE framework
+* Healthcare-focused case study (continuous patient twin)
+* Combined analysis of methodology and real-world application
 
 ---
 
 ## Level 3 Criteria Met
 
-* ✔ Uses multiple tools
-* ✔ Combines outputs from different tools
-* ✔ Processes and structures responses
-* ✔ Produces a meaningful final answer
-* ✔ Demonstrates reasoning over tool outputs
+* ✔ Utilizes multiple tools in a coordinated manner
+* ✔ Integrates outputs from different sources
+* ✔ Processes and structures tool responses
+* ✔ Generates a meaningful and relevant final answer
+* ✔ Demonstrates reasoning based on tool outputs
 
 ---
 
 ## Notes
 
-* Uses LPI server (`dist/src/index.js`), not test client
-* Filters case studies to match query context
-* Built using Python + Node.js (LPI)
+* Uses the LPI server (`dist/src/index.js`) instead of the test client
+* Applies filtering to ensure outputs match the query context
+* Implemented using Python for the agent and Node.js for LPI
 
 ---
 
 ## Reflection (Beyond Instructions)
 
 ### What I did beyond the instructions
-- Filtered tool output to extract only healthcare-relevant case studies instead of returning full raw results.
-- Modified tool arguments (`"healthcare digital twin"`) to improve relevance instead of directly passing the user query.
-- Implemented manual parsing of nested JSON-RPC responses (`result → content → text`).
-- Used the actual LPI server (`dist/src/index.js`) instead of the test client, and handled initialization explicitly.
+
+* Applied filtering logic to extract only healthcare-relevant case studies rather than returning the entire raw output
+* Adjusted tool arguments (e.g., `"healthcare digital twin"`) to improve result relevance instead of directly passing the user query
+* Implemented manual parsing for nested JSON-RPC responses (`result → content → text`)
+* Switched from the test client to the actual LPI server (`dist/src/index.js`) and handled initialization explicitly
 
 ### What I would do differently next time
-- Abstract tool-calling logic into a reusable client instead of mixing it with agent logic.
-- Add clearer reasoning traces showing why tools were selected and how outputs were combined.
-- Improve summarization by structuring outputs (Challenge, Approach, Outcome) instead of truncation.
-- Make tool selection adaptive instead of rule-based.
+
+* Separate tool-calling logic into a reusable client instead of embedding it within the agent
+* Improve transparency by explicitly showing reasoning steps behind tool selection and result combination
+* Enhance summarization by structuring outputs (e.g., Challenge, Approach, Outcome) instead of simple truncation
+* Replace rule-based tool selection with a more adaptive or query-driven approach
+
+---
