@@ -4,6 +4,10 @@
 
 *Repository:* https://github.com/iamaryan07/lpi-life-agent
 
+*Agent:* https://github.com/iamaryan07/lpi-life-agent/blob/main/agent.py
+
+*A2A Card:* https://github.com/iamaryan07/lpi-life-agent/blob/main/agent.json
+
 ---
 
 ## Overview
