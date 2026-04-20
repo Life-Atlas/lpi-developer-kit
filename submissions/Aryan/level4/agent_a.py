@@ -1,78 +1,146 @@
 import requests
-
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL = "tinyllama"
+from security import prevent_data_leak
 
 
+# ---- LLM (same as your Level 3) ----
 def ask_llm(prompt):
     try:
         res = requests.post(
-            OLLAMA_URL,
+            "http://localhost:11434/api/generate",
             json={
-                "model": MODEL,
+                "model": "qwen2.5:1.5b",
                 "prompt": prompt,
                 "stream": False
             }
         )
+
         data = res.json()
-        return data.get("response", "LLM error: no response")
+
+        if "response" in data:
+            return data["response"]
+        else:
+            return f"Unexpected LLM response: {data}"
 
     except Exception as e:
         return f"LLM Error: {str(e)}"
 
 
-def expert_agent(query, context):
-    """
-    Expert Agent:
-    - Takes structured data from Research Agent
-    - Extracts relevant sections
-    - Produces grounded, structured answer (NO LLM)
-    """
+# ---- AGENT A ----
+def run_agent_a(input_data):
+    user_query = input_data.get("query", "")
+    grounding = input_data.get("grounding_data", {})
 
-    # ---- Extract SMILE phases (fixed known phases) ----
-    smile_phases = [
-        "Reality Emulation",
-        "Concurrent Engineering",
-        "Collective Intelligence",
-        "Contextual Intelligence"
-    ]
+    smile_data = grounding.get("smile_data", "")
+    case_data = grounding.get("case_data", "")
 
-    # ---- Extract healthcare case ----
-    case_part = ""
+    # ---- YOUR ORIGINAL PROMPT (slightly adapted) ----
+    prompt = f"""
+        You are a STRICT reasoning agent using SMILE methodology and real case study data.
 
-    sections = context.split("## ")
-    for sec in sections:
-        if "healthcare" in sec.lower() or "chronic disease" in sec.lower():
-            case_part = "## " + sec[:1200]
-            break
+        ====================
+        INPUT
+        ====================
 
-    # fallback if not found
-    if case_part == "":
-        case_part = "Not found in provided data"
+        User Query:
+        {user_query}
 
-    # ---- Final structured answer ----
-    return f"""
-1. Understanding:
-Digital twins are implemented using the SMILE methodology, which focuses on starting from impact and building structured digital representations for real-world systems.
+        SMILE Data:
+        {smile_data}
 
-2. SMILE Phases:
-{chr(10).join(f"- {p}" for p in smile_phases)}
+        Case Study Data:
+        {case_data}
 
-3. Real-World Application:
-{case_part}
+        ====================
+        MANDATORY RULES (NO EXCEPTIONS)
+        ====================
 
-4. Insight:
-The SMILE framework provides the structured lifecycle for implementation, while the healthcare patient twin demonstrates how continuous monitoring and early intervention improve outcomes.
+        1. You MUST use ONLY the provided SMILE Data and Case Study Data.
+        2. You MUST NOT use general knowledge.
+        3. You MUST NOT invent examples, systems, or explanations.
+        4. If information is missing → explicitly write: "Not specified in data".
+        5. You MUST NOT introduce any SMILE phase not present in SMILE Data.
 
-5. Conclusion:
-Digital twins in healthcare enable proactive, data-driven management of chronic diseases through continuous monitoring and structured decision-making.
-"""
+        ====================
+        ALLOWED SMILE PHASES
+        ====================
+
+        Reality Emulation  
+        Concurrent Engineering  
+        Collective Intelligence  
+        Contextual Intelligence  
+
+        If a phase is not explicitly present in SMILE Data → DO NOT use it.
+
+        ====================
+        GROUNDING REQUIREMENTS
+        ====================
+
+        - Every claim MUST be traceable to SMILE Data or Case Study Data.
+        - You MUST reference the case study explicitly (name or scenario).
+        - Do NOT generalize beyond given data.
+        - Keep reasoning tight and evidence-based.
+
+        ====================
+        OUTPUT STRUCTURE (STRICT)
+        ====================
+
+        1. Understanding:
+        Explain ONLY using SMILE Data (no external explanation).
+
+        2. Key SMILE Phases:
+        - Select ONLY 2–3 phases from allowed list
+        - Each phase must be justified using provided data
+
+        3. Real-World Application:
+        - Use ONLY the given case study
+        - Describe what was done (no assumptions)
+
+        4. Insight:
+        - Connect SMILE phases with the case study
+        - No generic statements
+
+        5. Conclusion:
+        - Short, grounded summary
+
+        ====================
+        STYLE CONSTRAINTS
+        ====================
+
+        - Be concise
+        - Avoid long explanations
+        - Avoid generic AI statements
+        - No extra information outside provided data
+
+        ====================
+        FINAL CHECK (MANDATORY)
+        ====================
+
+        Before answering, ensure:
+        - No invented SMILE phases
+        - No general knowledge used
+        - All statements trace back to input data
+
+        If any rule is violated → correct internally before answering.
+        """
+
+    response = ask_llm(prompt)
+    response = prevent_data_leak(response)
+
+    return {
+        "answer": response,
+        "source": "Agent A (SMILE reasoning)"
+    }
 
 
-# Optional standalone test
+# ---- TEST ----
 if __name__ == "__main__":
-    test_query = "How are digital twins used in healthcare?"
-    test_context = "Sample SMILE + case study data"
+    sample_input = {
+        "query": "How are digital twins used in healthcare?",
+        "grounding_data": {
+            "smile_data": "SMILE methodology phases...",
+            "case_data": "Healthcare digital twin case study..."
+        }
+    }
 
-    result = expert_agent(test_query, test_context)
-    print(result)
+    output = run_agent_a(sample_input)
+    print(output["answer"])
