@@ -2,12 +2,12 @@
   "name": "level3-agent",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "agent.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node agent.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "module"
 }
