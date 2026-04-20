@@ -1,0 +1,28 @@
+{
+  "name": "Daksh Garg",
+  "github": "thedgarg31",
+  "program": "B.Tech CSE (Data Science) + BS Data Science (IIT Madras)",
+  "campus": "Amity University Noida",
+  "skills": [
+    "python",
+    "machine learning",
+    "data science",
+    "react",
+    "node.js",
+    "mongodb",
+    "c++",
+    "java",
+    "unity",
+    "ar/vr"
+  ],
+  "interests": [
+    "AI agents",
+    "NLP",
+    "AR/VR",
+    "mental health tech",
+    "smart systems",
+    "full stack development"
+  ],
+  "track": "A: Agent Builders / B: Content & Research / C: Design & UX / D: 3D & Visualization / E: QA & Security",
+  "my_twin": "I would track my focus levels, sleep quality, screen time, and coding productivity throughout the day because I often feel more productive at night but inconsistent during the day. I want to identify patterns related to sleep, diet, and habits that affect my deep work ability."
+}
