@@ -274,18 +274,18 @@
   "khushi-garg": {
     "name": "Khushi Garg",
     "level": 3,
-    "score": 10,
+    "score": 11,
     "max": 13,
-    "pct": 77,
-    "updated": "2026-04-19T07:49:19.847Z"
+    "pct": 85,
+    "updated": "2026-04-20T11:52:52.810Z"
   },
   "rahul-bijarnia": {
     "name": "Rahul Bijarnia",
     "level": 3,
-    "score": 10,
+    "score": 11,
     "max": 13,
-    "pct": 77,
-    "updated": "2026-04-20T11:38:00.677Z"
+    "pct": 85,
+    "updated": "2026-04-20T11:48:29.042Z"
   },
   "yash-maheshwari": {
     "name": "Yash Maheshwari",
@@ -313,11 +313,11 @@
   },
   "aman-sharma": {
     "name": "Aman Sharma",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-18T21:49:13.504Z"
+    "level": 3,
+    "score": 7,
+    "max": 13,
+    "pct": 54,
+    "updated": "2026-04-20T12:15:13.889Z"
   },
   "abhinav-chaudhary": {
     "name": "Abhinav Chaudhary",
@@ -338,18 +338,18 @@
   "praveen-singh": {
     "name": "Praveen Singh",
     "level": 3,
-    "score": 10,
+    "score": 11,
     "max": 13,
-    "pct": 77,
-    "updated": "2026-04-20T11:42:30.310Z"
+    "pct": 85,
+    "updated": "2026-04-20T12:16:13.001Z"
   },
   "aryan": {
     "name": "Aryan",
     "level": 3,
-    "score": 10,
+    "score": 11,
     "max": 13,
-    "pct": 77,
-    "updated": "2026-04-20T11:08:54.661Z"
+    "pct": 85,
+    "updated": "2026-04-20T12:20:57.724Z"
   },
   "level-2---farhan-ahmed-siddique": {
     "name": "level-2 - Farhan Ahmed Siddique",
@@ -458,9 +458,9 @@
   "yashika-verma": {
     "name": "Yashika Verma",
     "level": 3,
-    "score": 9,
+    "score": 11,
     "max": 13,
-    "pct": 69,
-    "updated": "2026-04-20T11:38:30.946Z"
+    "pct": 85,
+    "updated": "2026-04-20T12:13:39.775Z"
   }
 }
