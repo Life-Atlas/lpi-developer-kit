@@ -1,30 +1,68 @@
-from agent_b_researcher import researcher_agent
-from agent_a_expert import expert_agent
+import json
+from agent_a import run_agent_a
+from agent_b import run_agent_b
+
+# ---- SECURITY ----
+from security import sanitize_input, validate_length, prevent_data_leak
 
 
-def orchestrate(query):
-    print("\n=== ORCHESTRATOR START ===")
+# ---- ORCHESTRATOR ----
+def run_system():
+    print("=== ORCHESTRATOR START ===\n")
 
-    # Step 1: Research
-    print("\n[Step 1] Researching...")
-    context, tools_used = researcher_agent(query)
+    # ---- USER INPUT (same as your original) ----
+    try:
+        user_query = input("Enter your question: ")
+        user_query = sanitize_input(user_query)
+        user_query = validate_length(user_query)
+    except ValueError as e:
+        print(f"[SECURITY BLOCKED]: {e}")
+        return
 
-    print("\n--- TOOLS USED ---")
-    for t in tools_used:
-        print("-", t)
+    # ---- STEP 1: AGENT B (RESEARCH) ----
+    print("\n[Step 1] Researching...\n")
 
-    # Step 2: Expert reasoning
-    print("\n[Step 2] Expert analysis...")
-    answer = expert_agent(query, context)
+    try:
+        grounding_output = run_agent_b({
+            "query": user_query
+        })
+    except Exception as e:
+        print(f"[Agent B Error]: {e}")
+        return
 
-    print("\n=== FINAL ANSWER ===\n")
+    # ---- SANITIZE OUTPUT ----
+    grounding_output = {
+        "smile_data": prevent_data_leak(grounding_output.get("smile_data", "")),
+        "case_data": prevent_data_leak(grounding_output.get("case_data", "")),
+        "sources": grounding_output.get("sources", [])
+    }
+
+    print("[Agent B Output Ready]\n")
+
+    # ---- STEP 2: AGENT A (REASONING) ----
+    print("[Step 2] Generating answer...\n")
+
+    try:
+        final_output = run_agent_a({
+            "query": user_query,
+            "grounding_data": grounding_output
+        })
+    except Exception as e:
+        print(f"[Agent A Error]: {e}")
+        return
+
+    # ---- FINAL OUTPUT ----
+    answer = prevent_data_leak(final_output.get("answer", ""))
+
+    print("----- FINAL ANSWER -----\n")
     print(answer)
 
-    print("\n=== TRACE ===")
-    print("Tools Used:", tools_used)
+    # ---- SOURCES (same as your Level 3 requirement) ----
+    print("\n----- SOURCES -----")
+    for src in grounding_output.get("sources", []):
+        print(f"- {src}")
 
 
-# CLI entry
+# ---- RUN ----
 if __name__ == "__main__":
-    user_query = input("Enter your question: ")
-    orchestrate(user_query)
+    run_system()
