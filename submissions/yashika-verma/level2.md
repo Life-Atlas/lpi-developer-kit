@@ -10,6 +10,19 @@ Steps performed:
 - Built the project using `npm run build`
 - Ran the test client using `npm run test-client`
 
+## LPI Test Client Output
+
+```
+Tool 1 passed
+Tool 2 passed
+Tool 3 passed
+Tool 4 passed
+Tool 5 passed
+Tool 6 passed
+Tool 7 passed
+```
+
+
 Result:
 All 7 tools passed successfully, confirming that the LPI environment is working correctly.
 
