@@ -1,6 +1,6 @@
 # Level 3 Submission, Saima Afroz (Track B :Content & Research)
 
-## Digital Twin Implementations (Content & Research Track)
+## Digital Twin Implementations (Content & Research Track) 
 
 In this task, I explored real-world digital twin implementations and analyzed how they fit with the SMILE methodology. The goal was to understand how different industries use digital twins to solve real problems and improve decision-making.
 
@@ -75,3 +75,4 @@ The system enhances traffic management, assists with urban planning, and maximiz
 ## Conclusion
 
 These examples show that digital twins are used in industries like manufacturing, healthcare, and smart cities to boost efficiency and decision-making. The SMILE methodology offers a clear and structured way to build these systems, ensuring ongoing learning and improvement. Overall, digital twins are changing traditional systems into smart, data-driven solutions.
+Final level 2 submission
