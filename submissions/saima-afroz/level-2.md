@@ -2,10 +2,7 @@
 
 ## Sandbox Execution
 
-To understand the SMILE methodology in practice, I set up and ran the LPI Developer Kit on my local system. I first cloned the repository and navigated into the project folder using:
-
-* git clone https://github.com/Life-Atlas/lpi-developer-kit.git
-* cd lpi-developer-kit
+To understand the SMILE methodology in practice, I set up and ran the LPI Developer Kit on my local system. I first cloned the repository and navigated into the project folder 
 
 Then, I installed all required dependencies:
 
@@ -43,25 +40,24 @@ This hands-on execution helped me understand how SMILE connects real-world data 
 
 ## Application of SMILE Methodology in Healthcare
 
-The SMILE (Sustainable Methodology for Impact Lifecycle Enablement) framework offers a structured approach to building digital twin systems. In healthcare, it can be used to create digital representations of patients, which helps improve decision-making and treatment outcomes.
+The SMILE methodology, or Sustainable Methodology for Impact Lifecycle Enablement, is a clear approach for building digital twins that turn real-world data into useful insights. After looking into the LPI Developer Kit and its tools, I realized how effectively SMILE can be used in healthcare.
 
-The first phase, Reality Capture, involves gathering real-world patient data such as heart rate, sleep patterns, medical history, and other health metrics using wearable devices and hospital systems.
+The first phase, Reality Emulation, focuses on gathering real-world data. In healthcare, this includes collecting patient information like heart rate, sleep patterns, medical history, and data from wearable devices. This phase ensures that reliable and ongoing data is ready for analysis.
 
-In the Digital Modeling phase, this data is used to create a digital twin of the patient. This virtual model reflects the patient’s current health condition and updates continuously with new data.
+The second phase, Concurrent Engineering, involves creating a digital version of the system. Here, a digital twin of the patient is made using the collected data. This virtual model shows the patient’s real-time health condition, allowing doctors to monitor changes closely.
 
-The Simulation and Analysis phase allows doctors and AI systems to study the patient’s data, identify patterns, and detect abnormalities. From the case studies examined, similar approaches are already being used to monitor patients and improve treatment planning.
+The third phase is Simulation and Analysis. The system reviews patient data to identify patterns and abnormalities. Based on case studies in the LPI knowledge base, similar methods are used in smart health monitoring systems to improve diagnosis and treatment planning.
 
-In the Prediction phase, the system can pinpoint potential health risks before they become serious. This enables early diagnosis and preventive care.
+The fourth phase, Prediction, allows the system to forecast potential health risks. For instance, it can predict heart-related issues or fatigue patterns before they escalate. This supports early intervention and prevention.
 
-The Intervention phase focuses on taking action based on these predictions. Doctors can recommend personalized treatments, medications, or lifestyle changes tailored to the patient.
+The fifth phase is Intervention. Here, actions are taken based on insights. Doctors can create personalized treatment plans, suggest lifestyle changes, or adjust medications based on the system’s predictions.
 
-Finally, the Continuous Improvement phase ensures that the system keeps learning from new data, making predictions and recommendations more accurate over time.
+The final phase, Continuous Improvement, makes sure that the digital twin continues to learn from new data. This improves the accuracy of predictions and overall healthcare outcomes over time.
 
-From the case studies, it is clear that SMILE is not just about collecting data but about continuously improving decisions with that data. In healthcare, this leads to better monitoring, early diagnosis, and personalized care.
+From the case studies, it's evident that SMILE creates a constant feedback loop where data is always collected, analyzed, and refined. In healthcare, this results in better patient monitoring, early disease detection, and personalized care.
 
-Overall, SMILE helps shift healthcare from a reactive system to a proactive and predictive one, improving both patient outcomes and system efficiency.
+Overall, the SMILE methodology shifts healthcare from being reactive to proactive and predictive, enhancing both efficiency and patient outcomes.
 
+Sandbox Execution
 
-### Conclusion
-
-The SMILE methodology enables smarter healthcare systems by combining data, AI, and continuous monitoring. It helps in making faster, more accurate, and personalized medical decisions.
+I ran the LPI sandbox locally and confirmed that all 7 tools passed using npm install, npm run build, and npm run test-client.
