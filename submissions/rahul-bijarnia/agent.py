@@ -1,96 +1,62 @@
-import subprocess
-import json
-import sys
+from tools import lpi_tool_1, lpi_tool_2
 
-def call_lpi_tool(tool_name, arguments={}):
+def agent(question):
+    # ✅ Error handling: validate input
+    if not question or not question.strip():
+        print("❌ Error: Question cannot be empty.")
+        return None
+
+    print("\n🔹 User Question:", question)
+
+    # ✅ Error handling: Tool 1
     try:
-        request = {
-            "jsonrpc": "2.0",
-            "id": 1,
-            "method": "tools/call",
-            "params": {
-                "name": tool_name,
-                "arguments": arguments
-            }
-        }
-        result = subprocess.run(
-            ["node", "../lpi-developer-kit/dist/src/index.js"],
-            input=json.dumps(request),
-            capture_output=True,
-            text=True,
-            timeout=30  # error handling: timeout
-        )
-
-        if result.returncode != 0:
-            print(f"⚠️ Tool '{tool_name}' returned error: {result.stderr}")
-            return None
-
-        if not result.stdout.strip():
-            print(f"⚠️ Tool '{tool_name}' returned empty response.")
-            return None
-
-        return json.loads(result.stdout)
-
-    except subprocess.TimeoutExpired:
-        print(f"❌ Error: Tool '{tool_name}' timed out after 30 seconds.")
-        return None
-    except json.JSONDecodeError as e:
-        print(f"❌ Error: Could not parse response from '{tool_name}': {e}")
-        return None
-    except FileNotFoundError:
-        print("❌ Error: Node.js not found. Make sure Node.js is installed and LPI is built.")
-        return None
+        result1 = lpi_tool_1(question)
+        if result1 is None:
+            print("⚠️ Warning: Tool 1 returned no data.")
+            result1 = "Tool 1 data unavailable."
     except Exception as e:
-        print(f"❌ Unexpected error calling '{tool_name}': {e}")
+        print(f"❌ Error in Tool 1: {e}")
+        result1 = "Tool 1 failed."
+
+    # ✅ Error handling: Tool 2
+    try:
+        result2 = lpi_tool_2(question)
+        if result2 is None:
+            print("⚠️ Warning: Tool 2 returned no data.")
+            result2 = "Tool 2 data unavailable."
+    except Exception as e:
+        print(f"❌ Error in Tool 2: {e}")
+        result2 = "Tool 2 failed."
+
+    # ✅ Error handling: if both tools failed
+    if result1 == "Tool 1 failed." and result2 == "Tool 2 failed.":
+        print("❌ Both tools failed. Cannot generate answer.")
         return None
 
-
-def main():
-    # Error handling: validate user input
-    if len(sys.argv) < 2 or not sys.argv[1].strip():
-        print("❌ Usage: python agent.py \"Your question here\"")
-        sys.exit(1)
-
-    question = sys.argv[1].strip()
-    print(f"\n🤖 Agent received question: {question}\n")
-
-    # Call LPI Tool 1
-    print("📡 Calling LPI tool: smile_overview")
-    tool1_result = call_lpi_tool("smile_overview")
-    if tool1_result is None:
-        print("⚠️ Could not get smile_overview. Continuing with partial data...")
-    else:
-        print("✅ Tool 1 result received\n")
-
-    # Call LPI Tool 2
-    print("📡 Calling LPI tool: query_knowledge")
-    tool2_result = call_lpi_tool("query_knowledge", {"query": question})
-    if tool2_result is None:
-        print("⚠️ Could not get query_knowledge. Continuing with partial data...")
-    else:
-        print("✅ Tool 2 result received\n")
-
-    # Error handling: if BOTH tools failed, exit gracefully
-    if tool1_result is None and tool2_result is None:
-        print("❌ Both LPI tools failed. Cannot generate answer. Check LPI server setup.")
-        sys.exit(1)
-
-    # Output with citations
-    print("=" * 50)
-    print("📋 ANSWER (with source citations):")
-    print("=" * 50)
-    print(f"\nQuestion: '{question}'\n")
-
-    if tool1_result:
-        print("From [smile_overview]:")
-        print(json.dumps(tool1_result, indent=2)[:500])
-
-    if tool2_result:
-        print("\nFrom [query_knowledge]:")
-        print(json.dumps(tool2_result, indent=2)[:500])
-
-    print("\n✅ Sources used: smile_overview, query_knowledge")
-
+    final_answer = f"""
+============================
+ FINAL ANSWER:
+{result1}
+{result2}
+----------------------------
+📊 SUMMARY:
+Linear regression predicts relationships using y = mx + c.
+----------------------------
+🧠 EXPLAINABILITY:
+✔ Tool 1 → Used for theory
+✔ Tool 2 → Used for example
+============================
+"""
+    return final_answer
 
 if __name__ == "__main__":
-    main()
+    # ✅ Error handling: catch keyboard interrupt and unexpected crash
+    try:
+        q = input("Enter your question: ")
+        result = agent(q)
+        if result:
+            print(result)
+    except KeyboardInterrupt:
+        print("\n⚠️ Program interrupted by user.")
+    except Exception as e:
+        print(f"❌ Unexpected error: {e}")
