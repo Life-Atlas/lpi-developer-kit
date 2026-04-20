@@ -454,5 +454,13 @@
     "max": 5,
     "pct": 60,
     "updated": "2026-04-20T10:17:22.964Z"
+  },
+  "yashika-verma": {
+    "name": "Yashika Verma",
+    "level": 2,
+    "score": 5,
+    "max": 5,
+    "pct": 100,
+    "updated": "2026-04-20T10:51:26.072Z"
   }
 }
