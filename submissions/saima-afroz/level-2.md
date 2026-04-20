@@ -1,5 +1,25 @@
 # Level 2 Submission — Saima Afroz
 
+Sandbox Execution
+
+To understand the SMILE methodology in practice, I set up and ran the LPI Developer Kit on my system.
+
+First, I cloned the repository and navigated into the project folder. Then, I installed all required dependencies using:
+
+npm install
+
+After that, I built the project using:
+
+npm run build
+
+Finally, I ran the test client:
+
+npm run test-client
+
+All 7 tools executed successfully, including:
+smile_overview, smile_phase_detail, query_knowledge, get_case_studies, get_insights, list_topics, and get_methodology_step.
+
+This confirmed that the LPI sandbox was working correctly and ready for use.
 ## Application of SMILE Methodology in Healthcare
 
 ### Introduction
