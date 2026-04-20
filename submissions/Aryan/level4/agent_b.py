@@ -4,7 +4,8 @@ import os
 
 # Path to LPI server
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-LPI_PATH = os.path.join(BASE_DIR, "..", "dist", "src", "index.js")
+# LPI_PATH = os.path.join(BASE_DIR, "..", "dist", "src", "index.js")
+LPI_PATH = r"C:\Users\Aryan\Desktop\lpi-developer-kit\dist\src\index.js"
 
 
 def call_lpi_tool(tool_name, query):
@@ -46,6 +47,7 @@ def call_lpi_tool(tool_name, query):
         process.stdin.flush()
 
         stdout, stderr = process.communicate(timeout=10)
+        print("\n[RAW LPI OUTPUT]:\n", stdout)
 
         # Parse response
         if stdout.strip():
