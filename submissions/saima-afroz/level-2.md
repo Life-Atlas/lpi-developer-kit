@@ -42,7 +42,7 @@ You can now build agents that connect to this server.
 
 C:\Users\SAIMA AFROZ\lpi-developer-kit>
 
-I successfully ran the LPI Developer Kit locally using the following commands:
+I successfully ran the LPI Developer Kit locally using the following commands: 
 
 npm install
 npm run build
