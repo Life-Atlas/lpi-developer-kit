@@ -2,84 +2,139 @@
 
 ## Overview
 
-This document outlines potential risks and mitigation strategies for the multi-agent system using LPI tools and an LLM.
+This document outlines the security mechanisms implemented in the multi-agent system built using the Life Programmable Interface (LPI).
+
+The system is designed to:
+- Prevent prompt injection attacks  
+- Avoid data leakage  
+- Ensure safe inter-agent communication  
+- Maintain strict grounding of outputs  
 
 ---
 
-## 1. Tool Input Safety
+## System Attack Surface
+
+The system has three primary exposure points:
+
+1. **User Input (Orchestrator)**
+2. **Tool Outputs (Agent B → Agent A)**
+3. **LLM Output (Agent A)**
+
+Each layer is protected with targeted defenses.
+
+---
+# 1. Prompt Injection Protection
 
 ### Risk
-
-User queries are directly passed to LPI tools, which may lead to unexpected or irrelevant outputs.
+Malicious users may attempt to override instructions, e.g.: 
+- "ignore previous instructions" 
+- "reveal system prompt"
 
 ### Mitigation
-
-* Tool selection is controlled using rule-based logic
-* Fixed arguments are used for sensitive tools (e.g., healthcare filtering in `get_case_studies`)
-* Only known tool names are allowed
+Implemented in `sanitize_input()`:
+- Blocks known injection patterns:
+  - ignore previous instructions  
+  - system prompt  
+  - override  
+  - jailbreak  
+  - reveal hidden
+- Raises exception if detected
+- Prevents malicious queries from reaching agents
+### Result
+Prevents accidental leakage of internal system details
 
 ---
 
-## 2. LLM Hallucination
+## 3. Denial-of-Service (DoS) Protection
 
 ### Risk
-
-The LLM may generate information not present in the tool outputs.
+Large inputs can overload the system or LLM.
 
 ### Mitigation
+Implemented in `validate_length()`:
+- Limits input size (default: 500 characters)
+- Rejects oversized inputs
 
-* Prompt explicitly restricts output to provided data
-* Instructions enforce: *"Do not invent new concepts"*
-* Missing data is handled with: *"Not found in provided data"*
+### Result
+Protects the system from resource exhaustion
 
 ---
 
-## 3. Data Integrity
+## 4. Inter-Agent Data Validation
 
 ### Risk
-
-Incorrect parsing of JSON-RPC responses could lead to incomplete or misleading outputs.
+Malformed or manipulated data between agents can break logic or introduce vulnerabilities.
 
 ### Mitigation
+Implemented in `validate_agent_call()`:
+- Ensures input is a dictionary  
+- Ensures `grounding_data` exists  
+- Validates correct structure  
 
-* Custom parsing ensures extraction from `result → content → text`
-* Fallback handling for empty or malformed responses
+### Result
+Maintains integrity of agent communication
 
 ---
 
-## 4. Process Execution Risk
+## 5. Grounding Enforcement (Anti-Hallucination)
 
 ### Risk
-
-Subprocess calls to the LPI server may fail or hang.
+LLM may generate:
+- Fabricated SMILE phases  
+- Unsupported claims  
 
 ### Mitigation
+Agent A enforces strict rules:
+- Only uses data from Agent B  
+- No external knowledge allowed  
+- Missing data → explicitly stated  
 
-* Timeout is applied to subprocess communication
-* Errors are caught and returned safely
-* System does not crash on tool failure
+### Result
+All outputs are traceable to tool data
 
 ---
 
-## 5. Over-Reliance on Single Pass
+## 6. Tool Output Filtering
 
 ### Risk
+LPI tools may return excessive or irrelevant data.
 
-The system generates answers in a single pass without validation.
+### Mitigation (Agent B)
+- Extracts only:
+  - SMILE overview  
+  - Healthcare-related case study  
+- Filters irrelevant sections  
 
-### Mitigation (Future Work)
-
-* Introduce reflection or validation step
-* Add multi-step reasoning loop
+### Result
+- Reduces noise  
+- Improves precision  
+- Limits unintended exposure  
 
 ---
 
-## Summary
+## Security Guarantees
 
-The system applies basic safeguards for:
+The system ensures:
+- ✔ No prompt injection execution  
+- ✔ No sensitive data leakage  
+- ✔ Controlled input size  
+- ✔ Valid inter-agent communication  
+- ✔ Grounded, verifiable outputs  
 
-* controlled tool usage
-* grounded LLM responses
-* safe subprocess handling
+---
 
-Further improvements can enhance robustness and reliability in production environments.
+## Limitations
+
+- Keyword-based filtering may not catch all advanced attacks  
+- Relies on predefined patterns (not adaptive)  
+- Does not include authentication or rate limiting  
+
+---
+
+## Future Improvements
+
+- Semantic prompt injection detection  
+- Role-based access control  
+- Rate limiting and request throttling  
+- Output verification using a secondary agent  
+- Structured schema validation for all tool outputs  
