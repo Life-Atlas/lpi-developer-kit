@@ -1,64 +1,75 @@
-# Demo
+# Demo — Level 4 Multi-Agent System
 
-## User Input
-"I feel distracted and unproductive"
+## Overview
 
-## Agent A Processing
-```
-[Agent A] Discovering Agent B at http://localhost:8000...
-[Agent A] ✓ Discovered: smile_agent
-[Agent A]   Capabilities: 1 available
-[Agent A] Sending request to http://localhost:8000/analyze...
-[Agent A] Task: analyze_problem
-[Agent A] Input: I feel distracted and unproductive
-[Agent A] ✓ Received response from Agent B
-```
+This demo shows a multi-agent system built using LPI with:
 
-## Agent B Processing
-```
-[Agent B] Received request: {"task": "analyze_problem", "input": "I feel distracted and unproductive", ...}
-[Agent B] Validating request structure... ✅
-[Agent B] Checking rate limits... ✅
-[Agent B] Connecting to LPI MCP server...
-[Agent B] Calling query_knowledge with user input...
-[Agent B] Calling get_insights with user input...
-[Agent B] Generating analysis with Ollama...
-[Agent B] Sanitizing response... ✅
-[Agent B] Returning structured response
+* Research Agent → retrieves data from LPI tools
+* Expert Agent → generates structured explanation
+* Orchestrator → coordinates agents
+
+---
+
+## How to Run
+
+### 1. Start LPI server
+
+```bash
+node dist/src/index.js
 ```
 
-## Final Output
+---
 
-```
-============================================================
-  RESPONSE FROM AGENT B
-============================================================
+### 2. Start Ollama
 
-Problem:
-User experiencing difficulty with focus and productivity
-
-Analysis:
-Applying SMILE methodology to your productivity challenge reveals several systemic patterns. 
-From a System Definition perspective, your current work environment and habits form an 
-interconnected system where distractions and productivity influence each other. The 
-Requirements Analysis shows you need a structured approach to identify specific 
-distraction triggers and productivity patterns.
-
-Suggestions:
-1. Implement structured focus sessions with clear time boundaries
-2. Track distraction sources for one week to identify patterns
-3. Design your environment to minimize external interruptions
-4. Establish consistent daily routines that support deep work
-
-Sources:
-["query_knowledge", "get_insights"]
-============================================================
+```bash
+ollama serve
+ollama run qwen2.5:1.5b
 ```
 
-## Security Features Demonstrated
-- Input validation passed (no injection detected)
-- Rate limiting enforced (within limits)
-- Output sanitization applied (only allowed fields returned)
-- Structured communication maintained (A2A protocol)
-- MCP integration successful (both tools called)
-- LLM analysis generated (Ollama integration working)
+---
+
+### 3. Run orchestrator
+
+```bash
+python orchestrator.py
+```
+
+---
+
+## Example Query
+
+```
+How are digital twins used in healthcare?
+```
+
+---
+
+## Expected Flow
+
+1. Orchestrator receives query
+2. Research Agent selects tools:
+
+   * `smile_overview`
+   * `get_case_studies`
+3. Research Agent fetches and filters data
+4. Expert Agent processes context using LLM
+5. Final structured answer is returned
+
+---
+
+## Sample Output (Summary)
+
+* Explanation of digital twins
+* Relevant SMILE phases
+* Healthcare case study
+* Insight + conclusion
+
+---
+
+## Key Highlights
+
+* Multi-agent architecture (Research + Expert)
+* Separation of data retrieval and reasoning
+* Grounded responses using LPI tools
+* Structured, explainable outputs
