@@ -1,22 +1,23 @@
 import requests
 import sys
-
+def safe_call(url, params=None):
+    try:
+        res = requests.get(url, params=params)
+        return res.json()
+    except Exception as e:
+        return {"error": str(e)}
 query = sys.argv[1]
 
-BASE_URL = "http://localhost:8000"   # LPI sandbox URL
+BASE_URL = "http://localhost:8000"
 
-# ---- REAL LPI TOOL CALLS ----
 def smile_overview():
-    res = requests.get(f"{BASE_URL}/smile_overview")
-    return res.json()
+    return safe_call(f"{BASE_URL}/smile_overview")
 
 def query_knowledge(q):
-    res = requests.get(f"{BASE_URL}/query_knowledge", params={"query": q})
-    return res.json()
+    return safe_call(f"{BASE_URL}/query_knowledge", {"query": q})
 
 def get_case_studies(q):
-    res = requests.get(f"{BASE_URL}/get_case_studies", params={"query": q})
-    return res.json()
+    return safe_call(f"{BASE_URL}/get_case_studies", {"query": q})
 
 # ---- CALL TOOLS ----
 smile = smile_overview()
