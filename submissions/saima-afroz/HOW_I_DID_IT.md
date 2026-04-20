@@ -1,11 +1,13 @@
-I started Level 3 by understanding the requirement to find real-world digital twin implementations.
+I started by reading the instructions for Level 2 and understanding what SMILE methodology is.
 
-I searched for examples in healthcare, smart cities, and manufacturing.
+At first, the concepts were new to me, so I simplified each phase into easy language.
 
-I selected Philips Healthcare, Singapore Smart City, and Siemens because they are well-known and easy to explain.
+I chose healthcare as my industry because it is easy to understand and relatable.
 
-For each example, I described the challenge, approach, and outcome in simple terms.
+I then wrote how each phase of SMILE applies to healthcare step by step.
 
-I then mapped each example to relevant SMILE phases based on my understanding from Level 2.
+I also included real-world examples like wearable devices and hospital monitoring systems.
 
-This task helped me understand how digital twins are used in different industries and how the SMILE framework applies in real-world scenarios.
+During this process, I learned how digital twins can be used to predict and improve real-life outcomes.
+
+This task helped me understand how AI and data can be applied in practical situations.
