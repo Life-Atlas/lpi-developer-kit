@@ -11,7 +11,6 @@ Steps performed:
 - Ran the test client using `npm run test-client`
 
 ## LPI Test Client Output
-
 ```
 Tool 1 passed
 Tool 2 passed
@@ -43,6 +42,10 @@ Explain APIs in simple terms with an example
 
 Output:
 The model successfully explained APIs using a real-world analogy (restaurant ordering system), showing that it can generate meaningful responses locally without relying on cloud APIs.
+
+## Update
+
+Re-submitting after fixing test client output detection.
 
 🧠 What Surprised Me (SMILE Reflection)
 
