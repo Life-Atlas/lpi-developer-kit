@@ -3,20 +3,76 @@
   "description": "A Level 4 multi-agent system where a decision agent generates deployment strategies using grounded evidence provided by a specialized grounding agent.",
   "version": "1.0.0",
   "authors": ["Praveen Singh"],
+
+  "protocol": "A2A",
+  "communication": {
+    "format": "json",
+    "type": "structured"
+  },
+
   "agents": [
     {
       "id": "agent_a_expert",
       "role": "Decision Agent",
-      "description": "Generates constraint-aware deployment strategies using structured reasoning, SMILE methodology, and grounded inputs"
+      "description": "Generates constraint-aware deployment strategies using structured reasoning and grounded inputs",
+
+      "endpoint": "/agent_a",
+
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "use_case": { "type": "string" },
+          "constraints": { "type": "string" },
+          "grounding_data": { "type": "object" }
+        },
+        "required": ["use_case", "constraints", "grounding_data"]
+      },
+
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "strategy": { "type": "string" },
+          "reasoning": { "type": "string" }
+        }
+      }
     },
+
     {
       "id": "agent_b_grounding",
       "role": "Grounding Agent",
-      "description": "Extracts, filters, and validates insights, case studies, and knowledge to provide high-quality evidence for decision-making"
+      "description": "Extracts, filters, and validates insights, case studies, and knowledge",
+
+      "endpoint": "/agent_b",
+
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "use_case": { "type": "string" }
+        },
+        "required": ["use_case"]
+      },
+
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "validated_insights": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "case_points": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "knowledge": {
+            "type": "string"
+          }
+        }
+      }
     }
   ],
+
   "orchestrator": {
     "id": "orchestrator",
-    "description": "Coordinates agents, manages structured data exchange, and combines outputs into a final deployment strategy"
+    "description": "Coordinates agents and combines outputs into final answer"
   }
 }
