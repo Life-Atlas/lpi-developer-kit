@@ -1,13 +1,18 @@
-import subprocess
 import json
+import subprocess
 import os
+from security import prevent_data_leak
 
-# Path to LPI server
+
+# ---- PATH SETUP (same as your code) ----
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# LPI_PATH = os.path.join(BASE_DIR, "..", "dist", "src", "index.js")
-LPI_PATH = r"C:\Users\Aryan\Desktop\lpi-developer-kit\dist\src\index.js"
+LPI_PATH = os.path.join(BASE_DIR, "..", "..", "dist", "src", "index.js")
+
+if not os.path.exists(LPI_PATH):
+    raise FileNotFoundError(f"LPI server not found at {LPI_PATH}")
 
 
+# ---- CALL LPI TOOL (your logic, cleaned) ----
 def call_lpi_tool(tool_name, query):
     try:
         process = subprocess.Popen(
@@ -20,20 +25,19 @@ def call_lpi_tool(tool_name, query):
         )
 
         # INIT
-        init_msg = {
+        process.stdin.write(json.dumps({
             "jsonrpc": "2.0",
             "method": "notifications/initialized"
-        }
-        process.stdin.write(json.dumps(init_msg) + "\n")
+        }) + "\n")
 
-        # Arguments
+        # ARGUMENT FIX (your special handling preserved)
         if tool_name == "get_case_studies":
             args = {"query": "healthcare digital twin"}
         else:
             args = {"query": query}
 
-        # Request
-        request = {
+        # TOOL CALL
+        process.stdin.write(json.dumps({
             "jsonrpc": "2.0",
             "method": "tools/call",
             "params": {
@@ -41,87 +45,89 @@ def call_lpi_tool(tool_name, query):
                 "arguments": args
             },
             "id": 1
-        }
+        }) + "\n")
 
-        process.stdin.write(json.dumps(request) + "\n")
         process.stdin.flush()
 
-        stdout, stderr = process.communicate(timeout=10)
-        print("\n[RAW LPI OUTPUT]:\n", stdout)
+        stdout, _ = process.communicate(timeout=10)
 
-        # Parse response
-        if stdout.strip():
-            lines = stdout.strip().split("\n")
+        if not stdout.strip():
+            return ""
 
-            for line in reversed(lines):
-                try:
-                    parsed = json.loads(line)
+        # ---- PARSE OUTPUT (same logic, but forward scan instead of reverse) ----
+        for line in stdout.split("\n"):
+            try:
+                parsed = json.loads(line)
 
-                    if "result" in parsed:
-                        result = parsed["result"]
+                if "result" in parsed:
+                    result = parsed["result"]
 
-                        if isinstance(result, dict) and "content" in result:
-                            content = result["content"]
+                    if isinstance(result, dict) and "content" in result:
+                        content = result["content"]
 
-                            if isinstance(content, list) and len(content) > 0:
-                                text = content[0].get("text", "")
+                        if isinstance(content, list) and content:
+                            text = content[0].get("text", "")
 
-                                # Filter healthcare section
-                                if tool_name == "get_case_studies":
-                                    parts = text.split("## ")
-                                    for part in parts:
-                                        if "health" in part.lower():
-                                            return "## " + part[:800]
+                            # ---- CASE STUDY FILTER (your idea preserved) ----
+                            if tool_name == "get_case_studies":
+                                parts = text.split("## ")
+                                for part in parts:
+                                    if "health" in part.lower():
+                                        return "## " + part[:1200]
 
-                                return text
+                            return text
 
-                        return str(result)
+                    return str(result)
 
-                except:
-                    continue
+            except:
+                continue
 
-        return "No output received"
+        return ""
 
     except Exception as e:
-        return f"Error: {str(e)}"
+        return f"Error calling {tool_name}: {str(e)}"
 
 
-def researcher_agent(query):
-    """
-    Decides which tools to use and gathers data
-    """
-
+# ---- TOOL SELECTION (same as your Level 3) ----
+def choose_tools(query):
     q = query.lower()
 
-    # Tool selection
     if "how" in q or "use" in q:
-        tools = ["smile_overview", "get_case_studies"]
+        return ["smile_overview", "get_case_studies"]
     elif "implement" in q or "steps" in q:
-        tools = ["get_methodology_step", "get_insights"]
+        return ["get_methodology_step", "get_insights"]
     else:
-        tools = ["query_knowledge", "get_case_studies"]
-
-    results = {}
-
-    for tool in tools:
-        print(f"[Researcher] Calling tool: {tool}")
-        results[tool] = call_lpi_tool(tool, query)
-
-    # Combine context
-    context = "\n\n".join(
-        [f"{k.upper()}:\n{v}" for k, v in results.items()]
-    )
-
-    return context, tools
+        return ["query_knowledge", "get_case_studies"]
 
 
-# Optional test
+# ---- AGENT B ----
+def run_agent_b(input_data):
+    query = input_data.get("query", "")
+
+    # ---- SELECT TOOLS ----
+    tool1, tool2 = choose_tools(query)
+
+    # ---- CALL TOOLS ----
+    data1 = call_lpi_tool(tool1, query)
+    data2 = call_lpi_tool(tool2, query)
+
+    # ---- SECURITY FILTER ----
+    data1 = prevent_data_leak(data1)
+    data2 = prevent_data_leak(data2)
+
+    # ---- STRUCTURED OUTPUT ----
+    return {
+        "smile_data": data1,
+        "case_data": data2,
+        "sources": [tool1, tool2]
+    }
+
+
+# ---- TEST ----
 if __name__ == "__main__":
-    q = "How are digital twins used in healthcare?"
-    ctx, used = researcher_agent(q)
+    result = run_agent_b({
+        "query": "How are digital twins used in healthcare?"
+    })
 
-    print("\n--- TOOLS USED ---")
-    print(used)
-
-    print("\n--- CONTEXT ---")
-    print(ctx[:1000])
+    print("\n=== AGENT B OUTPUT ===\n")
+    print(json.dumps(result, indent=2))
