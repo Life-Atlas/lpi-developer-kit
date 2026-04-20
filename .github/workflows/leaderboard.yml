@@ -14,9 +14,14 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: leaderboard-deploy
+  cancel-in-progress: true
+
 jobs:
   build-leaderboard:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
@@ -105,6 +110,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/data.json
           git diff --cached --quiet || git commit -m "Update leaderboard data [automated]"
+          git pull --rebase origin master
           git push
 
       - name: Deploy to GitHub Pages

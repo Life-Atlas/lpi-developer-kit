@@ -1,0 +1,109 @@
+{
+  "name": "SMILE Implementation Planner",
+  "description": "Given an industry, use case, and resource constraints, produces a prioritized SMILE implementation plan grounded in LPI methodology data. Queries smile_phase_detail and get_methodology_step to build a structured, evidence-based plan. Output is a typed JSON schema consumed by downstream agents. Part of the Level 4 Secure Agent Mesh.",
+  "url": "local://python planner.py",
+  "version": "1.0.0",
+  "defaultInputModes": ["application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "stdio-json",
+      "url": "local://python submissions/shubham-kumar/level4/planner.py",
+      "comment": "Send JSON to stdin, receive plan JSON on stdout. Requires: npm run build, ollama serve."
+    }
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["industry", "usecase", "constraints"],
+    "properties": {
+      "industry": {
+        "type": "string",
+        "maxLength": 500,
+        "description": "Target industry (e.g. healthcare, manufacturing, smart buildings)"
+      },
+      "usecase": {
+        "type": "string",
+        "maxLength": 500,
+        "description": "Specific use case (e.g. predictive maintenance, patient flow optimization)"
+      },
+      "constraints": {
+        "type": "string",
+        "maxLength": 500,
+        "description": "Resource constraints (e.g. 2 developers, 3 months, no cloud)"
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "required": ["project", "phases", "milestones", "risks", "tools_used"],
+    "properties": {
+      "project": {
+        "type": "object",
+        "properties": {
+          "industry": {"type": "string"},
+          "usecase": {"type": "string"},
+          "constraints": {"type": "string"}
+        }
+      },
+      "phases": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "phase": {"type": "string"},
+            "priority": {"type": "integer"},
+            "rationale": {"type": "string"},
+            "duration": {"type": "string"},
+            "key_activities": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      },
+      "milestones": {"type": "array", "items": {"type": "string"}},
+      "risks": {"type": "array", "items": {"type": "string"}},
+      "tools_used": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "tool": {"type": "string"},
+            "args": {"type": "object"}
+          }
+        }
+      }
+    }
+  },
+  "skills": [
+    {
+      "id": "smile-implementation-plan",
+      "name": "SMILE Implementation Planner",
+      "description": "Produces a 3-phase SMILE implementation plan with priorities, rationale, durations, key activities, milestones, and risks. All phases grounded in LPI smile_phase_detail and get_methodology_step data. Designed to be consumed by a devil's advocate validator agent.",
+      "tags": ["planning", "SMILE", "digital-twin", "implementation", "A2A"],
+      "examples": [
+        "Plan a digital twin for healthcare patient flow with 2 developers and 3 months",
+        "Manufacturing predictive maintenance with limited budget",
+        "Smart building energy optimization with no cloud infrastructure"
+      ]
+    }
+  ],
+  "security": {
+    "inputSanitization": "Prompt injection patterns filtered. Input length capped at 500 chars per field.",
+    "outputSchema": "Validated against typed JSON schema before passing to downstream agents."
+  },
+  "authentication": {
+    "schemes": ["none"]
+  },
+  "provider": {
+    "organization": "Shubham Kumar",
+    "url": "https://github.com/kshubham090"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["smile_phase_detail", "get_methodology_step"],
+    "llmProvider": "ollama",
+    "role": "planner",
+    "meshPartner": "validator-agent (validator.json)"
+  }
+}

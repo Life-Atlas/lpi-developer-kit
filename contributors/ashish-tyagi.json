@@ -1,11 +1,10 @@
 {
   "name": "Ashish Tyagi",
   "github": "xAshisssh",
-  "university": "Amity University",
-  "track": "Content & Research",
-  "program": "B.Tech Computer Science",
-  "campus": "Noida",
-  "skills": ["Content Writing", "Research", "Basic Programming"],
-  "interests": ["AI", "Digital Twins", "Startups"],
-  "my_twin": "I want to build a digital twin of my personal productivity and learning system to optimize my daily routines, track progress, and improve decision-making."
+  "program": "B.Tech CSE DS",
+  "campus": "Amity Noida",
+  "skills": ["python", "machine learning", "Deep Learning", "NLP", "Agentic RAG", "AI Automation", "State of Space Models", "Cloud Compute Services"],
+  "interests": ["AI Automation", "digital twins", "computer vision", "State of Space Models-MAMBA"],
+  "track": "A: Agent Builders",
+  "my_twin": "By Building a digital twin of my daily performance which can correlate sleep, nutrition, and training intensity with my focus and output, I can optimize my peak performance hours."
 }
