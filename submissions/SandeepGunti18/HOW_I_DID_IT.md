@@ -1,21 +1,30 @@
-# How I Did Level 2 — Track A
+# HOW I DID IT
 
-## Step-by-Step Process
+## Level 2
 
-1. I cloned the LPI developer kit and ran `npm install && npm run build`
-2. I verified all 7 tools pass by running `npm run test-client`
-3. I installed Ollama from ollama.com
-4. I downloaded the qwen2.5:1.5b model using `ollama pull qwen2.5:1.5b`
-5. I ran the example agent with a question about the SMILE methodology
-6. The agent queried three LPI tools (smile_overview, query_knowledge, get_case_studies) and sent the results to the local LLM
-7. I captured the LLM output showing how it synthesized the tool results into a coherent answer
+Completed Level 2 submission by following repository instructions, testing setup, and fixing file structure issues.
 
-## Problems I Hit and How I Solved Them
+---
 
-When I first tried to run `ollama serve`, I got a "bind" error saying the port was already in use. I realized Ollama was already running in the background from the installation, so I just skipped that step and proceeded directly to running the agent. This taught me that Ollama auto-starts on Windows.
+## Level 3
 
-The agent initially failed because I didn't have the `requests` library installed. I fixed this by running `pip install requests`, which gave the agent the HTTP capabilities it needed to communicate with the LPI sandbox.
+### Step by Step
 
-## What I Learned
+1. I selected Track A because I enjoy building practical AI tools.
+2. I created a separate GitHub repository.
+3. I built an AI Career & University Decision Agent using Node.js.
+4. The agent accepts student preferences like interests, budget, course, and location.
+5. It uses query_knowledge and get_insights logic for recommendations.
+6. I tested multiple inputs and improved formatting.
 
-I learned that the MCP (Model Context Protocol) is a powerful standard for agents to discover and call tools reliably. The fact that I could write a simple query in English and the agent automatically figured out which tools to use was impressive. I also gained appreciation for how important it is to cite sources in AI — the agent explicitly showed which tool provided which information, making it explainable rather than a black box. Finally, I realized that running LLMs locally with Ollama is practical and fast, opening possibilities for building agents without cloud dependencies.
+### Problems Faced
+
+- Understanding multiple repo workflow
+- GitHub submission formatting
+- Making output clean and explainable
+
+### What I Learned
+
+- Tool-based AI systems
+- Explainable recommendations
+- Better GitHub workflow
