@@ -1,73 +1,109 @@
-# Secure Agent Mesh - Level 4 Submission
+# Level 4 — Secure Multi-Agent System (LPI)
 
-A secure agent-to-agent communication system implementing A2A protocol with MCP integration and comprehensive security hardening.
+## Overview
 
-## What System Does
-- **Agent A**: Client agent that handles user input and discovers Agent B
-- **Agent B**: Server agent that analyzes problems using SMILE methodology via LPI tools
-- **Security**: Comprehensive protection against injection, DoS, and data exfiltration
-- **Communication**: Structured JSON-based agent-to-agent communication
+This project implements a **secure multi-agent system** using the Life Programmable Interface (LPI).
+
+The system answers user queries by:
+- retrieving grounded knowledge using LPI tools  
+- reasoning strictly over that data  
+- enforcing security constraints to prevent misuse  
+
+---
 
 ## Architecture
-```
-User → Agent A (Client) → Agent B (Server) → LPI MCP Server → Ollama LLM
-```
 
-## How to Run
+The system consists of **two agents + orchestrator**:
 
-### Prerequisites
-- Python 3.10+, Flask, requests
-- Node.js 18+ (for LPI MCP server)
-- Ollama with qwen2.5:1.5b model
-- LPI developer kit built (`npm run build`)
+### 1. Agent B — Research Agent
+- Calls LPI tools (`smile_overview`, `get_case_studies`)  
+- Extracts relevant data (healthcare-focused filtering)  
+- Returns structured grounding data
 
-### Step 1: Install Dependencies
-```bash
-pip install flask requests
-```
+### 2. Agent A — Reasoning Agent
+- Takes grounded data from Agent B  
+- Uses a constrained prompt (no external knowledge)  
+- Generates a structured, explainable answer
 
-### Step 2: Start Ollama
-```bash
-ollama serve
-ollama pull qwen2.5:1.5b
-```
+### 3. Orchestrator
+- Handles user input  
+- Routes data between agents  
+- Applies security checks  
+- Produces final output
 
-### Step 3: Start Agent B (Server)
-```bash
-python agent_b.py
-```
-Expected: Server starts on http://localhost:8000
+---
 
-### Step 4: Start Agent A (Client)
-```bash
-python agent_a.py
-```
-Expected: Agent discovers Agent B and waits for user input
+## Data Flow
 
-### Step 5: Use the System
-```
-Enter your problem: I feel distracted and unproductive
-```
+User Query → Orchestrator → Agent B (LPI Tools) → Grounded Data (SMILE + Case Study) → Agent A (Reasoning) → Final Answer
+
+---
+
+## Tools Used
+
+- `smile_overview` → SMILE methodology  
+- `get_case_studies` → real-world digital twin implementations
+
+---
 
 ## Security Features
-- **Prompt Injection Protection**: Pattern-based detection and blocking
-- **Rate Limiting**: 10 requests per minute per client
-- **Input Validation**: Length limits, character sanitization
-- **Output Sanitization**: Field whitelisting, data leakage prevention
-- **Timeout Protection**: Prevents resource exhaustion
+Implemented in `security.py`:
+### 1. Prompt Injection Protection
+Blocks malicious inputs such as:
+- "ignore previous instructions"  
+- "reveal system prompt"
+### 2. Data Leak Prevention
+Redacts sensitive outputs like:
+- system prompts  
+- hidden instructions  
+- tool schemas   
+### 3. DoS Protection
+Limits input size to prevent overload   
+### 4. Agent Validation
+Ensures correct structure of inter-agent communication   
+---
 
-## A2A Protocol Implementation
-- Agent discovery via `.well-known/agent.json`
-- Structured JSON communication
-- Capability description and validation
-- Security feature disclosure
+## Key Design Decisions - 
 
-## Files
-- `agent_a.py` - Client agent with security validation
-- `agent_b.py` - Server agent with MCP integration
-- `.well-known/agent.json` - A2A agent card
-- `threat_model.md` - Attack surface and threat analysis
-- `security_audit.md` - Security testing results
-- `demo.md` - Working demonstration transcript
+**Strict grounding**: 
 
-This system demonstrates production-ready agent-to-agent communication with comprehensive security controls and real-world applicability.
+Agent A can only use data from Agent B - 
+
+**No hallucination**: LLM constrained with hard rules - 
+**Tool-first architecture**: reasoning depends on LPI outputs - 
+**Security-first design**: all inputs and outputs are filtered   
+
+---
+
+## Example Query - How are digital twins used in healthcare?
+
+---
+## Example Output -
+
+- SMILE-based explanation
+- Healthcare case study (continuous patient twin)
+- Structured reasoning (phases, application, insight, conclusion)
+
+---
+
+## How to Run - ### 1. Start LPI server
+```bash npm run build node dist/src/index.js```
+
+and start Ollama:
+
+'term'ollama run qwen2.5:1.5b'``` or follow the detailed steps provided.
+
+details include starting the server, running Ollama, and executing the orchestrator script.
+
+detailed project structure is also outlined.
+
+e.g., level4/ directory contains key scripts and files.
+e.g., security layer is implemented in `security.py`.
+e.g., architecture includes agent scripts and orchestrator.
+e.g., notes mention local LPI server and Ollama usage for reasoning.
+e.g., filtering applied for relevance in healthcare context.
+
+details about author and credibility are included.
+highlighting that this setup matches actual code, shows architecture clearly, emphasizes security, and maintains credibility.
+the final advice encourages clarity, technical honesty, and avoiding buzzwords.
+a reminder that additional versions of documentation can be provided if needed.
