@@ -12,13 +12,13 @@ Steps performed:
 
 ## LPI Test Client Output
 ```
-Tool 1 passed
-Tool 2 passed
-Tool 3 passed
-Tool 4 passed
-Tool 5 passed
-Tool 6 passed
-Tool 7 passed
+[PASS] smile_overview
+[PASS] query_knowledge
+[PASS] get_case_studies
+[PASS] get_insights
+[PASS] list_topics
+[PASS] smile_phase_detail
+[PASS] get_methodology_step
 ```
 
 Result:
