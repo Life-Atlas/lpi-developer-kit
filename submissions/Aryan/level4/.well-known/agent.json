@@ -1,22 +1,22 @@
 {
-  "name": "smile_agent",
-  "description": "Analyzes user problems using SMILE methodology with LPI tools and explainable AI",
+  "name": "LPI Multi-Agent System",
+  "description": "A Level 4 multi-agent system that uses expert and researcher agents to answer queries using LPI tools with orchestration and validation.",
   "version": "1.0.0",
-  "endpoint": "http://localhost:8000/analyze",
-  "capabilities": [
+  "authors": ["Aryan"],
+  "agents": [
     {
-      "id": "analyze_problem",
-      "name": "Analyze Personal Problem",
-      "description": "Analyze productivity, stress, or focus problems using SMILE methodology",
-      "input": "text",
-      "output": "structured_analysis"
+      "id": "agent_a_expert",
+      "role": "Expert",
+      "description": "Provides structured explanations using SMILE methodology"
+    },
+    {
+      "id": "agent_b_researcher",
+      "role": "Researcher",
+      "description": "Finds and extracts relevant case studies and knowledge"
     }
   ],
-  "security": {
-    "rate_limiting": true,
-    "input_validation": true,
-    "output_sanitization": true
-  },
-  "protocols": ["A2A", "HTTP/JSON"],
-  "dependencies": ["LPI MCP Server", "Ollama"]
+  "orchestrator": {
+    "id": "orchestrator",
+    "description": "Coordinates agents and combines outputs into final answer"
+  }
 }
