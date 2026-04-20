@@ -1,22 +1,22 @@
 {
-  "name": "smile_agent",
-  "description": "Analyzes user problems using SMILE methodology with LPI tools and explainable AI",
+  "name": "LPI Multi-Agent System",
+  "description": "A Level 4 multi-agent system where a decision agent generates deployment strategies using grounded evidence provided by a specialized grounding agent.",
   "version": "1.0.0",
-  "endpoint": "http://localhost:8000/analyze",
-  "capabilities": [
+  "authors": ["Praveen Singh"],
+  "agents": [
     {
-      "id": "analyze_problem",
-      "name": "Analyze Personal Problem",
-      "description": "Analyze productivity, stress, or focus problems using SMILE methodology",
-      "input": "text",
-      "output": "structured_analysis"
+      "id": "agent_a_expert",
+      "role": "Decision Agent",
+      "description": "Generates constraint-aware deployment strategies using structured reasoning, SMILE methodology, and grounded inputs"
+    },
+    {
+      "id": "agent_b_grounding",
+      "role": "Grounding Agent",
+      "description": "Extracts, filters, and validates insights, case studies, and knowledge to provide high-quality evidence for decision-making"
     }
   ],
-  "security": {
-    "rate_limiting": true,
-    "input_validation": true,
-    "output_sanitization": true
-  },
-  "protocols": ["A2A", "HTTP/JSON"],
-  "dependencies": ["LPI MCP Server", "Ollama"]
+  "orchestrator": {
+    "id": "orchestrator",
+    "description": "Coordinates agents, manages structured data exchange, and combines outputs into a final deployment strategy"
+  }
 }
