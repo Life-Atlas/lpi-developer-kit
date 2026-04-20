@@ -86,24 +86,35 @@ Agent A can only use data from Agent B -
 
 ---
 
-## How to Run - ### 1. Start LPI server
-```bash npm run build node dist/src/index.js```
+# How to Run
 
-and start Ollama:
+## 1. Start LPI Server
+```bash
+npm run build
+node dist/src/index.js
+```
 
-'term'ollama run qwen2.5:1.5b'``` or follow the detailed steps provided.
+## 2. Start Ollama
+Run the following command:
+```
+ollama run qwen2.5:1.5b
+```
+Or follow the detailed steps provided.
 
-details include starting the server, running Ollama, and executing the orchestrator script.
+---
 
-detailed project structure is also outlined.
+### Details include:
+- Starting the server, running Ollama, and executing the orchestrator script.
+- The project structure is outlined:
+  - `level4/` directory contains key scripts and files.
+  - Security layer is implemented in `security.py`.
+  - Architecture includes agent scripts and orchestrator.
+- Notes mention:
+  - Use of local LPI server and Ollama for reasoning.
+  - Filtering applied for relevance in healthcare context.
+- Additional information about author and credibility:
+  - Setup matches actual code, clearly shows architecture, emphasizes security, and maintains credibility.
 
-e.g., level4/ directory contains key scripts and files.
-e.g., security layer is implemented in `security.py`.
-e.g., architecture includes agent scripts and orchestrator.
-e.g., notes mention local LPI server and Ollama usage for reasoning.
-e.g., filtering applied for relevance in healthcare context.
-
-details about author and credibility are included.
-highlighting that this setup matches actual code, shows architecture clearly, emphasizes security, and maintains credibility.
-the final advice encourages clarity, technical honesty, and avoiding buzzwords.
-a reminder that additional versions of documentation can be provided if needed.
+### Final Advice:
+- Encourage clarity, technical honesty, and avoiding buzzwords.
+- A reminder that additional versions of documentation can be provided if needed.
