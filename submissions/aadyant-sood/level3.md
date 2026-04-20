@@ -106,6 +106,30 @@ Each recommendation is derived from tool outputs and clearly traceable:
 
 This ensures every decision is explainable and grounded in data.
 
+## Design Decisions and Independent Thinking
+
+While implementing this project, I made several decisions beyond the given instructions.
+
+Instead of treating this as just a UI dashboard, I approached it as a system that behaves like an agent. This led me to integrate LPI tools using MCP, ensuring that insights are generated from real data rather than static logic.
+
+I also chose to prioritize explainability. Instead of returning direct outputs, I structured the system so every recommendation is backed by tool outputs (smile_overview, query_knowledge, get_case_studies). This improves transparency and aligns with real-world digital twin systems.
+
+Another key decision was focusing on robustness. I added handling for edge cases such as:
+- LPI server failure
+- timeout scenarios
+- invalid or malformed responses
+- empty user input
+
+This ensures the system continues functioning even under failure conditions.
+
+If I were to extend this further, I would:
+- replace subprocess-based MCP calls with direct API integration  
+- implement async tool execution  
+- add structured logging and monitoring  
+- scale the system into a full backend service  
+
+These decisions reflect a shift from simply completing the task to designing a reliable and realistic system.
+
 ---
 
 ## Design Approach
@@ -140,4 +164,4 @@ This aligns with how real-world digital twin systems operate.
 ---
 
 Final update: integrated explicit LPI tool execution flow and reasoning pipeline"mcp final fix" 
-"update: added robust error handling for LPI failures and invalid inputs"
+"update: added robust error handling for LPI failures and invalid inputs""update: added design decisions section" 
