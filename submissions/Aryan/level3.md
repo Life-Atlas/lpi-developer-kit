@@ -2,49 +2,84 @@
 
 ## Project: Explainable Knowledge Agent (LPI)
 
-*Repository:* https://github.com/iamaryan07/lpi-life-agent
+**Repository**: https://github.com/iamaryan07/lpi-life-agent
+
+**Agent**: https://github.com/iamaryan07/lpi-life-agent/blob/main/agent.py
+
+**A2A Card**: https://github.com/iamaryan07/lpi-life-agent/blob/main/agent.json
 
 ---
 
 ## Overview
 
 This project implements a Level 3 agent using the Life Programmable Interface (LPI).
-The agent answers user queries by selecting and calling multiple tools, processing their outputs, and generating a structured response
+
+The agent answers user queries by:
+
+* selecting appropriate tools based on the query
+* retrieving structured knowledge from LPI
+* combining multiple sources
+* generating a structured, explainable response using an LLM (Qwen via Ollama)
 
 ---
 
 ## Tools Used
 
-* `smile_overview` → provides SMILE methodology
-* `get_case_studies` → provides real-world implementations
+* `smile_overview` → provides SMILE methodology and conceptual framework
+* `get_case_studies` → provides real-world digital twin implementations
+* `get_methodology_step`, `get_insights` → used for implementation-focused queries
 
 ---
 
 ## How It Works
 
-1. Takes user input (e.g., healthcare-related query)
-2. Selects two relevant tools
-3. Sends JSON-RPC requests to LPI server
-4. Receives structured responses
-5. Parses and extracts relevant text
-6. Filters healthcare-specific case study
-7. Combines outputs into final answer
+1. Accepts a user query
+2. Selects tools based on query type (rule-based logic)
+3. Sends JSON-RPC requests to LPI server (`dist/src/index.js`)
+4. Retrieves structured outputs from multiple tools
+5. Extracts and filters relevant content (e.g., healthcare-specific sections)
+6. Combines tool outputs into a unified context
+7. Uses an LLM (Qwen via Ollama) to generate a structured response
 
 ---
 
 ## Key Features
 
-* Multi-tool orchestration
-* Dynamic argument handling for tools
-* JSON-RPC communication via subprocess
-* Structured output (summary + analysis + conclusion)
-* Domain-specific filtering (healthcare use case)
+* Tool coordination across multiple LPI endpoints
+* Query-based tool selection (simple reasoning logic)
+* JSON-RPC communication with LPI via subprocess
+* Context-aware filtering for domain-specific relevance (healthcare)
+* LLM-based reasoning to combine methodology and real-world data
+* Structured output format:
+
+  * Understanding
+  * SMILE Phases
+  * Real-World Application
+  * Insight
+  * Conclusion
+ 
+---
+
+## Design Decisions & Independent Thinking
+
+**Approach & Trade-offs:**
+I used a simple rule-based tool selector instead of an LLM planner to keep tool usage predictable and avoid incorrect tool calls. This trades flexibility for reliability and easier debugging.
+
+**Choices Beyond Instructions:**
+
+* Added an LLM (Qwen via Ollama) to combine tool outputs into a structured answer instead of returning raw data
+* Implemented filtering to extract only healthcare-relevant case study content
+* Designed a strict prompt to reduce hallucination and enforce grounded responses
+* Built custom parsing for nested JSON-RPC responses (`result → content → text`)
+
+**Learning:**
+Combining tool outputs with controlled LLM reasoning is more important than just calling tools.
 
 ---
 
 ## Example Query
 
-```text
+```
 How are digital twins used in healthcare?
 ```
 
@@ -52,40 +87,47 @@ How are digital twins used in healthcare?
 
 ## Example Output (Summary)
 
-* SMILE framework overview
+* Explanation of digital twins in healthcare
+* Relevant SMILE phases (e.g., Reality Emulation, Concurrent Engineering)
 * Healthcare case study (continuous patient twin)
-* Analysis of methodology + application
+* Insight connecting methodology with real-world application
+* Clear structured conclusion
 
 ---
 
 ## Level 3 Criteria Met
 
-* ✔ Uses multiple tools
-* ✔ Combines outputs from different tools
-* ✔ Processes and structures responses
-* ✔ Produces a meaningful final answer
-* ✔ Demonstrates reasoning over tool outputs
+* ✔ Uses multiple tools in coordination
+* ✔ Selects tools based on query type
+* ✔ Integrates outputs from different sources
+* ✔ Uses an LLM to synthesize and structure results
+* ✔ Produces explainable, structured answers
 
 ---
 
 ## Notes
 
-* Uses LPI server (`dist/src/index.js`), not test client
-* Filters case studies to match query context
-* Built using Python + Node.js (LPI)
+* Uses actual LPI server (`dist/src/index.js`) instead of test client
+* Applies filtering to extract healthcare-relevant case study content
+* Implemented using Python (agent) and Node.js (LPI server)
 
 ---
 
-## Reflection (Beyond Instructions)
+## Reflection
 
 ### What I did beyond the instructions
-- Filtered tool output to extract only healthcare-relevant case studies instead of returning full raw results.
-- Modified tool arguments (`"healthcare digital twin"`) to improve relevance instead of directly passing the user query.
-- Implemented manual parsing of nested JSON-RPC responses (`result → content → text`).
-- Used the actual LPI server (`dist/src/index.js`) instead of the test client, and handled initialization explicitly.
 
-### What I would do differently next time
-- Abstract tool-calling logic into a reusable client instead of mixing it with agent logic.
-- Add clearer reasoning traces showing why tools were selected and how outputs were combined.
-- Improve summarization by structuring outputs (Challenge, Approach, Outcome) instead of truncation.
-- Make tool selection adaptive instead of rule-based.
+* Implemented query-based tool selection instead of fixed tool usage
+* Applied filtering logic to extract domain-specific (healthcare) insights
+* Integrated an LLM (Qwen via Ollama) for reasoning instead of rule-based output
+* Designed a structured prompt to enforce grounded, explainable responses
+* Handled nested JSON-RPC parsing (`result → content → text`)
+
+### What I would improve next
+
+* Add explicit reasoning trace for better transparency
+* Improve error handling for tool and LLM failures
+* Support multi-step reasoning instead of single-pass generation
+* Expand tool selection strategy for broader query coverage
+
+---
