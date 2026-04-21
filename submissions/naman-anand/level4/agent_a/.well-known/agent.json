@@ -1,0 +1,57 @@
+{
+  "name": "SMILE Security Auditor",
+  "description": "Audits digital twin configurations for SMILE methodology compliance and security hardening. Specializes in analyzing implementation plans against SMILE's 'Reality Emulation' principles, assessing security posture, and providing compliance-scored audit reports. Queries the LPI for SMILE methodology knowledge and phase-specific security requirements.",
+  "url": "https://github.com/Naman-Playz/lpi-developer-kit",
+  "version": "1.0.0",
+  "defaultInputModes": ["application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "securityHardening": true,
+    "structuredDataExchange": true
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "MCP-stdio",
+      "url": "local://python secure_mesh.py --agent auditor",
+      "comment": "Runs as a hardened subprocess within the secure mesh orchestrator."
+    }
+  ],
+  "skills": [
+    {
+      "id": "methodology-audit",
+      "name": "SMILE Methodology Audit",
+      "description": "Audits a proposed digital twin configuration against all 6 SMILE phases. Returns a compliance score (0-100), phase-by-phase findings, and remediation recommendations. Uses LPI tools: smile_overview, smile_phase_detail.",
+      "tags": ["audit", "compliance", "smile", "security"],
+      "examples": [
+        "Audit this home network digital twin configuration for SMILE compliance",
+        "Check if this IoT deployment follows Reality Emulation principles"
+      ]
+    },
+    {
+      "id": "vulnerability-assessment",
+      "name": "Security Vulnerability Assessment",
+      "description": "Evaluates a digital twin architecture for security vulnerabilities including data exfiltration risks, privilege escalation vectors, and edge-native security gaps. Uses LPI tools: smile_phase_detail, query_knowledge.",
+      "tags": ["security", "vulnerability", "assessment", "hardening"],
+      "examples": [
+        "Assess security risks in this home network twin deployment",
+        "Find vulnerability vectors in this edge-native architecture"
+      ]
+    }
+  ],
+  "authentication": {
+    "schemes": ["bearer"],
+    "description": "Requires a mesh-internal HMAC-signed token for all inter-agent communications."
+  },
+  "provider": {
+    "organization": "Naman Anand",
+    "url": "https://github.com/Naman-Playz"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["smile_overview", "smile_phase_detail", "query_knowledge"],
+    "llmProvider": "ollama",
+    "llmModel": "qwen2.5:1.5b",
+    "explainability": "Every audit finding cites the specific LPI tool and data entry that informed it. The provenance chain: User Request → Agent Card Discovery → LPI Tool Call → Raw Data → Audit Finding → Compliance Score."
+  }
+}
