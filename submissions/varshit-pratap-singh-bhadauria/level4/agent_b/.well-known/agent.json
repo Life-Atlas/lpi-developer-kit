@@ -1,0 +1,14 @@
+{
+  "name": "LPI Expert Agent",
+  "description": "Premium network agent with access to the LPI MCP server and local Ollama LLMs for intelligent context synthesis.",
+  "type": "expert",
+  "skills": [
+    "query_knowledge",
+    "smile_phase_detail",
+    "ollama_intelligence"
+  ],
+  "contact": {
+    "protocol": "http",
+    "endpoint": "http://localhost:8000/query"
+  }
+}
