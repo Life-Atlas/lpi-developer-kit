@@ -1,6 +1,59 @@
 {
   "contributors": [
     {
+      "name": "Aadyant Sood",
+      "github": "Aadyant-7",
+      "skills": [
+        "python",
+        "html",
+        "css",
+        "javascript",
+        "react basics",
+        "git"
+      ],
+      "interests": [
+        "frontend development",
+        "full stack development",
+        "ui ux design",
+        "building real world applications",
+        "problem solving using technology",
+        "learning new technologies",
+        "ai integrations in web apps",
+        "user experience improvement",
+        "design systems and clean interfaces"
+      ],
+      "track": "C: Design & UX",
+      "level": 4,
+      "score": 12,
+      "score_max": 13,
+      "score_pct": 92
+    },
+    {
+      "name": "Jaivardhan Singh",
+      "github": "jv-singh",
+      "skills": [
+        "python",
+        "machine learning",
+        "Deep Learning",
+        "NLP",
+        "Agentic RAG",
+        "AI Automation",
+        "State of Space Models",
+        "Cloud Compute Services"
+      ],
+      "interests": [
+        "AI Automation",
+        "digital twins",
+        "computer vision",
+        "State of Space Models-MAMBA"
+      ],
+      "track": "A: Agent Builders",
+      "level": 4,
+      "score": 12,
+      "score_max": 13,
+      "score_pct": 92
+    },
+    {
       "name": "Sanskriti",
       "github": "smiling-sanskriti",
       "skills": [
@@ -99,6 +152,29 @@
       "score_pct": 85
     },
     {
+      "name": "Harshit Kumar",
+      "github": "hrk0503",
+      "skills": [
+        "python",
+        "javascript",
+        "git",
+        "data-structures",
+        "algorithms",
+        "web-development"
+      ],
+      "interests": [
+        "coding",
+        "stock-market",
+        "AI-agents",
+        "fintech"
+      ],
+      "track": "A: Agent Builders",
+      "level": 4,
+      "score": 11,
+      "score_max": 13,
+      "score_pct": 85
+    },
+    {
       "name": "Shourya Solanki",
       "github": "Shourya3113",
       "skills": [
@@ -123,28 +199,80 @@
       "score_pct": 85
     },
     {
-      "name": "Aadyant Sood",
-      "github": "Aadyant-7",
+      "name": "Abhinav Chaudhary",
+      "github": "https://github.com/abhichaudhary256-sudo",
       "skills": [
-        "python",
-        "html",
-        "css",
-        "javascript",
-        "react basics",
-        "git"
+        "Python",
+        "git",
+        "rest apis",
+        "machine Learning",
+        "nlp"
       ],
       "interests": [
-        "frontend development",
-        "full stack development",
-        "ui ux design",
-        "building real world applications",
-        "problem solving using technology",
-        "learning new technologies",
-        "ai integrations in web apps",
-        "user experience improvement",
-        "design systems and clean interfaces"
+        "ai agents",
+        "backend systems",
+        "api design",
+        "machine learning",
+        "blockchain"
       ],
-      "track": "C: Design & UX",
+      "track": "A: Agent Builders",
+      "level": 4,
+      "score": 10,
+      "score_max": 13,
+      "score_pct": 77
+    },
+    {
+      "name": "Varshit Pratap Singh Bhadauria",
+      "github": "temporalzone",
+      "skills": [
+        "python",
+        "java",
+        "javascript",
+        "react",
+        "django",
+        "flask",
+        "rest-apis",
+        "sqlite",
+        "mysql",
+        "git",
+        "dsa",
+        "jwt-auth"
+      ],
+      "interests": [
+        "agents",
+        "AI",
+        "api-integration",
+        "backend",
+        "automation"
+      ],
+      "track": "A: Agent Builders",
+      "level": 4,
+      "score": 9,
+      "score_max": 13,
+      "score_pct": 69
+    },
+    {
+      "name": "Aditi Mehta",
+      "github": "Dynamic-ctrl",
+      "skills": [
+        "python",
+        "pytorch",
+        "flask",
+        "postgresql",
+        "react",
+        "Java",
+        "Git"
+      ],
+      "interests": [
+        "ai-agents",
+        "machine learning",
+        "deep learning",
+        "backend-development",
+        "full-stack development",
+        "tech-for-social-impact",
+        "ai-safety"
+      ],
+      "track": "A: Agent Builders",
       "level": 3,
       "score": 12,
       "score_max": 13,
@@ -175,31 +303,6 @@
         "NLP",
         "3D",
         "security"
-      ],
-      "track": "A: Agent Builders",
-      "level": 3,
-      "score": 12,
-      "score_max": 13,
-      "score_pct": 92
-    },
-    {
-      "name": "Jaivardhan Singh",
-      "github": "jv-singh",
-      "skills": [
-        "python",
-        "machine learning",
-        "Deep Learning",
-        "NLP",
-        "Agentic RAG",
-        "AI Automation",
-        "State of Space Models",
-        "Cloud Compute Services"
-      ],
-      "interests": [
-        "AI Automation",
-        "digital twins",
-        "computer vision",
-        "State of Space Models-MAMBA"
       ],
       "track": "A: Agent Builders",
       "level": 3,
@@ -302,33 +405,6 @@
       "score_pct": 92
     },
     {
-      "name": "Aditi Mehta",
-      "github": "Dynamic-ctrl",
-      "skills": [
-        "python",
-        "pytorch",
-        "flask",
-        "postgresql",
-        "react",
-        "Java",
-        "Git"
-      ],
-      "interests": [
-        "ai-agents",
-        "machine learning",
-        "deep learning",
-        "backend-development",
-        "full-stack development",
-        "tech-for-social-impact",
-        "ai-safety"
-      ],
-      "track": "A: Agent Builders",
-      "level": 3,
-      "score": 11,
-      "score_max": 13,
-      "score_pct": 85
-    },
-    {
       "name": "Ananyaa M",
       "github": "ananyaa05",
       "skills": [
@@ -384,29 +460,6 @@
         "Building Scalable AI Solutions"
       ],
       "track": "",
-      "level": 3,
-      "score": 11,
-      "score_max": 13,
-      "score_pct": 85
-    },
-    {
-      "name": "Harshit Kumar",
-      "github": "hrk0503",
-      "skills": [
-        "python",
-        "javascript",
-        "git",
-        "data-structures",
-        "algorithms",
-        "web-development"
-      ],
-      "interests": [
-        "coding",
-        "stock-market",
-        "AI-agents",
-        "fintech"
-      ],
-      "track": "A: Agent Builders",
       "level": 3,
       "score": 11,
       "score_max": 13,
@@ -622,29 +675,6 @@
       "score_pct": 85
     },
     {
-      "name": "Abhinav Chaudhary",
-      "github": "https://github.com/abhichaudhary256-sudo",
-      "skills": [
-        "Python",
-        "git",
-        "rest apis",
-        "machine Learning",
-        "nlp"
-      ],
-      "interests": [
-        "ai agents",
-        "backend systems",
-        "api design",
-        "machine learning",
-        "blockchain"
-      ],
-      "track": "A: Agent Builders",
-      "level": 3,
-      "score": 10,
-      "score_max": 13,
-      "score_pct": 77
-    },
-    {
       "name": "Adil Islam",
       "github": "Adilislam0",
       "skills": [
@@ -745,24 +775,6 @@
       "score_pct": 77
     },
     {
-      "name": "Saima Afroz",
-      "github": "Saima1405",
-      "skills": [
-        "python",
-        "statistics"
-      ],
-      "interests": [
-        "AI",
-        "learning",
-        "data"
-      ],
-      "track": "",
-      "level": 3,
-      "score": 10,
-      "score_max": 13,
-      "score_pct": 77
-    },
-    {
       "name": "Sonal Yadav",
       "github": "sonalydav789",
       "skills": [
@@ -815,6 +827,27 @@
       "score": 10,
       "score_max": 13,
       "score_pct": 77
+    },
+    {
+      "name": "Abhishek Sharma",
+      "github": "Abhishek2006-Sharma",
+      "skills": [
+        "Git",
+        "CLI",
+        "LLM basics",
+        "Ollama",
+        "LPI Sandbox"
+      ],
+      "interests": [
+        "AI agents",
+        "automation",
+        "tool-based systems"
+      ],
+      "track": "A: Agent Builder",
+      "level": 3,
+      "score": 9,
+      "score_max": 13,
+      "score_pct": 69
     },
     {
       "name": "Navneet Kumar",
@@ -883,36 +916,6 @@
         "LLM"
       ],
       "track": "B: Content & Research",
-      "level": 3,
-      "score": 9,
-      "score_max": 13,
-      "score_pct": 69
-    },
-    {
-      "name": "Varshit Pratap Singh Bhadauria",
-      "github": "temporalzone",
-      "skills": [
-        "python",
-        "java",
-        "javascript",
-        "react",
-        "django",
-        "flask",
-        "rest-apis",
-        "sqlite",
-        "mysql",
-        "git",
-        "dsa",
-        "jwt-auth"
-      ],
-      "interests": [
-        "agents",
-        "AI",
-        "api-integration",
-        "backend",
-        "automation"
-      ],
-      "track": "A: Agent Builders",
       "level": 3,
       "score": 9,
       "score_max": 13,
@@ -1401,24 +1404,6 @@
       ],
       "track": "",
       "level": 2
-    },
-    {
-      "name": "Abhishek Sharma",
-      "github": "Abhishek2006-Sharma",
-      "skills": [
-        "Git",
-        "CLI",
-        "LLM basics",
-        "Ollama",
-        "LPI Sandbox"
-      ],
-      "interests": [
-        "AI agents",
-        "automation",
-        "tool-based systems"
-      ],
-      "track": "A: Agent Builder",
-      "level": 1
     },
     {
       "name": "Aditya Kumar",

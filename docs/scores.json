@@ -253,7 +253,7 @@
     "score": 10,
     "max": 13,
     "pct": 77,
-    "updated": "2026-04-19T20:47:58.594Z"
+    "updated": "2026-04-21T04:45:55.176Z"
   },
   "vusala-akanksha": {
     "name": "Vusala Akanksha",
@@ -341,7 +341,7 @@
     "score": 12,
     "max": 13,
     "pct": 92,
-    "updated": "2026-04-20T17:58:14.650Z"
+    "updated": "2026-04-21T06:15:10.476Z"
   },
   "aryan": {
     "name": "Aryan",
@@ -494,5 +494,13 @@
     "max": 13,
     "pct": 69,
     "updated": "2026-04-20T19:34:37.503Z"
+  },
+  "sandeep-gunti": {
+    "name": "Sandeep Gunti",
+    "level": 3,
+    "score": 9,
+    "max": 13,
+    "pct": 69,
+    "updated": "2026-04-21T06:12:48.448Z"
   }
 }
