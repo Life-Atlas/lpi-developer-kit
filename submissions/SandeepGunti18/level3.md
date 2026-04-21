@@ -7,7 +7,7 @@ Track A: Agent Builders
 AI Career & University Decision Agent
 
 ## Repository Link
-https://github.com/SandeepGunti18/ai-career-university-agent
+https://github.com/SandeepGunti18/lifeatlas-level3-agent
 
 ## Overview
 
