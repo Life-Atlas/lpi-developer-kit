@@ -1,0 +1,22 @@
+{
+  "name": "LPI Multi-Agent System",
+  "description": "A Level 4 multi-agent system that uses expert and researcher agents to answer queries using LPI tools with orchestration and validation.",
+  "version": "1.0.0",
+  "authors": ["Aryan"],
+  "agents": [
+    {
+      "id": "agent_a_expert",
+      "role": "Expert",
+      "description": "Provides structured explanations using SMILE methodology"
+    },
+    {
+      "id": "agent_b_researcher",
+      "role": "Researcher",
+      "description": "Finds and extracts relevant case studies and knowledge"
+    }
+  ],
+  "orchestrator": {
+    "id": "orchestrator",
+    "description": "Coordinates agents and combines outputs into final answer"
+  }
+}
