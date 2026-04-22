@@ -15,7 +15,7 @@ This agent was built from scratch by Khushi Garg
 Designed custom LPI tools (tool1, tool2)
 Implemented agent logic manually (no copy-paste framework)
 Structured project independently
-🧠 Agent Design
+Agent Design
 The agent follows a structured pipeline:
 
 Accept user query
