@@ -9,8 +9,8 @@ Explainable AI
 How to Run
 python agent.py
 
-🧑‍💻 Independent Development
-This agent was built from scratch by Rahul Bijarnia.
+Independent Development
+This agent was built from scratch by Khushi Garg
 
 Designed custom LPI tools (tool1, tool2)
 Implemented agent logic manually (no copy-paste framework)
