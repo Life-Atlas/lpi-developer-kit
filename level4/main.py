@@ -11,20 +11,20 @@ def run_system(user_input):
 
         final = f"""
 === AGENT A (SMILE) ===
-{a_result['data']}
+{a_result.get('data', 'No data')}
 
 === AGENT B (INSIGHTS) ===
-{b_result['data']}
+{b_result.get('data', 'No data')}
 
-=== FINAL OUTPUT ===
-Combined recommendation based on both agents.
+=== FINAL RECOMMENDATION ===
+Based on SMILE methodology and insights:
+
+- Improve your daily routine by focusing on sleep, exercise, and learning habits
+- Apply structured planning to your day for better productivity
+- Use insights from your input to adjust your workflow and reduce distractions
+
+=== EXPLAINABILITY ===
+This result was generated using:
+- smile_overview (Agent A)
+- get_insights (Agent B)
 """
-
-        return final
-
-    except Exception as e:
-        return f"Error: {str(e)}"
-
-
-if __name__ == "__main__":
-    print(run_system("How to improve productivity?"))
