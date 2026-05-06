@@ -24,9 +24,38 @@
       ],
       "track": "C: Design & UX",
       "level": 4,
-      "score": 12,
+      "score": 13,
       "score_max": 13,
-      "score_pct": 92
+      "score_pct": 100
+    },
+    {
+      "name": "Daksh Garg",
+      "github": "thedgarg31",
+      "skills": [
+        "python",
+        "machine learning",
+        "data science",
+        "react",
+        "node.js",
+        "mongodb",
+        "c++",
+        "java",
+        "unity",
+        "ar/vr"
+      ],
+      "interests": [
+        "AI agents",
+        "NLP",
+        "AR/VR",
+        "mental health tech",
+        "smart systems",
+        "full stack development"
+      ],
+      "track": "A: Agent Builders / B: Content & Research / C: Design & UX / D: 3D & Visualization / E: QA & Security",
+      "level": 4,
+      "score": 13,
+      "score_max": 13,
+      "score_pct": 100
     },
     {
       "name": "Jaivardhan Singh",
@@ -49,9 +78,9 @@
       ],
       "track": "A: Agent Builders",
       "level": 4,
-      "score": 12,
+      "score": 13,
       "score_max": 13,
-      "score_pct": 92
+      "score_pct": 100
     },
     {
       "name": "Sanskriti",
@@ -78,6 +107,53 @@
         "grant writing"
       ],
       "track": "Content & Research",
+      "level": 4,
+      "score": 13,
+      "score_max": 13,
+      "score_pct": 100
+    },
+    {
+      "name": "Harshit Kumar",
+      "github": "hrk0503",
+      "skills": [
+        "python",
+        "javascript",
+        "git",
+        "data-structures",
+        "algorithms",
+        "web-development"
+      ],
+      "interests": [
+        "coding",
+        "stock-market",
+        "AI-agents",
+        "fintech"
+      ],
+      "track": "A: Agent Builders",
+      "level": 4,
+      "score": 12,
+      "score_max": 13,
+      "score_pct": 92
+    },
+    {
+      "name": "Shourya Solanki",
+      "github": "Shourya3113",
+      "skills": [
+        "python",
+        "flask",
+        "nlp",
+        "computer vision",
+        "api-integration",
+        "machine learning"
+      ],
+      "interests": [
+        "ai agents",
+        "digital twins",
+        "health intelligence",
+        "quantum ai",
+        "human optimization"
+      ],
+      "track": "A: Agent Builders",
       "level": 4,
       "score": 12,
       "score_max": 13,
@@ -123,82 +199,6 @@
       "score_pct": 92
     },
     {
-      "name": "Daksh Garg",
-      "github": "thedgarg31",
-      "skills": [
-        "python",
-        "machine learning",
-        "data science",
-        "react",
-        "node.js",
-        "mongodb",
-        "c++",
-        "java",
-        "unity",
-        "ar/vr"
-      ],
-      "interests": [
-        "AI agents",
-        "NLP",
-        "AR/VR",
-        "mental health tech",
-        "smart systems",
-        "full stack development"
-      ],
-      "track": "A: Agent Builders / B: Content & Research / C: Design & UX / D: 3D & Visualization / E: QA & Security",
-      "level": 4,
-      "score": 11,
-      "score_max": 13,
-      "score_pct": 85
-    },
-    {
-      "name": "Harshit Kumar",
-      "github": "hrk0503",
-      "skills": [
-        "python",
-        "javascript",
-        "git",
-        "data-structures",
-        "algorithms",
-        "web-development"
-      ],
-      "interests": [
-        "coding",
-        "stock-market",
-        "AI-agents",
-        "fintech"
-      ],
-      "track": "A: Agent Builders",
-      "level": 4,
-      "score": 11,
-      "score_max": 13,
-      "score_pct": 85
-    },
-    {
-      "name": "Shourya Solanki",
-      "github": "Shourya3113",
-      "skills": [
-        "python",
-        "flask",
-        "nlp",
-        "computer vision",
-        "api-integration",
-        "machine learning"
-      ],
-      "interests": [
-        "ai agents",
-        "digital twins",
-        "health intelligence",
-        "quantum ai",
-        "human optimization"
-      ],
-      "track": "A: Agent Builders",
-      "level": 4,
-      "score": 11,
-      "score_max": 13,
-      "score_pct": 85
-    },
-    {
       "name": "Abhinav Chaudhary",
       "github": "https://github.com/abhichaudhary256-sudo",
       "skills": [
@@ -217,9 +217,9 @@
       ],
       "track": "A: Agent Builders",
       "level": 4,
-      "score": 10,
+      "score": 11,
       "score_max": 13,
-      "score_pct": 77
+      "score_pct": 85
     },
     {
       "name": "Varshit Pratap Singh Bhadauria",
@@ -247,9 +247,9 @@
       ],
       "track": "A: Agent Builders",
       "level": 4,
-      "score": 9,
+      "score": 10,
       "score_max": 13,
-      "score_pct": 69
+      "score_pct": 77
     },
     {
       "name": "Aditi Mehta",
@@ -283,25 +283,24 @@
       "github": "iamaryan07",
       "skills": [
         "python",
-        "pytorch",
-        "react",
-        "langchain",
-        "tensorflow",
-        "scikit-learn",
-        "django",
-        "django rest framework",
-        "pandas",
-        "numpy",
         "javascript",
         "java",
         "c++",
         "c",
-        "langgraph"
+        "langgraph",
+        "smachine learning",
+        "pytorch",
+        "langchain",
+        "tensorflow",
+        "django",
+        "django rest framework",
+        "deep learning",
+        "tableau",
+        "selenium"
       ],
       "interests": [
         "agents",
         "NLP",
-        "3D",
         "security"
       ],
       "track": "A: Agent Builders",
@@ -320,6 +319,9 @@
         "langchain",
         "tensorflow",
         "scikit-learn",
+        "seaborn",
+        "matplotlib",
+        "plotly",
         "node",
         "express",
         "pandas",
@@ -478,6 +480,42 @@
         "Soccer",
         "Fishing",
         "Skiing"
+      ],
+      "track": "E: QA & Security",
+      "level": 3,
+      "score": 11,
+      "score_max": 13,
+      "score_pct": 85
+    },
+    {
+      "name": "Kailash Narayana Prasad",
+      "github": "KailashNp",
+      "skills": [
+        "Python",
+        "Java",
+        "SQL",
+        "Cybersecurity (Network Security, Web Security, OWASP Top 10, Vulnerability Assessment, Penetration Testing basics)",
+        "Cryptography (Encryption/Decryption, Hashing, Digital Signatures, Public Key Infrastructure)",
+        "Blockchain (Decentralization, Consensus Mechanisms, Smart Contracts basics)",
+        "Secure Data Storage",
+        "HTML/CSS",
+        "C++",
+        "Android Development (Kotlin, Jetpack Compose)",
+        "Git & GitHub",
+        "Problem Solving",
+        "Analytical Thinking",
+        "Technical Troubleshooting",
+        "Team Collaboration"
+      ],
+      "interests": [
+        "AI Agents & Autonomous Systems",
+        "Agent Security & Adversarial Attacks",
+        "Cybersecurity & Ethical Hacking",
+        "Network & Web Security",
+        "Cryptography & Secure Communication",
+        "Blockchain & Decentralized Systems",
+        "Natural Language Processing (NLP)",
+        "Intelligent Systems & Automation"
       ],
       "track": "E: QA & Security",
       "level": 3,
@@ -753,6 +791,31 @@
       "score_pct": 77
     },
     {
+      "name": "Jahanvi Gupta",
+      "github": "Jahanvi3005",
+      "skills": [
+        "Python",
+        "React 19",
+        "Node.js",
+        "Machine Learning",
+        "FAISS",
+        "Next.js",
+        "MongoDB",
+        "RAG"
+      ],
+      "interests": [
+        "AI Agents",
+        "Data Engineering",
+        "Full-Stack Architecture",
+        "Knowledge Graphs"
+      ],
+      "track": "A: Agent Builders / D: 3D & Visualization",
+      "level": 3,
+      "score": 10,
+      "score_max": 13,
+      "score_pct": 77
+    },
+    {
       "name": "Naman Anand",
       "github": "Naman-Playz",
       "skills": [
@@ -994,31 +1057,6 @@
       "score_pct": 62
     },
     {
-      "name": "Jahanvi Gupta",
-      "github": "Jahanvi3005",
-      "skills": [
-        "Python",
-        "React 19",
-        "Node.js",
-        "Machine Learning",
-        "FAISS",
-        "Next.js",
-        "MongoDB",
-        "RAG"
-      ],
-      "interests": [
-        "AI Agents",
-        "Data Engineering",
-        "Full-Stack Architecture",
-        "Knowledge Graphs"
-      ],
-      "track": "A: Agent Builders / D: 3D & Visualization",
-      "level": 3,
-      "score": 8,
-      "score_max": 13,
-      "score_pct": 62
-    },
-    {
       "name": "Misha Arora",
       "github": "MishaArora2109",
       "skills": [
@@ -1081,32 +1119,6 @@
         "3D"
       ],
       "track": "",
-      "level": 3,
-      "score": 7,
-      "score_max": 13,
-      "score_pct": 54
-    },
-    {
-      "name": "Gunti Sandeep",
-      "github": "SandeepGunti18",
-      "skills": [
-        "python",
-        "java",
-        "tensorflow",
-        "pytorch",
-        "sql",
-        "nlp",
-        "keras",
-        "scikit-learn"
-      ],
-      "interests": [
-        "AI Agents",
-        "NLP",
-        "automation",
-        "healthcare AI",
-        "deep learning"
-      ],
-      "track": "A: Agent Builders ",
       "level": 3,
       "score": 7,
       "score_max": 13,
@@ -1287,28 +1299,6 @@
       "score_pct": 31
     },
     {
-      "name": "Aman Gupta",
-      "github": "AmanGupta3995377",
-      "skills": [
-        "machine learning",
-        "C/C++",
-        "SQL",
-        "DSA",
-        "Python"
-      ],
-      "interests": [
-        "ai agents",
-        "computer vision",
-        "web development",
-        "automation"
-      ],
-      "track": "A: Agent Builders",
-      "level": 3,
-      "score": 3,
-      "score_max": 13,
-      "score_pct": 23
-    },
-    {
       "name": "Yash Vardhan",
       "github": "Yashjal11",
       "skills": [
@@ -1349,6 +1339,25 @@
       "score": 1,
       "score_max": 13,
       "score_pct": 8
+    },
+    {
+      "name": "Aman Gupta",
+      "github": "AmanGupta3995377",
+      "skills": [
+        "machine learning",
+        "C/C++",
+        "SQL",
+        "DSA",
+        "Python"
+      ],
+      "interests": [
+        "ai agents",
+        "computer vision",
+        "web development",
+        "automation"
+      ],
+      "track": "A: Agent Builders",
+      "level": 3
     },
     {
       "name": "V Bharath Raju",
@@ -1500,6 +1509,29 @@
         "sentiment analysis"
       ],
       "track": "A: Agent Builders / C: Design & UX",
+      "level": 1
+    },
+    {
+      "name": "Gunti Sandeep",
+      "github": "SandeepGunti18",
+      "skills": [
+        "python",
+        "java",
+        "tensorflow",
+        "pytorch",
+        "sql",
+        "nlp",
+        "keras",
+        "scikit-learn"
+      ],
+      "interests": [
+        "AI Agents",
+        "NLP",
+        "automation",
+        "healthcare AI",
+        "deep learning"
+      ],
+      "track": "A: Agent Builders ",
       "level": 1
     },
     {

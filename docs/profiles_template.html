@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WINNIIO Intern Cohort — Decision Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:16px;max-width:1400px;margin:0 auto}
+h1{color:#58a6ff;font-size:1.6em;margin-bottom:4px}
+.sub{color:#8b949e;margin-bottom:16px;font-size:.9em}
+.ctrls{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.ctrls input{background:#161b22;border:1px solid #30363d;color:#c9d1d9;padding:8px 12px;border-radius:6px;font-size:.9em;width:260px}
+.ctrls button{padding:8px 16px;border-radius:6px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;cursor:pointer;font-size:.85em;transition:all .15s}
+.ctrls button:hover{background:#30363d}
+.ctrls button.on{background:#388bfd;border-color:#388bfd;color:#fff}
+.bar{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;gap:24px;flex-wrap:wrap;font-size:.9em}
+.bar span{color:#8b949e} .bar strong{color:#c9d1d9}
+.card{background:#161b22;border:1px solid #30363d;border-radius:10px;margin-bottom:8px;overflow:hidden;transition:border-color .2s}
+.card:hover{border-color:#58a6ff44}
+.card-h{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;flex-wrap:wrap}
+.card-h:hover{background:#1c2128}
+.rk{color:#8b949e;font-weight:700;font-size:1.1em;min-width:32px;text-align:center}
+.nb{flex:1;min-width:180px}
+.nb .nm{font-weight:700;font-size:1em;color:#c9d1d9}
+.nb .mt{color:#8b949e;font-size:.78em;margin-top:2px}
+.lv{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.8em;font-weight:700}
+.l4{background:#3fb95022;color:#3fb950;border:1px solid #3fb950}
+.l3{background:#58a6ff22;color:#58a6ff;border:1px solid #58a6ff}
+.l2{background:#8b949e22;color:#8b949e;border:1px solid #8b949e}
+.sc{text-align:right;min-width:90px}
+.sc .sn{font-weight:700;font-size:1.05em}
+.pb{width:80px;height:6px;background:#21262d;border-radius:3px;overflow:hidden;margin-top:4px}
+.pf{height:100%;border-radius:3px}
+.tb{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.78em;font-weight:700;white-space:nowrap}
+select.dc{padding:5px 10px;border-radius:6px;border:1px solid #30363d;font-size:.85em;font-weight:600;cursor:pointer}
+select.d-ACCEPT{background:#3fb95022;color:#3fb950;border-color:#3fb950}
+select.d-BENCH{background:#ffa65722;color:#ffa657;border-color:#ffa657}
+select.d-WAITLIST{background:#8b949e22;color:#8b949e;border-color:#8b949e}
+select.d-RELEASE{background:#f8514922;color:#f85149;border-color:#f85149}
+.cb{display:none;padding:0 16px 16px;border-top:1px solid #21262d}
+.cb.open{display:block}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.db{background:#0d1117;border:1px solid #21262d;border-radius:8px;padding:12px}
+.db h4{color:#58a6ff;font-size:.8em;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.db .v{color:#c9d1d9;font-size:.86em;line-height:1.5}
+.tw{color:#c9d1d9;font-size:.88em;line-height:1.6;font-style:italic;background:#1c2128;padding:12px;border-radius:8px;border-left:3px solid #58a6ff;margin-top:12px}
+.pl a{color:#58a6ff;text-decoration:none;margin-right:8px;font-weight:600;font-size:.88em}
+.pl a:hover{text-decoration:underline}
+.tgs{display:flex;flex-wrap:wrap;gap:4px}
+.tg{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.75em;background:#21262d;color:#8b949e}
+.ns{color:#ffa657;font-size:.82em;margin-top:8px}
+.ni{background:#0d1117;border:1px solid #30363d;color:#c9d1d9;padding:6px 10px;border-radius:6px;font-size:.85em;width:100%;margin-top:8px}
+.fg{color:#d29922;margin-left:6px}
+.acts{display:flex;gap:12px;margin-top:20px;padding:16px;background:#161b22;border:1px solid #30363d;border-radius:8px;flex-wrap:wrap;align-items:center}
+.acts button{padding:10px 20px;border-radius:6px;border:none;font-weight:600;cursor:pointer;font-size:.9em}
+.bx{background:#388bfd;color:#fff}
+.bx:hover{background:#58a6ff}
+.bg{background:#238636;color:#fff}
+.bg:hover{background:#2ea043}
+.bs{background:#8957e5;color:#fff}
+.bs:hover{background:#a371f7}
+.bd{background:#21262d;color:#c9d1d9;border:1px solid #30363d}
+.as{color:#8b949e;font-size:.9em;margin-left:auto}
+@media(max-width:768px){.dg{grid-template-columns:1fr}.card-h{gap:8px}}
+</style>
+</head><body>
+<h1>WINNIIO / LifeAtlas — Intern Cohort Decision Dashboard</h1>
+<p class="sub">Tuesday Apr 21, 2026 | 60 candidates | Corrected rankings with L4 bonuses | Click any row to expand profile, MY TWIN story, PRs</p>
+<div class="ctrls">
+<input type="text" id="q" placeholder="Search name, skill, track, GitHub..." oninput="render()">
+<button onclick="filt('all')" class="on" data-t="all">All</button>
+<button onclick="filt('core-crew')" data-t="core-crew">Core Crew</button>
+<button onclick="filt('fast-track')" data-t="fast-track">Fast Track</button>
+<button onclick="filt('proving')" data-t="proving">Proving Ground</button>
+<button onclick="filt('bench')" data-t="bench">Bench</button>
+<button onclick="filt('waitlist')" data-t="waitlist">Waitlist</button>
+<button onclick="filt('released')" data-t="released">Released</button>
+</div>
+<div class="bar" id="bar"></div>
+<div id="list"></div>
+<div class="acts">
+<button class="bd" onclick="cntD()">Count Decisions</button>
+<button class="bg" onclick="bulkA()">Accept All 9+</button>
+<button class="bs" onclick="svD()">Save Progress</button>
+<button class="bx" onclick="expCSV()">Export CSV</button>
+<span class="as" id="as"></span>
+</div>
+<script>
+const D=/*__DATA__*/;
+let cf='all',ok=null;
+const R='https://github.com/Life-Atlas/lpi-developer-kit/pull/';
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function ld(){try{const s=JSON.parse(localStorage.getItem('idc3')||'{}');D.forEach(d=>{if(s[d.k]){d.d=s[d.k].d||d.d;d.un=s[d.k].un||''}})}catch(e){}}
+function sv(){const s={};D.forEach(d=>s[d.k]={d:d.d,un:d.un||''});localStorage.setItem('idc3',JSON.stringify(s))}
+function render(){
+  const q=document.getElementById('q').value.toLowerCase();
+  const f=D.filter(d=>{
+    if(cf!=='all'&&d.t!==cf)return false;
+    if(q&&!(d.n+' '+d.sk+' '+d.tr+' '+d.gh+' '+d.camp+' '+d['int']).toLowerCase().includes(q))return false;
+    return true;
+  });
+  document.getElementById('list').innerHTML=f.map(d=>{
+    const lc=d.lv===4?'l4':d.lv===3?'l3':'l2';
+    const bc=d.p>=77?'#3fb950':d.p>=69?'#ffa657':d.p>=46?'#8b949e':'#f85149';
+    const sl=v=>d.d===v?'selected':'';
+    const fl=d.fl?'<span class="fg" title="Needs review">&#9888;</span>':'';
+    const gh=d.gh?'<a href="https://github.com/'+esc(d.gh)+'" target="_blank" style="color:#58a6ff">@'+esc(d.gh)+'</a>':'<span style="color:#8b949e">No GitHub linked</span>';
+    const mkL=(arr,pfx)=>arr.map(p=>'<a href="'+R+p+'" target="_blank">'+pfx+' #'+p+'</a>').join(' ');
+    const l3h=mkL(d.l3,'L3');
+    const l4h=mkL(d.l4,'L4');
+    const ah=mkL(d.ap,'');
+    const io=ok===d.k;
+    const tags=s=>s?s.split(', ').filter(x=>x).map(x=>'<span class="tg">'+esc(x)+'</span>').join(''):'<span class="tg">None listed</span>';
+    return '<div class="card">' +
+      '<div class="card-h" onclick="tgl(\''+d.k+'\')">' +
+        '<span class="rk">'+d.r+'</span>' +
+        '<div class="nb"><div class="nm">'+esc(d.n)+fl+'</div>' +
+        '<div class="mt">'+esc(d.prog)+(d.camp?' &mdash; '+esc(d.camp):'')+(d.tr?' | '+esc(d.tr):'')+'</div></div>' +
+        '<span class="lv '+lc+'">L'+d.lv+'</span>' +
+        '<div class="sc"><span class="sn" style="color:'+bc+'">'+d.s+'/'+d.m+' ('+d.p+'%)</span>' +
+        '<div class="pb"><div class="pf" style="width:'+d.p+'%;background:'+bc+'"></div></div></div>' +
+        '<span class="tb" style="background:'+d.tc+'22;color:'+d.tc+';border:1px solid '+d.tc+'">'+d.tl+'</span>' +
+        '<select class="dc d-'+d.d+'" data-k="'+d.k+'" onclick="event.stopPropagation()" onchange="ud(this)">' +
+        '<option value="ACCEPT" '+sl('ACCEPT')+'>ACCEPT</option>' +
+        '<option value="BENCH" '+sl('BENCH')+'>BENCH</option>' +
+        '<option value="WAITLIST" '+sl('WAITLIST')+'>WAITLIST</option>' +
+        '<option value="RELEASE" '+sl('RELEASE')+'>RELEASE</option></select>' +
+      '</div>' +
+      '<div class="cb'+(io?' open':'')+'">' +
+        (d.tw?'<div class="tw"><strong>MY TWIN:</strong> '+esc(d.tw)+'</div>':'') +
+        '<div class="dg">' +
+          '<div class="db"><h4>GitHub &amp; PRs</h4><div class="v">'+gh+'</div>' +
+          '<div class="pl" style="margin-top:8px">' +
+            (l4h?'<strong>L4:</strong> '+l4h+'<br>':'') +
+            (l3h?'<strong>L3:</strong> '+l3h+'<br>':'') +
+            (ah?'<strong>All PRs:</strong> '+ah:'') +
+          '</div></div>' +
+          '<div class="db"><h4>Skills</h4><div class="tgs">'+tags(d.sk)+'</div></div>' +
+          '<div class="db"><h4>Interests</h4><div class="tgs">'+tags(d['int'])+'</div></div>' +
+          '<div class="db"><h4>Track</h4><div class="v">'+(esc(d.tr)||'Not specified')+'</div></div>' +
+        '</div>' +
+        (d.nt?'<div class="ns">&#9432; '+esc(d.nt)+'</div>':'') +
+        '<input class="ni" placeholder="Add your note..." data-k="'+d.k+'" value="'+esc(d.un||'')+'" oninput="un(this)" onclick="event.stopPropagation()">' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  ub();
+}
+function tgl(k){ok=ok===k?null:k;render()}
+function ud(el){const d=D.find(x=>x.k===el.dataset.k);if(d)d.d=el.value;el.className='dc d-'+el.value;sv();ub()}
+function un(el){const d=D.find(x=>x.k===el.dataset.k);if(d)d.un=el.value;sv()}
+function filt(t){cf=t;document.querySelectorAll('.ctrls button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));render()}
+function ub(){const c={ACCEPT:0,BENCH:0,WAITLIST:0,RELEASE:0};D.forEach(d=>c[d.d]++);
+document.getElementById('bar').innerHTML=
+'<span>ACCEPT: <strong style="color:#3fb950">'+c.ACCEPT+'</strong></span>'+
+'<span>BENCH: <strong style="color:#ffa657">'+c.BENCH+'</strong></span>'+
+'<span>WAITLIST: <strong style="color:#8b949e">'+c.WAITLIST+'</strong></span>'+
+'<span>RELEASE: <strong style="color:#f85149">'+c.RELEASE+'</strong></span>'+
+'<span>Total: <strong>'+D.length+'</strong></span>'}
+function cntD(){const c={ACCEPT:0,BENCH:0,WAITLIST:0,RELEASE:0};D.forEach(d=>c[d.d]++);document.getElementById('as').textContent='Accept: '+c.ACCEPT+' | Bench: '+c.BENCH+' | Waitlist: '+c.WAITLIST+' | Release: '+c.RELEASE}
+function bulkA(){D.forEach(d=>{if(d.s>=9&&d.m===13)d.d='ACCEPT'});render();sv()}
+function svD(){sv();document.getElementById('as').textContent='Saved! '+new Date().toLocaleTimeString()}
+function expCSV(){
+const h='Rank,Name,Level,Score,Max,Pct,Tier,Decision,GitHub,Program,Campus,Track,MyTwin,SystemNote,UserNote';
+const r=D.map(d=>d.r+',"'+d.n.replace(/"/g,'""')+'",'+d.lv+','+d.s+','+d.m+','+d.p+',"'+d.tl+'","'+d.d+'","'+d.gh+'","'+(d.prog||'').replace(/"/g,'""')+'","'+(d.camp||'').replace(/"/g,'""')+'","'+(d.tr||'').replace(/"/g,'""')+'","'+(d.tw||'').replace(/"/g,'""')+'","'+(d.nt||'').replace(/"/g,'""')+'","'+((d.un||'').replace(/"/g,'""'))+'"');
+const csv=[h,...r].join('\n');
+const b=new Blob([csv],{type:'text/csv'});
+const u=URL.createObjectURL(b);
+const a=document.createElement('a');a.href=u;a.download='intern_decisions_'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(u)}
+ld();render();
+</script>
+</body></html>

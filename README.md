@@ -2,11 +2,18 @@
 
 **Build AI agents on the Life Programmable Interface.**
 
-> **DEADLINE PASSED: April 20, 2026.** Submissions are now being reviewed. L4 PRs still accepted — push yourself.
+> **PROGRAM STARTED — May 2026.** Screening phase complete. Welcome to the build phase.
 >
-> **Results:** 53 scored | 47 at L3 | 4 merged L4 | 4 open L4 PRs
+> **Screening results:** 53 scored | 47 at L3 | 4 merged L4 | Full leaderboard: [scores.json](docs/scores.json)
 >
-> **Top performers:** See [scores.json](docs/scores.json) for full leaderboard. Share your achievement on LinkedIn — tag @WINNIIO, @Nicolas Waern, @Life Atlas.
+> ## Current Challenge: Level 5 + Level 6 (Deadline: Wed May 13)
+>
+> Everyone does the same challenge — build a knowledge graph + dashboard from factory production data.
+>
+> - **[Level 5 — Graph Thinking](challenges/level5-knowledge-graph-foundations.md)** (written, 2-3 hrs)
+> - **[Level 6 — Build It: Graph + Dashboard](challenges/level6-build-a-knowledge-graph.md)** (build, 6-10 hrs)
+> - **[Data files](challenges/data/)** — factory_production.csv, factory_workers.csv, factory_capacity.csv
+> - **[Scoring Guide](challenges/scoring-guide-l5l6.md)** (for team leads)
 
 The LPI is an open MCP server with 7 tools exposing the [SMILE methodology](https://lifeatlas.online) — a digital twin implementation framework. This repo is your sandbox AND the entry point for the **LifeAtlas Contributor Program**.
 
