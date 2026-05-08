@@ -1,0 +1,44 @@
+{
+  "name": "LPI Risk Analyst Agent",
+  "description": "A specialized agent that analyzes historical failure metrics and industry case studies for digital twin implementations. It uses the get-case-studies and query-knowledge LPI tools.",
+  "url": "https://github.com/ananyaa05/ananyaa-personal-twin-agent",
+  "version": "1.0.0",
+  "defaultInputModes": ["text/plain", "application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "MCP-stdio",
+      "url": "local://python agent_risk_analyst.py",
+      "comment": "Local subprocess. Requires Ollama running on localhost:11434."
+    }
+  ],
+  "skills": [
+    {
+      "id": "skill-risk-analysis",
+      "name": "Historical Failure Analysis",
+      "description": "Expects a JSON input containing an 'industry' string. Returns a structured JSON payload detailing past failure metrics and methodology constraints using the LPI schema.",
+      "tags": ["risk", "case-studies", "safety"],
+      "examples": [
+        "{\"industry\": \"education\"}",
+        "{\"industry\": \"manufacturing\"}"
+      ]
+    }
+  ],
+  "authentication": {
+    "schemes": ["none"]
+  },
+  "provider": {
+    "organization": "Ananyaa M.",
+    "url": "https://github.com/ananyaa05"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["get-case-studies", "query-knowledge"],
+    "llmProvider": "ollama",
+    "llmModel": "tinyllama",
+    "explainability": "The agent hardcodes data provenance into its JSON output, mapping its findings directly to the LPI tool that sourced the metric."
+  }
+}
