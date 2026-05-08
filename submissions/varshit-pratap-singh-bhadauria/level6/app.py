@@ -1,4 +1,5 @@
 import os
+import streamlit as st
 
 
 URI = st.secrets["NEO4J_URI"]
