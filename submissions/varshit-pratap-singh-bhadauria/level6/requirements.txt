@@ -1,0 +1,4 @@
+streamlit
+neo4j
+pandas
+plotly
