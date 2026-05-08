@@ -91,6 +91,6 @@ with driver.session() as session:
     session.execute_write(load_data)
     print("✅ Graph seeding complete! You just earned 20 points.")
 
-driver.close()g relationships")
+driver.close()
         
-    st.balloons()
+
