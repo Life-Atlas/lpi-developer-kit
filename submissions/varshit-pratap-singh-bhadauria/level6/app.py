@@ -1,12 +1,9 @@
 import os
-from dotenv import load_dotenv
 
-# Load the hidden credentials from the .env file
-load_dotenv()
 
-URI = os.getenv("NEO4J_URI")
-USERNAME = os.getenv("NEO4J_USERNAME")
-PASSWORD = os.getenv("NEO4J_PASSWORD")
+URI = st.secrets["NEO4J_URI"]
+USERNAME = st.secrets["NEO4J_USERNAME"]
+PASSWORD = st.secrets["NEO4J_PASSWORD"]
 
 # Connect to the Neo4j database
 driver = GraphDatabase.driver(URI, auth=(USERNAME, PASSWORD))
