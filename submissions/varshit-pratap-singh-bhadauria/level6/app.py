@@ -19,7 +19,7 @@ def create_constraints(tx):
 
 def load_data(tx):
     # 2. Load Production Data (Projects, Products, Stations, Etapp, BOP, Weeks)
-    prod_df = pd.read_csv('factory_production.csv').fillna('')
+    prod_df = pd.read_csv('submissions/varshit-pratap-singh-bhadauria/level6/factory_production.csv').fillna('')
     query_prod = """
     UNWIND $rows AS row
     MERGE (p:Project {id: row.project_id})
@@ -50,7 +50,7 @@ def load_data(tx):
     tx.run(query_prod, rows=prod_df.to_dict('records'))
 
     # 3. Load Workers Data
-    workers_df = pd.read_csv('factory_workers.csv').fillna('')
+    work_df = pd.read_csv('submissions/varshit-pratap-singh-bhadauria/level6/factory_workers.csv').fillna('')
     query_workers = """
     UNWIND $rows AS row
     MERGE (w:Worker {id: row.worker_id})
@@ -69,7 +69,7 @@ def load_data(tx):
     tx.run(query_workers, rows=workers_df.to_dict('records'))
 
     # 4. Load Capacity Data
-    cap_df = pd.read_csv('factory_capacity.csv').fillna('')
+    cap_df = pd.read_csv('submissions/varshit-pratap-singh-bhadauria/level6/factory_capacity.csv').fillna('')
     query_capacity = """
     UNWIND $rows AS row
     MERGE (wk:Week {id: row.week})
