@@ -50,7 +50,7 @@ def load_data(tx):
     tx.run(query_prod, rows=prod_df.to_dict('records'))
 
     # 3. Load Workers Data
-    work_df = pd.read_csv('submissions/varshit-pratap-singh-bhadauria/level6/factory_workers.csv').fillna('')
+    workers_df = pd.read_csv('submissions/varshit-pratap-singh-bhadauria/level6/factory_workers.csv').fillna('')
     query_workers = """
     UNWIND $rows AS row
     MERGE (w:Worker {id: row.worker_id})
