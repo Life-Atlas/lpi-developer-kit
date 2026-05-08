@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+from neo4j import GraphDatabase
 
 
 URI = st.secrets["NEO4J_URI"]
