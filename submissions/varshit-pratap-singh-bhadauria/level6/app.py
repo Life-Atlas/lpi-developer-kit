@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 from neo4j import GraphDatabase
-
+import pandas as pd
 
 URI = st.secrets["NEO4J_URI"]
 USERNAME = st.secrets["NEO4J_USERNAME"]
