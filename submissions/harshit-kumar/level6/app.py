@@ -135,12 +135,13 @@ if page == "📊 Project Overview":
             st.markdown("### Products Involved per Project")
             prod_rows = run_query("""
                 MATCH (p:Project)-[:PRODUCES]->(pr:Product)
-                RETURN p.name AS project, collect(pr.type) AS products
-                ORDER BY p.id
+                RETURN p.id AS pid, p.name AS project, collect(pr.type) AS products
+                ORDER BY pid
             """)
             if prod_rows:
                 prod_df = pd.DataFrame(prod_rows)
                 prod_df["products"] = prod_df["products"].apply(lambda x: ", ".join(sorted(x)))
+                prod_df = prod_df.drop(columns=["pid"], errors="ignore")
                 st.dataframe(prod_df, use_container_width=True, hide_index=True)
         else:
             st.warning("No data found. Have you run seed_graph.py?")
@@ -405,7 +406,7 @@ elif page == "👷 Worker Coverage":
                 return ""
 
             st.markdown("### Coverage Matrix  (🔵 Primary | 🟢 Can Cover)")
-            styled = matrix_df.style.applymap(color_cell)
+            styled = matrix_df.style.map(color_cell)
             st.dataframe(styled, use_container_width=True)
 
             # Worker details table
