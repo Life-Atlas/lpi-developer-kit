@@ -3,9 +3,16 @@
   "github": "kshubham090",
   "program": "B.Tech CSE, AI & ML Specialization",
   "campus": "Amity University Noida",
-  "skills": ["python", "java", "pytorch", "tensorflow", "yolov8", "opencv", "mediapipe", "spring-boot", "langchain", "langgraph", "supabase", "docker", "gcp", "flutter", "sql", "mcp", "a2a-protocol", "ollama"],
+  "skills": ["python", "java", "pytorch", "tensorflow", "yolov8", "opencv", "mediapipe", "spring-boot", "langchain", "langgraph", "supabase", "docker", "gcp", "flutter", "sql", "mcp", "a2a-protocol", "ollama", "neo4j", "cypher", "streamlit", "knowledge-graphs"],
   "interests": ["agents", "neuro-symbolic-ai", "computer-vision", "autonomous-systems", "physical-ai", "defence-tech", "multi-agent-systems", "ai-security"],
   "track": "A: Agent Builders",
-  "my_twin": "If I had a personal digital twin, it would track every decision I make under uncertainty — because I'm building Symbiote-X, a neuro-symbolic AI governance architecture for drones and autonomous systems where AI that hallucinates its way into bad decisions can cost lives, and I want to know whether the guardrails I'm designing for machines actually hold for the human running them."
-
+  "levels": {
+    "L1": "completed",
+    "L2": "completed",
+    "L3": "completed",
+    "L4": "completed",
+    "L5": "completed",
+    "L6": "completed"
+  },
+  "my_twin": "If I had a personal digital twin, it would track every decision I make under uncertainty — because I'm building Symbiote-X, a neuro-symbolic AI governance architecture for drones and autonomous systems where AI that hallucinates its way into bad decisions can cost lives, and I want to know whether the guardrails I'm designing for machines actually hold for the human running them. It would also map how I move between abstraction layers — from a Neo4j graph schema to a Streamlit dashboard to a pitch deck — because that context-switching is where most of my errors hide."
 }
