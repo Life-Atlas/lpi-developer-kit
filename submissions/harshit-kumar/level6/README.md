@@ -5,7 +5,7 @@ A Neo4j knowledge graph + Streamlit dashboard for a Swedish steel fabrication fa
 
 ## Deployed Dashboard
 
-**Live URL:** https://factory-kg-harshit.streamlit.app
+**Live URL:** https://lpi-developer-hrk0503.streamlit.app/
 
 > Self-Test page: Click "🧪 Self-Test" in the sidebar → Run Tests
 
