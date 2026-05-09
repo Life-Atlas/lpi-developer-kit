@@ -1,1 +1,1 @@
-https://your-app.streamlit.app
+https://lifeatlasl6.streamlit.app
