@@ -1,0 +1,11 @@
+projectId,name,description,priority,startDate,deadline,status,budget,progress,complexity,daysToDeadline,riskScore
+P001,Factory Automation,Automate assembly line with robotic systems,4,2024-01-15,2024-06-15,ACTIVE,500000,65.5,3,45,0.65
+P002,Quality Control System,Implement AI-powered quality checks,5,2024-02-01,2024-05-01,ACTIVE,300000,42.0,4,30,0.78
+P003,Inventory Management,Smart inventory tracking with IoT sensors,3,2024-03-01,2024-08-01,PLANNING,200000,15.0,2,120,0.25
+P004,Safety Protocol Enhancement,Enhanced safety measures and monitoring,5,2024-01-01,2024-04-01,DELAYED,150000,85.0,4,-5,0.92
+P005,Energy Optimization,Reduce energy consumption across facility,2,2024-04-01,2024-09-01,PLANNING,100000,5.0,2,150,0.15
+P006,Predictive Maintenance,ML-based equipment failure prediction,4,2024-02-15,2024-07-15,ACTIVE,250000,35.0,4,60,0.58
+P007,Supply Chain Integration,Real-time supply chain visibility,3,2024-01-20,2024-06-20,ACTIVE,180000,55.0,3,40,0.45
+P008,Worker Training System,Digital training platform for upskilling,2,2024-03-15,2024-08-15,PLANNING,80000,10.0,2,105,0.20
+P009,Production Line Upgrade,Modernize production line equipment,5,2024-01-10,2024-04-10,COMPLETED,400000,100.0,5,-10,0.15
+P010,Waste Reduction Initiative,Implement zero-waste manufacturing,3,2024-02-20,2024-07-20,ACTIVE,120000,28.0,3,50,0.52
