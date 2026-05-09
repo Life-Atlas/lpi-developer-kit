@@ -1,0 +1,9 @@
+{
+  "name": "Naman Anand",
+  "github": "Naman-Playz",
+  "program": "B.Tech Computer Science and Engineering",
+  "campus": "Amity University, Noida",
+  "skills": ["Python", "Flask", "Cybersecurity", "Network Scanning", "C++"],
+  "interests": ["Intrusion Detection Systems", "AI/ML", "Digital Twins", "Ethical Hacking"],
+  "my_twin": "I would develop a digital twin of my home network infrastructure to emulate 'Reality' specifically tracking packet flow and device behavior. By running this twin in an isolated sandbox, I could use it to simulate various cyber attack vectors and proactively test my IDS (Intelligent Network Scanner) without risking live data, solving the problem of reactive security."
+}

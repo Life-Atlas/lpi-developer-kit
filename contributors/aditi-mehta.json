@@ -1,0 +1,10 @@
+{
+  "name": "Aditi Mehta",
+  "github": "Dynamic-ctrl",
+  "program": "B.Tech CSE",
+  "campus": "Amity University Noida",
+  "skills": ["python", "pytorch","flask", "postgresql","react","Java","Git"],
+  "interests": ["ai-agents", "machine learning","deep learning","backend-development","full-stack development", "tech-for-social-impact", "ai-safety"],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track my daily stress levels against how much time I spend talking to my loved ones, because I want to measure exactly how much social connection I need to prevent academic burnout."
+}

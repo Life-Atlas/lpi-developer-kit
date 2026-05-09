@@ -1,0 +1,28 @@
+{
+  "name": "Yash Maheshwari",
+  "github": "yashm0910",
+  "program": "B.Tech Computer Science (Data Science)",
+  "campus": "Amity, Noida",
+  "skills": [
+    "Python",
+    "FastAPI",
+    "RAG",
+    "LLMs",
+    "Langchain",
+    "LangGraph",
+    "Machine Learning",
+    "NLP",
+    "SQL",
+    "Streamlit"
+  ],
+  "interests": [
+    "AI systems",
+    "agent workflows",
+    "retrieval-augmented generation",
+    "backend engineering",
+    "system reliability",
+    "evaluation and feedback loops"
+  ],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track how my systems perform over time and where they fail, because I focus on building AI systems that can be improved through evaluation and feedback rather than just generating outputs because i love to dive deep in what i build"
+}

@@ -3,374 +3,402 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LPI Developer Kit — Mission Control</title>
+    <title>LPI Developer Kit — Leaderboard</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #0a0e17; color: #e2e8f0; min-height: 100vh; }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:#0a0e17;color:#e2e8f0;min-height:100vh}
+        body::before{content:'';position:fixed;inset:0;background:radial-gradient(circle at 20% 50%,rgba(99,179,237,0.03) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(183,148,244,0.03) 0%,transparent 50%);pointer-events:none}
 
-        /* Animated grid background */
-        body::before { content:''; position:fixed; inset:0; background: radial-gradient(circle at 20% 50%, rgba(99,179,237,0.03) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(183,148,244,0.03) 0%, transparent 50%); pointer-events:none; z-index:0; }
+        .hero{position:relative;z-index:1;background:linear-gradient(135deg,#0a0e17,#131a2e,#0a0e17);border-bottom:1px solid rgba(99,179,237,0.15);padding:2rem 2rem 1.5rem;text-align:center}
+        .hero h1{font-size:2rem;font-weight:700;background:linear-gradient(135deg,#63b3ed,#b794f4,#63b3ed);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 3s ease infinite}
+        @keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+        .hero .sub{color:#718096;font-size:0.85rem;margin-top:0.3rem}
+        .deadline-banner{background:linear-gradient(135deg,rgba(245,101,101,0.15),rgba(237,137,54,0.15));border:1px solid rgba(245,101,101,0.4);border-radius:8px;padding:0.6rem 1.2rem;margin:1rem auto 0;max-width:600px;text-align:center;font-size:0.9rem;color:#fc8181;font-weight:600}
+        .deadline-banner .countdown{font-family:'JetBrains Mono',monospace;font-size:1.1rem;color:#f6ad55;margin-top:0.3rem}
+        .live-badge{display:inline-block;background:rgba(72,187,120,0.15);color:#68d391;border:1px solid rgba(72,187,120,0.3);border-radius:4px;padding:0.1rem 0.5rem;font-size:0.65rem;font-weight:600;text-transform:uppercase;margin-left:0.5rem;animation:pulse 2s ease infinite}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
 
-        .hero { position:relative; z-index:1; background: linear-gradient(135deg, #0a0e17 0%, #131a2e 50%, #0a0e17 100%); border-bottom: 1px solid rgba(99,179,237,0.15); padding: 2.5rem 2rem 1.5rem; text-align: center; }
-        .hero h1 { font-size: 2.2rem; font-weight: 700; background: linear-gradient(135deg, #63b3ed, #b794f4, #63b3ed); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 3s ease infinite; }
-        @keyframes shimmer { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
-        .hero .sub { color: #718096; font-size: 0.9rem; margin-top: 0.3rem; }
-        .mock-badge { display: inline-block; background: rgba(237,137,54,0.15); color: #ed8936; border: 1px solid rgba(237,137,54,0.3); border-radius: 4px; padding: 0.1rem 0.5rem; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; margin-left: 0.5rem; }
+        .legend{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin:1rem auto 0;max-width:800px}
+        .legend-item{display:flex;align-items:center;gap:0.4rem;font-size:0.75rem;color:#a0aec0}
+        .legend-dot{width:8px;height:8px;border-radius:50%}
+        .ld-1{background:#68d391;box-shadow:0 0 4px rgba(72,187,120,0.4)}
+        .ld-2{background:#63b3ed;box-shadow:0 0 4px rgba(99,179,237,0.4)}
+        .ld-3{background:#b794f4;box-shadow:0 0 4px rgba(183,148,244,0.4)}
+        .ld-4{background:#f6ad55;box-shadow:0 0 6px rgba(246,173,85,0.5)}
 
-        /* Legend */
-        .legend { display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin:1.2rem auto 0; max-width:900px; }
-        .legend-item { display:flex; align-items:center; gap:0.4rem; font-size:0.78rem; color:#a0aec0; }
-        .legend-dot { width:10px; height:10px; border-radius:50%; }
-        .legend-dot.ld-1 { background:#68d391; box-shadow:0 0 6px rgba(72,187,120,0.4); }
-        .legend-dot.ld-2 { background:#63b3ed; box-shadow:0 0 6px rgba(99,179,237,0.4); }
-        .legend-dot.ld-3 { background:#b794f4; box-shadow:0 0 6px rgba(183,148,244,0.4); }
-        .legend-dot.ld-0 { background:#718096; }
-        .legend-dot.ld-v { background:#68d391; width:6px; height:12px; border-radius:2px; }
+        .stats-row{position:relative;z-index:1;display:flex;justify-content:center;gap:0.8rem;flex-wrap:wrap;margin:1.5rem auto;max-width:900px}
+        .stat{background:rgba(26,32,53,0.8);border:1px solid rgba(99,179,237,0.12);border-radius:10px;padding:0.8rem 1.3rem;min-width:100px;text-align:center;transition:all 0.3s}
+        .stat:hover{border-color:rgba(99,179,237,0.3);transform:translateY(-1px)}
+        .stat b{display:block;font-size:1.8rem;font-family:'JetBrains Mono',monospace;background:linear-gradient(135deg,#63b3ed,#b794f4);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .stat small{color:#718096;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.05em}
 
-        .stats-row { position:relative; z-index:1; display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin: 1.5rem auto; max-width: 1100px; }
-        .stat { background: rgba(26,32,53,0.8); border: 1px solid rgba(99,179,237,0.12); border-radius: 10px; padding: 1rem 1.5rem; min-width: 120px; text-align: center; transition: all 0.3s; cursor:default; position:relative; }
-        .stat:hover { border-color: rgba(99,179,237,0.4); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(99,179,237,0.08); }
-        .stat b { display: block; font-size: 2rem; font-family: 'JetBrains Mono', monospace; background: linear-gradient(135deg, #63b3ed, #b794f4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .stat small { color: #718096; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .container{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:1.5rem}
+        .controls{display:flex;gap:0.8rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+        .search-box{flex:1;min-width:200px;background:#1a2035;border:1px solid #2d3748;border-radius:8px;padding:0.6rem 1rem;color:#e2e8f0;font-size:0.85rem;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s}
+        .search-box:focus{border-color:#63b3ed;box-shadow:0 0 0 3px rgba(99,179,237,0.1)}
+        .search-box::placeholder{color:#4a5568}
+        .fbtn{background:#1a2035;border:1px solid #2d3748;border-radius:6px;padding:0.5rem 0.9rem;color:#a0aec0;cursor:pointer;font-size:0.78rem;font-family:'Inter',sans-serif;transition:all 0.2s}
+        .fbtn:hover,.fbtn.active{border-color:#63b3ed;color:#63b3ed;background:rgba(99,179,237,0.08)}
 
-        /* Tooltips */
-        [data-tip] { position:relative; }
-        [data-tip]:hover::after { content:attr(data-tip); position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%); background:#1a2035; border:1px solid #2d3748; border-radius:6px; padding:0.5rem 0.8rem; font-size:0.75rem; color:#e2e8f0; white-space:nowrap; z-index:99; box-shadow:0 4px 12px rgba(0,0,0,0.3); pointer-events:none; }
-        [data-tip]:hover::before { content:''; position:absolute; bottom:calc(100% + 2px); left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:#2d3748; z-index:99; }
+        .table-wrap{background:rgba(26,32,53,0.6);border:1px solid rgba(99,179,237,0.1);border-radius:10px;overflow:hidden}
+        table{width:100%;border-collapse:collapse}
+        th{background:rgba(26,32,53,0.95);padding:0.7rem 1rem;text-align:left;color:#718096;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;font-weight:600;position:sticky;top:0;z-index:1}
+        td{padding:0.6rem 1rem;border-top:1px solid rgba(45,55,72,0.3);font-size:0.85rem}
+        tr{transition:background 0.15s}
+        tr:hover{background:rgba(99,179,237,0.05)}
+        .r1{color:#ffd700;font-weight:700}
+        .r2{color:#c0c0c0;font-weight:700}
+        .r3{color:#cd7f32;font-weight:700}
 
-        .container { position:relative; z-index:1; max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
-        .row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-        .col-main { flex: 3; min-width: 600px; }
-        .col-side { flex: 1; min-width: 280px; }
+        .lv{display:inline-block;padding:0.2rem 0.6rem;border-radius:20px;font-size:0.72rem;font-weight:600;font-family:'JetBrains Mono',monospace;cursor:default}
+        .lv1{background:rgba(72,187,120,0.12);color:#68d391;border:1px solid rgba(72,187,120,0.3)}
+        .lv2{background:rgba(99,179,237,0.12);color:#63b3ed;border:1px solid rgba(99,179,237,0.3)}
+        .lv3{background:rgba(183,148,244,0.12);color:#b794f4;border:1px solid rgba(183,148,244,0.3);box-shadow:0 0 8px rgba(183,148,244,0.1)}
+        .lv4{background:rgba(246,173,85,0.15);color:#f6ad55;border:1px solid rgba(246,173,85,0.4);box-shadow:0 0 10px rgba(246,173,85,0.15)}
 
-        .timeline { display: flex; gap: 0; margin-bottom: 1rem; background: #1a2035; border-radius: 8px; overflow: hidden; border: 1px solid #2d3748; }
-        .timeline button { flex: 1; padding: 0.7rem 0.5rem; background: transparent; border: none; color: #718096; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 0.78rem; transition: all 0.2s; border-right: 1px solid #2d3748; }
-        .timeline button:last-child { border-right: none; }
-        .timeline button:hover { background: rgba(99,179,237,0.05); color: #a0aec0; }
-        .timeline button.active { background: rgba(99,179,237,0.12); color: #63b3ed; font-weight: 600; box-shadow: inset 0 -2px 0 #63b3ed; }
+        a{color:#63b3ed;text-decoration:none}
+        a:hover{text-decoration:underline}
+        .footer{position:relative;z-index:1;text-align:center;padding:1.5rem;color:#4a5568;font-size:0.75rem}
+        .empty{text-align:center;padding:3rem;color:#4a5568}
+        .tag{display:inline-block;background:rgba(45,55,72,0.7);border-radius:3px;padding:0.1rem 0.4rem;font-size:0.65rem;color:#a0aec0;margin:0.05rem}
 
-        .controls { display: flex; gap: 0.8rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; }
-        .search-box { flex: 1; min-width: 180px; background: #1a2035; border: 1px solid #2d3748; border-radius: 8px; padding: 0.65rem 1rem; color: #e2e8f0; font-size: 0.85rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
-        .search-box:focus { border-color: #63b3ed; box-shadow: 0 0 0 3px rgba(99,179,237,0.1); }
-        .search-box::placeholder { color: #4a5568; }
-        .fbtn { background: #1a2035; border: 1px solid #2d3748; border-radius: 6px; padding: 0.5rem 0.9rem; color: #a0aec0; cursor: pointer; font-size: 0.78rem; font-family: 'Inter', sans-serif; transition: all 0.2s; }
-        .fbtn:hover, .fbtn.active { border-color: #63b3ed; color: #63b3ed; background: rgba(99,179,237,0.08); }
-
-        .table-wrap { background: rgba(26,32,53,0.6); border: 1px solid rgba(99,179,237,0.1); border-radius: 10px; overflow: hidden; max-height: 70vh; overflow-y: auto; }
-        .table-wrap::-webkit-scrollbar { width: 6px; }
-        .table-wrap::-webkit-scrollbar-track { background: #0a0e17; }
-        .table-wrap::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 3px; }
-        table { width: 100%; border-collapse: collapse; }
-        th { background: rgba(26,32,53,0.95); padding: 0.7rem 0.8rem; text-align: left; color: #718096; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; position: sticky; top: 0; z-index: 1; }
-        td { padding: 0.55rem 0.8rem; border-top: 1px solid rgba(45,55,72,0.3); font-size: 0.82rem; }
-        tr { transition: background 0.15s; }
-        tr:hover { background: rgba(99,179,237,0.05); }
-        .r1 { color: #ffd700; font-weight: 700; }
-        .r2 { color: #c0c0c0; font-weight: 700; }
-        .r3 { color: #cd7f32; font-weight: 700; }
-
-        .lv { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.72rem; font-weight: 600; font-family: 'JetBrains Mono', monospace; cursor: default; white-space: nowrap; }
-        .lv0 { background: rgba(160,174,192,0.1); color: #718096; border: 1px solid rgba(160,174,192,0.2); }
-        .lv1 { background: rgba(72,187,120,0.12); color: #68d391; border: 1px solid rgba(72,187,120,0.3); }
-        .lv2 { background: rgba(99,179,237,0.12); color: #63b3ed; border: 1px solid rgba(99,179,237,0.3); }
-        .lv3 { background: rgba(183,148,244,0.12); color: #b794f4; border: 1px solid rgba(183,148,244,0.3); box-shadow: 0 0 8px rgba(183,148,244,0.1); }
-
-        .bar { display: inline-block; height: 6px; border-radius: 3px; background: #2d3748; width: 60px; vertical-align: middle; margin-right: 0.4rem; }
-        .bar .fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #63b3ed, #b794f4); transition: width 0.4s ease; }
-        .sc { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #a0aec0; }
-
-        .velocity { display: inline-block; font-size: 0.72rem; font-family: 'JetBrains Mono', monospace; }
-        .v-up { color: #68d391; }
-        .v-flat { color: #4a5568; }
-        .v-new { color: #63b3ed; }
-
-        .panel { background: rgba(26,32,53,0.7); border: 1px solid rgba(99,179,237,0.1); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
-        .panel h3 { font-size: 0.8rem; color: #718096; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.8rem; }
-        .feed-item { padding: 0.5rem 0; border-bottom: 1px solid rgba(45,55,72,0.3); font-size: 0.8rem; line-height: 1.4; }
-        .feed-item:last-child { border-bottom: none; }
-        .feed-time { color: #4a5568; font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; }
-        .feed-up { color: #68d391; }
-        .feed-new { color: #63b3ed; }
-        .feed-drop { color: #fc8181; }
-        .feed-star { color: #ffd700; }
-
-        .team-bar { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.8rem; }
-        .team-bar .tname { flex: 1; color: #a0aec0; font-size: 0.78rem; }
-        .team-bar .tbar { flex: 2; height: 8px; background: #2d3748; border-radius: 4px; overflow: hidden; }
-        .team-bar .tbar .tfill { height: 100%; border-radius: 4px; transition: width 0.5s ease; }
-        .team-bar .tcount { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #718096; width: 30px; text-align: right; }
-
-        .alert { background: rgba(237,137,54,0.08); border: 1px solid rgba(237,137,54,0.2); border-radius: 8px; padding: 0.7rem; margin-bottom: 0.8rem; font-size: 0.8rem; color: #ed8936; line-height: 1.4; }
-
-        /* Funnel visual */
-        .funnel-bar { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.4rem; font-size:0.8rem; }
-        .funnel-bar .flabel { width:140px; color:#a0aec0; font-size:0.78rem; }
-        .funnel-bar .fbar { flex:1; height:20px; background:#1a2035; border-radius:4px; overflow:hidden; position:relative; }
-        .funnel-bar .fbar .ffill { height:100%; border-radius:4px; transition:width 0.5s ease; display:flex; align-items:center; padding-left:0.5rem; font-size:0.7rem; font-family:'JetBrains Mono',monospace; color:#fff; font-weight:600; }
-
-        a { color: #63b3ed; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .footer { position:relative; z-index:1; text-align: center; padding: 1.5rem; color: #4a5568; font-size: 0.75rem; }
+        [data-tip]{position:relative;cursor:default}
+        [data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a2035;border:1px solid #2d3748;border-radius:6px;padding:0.4rem 0.7rem;font-size:0.72rem;color:#e2e8f0;white-space:nowrap;z-index:99;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
     </style>
 </head>
 <body>
 <div class="hero">
-    <h1>LPI Mission Control</h1>
-    <p class="sub">LifeAtlas Contributor Program <span class="mock-badge">mock data</span></p>
+    <h1>LPI Developer Kit — Leaderboard</h1>
+    <p class="sub">LifeAtlas Contributor Program <span class="live-badge" id="badge">loading...</span></p>
     <div class="legend">
-        <div class="legend-item"><span class="legend-dot ld-1"></span> Registered — signed up, forked the repo</div>
-        <div class="legend-item"><span class="legend-dot ld-2"></span> Running — dev tools working on their machine</div>
-        <div class="legend-item"><span class="legend-dot ld-3"></span> Shipping — built and submitted a working agent</div>
-        <div class="legend-item"><span class="legend-dot ld-0"></span> Dropped — no activity for 7+ days</div>
-        <div class="legend-item"><span class="legend-dot ld-v"></span> Velocity — how fast someone is growing (+ = steady, +++ = rapid)</div>
+        <div class="legend-item"><span class="legend-dot ld-1"></span> Registered — signed up</div>
+        <div class="legend-item"><span class="legend-dot ld-2"></span> Running — dev tools working</div>
+        <div class="legend-item"><span class="legend-dot ld-3"></span> Shipping — built an agent or deliverable</div>
+        <div class="legend-item"><span class="legend-dot ld-4"></span> Architect — secure agent mesh</div>
     </div>
+    <!-- 🥚 -->
+    <span style="position:absolute;top:1rem;right:1.5rem;font-size:0.55rem;cursor:default;user-select:none;-webkit-text-fill-color:#131a2e;color:#131a2e" title="You found it. Add found_easter_egg: true to your contributor JSON.">found_easter_egg</span>
+</div>
+
+<div class="deadline-banner">
+    DEADLINE: Sunday April 20, 23:59 UTC
+    <div class="countdown" id="countdown"></div>
 </div>
 
 <div class="stats-row">
-    <div class="stat" data-tip="Total people who submitted a Level 1 PR"><b id="s-total">0</b><small>Registered</small></div>
-    <div class="stat" data-tip="People who did something in the last 7 days"><b id="s-active">0</b><small>Active</small></div>
-    <div class="stat" data-tip="Built and submitted a working agent (Level 3)"><b id="s-l3">0</b><small>Shipping</small></div>
-    <div class="stat" data-tip="New knowledge base entries contributed by interns"><b id="s-kb">0</b><small>KB Entries Added</small></div>
-    <div class="stat" data-tip="Times an intern reviewed another intern's PR"><b id="s-reviews">0</b><small>Peer Reviews</small></div>
-    <div class="stat" data-tip="No activity for 7+ days — may have left the program"><b id="s-drop">0</b><small>Dropped</small></div>
-    <div class="stat" data-tip="Of everyone who registered, how many shipped an agent?"><b id="s-conv">0%</b><small>Registered to Shipping</small></div>
+    <div class="stat" data-tip="People who submitted a Level 1 PR"><b id="s-total">-</b><small>Registered</small></div>
+    <div class="stat" data-tip="Dev tools running on their machine"><b id="s-l2">-</b><small>Running</small></div>
+    <div class="stat" data-tip="Built and submitted a working deliverable"><b id="s-l3">-</b><small>Shipping</small></div>
 </div>
+
+<div class="stats-row" id="track-stats" style="margin-top:0"></div>
 
 <div class="container">
-    <div class="timeline">
-        <button class="active" onclick="go('day1',this)">Day 1</button>
-        <button onclick="go('day3',this)">Day 3</button>
-        <button onclick="go('day7',this)">Day 7 (deadline)</button>
-        <button onclick="go('week2',this)">Week 2</button>
-        <button onclick="go('week4',this)">Week 4</button>
-        <button onclick="go('month2',this)">Month 2</button>
+    <div class="controls">
+        <input type="text" class="search-box" placeholder="Search by name, skill, or track..." oninput="filter()">
+        <button class="fbtn active" onclick="setLevel('all',this)">All</button>
+        <button class="fbtn" onclick="setLevel(3,this)">Shipping</button>
+        <button class="fbtn" onclick="setLevel(4,this)">Architect</button>
+        <button class="fbtn" onclick="setLevel(2,this)">Running</button>
+        <button class="fbtn" onclick="setLevel(1,this)">Registered</button>
+        <span style="color:#2d3748;margin:0 0.3rem">|</span>
+        <button class="fbtn" onclick="setTrack('all',this)" id="tbtn-all">All Tracks</button>
+        <button class="fbtn" onclick="setTrack('A',this)">A: Agents</button>
+        <button class="fbtn" onclick="setTrack('B',this)">B: Content</button>
+        <button class="fbtn" onclick="setTrack('C',this)">C: Design</button>
+        <button class="fbtn" onclick="setTrack('D',this)">D: 3D</button>
+        <button class="fbtn" onclick="setTrack('E',this)">E: QA/Sec</button>
+        <button class="fbtn" onclick="setTrack('none',this)">No Track</button>
     </div>
-
-    <div class="row">
-        <div class="col-main">
-            <div class="controls">
-                <input type="text" class="search-box" placeholder="Search by name, skill, team, or impact..." oninput="search(this.value)">
-                <button class="fbtn active" onclick="filt('all',this)">All</button>
-                <button class="fbtn" onclick="filt(3,this)" data-tip="Built a working agent">Shipping</button>
-                <button class="fbtn" onclick="filt(2,this)" data-tip="Dev tools running locally">Running</button>
-                <button class="fbtn" onclick="filt(1,this)" data-tip="Signed up but hasn't run the stack yet">Registered</button>
-                <button class="fbtn" onclick="filt(0,this)" data-tip="No activity for 7+ days">Dropped</button>
-            </div>
-            <div class="table-wrap">
-                <table>
-                    <thead><tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th data-tip="Registered = signed up | Running = dev tools work | Shipping = built an agent">Stage</th>
-                        <th data-tip="Automated score from code quality, explainability, and contribution reviews">Score</th>
-                        <th data-tip="How fast this person is growing — +++ means rapid improvement">Growth</th>
-                        <th data-tip="What this person actually contributed — real output, not busywork">Impact</th>
-                        <th data-tip="Which focus team they were placed in after Week 1 assessment">Team</th>
-                    </tr></thead>
-                    <tbody id="tbody"></tbody>
-                </table>
-            </div>
+    <div style="display:flex;gap:1.2rem;align-items:flex-start">
+        <div class="table-wrap" style="flex:1;min-width:0">
+            <table>
+                <thead><tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th data-tip="Registered / Running / Shipping">Stage</th>
+                    <th data-tip="Automated evaluation score">Score</th>
+                    <th data-tip="Track they chose">Track</th>
+                    <th>Skills</th>
+                    <th>Contributions</th>
+                </tr></thead>
+                <tbody id="tbody"><tr><td colspan="7" class="empty">Loading live data...</td></tr></tbody>
+            </table>
         </div>
-
-        <div class="col-side">
-            <div id="alerts-panel"></div>
-
-            <div class="panel">
-                <h3>What's Happening</h3>
-                <div id="feed"></div>
+        <div style="width:150px;flex-shrink:0;background:rgba(26,32,53,0.6);border:1px solid rgba(99,179,237,0.1);border-radius:10px;padding:1rem;position:sticky;top:1rem">
+            <div style="font-size:0.68rem;color:#718096;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.6rem;font-weight:600">Levels</div>
+            <div style="font-size:0.78rem;color:#a0aec0;line-height:1.8;margin-bottom:1rem">
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#68d39120;color:#68d391;font-size:0.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid #68d39140">1</span> Registered<br>
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#63b3ed20;color:#63b3ed;font-size:0.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid #63b3ed40">2</span> Running<br>
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#b794f420;color:#b794f4;font-size:0.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid #b794f440">3</span> Shipping<br>
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#f6ad5520;color:#f6ad55;font-size:0.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid #f6ad5540">4</span> Architect<br>
+                <span style="font-size:0.65rem;color:#4a5568;margin-left:20px">L3 = guaranteed place</span><br>
+                <span style="font-size:0.65rem;color:#ed8936;margin-left:20px">2x = multiple tracks</span>
             </div>
-
-            <div class="panel">
-                <h3>Team Health</h3>
-                <div id="teams"></div>
-            </div>
-
-            <div class="panel">
-                <h3>Funnel</h3>
-                <div id="funnel"></div>
+            <div style="font-size:0.68rem;color:#718096;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.6rem;font-weight:600">Badges</div>
+            <div style="font-size:0.78rem;color:#a0aec0;line-height:2">
+                🐦 Early Bird<br>
+                <span style="color:#4a5568;font-size:0.65rem">First 20 to register</span><br>
+                ⭐ Gold Star<br>
+                <span style="color:#4a5568;font-size:0.65rem">Completed Level 3</span><br>
+                🏆 Top Scorer<br>
+                <span style="color:#4a5568;font-size:0.65rem">80%+ eval score</span><br>
+                🛡️ Security<br>
+                <span style="color:#4a5568;font-size:0.65rem">QA & Security track</span><br>
+                ⚡ Multi-track<br>
+                <span style="color:#4a5568;font-size:0.65rem">2+ tracks</span><br>
+                🔥 On Fire<br>
+                <span style="color:#4a5568;font-size:0.65rem">3+ tracks</span><br>
+                💎 Diamond<br>
+                <span style="color:#4a5568;font-size:0.65rem">All 5 tracks</span>
             </div>
         </div>
     </div>
 </div>
-
-<div class="footer">Auto-updated on every merge | <a href="https://github.com/Life-Atlas/lpi-developer-kit">Life-Atlas/lpi-developer-kit</a> | Built by the LifeAtlas Agent Fabric</div>
+<div class="footer">Auto-updated on every merge | <a href="https://github.com/Life-Atlas/lpi-developer-kit">Life-Atlas/lpi-developer-kit</a></div>
 
 <script>
-function generateCohort(stage) {
-    const firstNames = ["Aarav","Aditi","Aisha","Akash","Amara","Ananya","Anil","Ankita","Arjun","Aryan","Bhavya","Chetan","Deepa","Deepak","Dev","Dhruv","Diya","Esha","Farhan","Gaurav","Harsh","Isha","Jaya","Karan","Kavya","Krishna","Laksh","Lavanya","Manav","Meera","Mohit","Nandini","Neha","Nikhil","Nisha","Omkar","Pallavi","Pankaj","Pooja","Prachi","Pranav","Priya","Rahul","Raj","Rajesh","Riya","Rohan","Ruchi","Sahil","Sakshi","Samar","Sanjay","Sara","Shivam","Shreya","Siddharth","Simran","Sneha","Suhani","Sunil","Swati","Tanvi","Tanya","Uday","Varun","Veer","Vidya","Vikram","Yash","Zara","Anishaa","Touqeer","Faariyh","Anshumaan","Siddhi","Anam","Joydeep","Misha","Lavanya P","Harshit","Ritheeshwar","Saima","Krishna G","Chetna","Inderjeet","Sonal","Prakriti","Vansh","Tejaswita","Vineet","Jahanvi","Asmi","Lavneesh","Saanvi","Jatin","Ankit","Siddhi S","Bhavesh","Lijo","Priyanshu","Aditya"];
-    const lastNames = ["Sharma","Patel","Kumar","Singh","Gupta","Agarwal","Verma","Mehta","Chaudhuri","Reddy","Nair","Joshi","Mishra","Bhat","Rao","Kapoor","Das","Malhotra","Saxena","Thakur","Shah","Pillai","Iyer","Menon","Chopra","Hamdani","Rizwan","Parashar","Maheshwari","Sahu","Nandi","Arora"];
-    const allSkills = ["python","pytorch","tensorflow","react","fastapi","flask","docker","langchain","NLP","CV","sql","pandas","javascript","node","streamlit","supabase","mongodb","REST","html-css","R","powerbi","arduino","java","c++","unity","blender","unreal"];
-    const allInterests = ["agents","healthcare","NLP","3D","security","edge","IoT","data","digital-twin","manufacturing","energy"];
-    const teamNames = ["Agent Builders","AI/ML Pipeline","Research & Content","QA & Security","Data & Knowledge","3D & Visualization"];
-    const seed = (i) => ((i * 2654435761) >>> 0) / 4294967296;
-    const configs = {
-        day1: { registered: 32, l2: 0, l3: 0, dropped: 0, maxScore: 0, teams: false },
-        day3: { registered: 71, l2: 22, l3: 3, dropped: 0, maxScore: 5, teams: false },
-        day7: { registered: 81, l2: 48, l3: 18, dropped: 5, maxScore: 9, teams: false },
-        week2: { registered: 85, l2: 52, l3: 28, dropped: 12, maxScore: 12, teams: true },
-        week4: { registered: 85, l2: 45, l3: 35, dropped: 18, maxScore: 18, teams: true },
-        month2: { registered: 85, l2: 30, l3: 42, dropped: 25, maxScore: 28, teams: true },
-    };
-    const cfg = configs[stage]; const people = [];
-    for (let i = 0; i < 101; i++) {
-        const s=seed(i), s2=seed(i+200), s3=seed(i+500);
-        const fn=firstNames[i%firstNames.length], ln=lastNames[i%lastNames.length];
-        const name=`${fn} ${ln}`, github=`${fn.toLowerCase()}-${ln.toLowerCase().slice(0,3)}`;
-        const nSk=2+Math.floor(s*4), skills=[];
-        for(let j=0;j<nSk;j++) skills.push(allSkills[Math.floor(seed(i*10+j)*allSkills.length)]);
-        let level=0, score=0, team="—", velocity="", dropped=false;
-        const rank=s;
-        if(i<cfg.dropped && s>0.6){ dropped=true; }
-        else if(i<cfg.l3+cfg.dropped){ level=3; score=Math.round(cfg.maxScore*(1-rank*0.6)+s2*2); velocity=rank<0.3?"+++":rank<0.6?"++":"+"; if(cfg.teams) team=teamNames[Math.floor(s2*teamNames.length)]+(rank<0.08?" (Lead)":""); }
-        else if(i<cfg.l3+cfg.l2+cfg.dropped){ level=2; score=Math.round(cfg.maxScore*0.4*(1-rank*0.5)+s2); velocity=rank<0.4?"++":"+"; if(cfg.teams) team=teamNames[Math.floor(s2*teamNames.length)]; }
-        else if(i<cfg.registered+cfg.dropped){ level=1; velocity=stage==='day1'?"new":rank<0.5?"+":""; }
-        else { continue; }
-        let impact="";
-        if(level===3 && !dropped){ const imps=["module used by 2 peers","KB entry merged","reviewed 3 PRs","fixed security bug","mentored a new intern","wrote case study","built reusable tool","integrated with A2A","shipped working demo","added 4 KB entries","ran team standup","debugged MCP issue for 3 people"]; if(stage==='month2'||stage==='week4'){const ni=1+Math.floor(s3*3),pk=[];for(let k=0;k<ni;k++)pk.push(imps[Math.floor(seed(i*7+k)*imps.length)]);impact=pk.join(", ");}else if(stage==='week2'){impact=imps[Math.floor(s3*imps.length)];} }
-        else if(level===2 && !dropped && (stage==='week4'||stage==='month2')){ const l2i=["filed 2 bug reports","wrote test cases","documented setup for Windows","translated README to Hindi"]; impact=l2i[Math.floor(s3*l2i.length)]; }
-        people.push({name,github,level,score,skills:[...new Set(skills)],team,velocity,dropped,impact});
+// Countdown timer
+function updateCountdown() {
+    const deadline = new Date('2026-04-20T23:59:00Z');
+    const now = new Date();
+    const diff = deadline - now;
+    const el = document.getElementById('countdown');
+    if (diff <= 0) { el.textContent = 'CLOSED'; return; }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    el.textContent = `${d}d ${h}h ${m}m ${s}s remaining`;
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+let allData = [];
+let curLevel = 'all';
+let curTrack = 'all';
+let curSearch = '';
+
+const stageNames = {1:'Registered', 2:'Running', 3:'Shipping', 4:'Architect'};
+const stageClasses = {1:'lv1', 2:'lv2', 3:'lv3', 4:'lv4'};
+
+// 🥚 If you're reading this source code, you found your first easter egg.
+// Add "found_easter_egg": true to your contributor JSON for bonus points.
+// There are more hidden in the LPI server source code. Happy hunting.
+
+fetch('data.json?v=' + Date.now())
+    .then(r => r.json())
+    .then(data => {
+        allData = (data.contributors || []).sort((a,b) => b.level - a.level || -(a.score||0) + (b.score||0) || a.name.localeCompare(b.name));
+
+        // Assign badges
+        const sorted = [...allData].sort((a,b) => {
+            const aTime = a._merged || '9999'; const bTime = b._merged || '9999';
+            return aTime.localeCompare(bTime);
+        });
+        const earlyBirds = new Set(sorted.slice(0, 20).map(d => d.name));
+
+        allData.forEach(d => {
+            d._badges = [];
+            // Early bird: first 10 to register
+            if (earlyBirds.has(d.name)) d._badges.push({icon:'🐦', tip:'Early Bird — among the first 20 to register'});
+            // Gold star: completed Level 3
+            if (d.level >= 3) d._badges.push({icon:'⭐', tip:'Gold Star — shipped a working deliverable'});
+            // High scorer
+            if ((d.score_pct || 0) >= 80) d._badges.push({icon:'🏆', tip:'Top Scorer — 80%+ evaluation score'});
+            // Easter egg finder
+            if (d.found_easter_egg) d._badges.push({icon:'🥚', tip:'Found the easter egg in the source code'});
+            // Multi-track
+            const trackLetters = (d.track||'').match(/\b[A-E](?=\s*[:\.])/g);
+            const tc = trackLetters ? new Set(trackLetters).size : (d.track ? 1 : 0);
+            if (tc >= 5) d._badges.push({icon:'💎', tip:'Diamond — completed ALL 5 tracks'});
+            else if (tc >= 3) d._badges.push({icon:'🔥', tip:'On Fire — active in 3+ tracks'});
+            else if (tc >= 2) d._badges.push({icon:'⚡', tip:'Multi-track — active in 2 tracks'});
+            // Security champion
+            if ((d.track||'').includes('E') && d.level >= 2) d._badges.push({icon:'🛡️', tip:'Security Champion — QA & Security track'});
+        });
+
+        document.getElementById('badge').textContent = 'LIVE — ' + allData.length + ' contributors';
+        document.getElementById('badge').className = 'live-badge';
+        render();
+    })
+    .catch((err) => {
+        document.getElementById('badge').textContent = 'NO DATA YET';
+        document.getElementById('badge').style.color = '#718096';
+        document.getElementById('tbody').innerHTML = '<tr><td colspan="7" class="empty">No contributors yet. Be the first — <a href="https://github.com/Life-Atlas/lpi-developer-kit">fork the repo</a> and submit Level 1.</td></tr>';
+        console.error('Leaderboard fetch failed:', err);
+    });
+
+function setLevel(l, el) {
+    curLevel = l;
+    // Only deactivate level buttons, not track buttons
+    el.parentElement.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    render();
+}
+
+function setTrack(t, el) {
+    curTrack = t;
+    render();
+}
+
+function filter() {
+    curSearch = document.querySelector('.search-box').value.toLowerCase();
+    render();
+}
+
+function getTrackKey(track) {
+    if (!track) return 'none';
+    const t = track.trim().toUpperCase();
+    if (t.startsWith('A')) return 'A';
+    if (t.startsWith('B')) return 'B';
+    if (t.startsWith('C')) return 'C';
+    if (t.startsWith('D')) return 'D';
+    if (t.startsWith('E')) return 'E';
+    return 'none';
+}
+
+function render() {
+    let data = allData;
+
+    if (curLevel !== 'all') data = data.filter(d => d.level === curLevel);
+    if (curTrack !== 'all') {
+        if (curTrack === 'none') data = data.filter(d => !d.track || d.track.trim() === '');
+        else data = data.filter(d => getTrackKey(d.track) === curTrack);
     }
-    people.sort((a,b)=>{ if(a.dropped!==b.dropped) return a.dropped?1:-1; if(b.score!==a.score) return b.score-a.score; return b.level-a.level; });
-    return people;
-}
+    if (curSearch) data = data.filter(d =>
+        d.name.toLowerCase().includes(curSearch) ||
+        (d.skills || []).some(s => s.toLowerCase().includes(curSearch)) ||
+        (d.track || '').toLowerCase().includes(curSearch) ||
+        (d.github || '').toLowerCase().includes(curSearch)
+    );
 
-const feeds = {
-    day1: [{t:"18:32",cls:"feed-new",txt:"32 Level 1 PRs received — auto-merging valid ones"},{t:"14:15",cls:"feed-new",txt:"First PR: Aarav Sharma registered in 3 minutes"},{t:"10:00",cls:"feed-new",txt:"Screening challenge email sent to 101 interns"}],
-    day3: [{t:"21:05",cls:"feed-star",txt:"First agent submitted! Aarav built a SMILE advisor"},{t:"16:30",cls:"feed-up",txt:"22 interns have their dev tools running"},{t:"11:20",cls:"feed-new",txt:"71 of 101 have registered"},{t:"09:00",cls:"feed-drop",txt:"4 interns blocked on npm install — troubleshooting posted"}],
-    day7: [{t:"23:59",cls:"feed-star",txt:"Deadline: 18 agents submitted"},{t:"18:00",cls:"feed-up",txt:"Anishaa's healthcare agent scored 9/11 — highest so far"},{t:"14:30",cls:"feed-drop",txt:"5 marked as dropped (no activity since Day 1)"},{t:"10:15",cls:"feed-up",txt:"48 with stack running, 81 total registered"},{t:"08:00",cls:"feed-new",txt:"20 still at Registered — sending encouragement"}],
-    week2: [{t:"Fri",cls:"feed-star",txt:"Demo Day: 8 agents presented. Yash's multi-tool agent wins"},{t:"Thu",cls:"feed-up",txt:"Teams formed: 6 teams, 5 leads assigned"},{t:"Wed",cls:"feed-drop",txt:"12 total dropouts — mostly never progressed past signup"},{t:"Tue",cls:"feed-up",txt:"28 agents shipped — 10 more since deadline"},{t:"Mon",cls:"feed-new",txt:"Daily standups started across all 6 teams"}],
-    week4: [{t:"Fri",cls:"feed-star",txt:"35 shipping. 3 LangGraph multi-agent workflows submitted"},{t:"Wed",cls:"feed-up",txt:"Faariyh found prompt injection vector — fixed same day"},{t:"Tue",cls:"feed-drop",txt:"18 total dropouts. 67 active contributors."},{t:"Mon",cls:"feed-star",txt:"First A2A agent card submitted — agents discovering each other"}],
-    month2: [{t:"Fri",cls:"feed-star",txt:"42 shipping contributors. KB grew from 63 to 89 entries."},{t:"Thu",cls:"feed-up",txt:"Knowledge base enriched by intern research"},{t:"Wed",cls:"feed-star",txt:"Priya went Registered → Shipping in 5 weeks — top growth"},{t:"Tue",cls:"feed-up",txt:"6 team leads running autonomous standups"},{t:"Mon",cls:"feed-drop",txt:"25 dropouts stabilized. 60 active, 42 shipping weekly."}],
-};
-const alerts = {
-    day1: ["32 of 101 registered on Day 1 — 69 remaining"],
-    day3: ["First agent submitted!","4 interns blocked on npm install — check troubleshooting"],
-    day7: ["20 still at Registered only — send a nudge?","18 agents submitted — evaluation queue building"],
-    week2: ["12 dropouts detected (7+ days no activity)","QA & Security team has only 3 people — merge with another?"],
-    week4: ["35% of registrants now shipping","3 people haven't attended standups in 5+ days"],
-    month2: ["60 active / 25 dropped / 16 dormant","Top performers ready for advanced work: Aarav, Aditi, Anishaa"],
-};
+    // Track stats
+    const trackColors = {A:'#b794f4', B:'#68d391', C:'#ed8936', D:'#63b3ed', E:'#fc8181', none:'#718096'};
+    const trackNames = {A:'Agent Builders', B:'Content & Research', C:'Design & UX', D:'3D & Viz', E:'QA & Security', none:'No Track'};
+    const trackCounts = {};
+    allData.forEach(d => { const k = getTrackKey(d.track); trackCounts[k] = (trackCounts[k]||0)+1; });
+    document.getElementById('track-stats').innerHTML = Object.entries(trackCounts)
+        .sort((a,b) => b[1]-a[1])
+        .map(([k,v]) => `<div class="stat" style="border-color:${trackColors[k]||'#2d3748'}40;min-width:80px;padding:0.6rem 1rem;cursor:pointer" onclick="setTrack('${k}',this)"><b style="font-size:1.4rem;background:${trackColors[k]||'#718096'};-webkit-background-clip:text;-webkit-text-fill-color:transparent">${v}</b><small>${trackNames[k]||k}</small></div>`)
+        .join('');
 
-let cur='day1', curFilt='all', curSearch='';
-function go(stage,el){cur=stage;document.querySelectorAll('.timeline button').forEach(b=>b.classList.remove('active'));el.classList.add('active');render();}
-function filt(f,el){curFilt=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));el.classList.add('active');render();}
-function search(q){curSearch=q.toLowerCase();render();}
+    // Stats (always from full data)
+    document.getElementById('s-total').textContent = allData.length;
+    document.getElementById('s-l2').textContent = allData.filter(d => d.level >= 2).length;
+    document.getElementById('s-l3').textContent = allData.filter(d => d.level >= 3).length;
 
-const stageLabels = {0:'Dropped',1:'Registered',2:'Running',3:'Shipping'};
-const stageTips = {0:'No activity for 7+ days',1:'Signed up and forked the repo',2:'Dev tools and LPI server running on their machine',3:'Built and submitted a working agent'};
+    if (data.length === 0) {
+        document.getElementById('tbody').innerHTML = '<tr><td colspan="7" class="empty">No contributors match your filter</td></tr>';
+        return;
+    }
 
-function render(){
-    let data=generateCohort(cur); const allData=data;
-    const total=data.length, active=data.filter(d=>!d.dropped).length;
-    const l3=data.filter(d=>d.level>=3).length, drop=data.filter(d=>d.dropped).length;
-    const l1count=data.filter(d=>d.level>=1&&!d.dropped).length;
-    const conv=l1count>0?Math.round((l3/l1count)*100):0;
-    const kbAdded=cur==='month2'?26:cur==='week4'?12:cur==='week2'?4:cur==='day7'?1:0;
-    const reviews=cur==='month2'?84:cur==='week4'?38:cur==='week2'?12:0;
-
-    document.getElementById('s-total').textContent=total;
-    document.getElementById('s-active').textContent=active;
-    document.getElementById('s-l3').textContent=l3;
-    document.getElementById('s-kb').textContent=kbAdded;
-    document.getElementById('s-reviews').textContent=reviews;
-    document.getElementById('s-drop').textContent=drop;
-    document.getElementById('s-conv').textContent=conv+'%';
-
-    if(curFilt===0) data=data.filter(d=>d.dropped);
-    else if(curFilt!=='all') data=data.filter(d=>d.level===curFilt&&!d.dropped);
-    if(curSearch) data=data.filter(d=>d.name.toLowerCase().includes(curSearch)||d.skills.some(s=>s.includes(curSearch))||d.team.toLowerCase().includes(curSearch)||(d.impact&&d.impact.toLowerCase().includes(curSearch)));
-
-    const maxSc=Math.max(...allData.map(d=>d.score),1);
-    const tbody=document.getElementById('tbody');
-    tbody.innerHTML=data.map((d,i)=>{
-        const rc=i===0?'r1':i===1?'r2':i===2?'r3':'';
-        const lvCls=d.dropped?'lv0':`lv${d.level}`;
-        const lvTxt=stageLabels[d.dropped?0:d.level];
-        const lvTip=stageTips[d.dropped?0:d.level];
-        const pct=Math.round((d.score/maxSc)*100);
-        const vCls=d.velocity.includes('+')?'v-up':d.velocity==='new'?'v-new':'v-flat';
-        const vTxt=d.velocity||'—';
-        const vTip=d.velocity.includes('+++')?'Rapid growth':d.velocity.includes('++')?'Steady growth':d.velocity==='+'?'Getting started':d.velocity==='new'?'Just joined':'No recent activity';
-        const impactTxt=d.impact?`<span style="font-size:0.73rem;color:#a0aec0">${d.impact}</span>`:'<span style="color:#2d3748;font-size:0.73rem">—</span>';
-        return `<tr><td class="${rc}">${i+1}</td><td><strong>${d.name}</strong></td><td><span class="lv ${lvCls}" data-tip="${lvTip}">${lvTxt}</span></td><td><span class="bar"><span class="fill" style="width:${pct}%"></span></span><span class="sc">${d.score}</span></td><td><span class="velocity ${vCls}" data-tip="${vTip}">${vTxt}</span></td><td>${impactTxt}</td><td style="font-size:0.75rem;color:#718096">${d.team}</td></tr>`;
-    }).join('');
-
-    const al=alerts[cur]||[];
-    document.getElementById('alerts-panel').innerHTML=al.length?al.map(a=>`<div class="alert">${a}</div>`).join(''):'';
-
-    const f=feeds[cur]||[];
-    document.getElementById('feed').innerHTML=f.map(fi=>`<div class="feed-item"><span class="feed-time">${fi.t}</span> <span class="${fi.cls}">${fi.txt}</span></div>`).join('');
-
-    const teamCounts={};
-    allData.filter(d=>!d.dropped&&d.team!=='—').forEach(d=>{const t=d.team.replace(/ \(Lead\)/,'');teamCounts[t]=(teamCounts[t]||0)+1;});
-    const maxTeam=Math.max(...Object.values(teamCounts),1);
-    const colors={"Agent Builders":"#b794f4","AI/ML Pipeline":"#63b3ed","Research & Content":"#68d391","QA & Security":"#fc8181","Data & Knowledge":"#ffd700","3D & Visualization":"#ed8936"};
-    document.getElementById('teams').innerHTML=Object.entries(teamCounts).sort((a,b)=>b[1]-a[1]).map(([t,c])=>{
-        const col=colors[t]||'#63b3ed';const w=Math.round((c/maxTeam)*100);
-        return `<div class="team-bar"><span class="tname">${t}</span><div class="tbar"><div class="tfill" style="width:${w}%;background:${col}"></div></div><span class="tcount">${c}</span></div>`;
-    }).join('')||'<div style="color:#4a5568;font-size:0.8rem">Teams form after Week 1</div>';
-
-    // Funnel with visual bars
-    const l1c=allData.filter(d=>d.level>=1).length;
-    const l2c=allData.filter(d=>d.level>=2).length;
-    const l3c=allData.filter(d=>d.level>=3).length;
-    const dc=allData.filter(d=>d.dropped).length;
-    const funnelData = [
-        {label:"Invited",count:101,color:"#4a5568",pct:100},
-        {label:"Registered",count:l1c,color:"#68d391",pct:Math.round(l1c/101*100)},
-        {label:"Running",count:l2c,color:"#63b3ed",pct:Math.round(l2c/101*100)},
-        {label:"Shipping",count:l3c,color:"#b794f4",pct:Math.round(l3c/101*100)},
-        {label:"Dropped",count:dc,color:"#fc8181",pct:Math.round(dc/101*100)},
-    ];
-    document.getElementById('funnel').innerHTML=funnelData.map(f=>`<div class="funnel-bar"><span class="flabel">${f.label}</span><div class="fbar"><div class="ffill" style="width:${f.pct}%;background:${f.color}">${f.count}</div></div></div>`).join('');
-}
-render();
-
-// Load live data if available — overlays real contributors on the "live" tab
-fetch('data.json').then(r=>r.json()).then(data=>{
-    if(data.contributors && data.contributors.length > 0){
-        // Add a "Live" button to the timeline
-        const tl = document.querySelector('.timeline');
-        const btn = document.createElement('button');
-        btn.textContent = 'LIVE (' + data.contributors.length + ')';
-        btn.style.color = '#68d391';
-        btn.style.fontWeight = '700';
-        btn.onclick = function(){
-            document.querySelectorAll('.timeline button').forEach(b=>b.classList.remove('active'));
-            btn.classList.add('active');
-            renderLive(data.contributors);
+    document.getElementById('tbody').innerHTML = data.map((d, i) => {
+        const rc = i === 0 ? 'r1' : i === 1 ? 'r2' : i === 2 ? 'r3' : '';
+        const lvCls = stageClasses[d.level] || 'lv1';
+        const lvTxt = stageNames[d.level] || 'Registered';
+        const skills = (d.skills || []).slice(0, 4).map(s => `<span class="tag">${s}</span>`).join('');
+        const track = d.track || '—';
+        const gh = d.github || '';
+        const shareTexts = {
+            2: `Well on my way \u{1F680}\n\nJust completed Level 2 of the @WINNIIO AB / @LifeAtlas Contributor Program — dev environment running, LPI sandbox live, and working with the SMILE digital twin methodology.\n\nWINNIIO is a Swedish strategy & innovation advisory with a decade of experience in digital twin projects spanning smart buildings, healthcare, manufacturing, and IoT — led by founder @Nicolas Waern. LifeAtlas is their longevity and life sciences platform, building personal digital twins that put people in control of their own data.\n\n${allData.length} applicants in the challenge. Level 3 is next — that's where you earn your place.\n\nLive leaderboard \u{1F4CA}: https://life-atlas.github.io/lpi-developer-kit/\n\nhttps://www.linkedin.com/company/winniio\nhttps://www.linkedin.com/company/lifeatlas\n\n#DigitalTwin #AI #OpenSource #WINNIIO #LifeAtlas #Internship`,
+            3: `I just earned my place at @WINNIIO AB / @LifeAtlas \u{1F389}\n\nStarting May 2026 as a contributor to LifeAtlas — a personal digital twin platform for longevity and life sciences.\n\nWINNIIO is a Swedish advisory with a decade of digital twin projects across smart buildings, healthcare, manufacturing, and IoT. Led by founder @Nicolas Waern, they're now applying that expertise to personal health and longevity through LifeAtlas.\n\n${allData.length} applicants in the challenge and ${allData.filter(x=>x.level>=3).length} are crushing it at Level 3 so far — first to the peak but definitely not the last \u{1F4AA}\n\nI built a real deliverable using the SMILE methodology and the Life Programmable Interface (LPI) — an open-source AI agent framework.\n\nLive leaderboard \u{1F4CA}: https://life-atlas.github.io/lpi-developer-kit/\n\nhttps://www.linkedin.com/company/winniio\nhttps://www.linkedin.com/company/lifeatlas\n\n#DigitalTwin #AI #OpenSource #WINNIIO #LifeAtlas #Longevity #Internship`,
+            4: `Level 4 complete \u{1F525}\n\nBuilt a secure multi-agent mesh for @WINNIIO AB / @LifeAtlas — A2A protocol discovery, structured agent communication, and security hardening.\n\nWINNIIO has a decade of digital twin experience across industries. LifeAtlas is their longevity platform — personal digital twins, explainable AI, data sovereignty. Led by @Nicolas Waern.\n\nNo hand-holding. No templates.\n\nLive leaderboard \u{1F4CA}: https://life-atlas.github.io/lpi-developer-kit/\n\nhttps://www.linkedin.com/company/winniio\nhttps://www.linkedin.com/company/lifeatlas\n\n#DigitalTwin #AI #AgentToAgent #Security #WINNIIO #LifeAtlas #Longevity`
         };
-        tl.appendChild(btn);
-    }
-}).catch(()=>{/* no live data yet — mock only */});
+        const shareBtn = d.level >= 2 ? `<span class="share-btn" onclick="navigator.clipboard.writeText(\`${(shareTexts[d.level]||shareTexts[3]).replace(/`/g,'\\`')}\`).then(()=>{this.textContent='Copied!';setTimeout(()=>this.textContent='Share \u{1F4E3}',2000)});window.open('https://www.linkedin.com/feed/?shareActive=true','_blank')" data-tip="Copy post text + open LinkedIn" style="cursor:pointer;font-size:0.65rem;background:rgba(0,119,181,0.15);color:#0077b5;border:1px solid rgba(0,119,181,0.3);border-radius:4px;padding:0.15rem 0.4rem;margin-left:0.3rem;white-space:nowrap">Share \u{1F4E3}</span>` : '';
+        const certBtn = d.level >= 2 ? `<span onclick="generateCert('${d.name.replace(/'/g,"\\'")}',${d.level},'${(d.track||'General').replace(/'/g,"\\'")}',${d.score||0},${d.score_max||0})" data-tip="Download certificate" style="cursor:pointer;font-size:0.65rem;background:rgba(246,173,85,0.15);color:#f6ad55;border:1px solid rgba(246,173,85,0.3);border-radius:4px;padding:0.15rem 0.4rem;margin-left:0.3rem;white-space:nowrap">\u{1F3C5} Cert</span>` : '';
+        const contribLinks = gh ? `<a href="https://github.com/${gh}" style="font-size:0.75rem">${gh}</a> · <a href="https://github.com/Life-Atlas/lpi-developer-kit/pulls?q=is%3Apr+author%3A${gh}" style="font-size:0.75rem">PRs</a>${shareBtn}${certBtn}` : '—';
 
-function renderLive(contributors){
-    const total = contributors.length;
-    const l3 = contributors.filter(c=>c.level>=3).length;
-    const l2 = contributors.filter(c=>c.level>=2).length;
+        const scorePct = d.score_pct || 0;
+        const scoreDisplay = d.score != null ? `<span style="display:inline-block;height:5px;width:50px;background:#2d3748;border-radius:3px;vertical-align:middle;margin-right:0.4rem"><span style="display:block;height:100%;width:${scorePct}%;background:linear-gradient(90deg,#63b3ed,#b794f4);border-radius:3px"></span></span><span style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#a0aec0">${d.score}/${d.score_max}</span>` : '<span style="color:#2d3748;font-size:0.75rem">—</span>';
 
-    document.getElementById('s-total').textContent = total;
-    document.getElementById('s-active').textContent = total;
-    document.getElementById('s-l3').textContent = l3;
-    document.getElementById('s-kb').textContent = '—';
-    document.getElementById('s-reviews').textContent = '—';
-    document.getElementById('s-drop').textContent = '0';
-    document.getElementById('s-conv').textContent = total > 0 ? Math.round((l3/total)*100)+'%' : '0%';
+        const badges = (d._badges || []).map(b => `<span data-tip="${b.tip}" style="cursor:help;margin-left:0.2rem">${b.icon}</span>`).join('');
 
-    const tbody = document.getElementById('tbody');
-    tbody.innerHTML = contributors.map((c,i) => {
-        const lvCls = `lv${c.level}`;
-        const lvTxt = ['—','Registered','Running','Shipping'][c.level] || '—';
-        const skills = (c.skills||[]).slice(0,3).map(s=>`<span style="display:inline-block;background:rgba(45,55,72,0.7);border-radius:3px;padding:0.1rem 0.4rem;font-size:0.65rem;color:#a0aec0;margin:0.05rem">${s}</span>`).join('');
-        const track = c.track || '—';
-        return `<tr><td>${i+1}</td><td><strong>${c.name}</strong></td><td><span class="lv ${lvCls}">${lvTxt}</span></td><td><span class="sc">—</span></td><td><span class="velocity v-new">new</span></td><td>${skills}</td><td style="font-size:0.75rem;color:#718096">${track}</td></tr>`;
+        // Level indicator + track count combined
+        const lvColors = {1:'#68d391',2:'#63b3ed',3:'#b794f4',4:'#f6ad55'};
+        const trackCount = d.track ? d.track.split(/[,\/]/).filter(t => t.trim() && t.trim().match(/^[A-E]/)).length : 0;
+        const multiTrack = trackCount > 1 ? `<span style="font-size:0.55rem;color:#ed8936;margin-left:1px" data-tip="${trackCount} tracks">${trackCount}x</span>` : '';
+        const lvNum = `<span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:${lvColors[d.level]||'#718096'}20;color:${lvColors[d.level]||'#718096'};font-size:0.65rem;font-weight:700;font-family:'JetBrains Mono',monospace;margin-right:0.3rem;border:1px solid ${lvColors[d.level]||'#718096'}40">${d.level}</span>${multiTrack}`;
+
+        return `<tr>
+            <td class="${rc}">${i + 1}</td>
+            <td>${lvNum}<strong style="margin-left:0.2rem">${d.name}</strong>${badges}</td>
+            <td><span class="lv ${lvCls}">${lvTxt}</span></td>
+            <td>${scoreDisplay}</td>
+            <td style="font-size:0.78rem;color:#a0aec0">${track}</td>
+            <td>${skills}</td>
+            <td style="font-size:0.78rem">${contribLinks}</td>
+        </tr>`;
     }).join('');
+}
 
-    document.getElementById('alerts-panel').innerHTML = `<div class="alert">Live data: ${total} real contributors</div>`;
-    document.getElementById('feed').innerHTML = '<div class="feed-item"><span class="feed-new">Showing live data from GitHub</span></div>';
-    document.getElementById('teams').innerHTML = '';
-    document.getElementById('funnel').innerHTML = `<div style="font-size:0.8rem"><div>Registered: <b>${total}</b></div><div>Running: <b>${l2}</b></div><div>Shipping: <b>${l3}</b></div></div>`;
+function generateCert(name, level, track, score, scoreMax) {
+    const levelTitles = {
+        2: 'Level 2 — Running',
+        3: 'Level 3 — Contributor',
+        4: 'Level 4 — Architect'
+    };
+    const levelDescs = {
+        2: 'has successfully completed Level 2 of the LifeAtlas Contributor Program, demonstrating the ability to set up development tools, run the LPI sandbox, and engage with the SMILE digital twin methodology.',
+        3: 'has earned a place on the WINNIIO / LifeAtlas contributor team by completing Level 3 of the LifeAtlas Contributor Program — building a real deliverable using the SMILE methodology and the Life Programmable Interface (LPI).',
+        4: 'has completed Level 4 of the LifeAtlas Contributor Program — designing and building a secure multi-agent mesh with A2A protocol discovery and security hardening. This is the highest achievement in the program.'
+    };
+    const borderColor = {2:'#63b3ed', 3:'#b794f4', 4:'#f6ad55'}[level] || '#63b3ed';
+    const scoreText = score > 0 ? `Score: ${score}/${scoreMax}` : '';
+    const dateStr = new Date().toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
+
+    const w = window.open('', '_blank');
+    w.document.write(`<!DOCTYPE html><html><head><title>Certificate — ${name}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        @page{size:landscape;margin:0}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f7f7f7;font-family:'Inter',sans-serif}
+        .cert{width:900px;height:620px;background:#fff;border:3px solid ${borderColor};position:relative;padding:60px 80px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
+        .cert::before{content:'';position:absolute;inset:12px;border:1px solid ${borderColor}40;pointer-events:none}
+        .logo-row{display:flex;justify-content:center;align-items:center;gap:30px;margin-bottom:10px}
+        .org{font-size:13px;color:#718096;letter-spacing:3px;text-transform:uppercase;font-weight:500}
+        h1{font-family:'Playfair Display',serif;font-size:38px;color:#1a202c;margin:15px 0 5px;font-weight:700}
+        .level-badge{display:inline-block;background:${borderColor}18;color:${borderColor};border:1px solid ${borderColor}50;border-radius:6px;padding:4px 16px;font-size:13px;font-weight:600;letter-spacing:1px;margin:8px 0 20px}
+        .name{font-family:'Playfair Display',serif;font-size:30px;color:${borderColor};margin:10px 0;font-weight:700}
+        .desc{font-size:13px;color:#4a5568;line-height:1.7;max-width:650px;margin:0 auto 15px}
+        .track{font-size:12px;color:#718096;margin:5px 0}
+        .score{font-size:12px;color:${borderColor};font-weight:600;margin:5px 0}
+        .footer-row{position:absolute;bottom:40px;left:80px;right:80px;display:flex;justify-content:space-between;align-items:flex-end}
+        .sig{text-align:center}
+        .sig-line{width:180px;border-top:1px solid #cbd5e0;margin-bottom:4px}
+        .sig-name{font-size:11px;color:#4a5568}
+        .sig-title{font-size:10px;color:#a0aec0}
+        .date{font-size:11px;color:#a0aec0}
+        .print-note{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);font-size:11px;color:#a0aec0;font-family:'Inter',sans-serif}
+        @media print{.print-note{display:none}body{background:#fff}}
+    </style></head><body>
+    <div class="cert">
+        <div class="logo-row">
+            <span class="org">WINNIIO AB</span>
+            <span style="color:#cbd5e0">\u{2022}</span>
+            <span class="org">LifeAtlas</span>
+        </div>
+        <h1>Certificate of Achievement</h1>
+        <div class="level-badge">${levelTitles[level] || 'Contributor'}</div>
+        <p style="font-size:14px;color:#718096;margin-bottom:5px">This certifies that</p>
+        <p class="name">${name}</p>
+        <p class="desc">${levelDescs[level] || levelDescs[2]}</p>
+        <p class="track">Track: ${track}</p>
+        ${scoreText ? `<p class="score">${scoreText}</p>` : ''}
+        <div class="footer-row">
+            <div class="date">${dateStr}</div>
+            <div class="sig">
+                <div class="sig-line"></div>
+                <div class="sig-name">Nicolas Waern</div>
+                <div class="sig-title">CEO & Founder, WINNIIO AB</div>
+            </div>
+        </div>
+    </div>
+    <div class="print-note">Press Ctrl+P (or Cmd+P) to save as PDF</div>
+    </body></html>`);
+    w.document.close();
 }
 </script>
 </body>

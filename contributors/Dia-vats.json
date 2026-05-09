@@ -1,0 +1,23 @@
+{
+  "name": "Dia Vats",
+  "github": "https://github.com/Diavats",
+  "program": "B.Tech Bioinformatics",
+  "campus": "Amity University Noida",
+  "skills": [
+    "python",
+    "machine learning",
+    "geospatial data",
+    "RAG pipelines",
+    "data structures",
+    "git & github",
+    "data analysis"
+  ],
+  "interests": [
+    "AI agents",
+    "real world problem solving",
+    "biomedical AI",
+    "climate tech"
+  ],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track how my energy, focus and interest shift across project building, college assignments, and self-learning because I have noticed that I’m most effective doing hands-on work late at night, while during the day I tend to split my attention between assignments and smaller tasks instead of going deep. I would like to understand which factors drive this consistent pattern."
+}

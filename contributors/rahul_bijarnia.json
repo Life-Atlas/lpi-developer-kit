@@ -1,0 +1,27 @@
+{
+  "name": "Rahul Bijarnia",
+  "github": "RahulBijarnia1",
+  "program": "B.Tech Computer Science",
+  "campus": "Amity School of Engineering and Technology, Noida",
+  "skills": [
+    "Python",
+    "C++",
+    "SQL",
+    "Flask",
+    "Machine Learning",
+    "Data Analysis",
+    "Streamlit",
+    "API Development",
+    "MySQL"
+  ],
+  "interests": [
+    "data analytics",
+    "machine learning systems",
+    "web development",
+    "API design",
+    "problem solving",
+    "system reliability"
+  ],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track how I solve coding problems and build systems—like where I make repeated mistakes, how I handle debugging, and how efficient my solutions are. It would help me improve my problem-solving over time, similar to how I refine my approach in projects, and also track how I manage responsibilities and collaborate in teams to become more effective."
+}
