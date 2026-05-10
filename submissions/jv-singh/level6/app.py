@@ -2,7 +2,7 @@
 
 # -----------------------------------------------------------------------------
 # FACTORY GRAPH DASHBOARD - Level 6 Neo4j & Streamlit
-# UI/UX OVERHAUL - All core logic is untouched.
+# UI/UX OVERHAUL - Horizontal tab navigation
 # -----------------------------------------------------------------------------
 
 from __future__ import annotations
@@ -16,6 +16,7 @@ import streamlit as st
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
 
+
 BASE_DIR = Path(__file__).resolve().parent
 
 # Page config - wide layout, no emoji, clean favicon
@@ -23,10 +24,10 @@ st.set_page_config(
     page_title="Factory Graph Dashboard",
     page_icon=None,
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",  # Sidebar collapsed — nav is now top tabs
 )
 
-# Global CSS injection - dark industrial premium theme
+# Global CSS injection - dark industrial premium theme + horizontal tab overrides
 GLOBAL_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;600;700&display=swap');
@@ -181,23 +182,6 @@ p, li, label, span {
     box-shadow: var(--shadow-hover) !important;
 }
 
-[data-testid="stSidebar"] [data-testid="stRadio"] label {
-    display: block !important;
-    padding: 0.55rem 0.9rem !important;
-    border-radius: var(--radius-sm) !important;
-    font-size: 0.88rem !important;
-    font-weight: 500 !important;
-    color: var(--text-dim) !important;
-    cursor: pointer !important;
-    transition: background 0.15s ease, color 0.15s ease !important;
-    border: 1px solid transparent !important;
-}
-[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
-    background: var(--accent-dim) !important;
-    color: var(--accent) !important;
-    border-color: var(--accent) !important;
-}
-
 [data-testid="stAlert"] {
     border-radius: var(--radius-sm) !important;
     border-width: 1px !important;
@@ -232,6 +216,83 @@ hr {
     border-color: var(--accent) !important;
     color: var(--text-dim) !important;
 }
+
+/* =========================================================
+   HORIZONTAL TABS - Full custom override
+   ========================================================= */
+
+/* Tab strip container */
+[data-testid="stTabs"] {
+    background: transparent !important;
+    margin-bottom: 1.75rem !important;
+}
+
+/* The scrollable tab list wrapper */
+[data-testid="stTabs"] [data-baseweb="tab-list"] {
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    padding: 0.35rem 0.45rem !important;
+    gap: 0.2rem !important;
+    box-shadow: var(--shadow) !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+}
+[data-testid="stTabs"] [data-baseweb="tab-list"]::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Individual tab button */
+[data-testid="stTabs"] [data-baseweb="tab"] {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: var(--radius-sm) !important;
+    color: var(--text-muted) !important;
+    font-family: 'DM Mono', monospace !important;
+    font-size: 0.78rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    padding: 0.55rem 1.2rem !important;
+    white-space: nowrap !important;
+    transition: background 0.18s ease, color 0.18s ease,
+                border-color 0.18s ease, box-shadow 0.18s ease !important;
+    outline: none !important;
+}
+
+/* Tab hover */
+[data-testid="stTabs"] [data-baseweb="tab"]:hover {
+    background: var(--accent-dim) !important;
+    color: var(--accent) !important;
+    border-color: var(--accent) !important;
+}
+
+/* Active / selected tab */
+[data-testid="stTabs"] [aria-selected="true"] {
+    background: var(--accent-dim) !important;
+    color: var(--accent) !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 14px var(--accent-glow) !important;
+    font-weight: 600 !important;
+}
+
+/* Kill the default underline indicator that Streamlit renders */
+[data-testid="stTabs"] [data-baseweb="tab-highlight"],
+[data-testid="stTabs"] [data-baseweb="tab-border"] {
+    display: none !important;
+    background: transparent !important;
+    height: 0 !important;
+}
+
+/* Tab content panel */
+[data-testid="stTabs"] [data-baseweb="tab-panel"] {
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+/* =========================================================
+   CARD / UTILITY CLASSES
+   ========================================================= */
 
 .ui-card {
     background: var(--card);
@@ -314,7 +375,7 @@ pre code {
 </style>
 """
 
-# Shared Plotly theme dict (Height removed to prevent update_layout conflicts)
+# Shared Plotly theme dict
 PLOTLY_THEME = dict(
     template="plotly_dark",
     paper_bgcolor="rgba(26,30,42,1)",
@@ -324,14 +385,12 @@ PLOTLY_THEME = dict(
     margin=dict(l=16, r=16, t=44, b=16),
 )
 
-# Shared hoverlabel style dict
 HOVER_STYLE = dict(
     bgcolor="#13161E",
     bordercolor="#F59E0B",
     font=dict(family="DM Mono", size=11, color="#E2E8F0"),
 )
 
-# Shared axis style kwargs
 AXIS_STYLE = dict(
     xaxis_gridcolor="#1F2435",
     xaxis_linecolor="#272C3D",
@@ -343,7 +402,6 @@ AXIS_STYLE = dict(
     yaxis_tickfont_size=10,
 )
 
-# Shared legend style kwargs
 LEGEND_STYLE = dict(
     legend_bgcolor="rgba(19,22,30,0.9)",
     legend_bordercolor="#272C3D",
@@ -353,14 +411,18 @@ LEGEND_STYLE = dict(
     legend_font_color="#94A3B8",
 )
 
+
 def card_start() -> None:
     st.markdown('<div class="ui-card fade-up">', unsafe_allow_html=True)
+
 
 def card_end() -> None:
     st.markdown('</div>', unsafe_allow_html=True)
 
+
 def _badge(text: str) -> None:
     st.markdown(f'<div class="section-badge">{text}</div>', unsafe_allow_html=True)
+
 
 def _page_rule() -> None:
     st.markdown(
@@ -368,6 +430,7 @@ def _page_rule() -> None:
         'border-radius:2px;margin-bottom:1.5rem;"></div>',
         unsafe_allow_html=True,
     )
+
 
 # -----------------------------------------------------------------------------
 # CORE LOGIC
@@ -381,6 +444,7 @@ def get_secret(name: str, default: str | None = None) -> str | None:
         pass
     return os.getenv(name, default)
 
+
 @st.cache_resource(show_spinner=False)
 def get_driver():
     load_dotenv(BASE_DIR / ".env")
@@ -391,10 +455,12 @@ def get_driver():
         return None
     return GraphDatabase.driver(uri, auth=(user, password))
 
+
 def query_df(driver, cypher: str, **params) -> pd.DataFrame:
     with driver.session() as session:
         rows = [dict(record) for record in session.run(cypher, **params)]
     return pd.DataFrame(rows)
+
 
 def run_self_test(driver):
     checks = []
@@ -402,7 +468,7 @@ def run_self_test(driver):
         with driver.session() as session:
             session.run("RETURN 1")
         checks.append(("Neo4j connected", True, 3))
-    except Exception as exc: 
+    except Exception as exc:
         checks.append((f"Neo4j connected ({exc.__class__.__name__})", False, 3))
         return checks
 
@@ -440,8 +506,9 @@ def run_self_test(driver):
         checks.append((f"Variance query: {len(rows)} results", len(rows) > 0, 5))
     return checks
 
+
 # -----------------------------------------------------------------------------
-# RENDER FUNCTIONS
+# RENDER FUNCTIONS  (all logic unchanged)
 # -----------------------------------------------------------------------------
 
 def render_connection_help() -> None:
@@ -467,6 +534,7 @@ def render_connection_help() -> None:
         'NEO4J_PASSWORD = "your-password"',
         language="toml",
     )
+
 
 def render_project_overview(driver) -> None:
     _badge("Module 01")
@@ -543,7 +611,6 @@ def render_project_overview(driver) -> None:
         title="Planned vs Actual Hours by Project",
         color_discrete_sequence=["#3B82F6", "#F59E0B"],
     )
-    
     fig.update_layout(
         **PLOTLY_THEME,
         **AXIS_STYLE,
@@ -555,6 +622,7 @@ def render_project_overview(driver) -> None:
     )
     st.plotly_chart(fig, use_container_width=True)
     card_end()
+
 
 def render_station_load(driver) -> None:
     _badge("Module 02")
@@ -609,7 +677,6 @@ def render_station_load(driver) -> None:
         title="Weekly Planned vs Actual Station Load",
         color_discrete_sequence=["#3B82F6", "#F59E0B"],
     )
-    
     fig.update_layout(
         **PLOTLY_THEME,
         **AXIS_STYLE,
@@ -632,6 +699,7 @@ def render_station_load(driver) -> None:
     )
     st.dataframe(overrun_df, use_container_width=True, hide_index=True)
     card_end()
+
 
 def render_capacity_tracker(driver) -> None:
     _badge("Module 03")
@@ -687,7 +755,6 @@ def render_capacity_tracker(driver) -> None:
         marker={"color": "#EF4444", "size": 13, "symbol": "x"},
         name="Deficit week",
     )
-    
     fig.update_layout(
         **PLOTLY_THEME,
         **AXIS_STYLE,
@@ -708,6 +775,7 @@ def render_capacity_tracker(driver) -> None:
     )
     st.dataframe(styled, use_container_width=True, hide_index=True)
     card_end()
+
 
 def render_worker_coverage(driver) -> None:
     _badge("Module 04")
@@ -783,6 +851,7 @@ def render_worker_coverage(driver) -> None:
     st.dataframe(matrix_df, use_container_width=True, hide_index=True)
     card_end()
 
+
 def render_self_test(driver) -> None:
     _badge("Module 05")
     st.header("Self-Test")
@@ -832,6 +901,7 @@ def render_self_test(driver) -> None:
     )
     st.progress(earned / possible if possible else 0)
 
+
 # -----------------------------------------------------------------------------
 # MAIN
 # -----------------------------------------------------------------------------
@@ -839,6 +909,7 @@ def render_self_test(driver) -> None:
 def main() -> None:
     st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
 
+    # ── Top header (unchanged visual) ────────────────────────────────────────
     st.markdown(
         """
         <div class="fade-up" style="margin-bottom:0.25rem;">
@@ -851,7 +922,7 @@ def main() -> None:
             </div>
         </div>
         <div style="height:2px;background:linear-gradient(90deg,#F59E0B 0%,#3B82F6 60%,transparent 100%);
-                    border-radius:2px;margin:0.75rem 0 1.75rem 0;"></div>
+                    border-radius:2px;margin:0.75rem 0 1.5rem 0;"></div>
         """,
         unsafe_allow_html=True,
     )
@@ -861,45 +932,27 @@ def main() -> None:
         render_connection_help()
         return
 
-    pages = {
-        "Project Overview": render_project_overview,
-        "Station Load": render_station_load,
-        "Capacity Tracker": render_capacity_tracker,
-        "Worker Coverage": render_worker_coverage,
-        "Self-Test": render_self_test,
-    }
+    # ── Horizontal tab navigation ─────────────────────────────────────────────
+    tab_labels = [
+        "01  Project Overview",
+        "02  Station Load",
+        "03  Capacity Tracker",
+        "04  Worker Coverage",
+        "05  Self-Test",
+    ]
+    tab_renderers = [
+        render_project_overview,
+        render_station_load,
+        render_capacity_tracker,
+        render_worker_coverage,
+        render_self_test,
+    ]
 
-    with st.sidebar:
-        st.markdown(
-            """
-            <div style="padding:0.5rem 0 1.25rem 0;border-bottom:1px solid #272C3D;margin-bottom:1rem;">
-                <span style="font-family:'DM Mono',monospace;font-size:0.65rem;
-                             letter-spacing:0.14em;color:#64748B;text-transform:uppercase;">
-                    Navigation
-                </span>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        
-        # FIXED: Added a valid string "Navigation Menu" to fix the empty label accessibility warning
-        selected_page = st.radio("Navigation Menu", list(pages.keys()), label_visibility="collapsed")
-        
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.info("All pages query Neo4j directly. CSV files are only used by seed_graph.py.")
+    tabs = st.tabs(tab_labels)
+    for tab, renderer in zip(tabs, tab_renderers):
+        with tab:
+            renderer(driver)
 
-        st.markdown(
-            """
-            <div style="position:fixed;bottom:1rem;left:0;width:17rem;padding:0 1.2rem;
-                        font-family:'DM Mono',monospace;font-size:0.65rem;
-                        color:#64748B;border-top:1px solid #272C3D;padding-top:0.75rem;">
-                Factory Graph - Level 6
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    pages[selected_page](driver)
 
 if __name__ == "__main__":
     main()
