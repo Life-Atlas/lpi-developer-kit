@@ -6,5 +6,5 @@
   "skills": ["machine-learning", "opencv", "pytorch", "sql", "data-preprocessing", "tensorflow", "neural-networks", "java", "deep-learning", "scikit-learn", "computer-vision", "pandas", "ollama", "python", "nlp", "numpy", "llm", "object-detection", "keras", "data-science"],
   "interests": ["agents", "NLP", "AI-pipelines","LLMs"],
   "track": "A: Agent Builders",
-  "my_twin": "I would track my focus and energy patterns across different times of day and correlate them with my sleep, diet, and the type of work I was doing — because I notice I write cleaner code some days versus others and I genuinely don't know why. I'd want the twin to flag when I'm likely to make mistakes so I can schedule reviews at better times."
+  "my_twin": "I'd have it monitor my focus and energy levels throughout the day and map them against my sleep quality, meals, and the kind of tasks I was working on — because some days my code just flows and other days everything feels off, and I can never pinpoint the reason. I'd want it to predict when I'm most error-prone so I can shift my review sessions to when my mind is actually sharp."
 }
