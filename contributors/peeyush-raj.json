@@ -2,8 +2,9 @@
   "name": "Peeyush Raj",
   "github": "Peeyush1010",
   "program": "B.Tech Computer Science",
-  "campus": "Your College Name",
+  "campus": "Amity Noida",
   "skills": ["Python", "Machine Learning", "AI"],
   "interests": ["AI", "Deep Learning", "Problem Solving"],
-  "my_twin": "I am passionate about learning new technologies and building impactful projects."
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would track my daily productivity, focus levels, and study patterns because I want to understand when I perform best and improve my consistency."
 }

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WINNIIO Intern Interview — Book Your Slot</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0d1117;color:#c9d1d9;padding:20px;max-width:900px;margin:0 auto}
+h1{color:#58a6ff;font-size:1.5em;margin-bottom:4px}
+.sub{color:#8b949e;margin-bottom:24px;font-size:.9em;line-height:1.5}
+.info{background:#161b22;border:1px solid #30363d;border-radius:10px;padding:16px;margin-bottom:24px;line-height:1.6;font-size:.9em}
+.info strong{color:#58a6ff}
+.info ul{margin:8px 0 0 20px;color:#8b949e}
+.info ul li{margin-bottom:4px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;color:#c9d1d9;font-weight:600;margin-bottom:6px;font-size:.9em}
+.form-group input{width:100%;padding:10px 14px;background:#161b22;border:1px solid #30363d;border-radius:8px;color:#c9d1d9;font-size:.95em}
+.form-group input:focus{outline:none;border-color:#58a6ff}
+h2{color:#c9d1d9;font-size:1.1em;margin:24px 0 12px}
+.live{display:inline-block;width:8px;height:8px;background:#3fb950;border-radius:50%;margin-right:6px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+@media(max-width:600px){.slots{grid-template-columns:1fr}}
+.slot{background:#161b22;border:2px solid #30363d;border-radius:10px;padding:14px;cursor:pointer;transition:all .2s;position:relative}
+.slot:hover:not(.full){border-color:#58a6ff;background:#1c2128}
+.slot.selected{border-color:#3fb950;background:#3fb95011}
+.slot.full{opacity:.45;cursor:not-allowed;border-color:#21262d}
+.slot.full:hover{border-color:#21262d;background:#161b22}
+.slot .day{font-weight:700;font-size:.95em;color:#c9d1d9}
+.slot .time{color:#58a6ff;font-size:.85em;margin-top:2px}
+.slot .seats{color:#8b949e;font-size:.8em;margin-top:6px}
+.slot .seats .count{color:#3fb950;font-weight:700}
+.slot .seats .count.low{color:#ffa657}
+.slot .seats .count.none{color:#f85149}
+.slot .check{position:absolute;top:12px;right:12px;width:22px;height:22px;border:2px solid #30363d;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
+.slot.selected .check{border-color:#3fb950;background:#3fb950;color:#fff}
+.submit{width:100%;padding:14px;background:#238636;color:#fff;border:none;border-radius:8px;font-size:1em;font-weight:700;cursor:pointer;transition:background .2s}
+.submit:hover:not(:disabled){background:#2ea043}
+.submit:disabled{background:#21262d;color:#8b949e;cursor:not-allowed}
+.err{background:#f8514922;border:1px solid #f85149;color:#f85149;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:.85em;display:none}
+.confirm{background:#161b22;border:1px solid #3fb950;border-radius:10px;padding:20px;margin-top:20px;text-align:center;display:none}
+.confirm h3{color:#3fb950;margin-bottom:8px}
+.confirm p{color:#8b949e;font-size:.9em;line-height:1.5}
+.already{background:#161b22;border:1px solid #ffa657;border-radius:10px;padding:20px;margin-top:20px;text-align:center;display:none}
+.already h3{color:#ffa657;margin-bottom:8px}
+.already p{color:#8b949e;font-size:.9em;line-height:1.5}
+.footer{text-align:center;margin-top:32px;color:#8b949e;font-size:.8em}
+.footer a{color:#58a6ff;text-decoration:none}
+.tz-note{background:#ffa65711;border:1px solid #ffa657;border-radius:8px;padding:10px 14px;margin-bottom:20px;font-size:.85em;color:#ffa657}
+.loading{text-align:center;padding:40px;color:#8b949e}
+.spinner{display:inline-block;width:20px;height:20px;border:2px solid #30363d;border-top-color:#58a6ff;border-radius:50%;animation:spin .6s linear infinite;margin-right:8px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head><body>
+<h1>WINNIIO / LifeAtlas — Intern Interview Booking</h1>
+<p class="sub">Congratulations on being selected! Please book your 30-minute interview slot below.<br>You'll receive a calendar invite after booking.</p>
+
+<div class="info">
+<strong>What to expect:</strong>
+<ul>
+<li><strong>Format:</strong> 30-min code walkthrough + discussion (camera on)</li>
+<li><strong>What we review:</strong> Your L3/L4 PR submission — walk us through your code, decisions, and what you'd improve</li>
+<li><strong>Interviewers:</strong> Nicolas (CEO) + team lead for your track</li>
+<li><strong>Preparation:</strong> Have your repo open, be ready to screen-share and explain your approach</li>
+</ul>
+</div>
+
+<div class="tz-note">&#9888; All times are in <strong>CEST (Central European Summer Time, UTC+2)</strong>. Please convert to your local timezone.</div>
+
+<div class="form-group">
+<label>Full Name (as submitted in your PR)</label>
+<input type="text" id="fname" placeholder="e.g. Daksh Garg" required>
+</div>
+<div class="form-group">
+<label>Email Address</label>
+<input type="email" id="femail" placeholder="your@email.com" required>
+</div>
+<div class="form-group">
+<label>GitHub Username</label>
+<input type="text" id="fgh" placeholder="e.g. dakshgarg2006">
+</div>
+
+<h2><span class="live"></span>Select your preferred time slot — live availability</h2>
+<div class="slots" id="slots"><div class="loading"><span class="spinner"></span>Loading available slots...</div></div>
+
+<div class="err" id="err"></div>
+<button class="submit" id="sbtn" disabled onclick="submitBooking()">Book Interview Slot</button>
+
+<div class="confirm" id="confirm">
+<h3>&#10003; Interview Booked!</h3>
+<p id="conf-msg"></p>
+</div>
+
+<div class="already" id="already">
+<h3>&#9888; Already Booked</h3>
+<p id="already-msg"></p>
+</div>
+
+<div class="footer">
+<p>WINNIIO AB &mdash; <a href="https://lifeatlas.io">lifeatlas.io</a> | Questions? Email <a href="mailto:ceo@winniio.io">ceo@winniio.io</a></p>
+</div>
+
+<script>
+const SB_URL = 'https://wubnxmzqxlwktuhbmrdo.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1Ym54bXpxeGx3a3R1aGJtcmRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ2MDA2NDIsImV4cCI6MjA2MDE3NjY0Mn0.wfPU_K__9SvE35_aYqmmV7DecOTr_jywTjW1CmIlPJQ';
+const sb = supabase.createClient(SB_URL, SB_KEY);
+
+const SLOTS = [
+  { id: 'A1', day: 'Wednesday, Apr 23', time: '10:00 — 12:00 CEST', label: 'Morning A', max: 5 },
+  { id: 'A2', day: 'Wednesday, Apr 23', time: '14:00 — 16:00 CEST', label: 'Afternoon A', max: 5 },
+  { id: 'B1', day: 'Thursday, Apr 24', time: '10:00 — 12:00 CEST', label: 'Morning B', max: 5 },
+  { id: 'B2', day: 'Thursday, Apr 24', time: '14:00 — 16:00 CEST', label: 'Afternoon B', max: 5 },
+  { id: 'C1', day: 'Friday, Apr 25', time: '10:00 — 12:00 CEST', label: 'Morning C', max: 5 },
+  { id: 'C2', day: 'Friday, Apr 25', time: '14:00 — 16:00 CEST', label: 'Afternoon C', max: 5 },
+  { id: 'D1', day: 'Monday, Apr 28', time: '10:00 — 12:00 CEST', label: 'Morning D', max: 5 },
+  { id: 'D2', day: 'Monday, Apr 28', time: '14:00 — 16:00 CEST', label: 'Afternoon D', max: 5 },
+];
+
+let selected = null;
+let counts = {};
+let submitting = false;
+
+async function loadCounts() {
+  const { data, error } = await sb.from('intern_bookings').select('slot_id');
+  if (error) { console.error(error); return; }
+  counts = {};
+  data.forEach(r => { counts[r.slot_id] = (counts[r.slot_id] || 0) + 1; });
+  render();
+}
+
+function render() {
+  const container = document.getElementById('slots');
+  container.innerHTML = SLOTS.map(s => {
+    const booked = counts[s.id] || 0;
+    const remaining = s.max - booked;
+    const full = remaining <= 0;
+    const sel = selected === s.id;
+    const countClass = remaining <= 0 ? 'none' : remaining <= 2 ? 'low' : '';
+    return '<div class="slot' + (sel ? ' selected' : '') + (full ? ' full' : '') + '" onclick="' + (full ? '' : "pick('" + s.id + "')") + '">' +
+      '<div class="day">' + s.day + '</div>' +
+      '<div class="time">' + s.time + '</div>' +
+      '<div class="seats">' +
+        '<span class="count ' + countClass + '">' + (remaining > 0 ? remaining + ' seat' + (remaining !== 1 ? 's' : '') + ' left' : 'FULL') + '</span>' +
+        ' &mdash; ' + s.label +
+      '</div>' +
+      '<div class="check">' + (sel ? '&#10003;' : '') + '</div>' +
+    '</div>';
+  }).join('');
+  document.getElementById('sbtn').disabled = !selected || submitting;
+}
+
+function pick(id) {
+  if (submitting) return;
+  selected = selected === id ? null : id;
+  render();
+}
+
+function showErr(msg) {
+  const el = document.getElementById('err');
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 5000);
+}
+
+async function submitBooking() {
+  if (submitting) return;
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const gh = document.getElementById('fgh').value.trim();
+
+  if (!name || !email || !selected) {
+    showErr('Please fill in your name, email, and select a time slot.');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showErr('Please enter a valid email address.');
+    return;
+  }
+
+  const slot = SLOTS.find(s => s.id === selected);
+  if (!slot) return;
+
+  submitting = true;
+  document.getElementById('sbtn').textContent = 'Booking...';
+  document.getElementById('sbtn').disabled = true;
+
+  // Check if email already booked
+  const { data: existing } = await sb.from('intern_bookings').select('slot_id').eq('email', email);
+  if (existing && existing.length > 0) {
+    const prev = SLOTS.find(s => s.id === existing[0].slot_id);
+    document.getElementById('already').style.display = 'block';
+    document.getElementById('already-msg').innerHTML =
+      'You already booked <strong>' + (prev ? prev.day + ', ' + prev.time : existing[0].slot_id) + '</strong>.<br>' +
+      'Each candidate can only book one slot. Contact <a href="mailto:ceo@winniio.io" style="color:#58a6ff">ceo@winniio.io</a> to reschedule.';
+    submitting = false;
+    document.getElementById('sbtn').textContent = 'Book Interview Slot';
+    document.getElementById('sbtn').disabled = false;
+    return;
+  }
+
+  // Recheck seat count right before insert
+  await loadCounts();
+  const currentCount = counts[selected] || 0;
+  if (currentCount >= slot.max) {
+    showErr('Sorry, that slot just filled up! Please pick another one.');
+    selected = null;
+    submitting = false;
+    document.getElementById('sbtn').textContent = 'Book Interview Slot';
+    render();
+    return;
+  }
+
+  const { error } = await sb.from('intern_bookings').insert({
+    slot_id: selected,
+    name: name,
+    email: email,
+    github: gh || null
+  });
+
+  if (error) {
+    showErr('Booking failed: ' + error.message + '. Please try again.');
+    submitting = false;
+    document.getElementById('sbtn').textContent = 'Book Interview Slot';
+    document.getElementById('sbtn').disabled = false;
+    return;
+  }
+
+  await loadCounts();
+
+  document.getElementById('confirm').style.display = 'block';
+  document.getElementById('conf-msg').innerHTML =
+    '<strong>' + name + '</strong>, you are confirmed for:<br>' +
+    '<strong>' + slot.day + ', ' + slot.time + '</strong><br><br>' +
+    'You will receive a calendar invite at <strong>' + email + '</strong> within 24 hours.<br>' +
+    'Have your repo open and be ready to screen-share.';
+
+  document.getElementById('sbtn').textContent = 'Booked';
+  document.getElementById('sbtn').disabled = true;
+  selected = null;
+  render();
+}
+
+// Realtime subscription — update counts live when anyone books
+sb.channel('bookings')
+  .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'intern_bookings' }, () => {
+    loadCounts();
+  })
+  .subscribe();
+
+loadCounts();
+</script>
+</body></html>

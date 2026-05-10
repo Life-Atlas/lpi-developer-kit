@@ -1,0 +1,10 @@
+{
+  "name": "Sania Gurung",
+  "github": "SANIAGRG",
+  "program": "B.Tech CSE (AI & ML Specialization)",
+  "campus": "Amity University Noida",
+  "skills": ["machine-learning", "opencv", "pytorch", "sql", "data-preprocessing", "tensorflow", "neural-networks", "java", "deep-learning", "scikit-learn", "computer-vision", "pandas", "ollama", "python", "nlp", "numpy", "llm", "object-detection", "keras", "data-science"],
+  "interests": ["agents", "NLP", "AI-pipelines","LLMs"],
+  "track": "A: Agent Builders",
+  "my_twin": "I'd have it monitor my focus and energy levels throughout the day and map them against my sleep quality, meals, and the kind of tasks I was working on — because some days my code just flows and other days everything feels off, and I can never pinpoint the reason. I'd want it to predict when I'm most error-prone so I can shift my review sessions to when my mind is actually sharp."
+}

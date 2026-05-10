@@ -1,0 +1,17 @@
+{
+  "name": "LifeTwin Agent",
+  "description": "Digital twin agent with LPI tool integration and explainable insights",
+  "version": "1.0",
+  "type": "single-agent",
+  "communication": "structured-json",
+  "capabilities": [
+    "pattern analysis",
+    "insight generation",
+    "explainability"
+  ],
+  "tools": [
+    "smile_overview",
+    "query_knowledge",
+    "get_case_studies"
+  ]
+}

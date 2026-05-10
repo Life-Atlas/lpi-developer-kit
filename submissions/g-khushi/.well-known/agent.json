@@ -1,0 +1,13 @@
+{
+  "name": "SMILE Advisor Agent",
+  "description": "An AI agent that uses LPI tools and a local LLM to explain SMILE methodology and digital twin concepts with full explainability.",
+  "version": "1.0",
+  "author": "Khushi Garg",
+  "tools": [
+    "smile_overview",
+    "query_knowledge",
+    "get_case_studies"
+  ],
+  "entry_point": "agent.py",
+  "language": "python"
+}
