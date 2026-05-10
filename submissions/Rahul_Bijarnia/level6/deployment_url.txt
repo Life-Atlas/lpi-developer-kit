@@ -1,1 +1,1 @@
-https://your-streamlit-app-url.streamlit.app
+https://your-streamlit-url.streamlit.app
