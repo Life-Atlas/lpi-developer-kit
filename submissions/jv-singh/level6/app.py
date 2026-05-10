@@ -1,5 +1,10 @@
 """Streamlit dashboard for the Level 6 factory Neo4j graph."""
 
+# -----------------------------------------------------------------------------
+# FACTORY GRAPH DASHBOARD - Level 6 Neo4j & Streamlit
+# UI/UX OVERHAUL - All core logic is untouched.
+# -----------------------------------------------------------------------------
+
 from __future__ import annotations
 
 import os
@@ -13,12 +18,360 @@ from neo4j import GraphDatabase
 
 BASE_DIR = Path(__file__).resolve().parent
 
+# Page config - wide layout, no emoji, clean favicon
 st.set_page_config(
     page_title="Factory Graph Dashboard",
-    page_icon="🏭",
+    page_icon=None,
     layout="wide",
+    initial_sidebar_state="expanded",
 )
 
+# Global CSS injection - dark industrial premium theme
+GLOBAL_CSS = """
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@300;400;600;700&display=swap');
+
+:root {
+    --bg:          #0D0F14;
+    --surface:     #13161E;
+    --card:        #1A1E2A;
+    --card-hover:  #1F2435;
+    --border:      #272C3D;
+    --accent:      #F59E0B;
+    --accent-dim:  rgba(245,158,11,0.12);
+    --accent-glow: rgba(245,158,11,0.25);
+    --green:       #10B981;
+    --red:         #EF4444;
+    --text:        #E2E8F0;
+    --text-muted:  #64748B;
+    --text-dim:    #94A3B8;
+    --radius:      12px;
+    --radius-sm:   8px;
+    --shadow:      0 4px 24px rgba(0,0,0,0.45);
+    --shadow-hover:0 8px 40px rgba(0,0,0,0.65);
+}
+
+html, body, [data-testid="stAppViewContainer"] {
+    background-color: var(--bg) !important;
+    font-family: 'Sora', sans-serif !important;
+    color: var(--text) !important;
+}
+
+[data-testid="stSidebar"] {
+    background: var(--surface) !important;
+    border-right: 1px solid var(--border) !important;
+}
+
+[data-testid="stSidebar"] * {
+    font-family: 'Sora', sans-serif !important;
+}
+
+#MainMenu, footer, header { visibility: hidden; }
+[data-testid="stDecoration"] { display: none; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+h1 {
+    font-size: 1.9rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.5px !important;
+    color: var(--text) !important;
+}
+h2 {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: var(--text) !important;
+    border-bottom: 1px solid var(--border) !important;
+    padding-bottom: 0.5rem !important;
+    margin-bottom: 1.25rem !important;
+}
+h3 {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: var(--text-dim) !important;
+}
+p, li, label, span {
+    color: var(--text-dim) !important;
+}
+
+[data-testid="stMetric"] {
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    padding: 1.1rem 1.3rem !important;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease !important;
+    cursor: default;
+}
+[data-testid="stMetric"]:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: var(--shadow-hover) !important;
+    border-color: var(--accent) !important;
+}
+[data-testid="stMetricLabel"] {
+    font-family: 'DM Mono', monospace !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: var(--text-muted) !important;
+}
+[data-testid="stMetricValue"] {
+    font-family: 'Sora', sans-serif !important;
+    font-size: 1.75rem !important;
+    font-weight: 700 !important;
+    color: var(--text) !important;
+}
+[data-testid="stMetricDelta"] {
+    font-size: 0.8rem !important;
+    font-family: 'DM Mono', monospace !important;
+}
+
+[data-testid="stButton"] button {
+    background: var(--card) !important;
+    color: var(--accent) !important;
+    border: 1px solid var(--accent) !important;
+    border-radius: var(--radius-sm) !important;
+    font-family: 'DM Mono', monospace !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.04em !important;
+    padding: 0.5rem 1.2rem !important;
+    transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.15s ease !important;
+}
+[data-testid="stButton"] button:hover {
+    background: var(--accent-dim) !important;
+    box-shadow: 0 0 16px var(--accent-glow) !important;
+    transform: translateY(-1px) !important;
+}
+
+[data-testid="stSelectbox"] > div > div {
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius-sm) !important;
+    color: var(--text) !important;
+    font-family: 'DM Mono', monospace !important;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+[data-testid="stSelectbox"] > div > div:hover {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 10px var(--accent-glow) !important;
+}
+
+[data-testid="stDataFrame"] {
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    overflow: hidden !important;
+    box-shadow: var(--shadow) !important;
+}
+[data-testid="stDataFrame"] iframe {
+    background: var(--card) !important;
+}
+
+.js-plotly-plot, .plotly {
+    border-radius: var(--radius) !important;
+    border: 1px solid var(--border) !important;
+    background: var(--card) !important;
+    box-shadow: var(--shadow) !important;
+    overflow: hidden !important;
+    transition: box-shadow 0.2s ease !important;
+}
+.js-plotly-plot:hover {
+    box-shadow: var(--shadow-hover) !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stRadio"] label {
+    display: block !important;
+    padding: 0.55rem 0.9rem !important;
+    border-radius: var(--radius-sm) !important;
+    font-size: 0.88rem !important;
+    font-weight: 500 !important;
+    color: var(--text-dim) !important;
+    cursor: pointer !important;
+    transition: background 0.15s ease, color 0.15s ease !important;
+    border: 1px solid transparent !important;
+}
+[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
+    background: var(--accent-dim) !important;
+    color: var(--accent) !important;
+    border-color: var(--accent) !important;
+}
+
+[data-testid="stAlert"] {
+    border-radius: var(--radius-sm) !important;
+    border-width: 1px !important;
+    font-family: 'DM Mono', monospace !important;
+    font-size: 0.82rem !important;
+}
+
+[data-testid="stProgressBar"] > div > div {
+    background: linear-gradient(90deg, var(--accent), #FBBF24) !important;
+    border-radius: 99px !important;
+}
+[data-testid="stProgressBar"] {
+    background: var(--border) !important;
+    border-radius: 99px !important;
+    height: 10px !important;
+}
+
+hr {
+    border-color: var(--border) !important;
+    margin: 1.5rem 0 !important;
+}
+
+[data-testid="stCaptionContainer"] p {
+    font-family: 'DM Mono', monospace !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.05em !important;
+    color: var(--text-muted) !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stAlert"] {
+    background: var(--accent-dim) !important;
+    border-color: var(--accent) !important;
+    color: var(--text-dim) !important;
+}
+
+.ui-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.1rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.ui-card:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(245,158,11,0.35);
+}
+
+.section-badge {
+    display: inline-block;
+    background: var(--accent-dim);
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.check-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    margin-bottom: 0.45rem;
+    background: var(--card);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+.check-row:hover {
+    background: var(--card-hover);
+    border-color: rgba(245,158,11,0.3);
+}
+.check-row.pass { border-left: 3px solid var(--green); }
+.check-row.fail { border-left: 3px solid var(--red); }
+.dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.dot.pass { background: var(--green); box-shadow: 0 0 6px rgba(16,185,129,0.6); }
+.dot.fail { background: var(--red);   box-shadow: 0 0 6px rgba(239,68,68,0.6); }
+.badge-pts {
+    margin-left: auto;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+    animation: fadeUp 0.4s ease both;
+}
+
+code {
+    font-family: 'DM Mono', monospace !important;
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 4px !important;
+    color: var(--accent) !important;
+    font-size: 0.82rem !important;
+}
+pre code {
+    display: block;
+    padding: 0.75rem 1rem !important;
+}
+</style>
+"""
+
+# Shared Plotly theme dict (Height removed to prevent update_layout conflicts)
+PLOTLY_THEME = dict(
+    template="plotly_dark",
+    paper_bgcolor="rgba(26,30,42,1)",
+    plot_bgcolor="rgba(26,30,42,1)",
+    font=dict(family="DM Mono, monospace", color="#94A3B8", size=11),
+    colorway=["#F59E0B", "#3B82F6", "#10B981", "#8B5CF6", "#EF4444", "#06B6D4"],
+    margin=dict(l=16, r=16, t=44, b=16),
+)
+
+# Shared hoverlabel style dict
+HOVER_STYLE = dict(
+    bgcolor="#13161E",
+    bordercolor="#F59E0B",
+    font=dict(family="DM Mono", size=11, color="#E2E8F0"),
+)
+
+# Shared axis style kwargs
+AXIS_STYLE = dict(
+    xaxis_gridcolor="#1F2435",
+    xaxis_linecolor="#272C3D",
+    xaxis_tickfont_family="DM Mono",
+    xaxis_tickfont_size=10,
+    yaxis_gridcolor="#1F2435",
+    yaxis_linecolor="#272C3D",
+    yaxis_tickfont_family="DM Mono",
+    yaxis_tickfont_size=10,
+)
+
+# Shared legend style kwargs
+LEGEND_STYLE = dict(
+    legend_bgcolor="rgba(19,22,30,0.9)",
+    legend_bordercolor="#272C3D",
+    legend_borderwidth=1,
+    legend_font_family="DM Mono",
+    legend_font_size=10,
+    legend_font_color="#94A3B8",
+)
+
+def card_start() -> None:
+    st.markdown('<div class="ui-card fade-up">', unsafe_allow_html=True)
+
+def card_end() -> None:
+    st.markdown('</div>', unsafe_allow_html=True)
+
+def _badge(text: str) -> None:
+    st.markdown(f'<div class="section-badge">{text}</div>', unsafe_allow_html=True)
+
+def _page_rule() -> None:
+    st.markdown(
+        '<div style="height:2px;background:linear-gradient(90deg,#F59E0B,transparent);'
+        'border-radius:2px;margin-bottom:1.5rem;"></div>',
+        unsafe_allow_html=True,
+    )
+
+# -----------------------------------------------------------------------------
+# CORE LOGIC
+# -----------------------------------------------------------------------------
 
 def get_secret(name: str, default: str | None = None) -> str | None:
     try:
@@ -27,7 +380,6 @@ def get_secret(name: str, default: str | None = None) -> str | None:
     except Exception:
         pass
     return os.getenv(name, default)
-
 
 @st.cache_resource(show_spinner=False)
 def get_driver():
@@ -39,28 +391,10 @@ def get_driver():
         return None
     return GraphDatabase.driver(uri, auth=(user, password))
 
-
 def query_df(driver, cypher: str, **params) -> pd.DataFrame:
     with driver.session() as session:
         rows = [dict(record) for record in session.run(cypher, **params)]
     return pd.DataFrame(rows)
-
-
-def render_connection_help() -> None:
-    st.error("Neo4j credentials are not configured.")
-    st.markdown(
-        """
-        Add these values either to a local `.env` file or to Streamlit Cloud
-        **Settings → Secrets** before running the dashboard:
-
-        ```toml
-        NEO4J_URI = "neo4j+s://xxxxx.databases.neo4j.io"
-        NEO4J_USER = "neo4j"
-        NEO4J_PASSWORD = "your-password"
-        ```
-        """
-    )
-
 
 def run_self_test(driver):
     checks = []
@@ -68,7 +402,7 @@ def run_self_test(driver):
         with driver.session() as session:
             session.run("RETURN 1")
         checks.append(("Neo4j connected", True, 3))
-    except Exception as exc:  # noqa: BLE001 - Streamlit should show the failed check instead of crashing.
+    except Exception as exc: 
         checks.append((f"Neo4j connected ({exc.__class__.__name__})", False, 3))
         return checks
 
@@ -106,9 +440,39 @@ def run_self_test(driver):
         checks.append((f"Variance query: {len(rows)} results", len(rows) > 0, 5))
     return checks
 
+# -----------------------------------------------------------------------------
+# RENDER FUNCTIONS
+# -----------------------------------------------------------------------------
+
+def render_connection_help() -> None:
+    st.markdown(
+        """
+        <div class="ui-card fade-up" style="border-color:#EF4444;border-left:3px solid #EF4444;">
+            <div class="section-badge" style="background:rgba(239,68,68,0.12);
+                 color:#EF4444;border-color:#EF4444;">Configuration Required</div>
+            <h2 style="border:none!important;color:#EF4444!important;margin-top:0.5rem;">
+                Neo4j credentials not configured
+            </h2>
+            <p style="margin-bottom:0;">
+                Add the values below to a local <code>.env</code> file or to Streamlit Cloud
+                <strong>Settings -> Secrets</strong> before running the dashboard.
+            </p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.code(
+        'NEO4J_URI = "neo4j+s://xxxxx.databases.neo4j.io"\n'
+        'NEO4J_USER = "neo4j"\n'
+        'NEO4J_PASSWORD = "your-password"',
+        language="toml",
+    )
 
 def render_project_overview(driver) -> None:
+    _badge("Module 01")
     st.header("Project Overview")
+    _page_rule()
+
     df = query_df(
         driver,
         """
@@ -138,15 +502,23 @@ def render_project_overview(driver) -> None:
     total_planned = df["planned_hours"].sum()
     total_actual = df["actual_hours"].sum()
     variance_pct = ((total_actual - total_planned) / total_planned) * 100 if total_planned else 0
+
+    card_start()
     col1, col2, col3, col4 = st.columns(4)
     col1.metric("Projects", len(df))
     col2.metric("Planned hours", f"{total_planned:,.1f}")
     col3.metric("Actual hours", f"{total_actual:,.1f}", f"{variance_pct:+.1f}%")
     col4.metric("Projects >10% variance", int((df["variance_pct"] > 10).sum()))
+    card_end()
+
+    st.markdown("<br>", unsafe_allow_html=True)
 
     display = df.copy()
     display["products"] = display["products"].apply(lambda values: ", ".join(values))
     display["stations"] = display["stations"].apply(lambda values: ", ".join(values))
+
+    card_start()
+    _badge("Data Table")
     st.dataframe(
         display,
         use_container_width=True,
@@ -157,20 +529,38 @@ def render_project_overview(driver) -> None:
             "actual_hours": st.column_config.NumberColumn("actual_hours", format="%.1f"),
         },
     )
+    card_end()
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    card_start()
+    _badge("Visualization")
     fig = px.bar(
         df,
         x="project_name",
         y=["planned_hours", "actual_hours"],
         barmode="group",
-        title="Planned vs actual hours by project",
+        title="Planned vs Actual Hours by Project",
+        color_discrete_sequence=["#3B82F6", "#F59E0B"],
     )
-    fig.update_layout(xaxis_title="Project", yaxis_title="Hours")
+    
+    fig.update_layout(
+        **PLOTLY_THEME,
+        **AXIS_STYLE,
+        **LEGEND_STYLE,
+        xaxis_title="Project",
+        yaxis_title="Hours",
+        hoverlabel=HOVER_STYLE,
+        height=500,
+    )
     st.plotly_chart(fig, use_container_width=True)
-
+    card_end()
 
 def render_station_load(driver) -> None:
+    _badge("Module 02")
     st.header("Station Load")
+    _page_rule()
+
     df = query_df(
         driver,
         """
@@ -188,8 +578,12 @@ def render_station_load(driver) -> None:
         st.warning("No station load data found.")
         return
 
+    card_start()
+    _badge("Filter")
     station_options = ["All stations", *df["station_name"].drop_duplicates().tolist()]
     selected = st.selectbox("Station filter", station_options)
+    card_end()
+
     chart_df = df if selected == "All stations" else df[df["station_name"] == selected]
 
     melted = chart_df.melt(
@@ -198,6 +592,11 @@ def render_station_load(driver) -> None:
         var_name="metric",
         value_name="hours",
     )
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    card_start()
+    _badge("Visualization")
     fig = px.bar(
         melted,
         x="week",
@@ -207,18 +606,38 @@ def render_station_load(driver) -> None:
         facet_col_wrap=3,
         barmode="group",
         hover_data=["station_code"],
-        title="Weekly planned vs actual station load",
+        title="Weekly Planned vs Actual Station Load",
+        color_discrete_sequence=["#3B82F6", "#F59E0B"],
     )
-    fig.update_layout(height=760 if selected == "All stations" else 460)
+    
+    fig.update_layout(
+        **PLOTLY_THEME,
+        **AXIS_STYLE,
+        **LEGEND_STYLE,
+        height=760 if selected == "All stations" else 460,
+        hoverlabel=HOVER_STYLE,
+    )
     st.plotly_chart(fig, use_container_width=True)
+    card_end()
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    card_start()
+    _badge("Overruns")
     overrun_df = df[df["actual_hours"] > df["planned_hours"]].copy()
-    st.subheader("Rows where actual hours exceed planned hours")
+    st.markdown(
+        f'<p style="color:#EF4444;font-family:\'DM Mono\',monospace;font-size:0.8rem;">'
+        f'Overrun: {len(overrun_df)} row(s) where actual hours exceed planned</p>',
+        unsafe_allow_html=True,
+    )
     st.dataframe(overrun_df, use_container_width=True, hide_index=True)
-
+    card_end()
 
 def render_capacity_tracker(driver) -> None:
+    _badge("Module 03")
     st.header("Capacity Tracker")
+    _page_rule()
+
     df = query_df(
         driver,
         """
@@ -240,37 +659,61 @@ def render_capacity_tracker(driver) -> None:
         return
 
     deficit_weeks = int(df["is_deficit"].sum())
+
+    card_start()
     col1, col2, col3 = st.columns(3)
     col1.metric("Weeks tracked", len(df))
     col2.metric("Deficit weeks", deficit_weeks)
     col3.metric("Worst deficit", f"{df['deficit'].min():,.0f} hours")
+    card_end()
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    card_start()
+    _badge("Visualization")
     fig = px.line(
         df,
         x="week",
         y=["total_capacity", "total_planned"],
         markers=True,
-        title="Total capacity vs planned demand",
+        title="Total Capacity vs Planned Demand",
+        color_discrete_sequence=["#10B981", "#F59E0B"],
     )
     deficit_points = df[df["deficit"] < 0]
     fig.add_scatter(
         x=deficit_points["week"],
         y=deficit_points["total_planned"],
         mode="markers",
-        marker={"color": "red", "size": 13, "symbol": "x"},
+        marker={"color": "#EF4444", "size": 13, "symbol": "x"},
         name="Deficit week",
     )
+    
+    fig.update_layout(
+        **PLOTLY_THEME,
+        **AXIS_STYLE,
+        **LEGEND_STYLE,
+        hoverlabel=HOVER_STYLE,
+        height=500,
+    )
     st.plotly_chart(fig, use_container_width=True)
+    card_end()
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    card_start()
+    _badge("Weekly Detail")
     styled = df.drop(columns=["sort_order"]).style.apply(
-        lambda row: ["background-color: #ffd6d6" if row["deficit"] < 0 else "" for _ in row],
+        lambda row: ["background-color: rgba(239,68,68,0.15)" if row["deficit"] < 0 else "" for _ in row],
         axis=1,
     )
     st.dataframe(styled, use_container_width=True, hide_index=True)
-
+    card_end()
 
 def render_worker_coverage(driver) -> None:
+    _badge("Module 04")
     st.header("Worker Coverage")
+    _page_rule()
+
     coverage = query_df(
         driver,
         """
@@ -298,48 +741,121 @@ def render_worker_coverage(driver) -> None:
         return
 
     spof = coverage[coverage["certified_workers"] <= 1]
+
+    card_start()
     col1, col2, col3 = st.columns(3)
     col1.metric("Workers", len(matrix))
     col2.metric("Stations", len(coverage))
-    col3.metric("Single-point-of-failure stations", len(spof))
+    col3.metric(
+        "Single-point-of-failure stations",
+        len(spof),
+        "Risk" if len(spof) > 0 else None,
+        delta_color="inverse",
+    )
+    card_end()
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    card_start()
+    _badge("Certification Coverage")
     coverage_display = coverage.copy()
     coverage_display["workers"] = coverage_display["workers"].apply(lambda values: ", ".join(values))
     styled = coverage_display.style.apply(
-        lambda row: ["background-color: #ffd6d6" if row["certified_workers"] <= 1 else "" for _ in row],
+        lambda row: [
+            "background-color: rgba(239,68,68,0.15)" if row["certified_workers"] <= 1 else ""
+            for _ in row
+        ],
         axis=1,
     )
-    st.subheader("Station certification coverage")
     st.dataframe(styled, use_container_width=True, hide_index=True)
+    card_end()
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    card_start()
+    _badge("Worker <-> Station Matrix")
     all_stations = sorted(coverage["station_code"].dropna().unique().tolist())
     matrix_rows = []
     for _, row in matrix.iterrows():
         covered = set(row["stations"])
         matrix_rows.append({"worker": row["worker"], **{station: station in covered for station in all_stations}})
     matrix_df = pd.DataFrame(matrix_rows)
-    st.subheader("Worker-to-station matrix")
     st.dataframe(matrix_df, use_container_width=True, hide_index=True)
-
+    card_end()
 
 def render_self_test(driver) -> None:
+    _badge("Module 05")
     st.header("Self-Test")
+    _page_rule()
     st.caption("Automated checks required by the Level 6 challenge.")
+
     checks = run_self_test(driver)
     earned = 0
     possible = sum(points for _, _, points in checks)
+
+    card_start()
     for label, passed, points in checks:
         if passed:
             earned += points
-        st.markdown(f"{'✅' if passed else '❌'} **{label}** — `{points if passed else 0}/{points}`")
+        status = "pass" if passed else "fail"
+        pts_label = f"{points if passed else 0}/{points} pts"
+        st.markdown(
+            f"""
+            <div class="check-row {status}">
+                <span class="dot {status}"></span>
+                <span>{label}</span>
+                <span class="badge-pts">{pts_label}</span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    card_end()
+
+    st.markdown("<br>", unsafe_allow_html=True)
     st.divider()
-    st.subheader(f"SELF-TEST SCORE: {earned}/{possible}")
+
+    score_color = "#10B981" if earned == possible else ("#F59E0B" if earned >= possible * 0.6 else "#EF4444")
+    st.markdown(
+        f"""
+        <div style="text-align:center;padding:1.2rem 0;">
+            <span style="font-family:'DM Mono',monospace;font-size:0.75rem;
+                         letter-spacing:0.12em;color:#64748B;text-transform:uppercase;">
+                Self-Test Score
+            </span><br>
+            <span style="font-family:'Sora',sans-serif;font-size:2.8rem;
+                         font-weight:700;color:{score_color};">
+                {earned}<span style="color:#272C3D;font-size:1.8rem;">/{possible}</span>
+            </span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     st.progress(earned / possible if possible else 0)
 
+# -----------------------------------------------------------------------------
+# MAIN
+# -----------------------------------------------------------------------------
 
 def main() -> None:
-    st.title("🏭 Factory Graph Dashboard")
-    st.caption("Level 6: Neo4j knowledge graph + Streamlit dashboard")
+    st.markdown(GLOBAL_CSS, unsafe_allow_html=True)
+
+    st.markdown(
+        """
+        <div class="fade-up" style="margin-bottom:0.25rem;">
+            <div>
+                <h1 style="margin:0;padding:0;">Factory Graph Dashboard</h1>
+                <p style="margin:0;font-family:'DM Mono',monospace;font-size:0.72rem;
+                            letter-spacing:0.08em;color:#64748B;">
+                    LEVEL 6 - NEO4J KNOWLEDGE GRAPH - STREAMLIT
+                </p>
+            </div>
+        </div>
+        <div style="height:2px;background:linear-gradient(90deg,#F59E0B 0%,#3B82F6 60%,transparent 100%);
+                    border-radius:2px;margin:0.75rem 0 1.75rem 0;"></div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     driver = get_driver()
     if driver is None:
         render_connection_help()
@@ -352,10 +868,38 @@ def main() -> None:
         "Worker Coverage": render_worker_coverage,
         "Self-Test": render_self_test,
     }
-    selected_page = st.sidebar.radio("Navigation", list(pages.keys()))
-    st.sidebar.info("All dashboard pages query Neo4j directly; CSV files are used only by seed_graph.py.")
-    pages[selected_page](driver)
 
+    with st.sidebar:
+        st.markdown(
+            """
+            <div style="padding:0.5rem 0 1.25rem 0;border-bottom:1px solid #272C3D;margin-bottom:1rem;">
+                <span style="font-family:'DM Mono',monospace;font-size:0.65rem;
+                             letter-spacing:0.14em;color:#64748B;text-transform:uppercase;">
+                    Navigation
+                </span>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        
+        # FIXED: Added a valid string "Navigation Menu" to fix the empty label accessibility warning
+        selected_page = st.radio("Navigation Menu", list(pages.keys()), label_visibility="collapsed")
+        
+        st.markdown("<br>", unsafe_allow_html=True)
+        st.info("All pages query Neo4j directly. CSV files are only used by seed_graph.py.")
+
+        st.markdown(
+            """
+            <div style="position:fixed;bottom:1rem;left:0;width:17rem;padding:0 1.2rem;
+                        font-family:'DM Mono',monospace;font-size:0.65rem;
+                        color:#64748B;border-top:1px solid #272C3D;padding-top:0.75rem;">
+                Factory Graph - Level 6
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    pages[selected_page](driver)
 
 if __name__ == "__main__":
     main()
