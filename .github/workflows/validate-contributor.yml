@@ -70,6 +70,7 @@ jobs:
         if: steps.level.outputs.has_deletions == 'true'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -122,6 +123,7 @@ jobs:
         if: always()
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} 
           script: |
             const level = '${{ steps.level.outputs.level }}';
             const labels = [];
@@ -173,6 +175,7 @@ jobs:
         if: steps.level.outputs.level != '1' && steps.level.outputs.has_contributor == 'true' && steps.validate_contributor.outputs.valid == 'true'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const level = '${{ steps.level.outputs.level }}';
             await github.rest.issues.createComment({
@@ -193,6 +196,7 @@ jobs:
         if: steps.level.outputs.level == '1' && steps.validate_l1.outputs.valid == 'true'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             // Welcome comment
             await github.rest.issues.createComment({
@@ -215,6 +219,7 @@ jobs:
         if: steps.level.outputs.level == '1' && steps.validate_l1.outputs.valid == 'false'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -227,6 +232,7 @@ jobs:
         if: steps.level.outputs.level == '2'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -239,6 +245,7 @@ jobs:
         if: steps.level.outputs.level == '3'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.issues.createComment({
               owner: context.repo.owner,

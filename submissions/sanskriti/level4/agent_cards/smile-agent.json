@@ -1,0 +1,44 @@
+{
+  "name": "smile-agent",
+  "description": "Specialist that answers with SMILE methodology context and focused knowledge excerpts from the LPI.",
+  "url": "http://127.0.0.1:8101/.well-known/agent.json",
+  "version": "1.0.0",
+  "defaultInputModes": ["application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "HTTP+JSON",
+      "url": "http://127.0.0.1:8101/a2a/query",
+      "comment": "Authenticated specialist endpoint for orchestrator calls only."
+    }
+  ],
+  "skills": [
+    {
+      "id": "smile-analysis",
+      "name": "SMILE Analysis",
+      "description": "Accepts a question, calls smile_overview and query_knowledge, and returns concise method highlights with evidence.",
+      "tags": ["smile", "methodology", "lpi"],
+      "examples": [
+        "What SMILE phase should we start with for a new twin program?",
+        "How does SMILE reduce rollout risk?"
+      ]
+    }
+  ],
+  "authentication": {
+    "schemes": ["apiKeyHeader"]
+  },
+  "provider": {
+    "organization": "Sanskriti",
+    "url": "https://github.com/smiling-sanskriti/lpi-developer-kit"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["smile_overview", "query_knowledge"],
+    "llmProvider": "none",
+    "llmModel": "none",
+    "explainability": "Returns explicit evidence excerpts per tool in JSON."
+  }
+}

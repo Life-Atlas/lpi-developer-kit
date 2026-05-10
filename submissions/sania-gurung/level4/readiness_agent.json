@@ -1,0 +1,96 @@
+{
+  "name": "Digital Twin Readiness Analyst",
+  "description": "Takes a plain-text digital twin project description, calls get_case_studies, query_knowledge, and get_insights to benchmark against real LPI evidence, and produces a scored ReadinessReport with per-dimension gap severity and evidence citations. Output is typed JSON consumed by the SMILE Roadmap Synthesiser.",
+  "url": "local://python readiness_agent.py",
+  "version": "1.0.0",
+  "defaultInputModes": ["application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "stdio-json",
+      "url": "local://python submissions/sania-gurung/level4/readiness_agent.py",
+      "comment": "Send JSON {description, request_id} to stdin. Requires npm run build and ollama serve."
+    }
+  ],
+  "inputSchema": {
+    "type": "object",
+    "required": ["description"],
+    "properties": {
+      "description": {
+        "type": "string",
+        "maxLength": 400,
+        "description": "Plain-text description of the digital twin project to assess."
+      },
+      "request_id": {
+        "type": "string",
+        "description": "UUID assigned by orchestrator for end-to-end trace correlation."
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "required": ["schema_version", "request_id", "project", "readiness_dimensions",
+                 "overall_readiness_score", "top_gaps", "recommended_starting_phase", "tools_used"],
+    "properties": {
+      "schema_version": { "type": "string" },
+      "request_id": { "type": "string" },
+      "project": {
+        "type": "object",
+        "properties": { "description": { "type": "string" } }
+      },
+      "readiness_dimensions": {
+        "type": "array",
+        "maxItems": 5,
+        "items": {
+          "type": "object",
+          "required": ["dimension", "score", "finding", "evidence_source", "gap_severity"],
+          "properties": {
+            "dimension": { "type": "string", "enum": ["data_maturity", "stakeholder_alignment", "technical_infrastructure"] },
+            "score": { "type": "integer", "minimum": 1, "maximum": 5 },
+            "finding": { "type": "string", "maxLength": 150 },
+            "evidence_source": { "type": "string" },
+            "gap_severity": { "type": "string", "enum": ["low", "medium", "high"] }
+          }
+        }
+      },
+      "overall_readiness_score": { "type": "integer", "minimum": 1, "maximum": 5 },
+      "top_gaps": { "type": "array", "items": { "type": "string" } },
+      "recommended_starting_phase": { "type": "string" },
+      "tools_used": { "type": "array" }
+    }
+  },
+  "skills": [
+    {
+      "id": "readiness-assessment",
+      "name": "Digital Twin Readiness Assessment",
+      "description": "Produces a 3-dimension readiness score (data_maturity, stakeholder_alignment, technical_infrastructure), each grounded in LPI evidence. Identifies top gaps and recommends starting SMILE phase. Designed to feed the SMILE Roadmap Synthesiser.",
+      "tags": ["readiness", "assessment", "digital-twin", "SMILE", "A2A", "LPI"],
+      "examples": [
+        "Assess readiness for a smart building energy twin with no existing sensor data",
+        "How ready is our manufacturing team for a predictive maintenance twin?",
+        "Evaluate readiness for a personal health digital twin tracking sleep and energy"
+      ]
+    }
+  ],
+  "security": {
+    "inputSanitization": "20+ prompt injection patterns filtered at entry. Description capped at 400 chars.",
+    "outputSchema": "ReadinessReport validated by orchestrator before passing to downstream agent."
+  },
+  "authentication": { "schemes": ["none"] },
+  "provider": {
+    "organization": "Sania Gurung",
+    "url": "https://github.com/SANIAGRG"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["get_case_studies", "query_knowledge", "get_insights"],
+    "llmProvider": "ollama",
+    "llmModel": "qwen2.5:5b",
+    "explainability": "Every score field includes evidence_source citing the LPI tool that grounded it. tools_used array records exact tool name, args, and chars returned. request_id propagated end-to-end for trace correlation.",
+    "meshPartner": "roadmap-agent (roadmap_agent.json)",
+    "toolSplitRationale": "Agent A uses only case/knowledge/insights tools (real-world evidence). Agent B uses only smile methodology tools (theory/prescription). This enforces clean separation: diagnosis vs prescription."
+  }
+}
