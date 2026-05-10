@@ -2,6 +2,7 @@ import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import numpy as np
 from neo4j import GraphDatabase
 from dotenv import load_dotenv
 
@@ -29,6 +30,7 @@ page = st.sidebar.radio("Navigate", [
     "Station Load",
     "Capacity Tracker",
     "Worker Coverage",
+    "Forecast",
     "Self-Test"
 ])
 
@@ -219,3 +221,88 @@ elif page == "Self-Test":
 
     st.divider()
     st.subheader(f"SELF-TEST SCORE: {total}/{max_total}")
+
+# ── Page 5: Forecast ─────────────────────────────────────────
+elif page == "Forecast":
+    st.title("Week 9 Forecast")
+    st.caption("Linear trend extrapolation — which stations will be overloaded in week 9?")
+
+    rows = query("""
+        MATCH (p:Project)-[r:SCHEDULED_AT]->(s:Station)
+        RETURN s.station_name AS station,
+               r.week AS week,
+               sum(r.actual_hours) AS actual
+    """)
+    df = pd.DataFrame(rows)
+
+    # Convert week string to number
+    df["week_num"] = df["week"].str.replace("w", "").astype(int)
+
+    stations = df["station"].unique()
+    forecasts = []
+
+    for station in stations:
+        sdf = df[df["station"] == station].sort_values("week_num")
+        x = sdf["week_num"].values
+        y = sdf["actual"].values
+
+        if len(x) >= 2:
+            coeffs = np.polyfit(x, y, 1)
+            slope, intercept = coeffs
+            week9 = slope * 9 + intercept
+
+            # Confidence band (simple std of residuals)
+            residuals = y - (slope * x + intercept)
+            std = np.std(residuals)
+
+            forecasts.append({
+                "station": station,
+                "week9_forecast": round(week9, 1),
+                "upper": round(week9 + std, 1),
+                "lower": round(week9 - std, 1),
+                "trend": "📈 Increasing" if slope > 1 else "📉 Decreasing" if slope < -1 else "➡️ Stable"
+            })
+
+    forecast_df = pd.DataFrame(forecasts).sort_values("week9_forecast", ascending=False)
+
+    # Capacity for week 9 (use w8 as proxy)
+    cap_rows = query("""
+        MATCH (w:Week {week_id: 'w8'})-[:HAS_CAPACITY]->(c:Capacity)
+        RETURN c.total_capacity AS capacity
+    """)
+    week9_capacity = cap_rows[0]["capacity"] if cap_rows else 500
+
+    st.info(f"Assumed Week 9 capacity: {week9_capacity}h (based on Week 8)")
+
+    fig = px.bar(
+        forecast_df,
+        x="station",
+        y="week9_forecast",
+        error_y=forecast_df["upper"] - forecast_df["week9_forecast"],
+        error_y_minus=forecast_df["week9_forecast"] - forecast_df["lower"],
+        color="week9_forecast",
+        color_continuous_scale=["green", "yellow", "red"],
+        title="Forecasted Hours per Station — Week 9",
+        labels={"week9_forecast": "Forecasted Hours"}
+    )
+    fig.add_hline(
+        y=week9_capacity / len(stations),
+        line_dash="dash",
+        line_color="white",
+        annotation_text="Avg capacity per station"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.subheader("Station Forecast Table")
+    st.dataframe(forecast_df.rename(columns={
+        "station": "Station",
+        "week9_forecast": "Forecasted Hours (w9)",
+        "upper": "Upper Bound",
+        "lower": "Lower Bound",
+        "trend": "Trend"
+    }), use_container_width=True)
+
+    at_risk = forecast_df[forecast_df["week9_forecast"] > (week9_capacity / len(stations))]
+    if not at_risk.empty:
+        st.warning(f"⚠️ {len(at_risk)} stations forecasted above average capacity in week 9:")
+        st.dataframe(at_risk[["station", "week9_forecast", "trend"]], use_container_width=True)

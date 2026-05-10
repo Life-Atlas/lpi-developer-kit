@@ -3,3 +3,4 @@ neo4j
 python-dotenv
 pandas
 plotly
+numpy
