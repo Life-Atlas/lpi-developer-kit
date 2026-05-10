@@ -36,6 +36,7 @@ level6/
 ├── requirements.txt
 ├── README.md
 ├── How-I-Did-It.md
+├── deployment_url.txt
 ├── .env
 │
 └── data/
@@ -66,7 +67,7 @@ pip install -r requirements.txt
 Or install manually:
 
 ```bash
-pip install flask streamlit neo4j python-dotenv
+pip install flask streamlit neo4j python-dotenv pandas
 ```
 
 ---
@@ -159,6 +160,22 @@ Level 6 Neo4j App Running Successfully!
 
 ---
 
+## Deployment
+
+Deployment details are available inside:
+
+```text
+deployment_url.txt
+```
+
+Local deployment used during development:
+
+```text
+http://127.0.0.1:5050
+```
+
+---
+
 ## Features
 
 - Secure Neo4j connection using `.env`
@@ -188,6 +205,53 @@ Level 6 Neo4j App Running Successfully!
 
 ---
 
+## Requirements File
+
+Example `requirements.txt`:
+
+```text
+flask
+streamlit
+neo4j
+python-dotenv
+pandas
+```
+
+---
+
+## Future Improvements
+
+- Add graph visualization dashboard
+- Add Neo4j query interface
+- Deploy application to cloud platform
+- Add authentication system
+- Add real-time analytics dashboard
+
+---
+
+## Screenshots
+
+Screenshots included:
+- Neo4j AuraDB connection
+- Flask server running
+- Browser output
+- VS Code setup
+- Successful connectivity verification
+
+---
+
+## Final Status
+
+Project completed successfully with:
+- Neo4j AuraDB integration
+- Flask application
+- Streamlit support
+- Environment variable configuration
+- Database connectivity verification
+- Documentation and setup guide
+
+---
+
 ## Author
 
-Rahul Bijarnia
+Rahul Bijarnia 
