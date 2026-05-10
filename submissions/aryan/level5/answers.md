@@ -2,280 +2,389 @@
 
 ## Q1. Model It
 
-I designed the graph around the operational production flow of the factory. The central entity is the `Project`, which connects to products, stations, workers, and weeks.
+Schema diagram provided in `schema.md`.
 
-The graph contains the following node labels:
+### Summary
 
-- Project
-- ProductType
-- Station
-- Worker
-- Week
-- Certification
-- Bottleneck
+The graph models:
+- projects
+- products
+- stations
+- workers
+- certifications
+- capacity planning
+- weekly production execution
+- bottleneck alerts
 
-The graph contains the following relationship types:
-
-- PRODUCES
-- USES_STATION
-- RUNS_IN
-- PRIMARY_AT
-- CAN_COVER
-- HAS_CERTIFICATION
-- WORKS_ON
-- CAPACITY_STATUS
-- HAS_BOTTLENECK
-- AFFECTS
-
-Operational production metrics such as `planned_hours`, `actual_hours`, `completed_units`, and `week` are stored on the `USES_STATION` relationship because they describe the interaction between a project and a station during a specific production period.
-
-The graph structure makes it possible to traverse staffing dependencies, production bottlenecks, and station utilization directly without relying on complex relational joins.
-
-The schema diagram is included in `schema.md`.
+The schema emphasizes:
+1. operational dependencies
+2. station overload analysis
+3. worker substitution coverage
+4. temporal production flow
+5. future vector + graph hybrid search
 
 ---
 
-## Q2. Why Not Just SQL?
+# Q2. Why Not Just SQL?
 
-### SQL Query
+## SQL Version
 
 ```sql
-SELECT DISTINCT
-    w2.name AS replacement_worker,
+SELECT
+    w.name,
+    w.worker_id,
+    s.station_name,
     p.project_name
-FROM workers w1
+FROM workers w
+JOIN worker_station_coverage c
+    ON w.worker_id = c.worker_id
 JOIN stations s
-    ON w1.primary_station = s.station_code
-JOIN workers w2
-    ON w2.can_cover_stations LIKE CONCAT('%', s.station_code, '%')
+    ON c.station_code = s.station_code
 JOIN production pr
     ON pr.station_code = s.station_code
 JOIN projects p
     ON p.project_id = pr.project_id
-WHERE w1.name = 'Per Gustafsson'
-AND s.station_code = '016'
-AND w2.name <> w1.name;
+WHERE s.station_code = '016'
+AND w.name != 'Per Gustafsson';
 ```
-
-### Cypher Query
-
-```cypher
-MATCH (per:Worker {name:"Per Gustafsson"})-[:PRIMARY_AT]->(s:Station {code:"016"})
-
-MATCH (backup:Worker)-[:CAN_COVER]->(s)
-
-MATCH (p:Project)-[:USES_STATION]->(s)
-
-WHERE backup.name <> per.name
-
-RETURN
-    s.name,
-    collect(DISTINCT backup.name) AS replacement_workers,
-    collect(DISTINCT p.project_name) AS affected_projects
-```
-
-### Comparison
-
-The SQL version hides operational relationships inside multiple joins and filtering conditions. The Cypher query directly expresses the traversal path between workers, stations, and affected projects, making staffing dependencies easier to understand and analyze.
-
-The graph structure also makes it easier to expand the query later, for example by including certifications, overtime risk, or multi-station worker coverage.
 
 ---
 
-## Q3. Spot the Bottleneck
-
-The capacity dataset shows recurring production deficits in multiple weeks, especially during w1, w2, w4, w6, and w7. This suggests structural overload rather than isolated production delays.
-
-Projects where actual production hours consistently exceed planned hours are likely contributing to bottleneck conditions at specific stations.
-
-### Cypher Query
+## Cypher Version
 
 ```cypher
-MATCH (p:Project)-[r:USES_STATION]->(s:Station)
+MATCH (vacationWorker:Worker {name: "Per Gustafsson"})
+MATCH (replacement:Worker)-[:CAN_COVER]->(s:Station {station_code: "016"})
+MATCH (p:Project)-[u:USES_STATION]->(s)
+WHERE replacement <> vacationWorker
+RETURN
+    replacement.name AS replacement_worker,
+    s.station_name AS station,
+    collect(DISTINCT p.project_name) AS affected_projects;
+```
 
-WHERE r.actual_hours > r.planned_hours * 1.10
+---
+
+## What the Graph Version Makes Obvious
+
+The graph query directly expresses relationships:
+- workers covering stations
+- projects depending on stations
+- operational dependency paths
+
+Cypher models the business reality as traversals through connected entities. SQL hides this logic behind multiple joins and intermediate tables, making operational dependency analysis harder to reason about and extend.
+
+---
+
+# Q3. Spot the Bottleneck
+
+## Projects/Stations Causing Overload
+
+Using `factory_capacity.csv` and production variance:
+
+### Major overload contributors
+
+| Week | Station | Likely Cause |
+|---|---|---|
+| w1 | 012 Förmontering IQB | Actual hours exceed plan |
+| w1 | 014 Svets o montage IQB | Welding overhead |
+| w2 | Multiple stations | Capacity deficit -125 |
+| w4 | IQB workflow stations | Sustained overload |
+| w6 | Reduced own staff capacity | Only 9 permanent workers |
+| w7 | High planned workload | Planned 600 vs capacity 520 |
+
+### Observations
+
+- IQB production flow dominates overload periods.
+- Welding and pre-assembly stations appear repeatedly in overrun paths.
+- Staffing reductions in w6 increase deficit risk.
+- Overtime temporarily compensates but does not eliminate overload.
+
+---
+
+## Cypher Query
+
+```cypher
+MATCH (p:Project)-[u:USES_STATION]->(s:Station)
+WHERE u.actual_hours > (u.planned_hours * 1.10)
 
 RETURN
     s.station_name AS station,
     p.project_name AS project,
-    r.week AS week,
-    r.planned_hours,
-    r.actual_hours,
+    u.week AS week,
+    u.planned_hours AS planned,
+    u.actual_hours AS actual,
     ROUND(
-        ((r.actual_hours - r.planned_hours) / r.planned_hours) * 100,
+        ((u.actual_hours - u.planned_hours) / u.planned_hours) * 100,
         2
     ) AS variance_pct
-
-ORDER BY variance_pct DESC
+ORDER BY variance_pct DESC;
 ```
 
-### Bottleneck Modeling
+---
 
-I would model bottlenecks as separate nodes instead of boolean flags.
+## Bottleneck Modeling Strategy
+
+Best approach:
+- explicit `(:BottleneckAlert)` nodes
 
 Example:
 
-```text
-(:Station)-[:HAS_BOTTLENECK]->(:Bottleneck)
+```cypher
+(:BottleneckAlert {
+    severity: "high",
+    variance_pct: 22.5,
+    week: "w2"
+})
 ```
 
-The bottleneck node can store:
+Relationships:
 
-- severity
-- overload percentage
-- affected week
-- capacity deficit
-- impacted projects
+```cypher
+(:BottleneckAlert)-[:AT_STATION]->(:Station)
+(:BottleneckAlert)-[:AFFECTS_PROJECT]->(:Project)
+(:BottleneckAlert)-[:DURING]->(:Week)
+```
 
-This approach allows the graph to track recurring operational issues over time and analyze how bottlenecks propagate through projects and staffing dependencies.
+Why this works:
+- alerts become queryable historical entities
+- supports trend analysis
+- enables graph analytics on recurring bottlenecks
+- easier integration with dashboards and notifications
 
 ---
 
-## Q4. Vector + Graph Hybrid
+# Q4. Vector + Graph Hybrid
 
-I would embed:
+## What Would Be Embedded?
 
+### Primary embeddings
 - project descriptions
-- product specifications
 - customer requirements
-- delivery constraints
 - production notes
-- timeline urgency
+- product specifications
 
-These fields contain semantic meaning that vector embeddings can compare effectively.
+### Secondary embeddings
+- worker skills/certifications
+- station capabilities
+- historical bottleneck summaries
 
-### Hybrid Query
+---
+
+## Hybrid Query
+
+### Vector Search
+
+Find semantically similar projects:
+
+```python
+embedding("450 meters of IQB beams for hospital extension")
+```
+
+Retrieve top-k similar projects.
+
+---
+
+### Graph Filter
 
 ```cypher
-CALL db.index.vector.queryNodes(
-  'project_embeddings',
-  5,
-  $embedding
-)
-YIELD node, score
+MATCH (candidate:Project)-[:PRODUCES]->(:Product)-[:PROCESSED_AT]->(s:Station)
 
-MATCH (node)-[r:USES_STATION]->(s:Station)
+MATCH (candidate)-[u:USES_STATION]->(s)
 
-WHERE r.actual_hours <= r.planned_hours * 1.05
+WHERE candidate.embedding_score > 0.85
+AND abs(u.actual_hours - u.planned_hours) / u.planned_hours < 0.05
 
 RETURN
-    node.project_name,
-    score,
-    collect(s.station_name) AS stations_used
-
-ORDER BY score DESC
+    candidate.project_name,
+    collect(DISTINCT s.station_name) AS stations,
+    avg(
+        abs(u.actual_hours - u.planned_hours) / u.planned_hours
+    ) AS avg_variance
+ORDER BY candidate.embedding_score DESC;
 ```
 
-### Why Hybrid Retrieval Is Useful
+---
 
-Vector similarity identifies semantically similar projects based on textual meaning and operational context.
+## Why This Is Better Than Product Filtering
 
-The graph layer validates operational similarity using shared stations, production flows, and performance metrics such as low variance between planned and actual production hours.
+Product filtering only matches structured attributes like:
+- IQB
+- beam
+- dimensions
 
-This is more useful than filtering only by product type because projects with similar operational complexity may use different products while still requiring similar workflows, staffing, and station utilization.
+Vector + graph hybrid search additionally captures:
+- semantic similarity
+- operational similarity
+- station workflow similarity
+- execution reliability
+- timeline complexity
 
-This same hybrid pattern can also be applied to people matching systems such as Boardy, where embeddings identify similar needs or offers while the graph validates social or professional relationships.
+Two projects may use the same product type but have completely different:
+- staffing requirements
+- bottlenecks
+- risk profiles
+- production flows
+
+The hybrid approach captures operational reality instead of just metadata.
 
 ---
 
-## Q5. Your L6 Plan
+# Q5. Your L6 Plan
 
-### Node Mapping
+## 1. Node Labels + CSV Mapping
 
-| CSV Column | Node |
+| Node Label | CSV Columns |
 |---|---|
-| project_id | Project |
-| project_name | Project |
-| product_type | ProductType |
-| station_code | Station |
-| station_name | Station |
-| week | Week |
-| worker_id | Worker |
-| certifications | Certification |
+| `Project` | project_id, project_number, project_name |
+| `Product` | product_type, unit, quantity, unit_factor |
+| `Station` | station_code, station_name, etapp, bop |
+| `Worker` | worker_id, name, hours_per_week |
+| `Certification` | certifications |
+| `Role` | role |
+| `EmploymentType` | type |
+| `Week` | week |
+| `Capacity` | all capacity metrics |
+| `BottleneckAlert` | generated dynamically |
 
 ---
 
-### Relationship Mapping
+## 2. Relationship Types
 
-| Relationship | Source |
+| Relationship | Created From |
 |---|---|
-| PRODUCES | factory_production.csv |
-| USES_STATION | factory_production.csv |
-| RUNS_IN | factory_production.csv |
-| PRIMARY_AT | factory_workers.csv |
-| CAN_COVER | factory_workers.csv |
-| HAS_CERTIFICATION | factory_workers.csv |
-| CAPACITY_STATUS | factory_capacity.csv |
+| `PRODUCES` | project → product |
+| `PROCESSED_AT` | product → station |
+| `USES_STATION` | production rows |
+| `ASSIGNED_TO` | worker primary_station |
+| `CAN_COVER` | can_cover_stations |
+| `HAS_CERTIFICATION` | certifications |
+| `HAS_ROLE` | role |
+| `EMPLOYED_AS` | type |
+| `SCHEDULED_IN` | week |
+| `HAS_CAPACITY` | capacity rows |
 
 ---
 
-### Streamlit Dashboard Panels
+## 3. Streamlit Dashboard Panels
 
-#### 1. Station Overload Heatmap
+### A. Station Load Heatmap
+Shows:
+- planned vs actual hours
+- overload intensity by week
 
-Purpose:
-Visualize overload conditions by station and week.
-
-Cypher Query:
+Cypher:
 
 ```cypher
-MATCH (p:Project)-[r:USES_STATION]->(s:Station)
-
+MATCH (p:Project)-[u:USES_STATION]->(s:Station)
 RETURN
     s.station_name,
-    r.week,
-    SUM(r.actual_hours - r.planned_hours) AS overload
+    u.week,
+    sum(u.planned_hours),
+    sum(u.actual_hours);
 ```
 
 ---
 
-#### 2. Worker Coverage Matrix
+### B. Worker Coverage Matrix
+Shows:
+- which workers can replace others
+- certification overlap
+- station redundancy
 
-Purpose:
-Show which workers can replace each other across stations.
-
-Cypher Query:
+Cypher:
 
 ```cypher
 MATCH (w:Worker)-[:CAN_COVER]->(s:Station)
-
-RETURN
-    w.name,
-    collect(s.station_name) AS coverage
+RETURN w.name, collect(s.station_name);
 ```
 
 ---
 
-#### 3. Project Variance Leaderboard
+### C. Bottleneck Timeline Dashboard
+Shows:
+- recurring overload stations
+- weekly variance spikes
+- severity trends
 
-Purpose:
-Identify projects with the largest production overruns.
-
-Cypher Query:
+Cypher:
 
 ```cypher
-MATCH (p:Project)-[r:USES_STATION]->()
-
+MATCH (b:BottleneckAlert)-[:AT_STATION]->(s:Station)
 RETURN
-    p.project_name,
-    ROUND(
-        SUM(r.actual_hours) / SUM(r.planned_hours),
-        2
-    ) AS variance_ratio
-
-ORDER BY variance_ratio DESC
+    s.station_name,
+    b.week,
+    b.variance_pct,
+    b.severity;
 ```
 
 ---
 
-### Technologies
+### D. Project Execution Variance
+Shows:
+- projects exceeding plan
+- variance percentage
+- affected stations
 
-For Level 6 I plan to use:
+Cypher:
 
-- Neo4j for the graph database
-- Cypher for graph queries
-- pandas for CSV ingestion and transformation
-- Streamlit for dashboard visualization
-- Vector embeddings for semantic project similarity search
+```cypher
+MATCH (p:Project)-[u:USES_STATION]->(s:Station)
+RETURN
+    p.project_name,
+    s.station_name,
+    u.planned_hours,
+    u.actual_hours;
+```
 
-The graph database will allow the dashboard to analyze production dependencies, staffing flexibility, and bottleneck propagation more naturally than a relational model.
+---
+
+### E. Capacity vs Demand Dashboard
+Shows:
+- total weekly capacity
+- total planned load
+- overtime usage
+- deficit trends
+
+Cypher:
+
+```cypher
+MATCH (w:Week)-[:HAS_CAPACITY]->(c:Capacity)
+RETURN
+    w.week,
+    c.total_capacity,
+    c.total_planned,
+    c.deficit,
+    c.overtime_hours;
+```
+
+---
+
+# Final Architecture
+
+## Neo4j
+Stores:
+- operational graph
+- dependencies
+- bottlenecks
+- worker coverage
+- station relationships
+
+## Vector Database
+Stores:
+- project embeddings
+- specification embeddings
+- production notes
+
+## Streamlit
+Provides:
+- operational dashboards
+- bottleneck analytics
+- staffing visualization
+- production planning support
+
+This architecture directly scales into:
+- VSAB Dashboard
+- Boardy matching engine
+- Factory digital twin systems
+- production optimization workflows
