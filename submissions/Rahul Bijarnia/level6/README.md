@@ -32,17 +32,19 @@ The project includes:
 level6/
 │
 ├── app.py
+├── streamlit_app.py
+├── deployment_url.txt
 ├── seed_graph.py
 ├── requirements.txt
 ├── README.md
 ├── How-I-Did-It.md
-├── deployment_url.txt
-├── .env
+├── .env.example
+├── .gitignore
 │
 └── data/
     ├── factory_capacity.csv
     ├── factory_production.csv
-    └── factory_workers.csv
+    └── factory_workers.csv 
 ```
 
 ---
