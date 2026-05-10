@@ -17,44 +17,48 @@
   },
   "kailash-narayana-prasad": {
     "name": "Kailash Narayana Prasad",
-    "level": 3,
+    "level": 5,
     "score": 11,
     "max": 13,
     "pct": 85,
-    "updated": "2026-04-17T13:56:06.147Z"
+    "updated": "2026-05-09T19:06:46.000Z",
+    "note": "L5 PR #472 OPEN May 9. L6 not yet submitted."
   },
   "sania-gurung": {
     "name": "Sania Gurung",
-    "level": 3,
+    "level": 5,
     "score": 12,
     "max": 13,
     "pct": 92,
-    "updated": "2026-04-20T18:22:15.222Z"
+    "updated": "2026-05-09T10:47:15.000Z",
+    "note": "L5 PR #469 MERGED May 9. L6 not yet submitted. Score pending rubric review."
   },
   "shubham-kumar": {
     "name": "Shubham Kumar",
-    "level": 3,
-    "score": 12,
+    "level": 6,
+    "score": 13,
     "max": 13,
-    "pct": 92,
-    "updated": "2026-04-19T21:41:57.944Z"
+    "pct": 100,
+    "updated": "2026-05-09T10:30:43.000Z",
+    "note": "L5 PR #468 MERGED May 9. L6 PR #471 MERGED May 9. First to complete both. Scores pending rubric review."
   },
   "harshit-kumar": {
     "name": "Harshit Kumar",
-    "level": 4,
+    "level": 6,
     "score": 12,
     "max": 13,
     "pct": 92,
-    "updated": "2026-04-21T12:00:00.000Z",
-    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
+    "updated": "2026-05-10T01:47:10.000Z",
+    "note": "L5 PR #470 OPEN May 9. L6 PR #473 OPEN May 10. Score pending rubric review."
   },
   "ananyaa-m": {
     "name": "Ananyaa M",
-    "level": 3,
+    "level": 5,
     "score": 11,
     "max": 13,
     "pct": 85,
-    "updated": "2026-04-18T17:33:19.855Z"
+    "updated": "2026-05-08T18:11:10.000Z",
+    "note": "L5 PR #465 OPEN May 8. L6 not yet submitted."
   },
   "srishti-gusain": {
     "name": "Srishti Gusain",
@@ -66,12 +70,12 @@
   },
   "varshit-pratap-singh-bhadauria": {
     "name": "Varshit Pratap Singh Bhadauria",
-    "level": 4,
+    "level": 5,
     "score": 10,
     "max": 13,
     "pct": 77,
-    "updated": "2026-04-21T12:00:00.000Z",
-    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
+    "updated": "2026-05-09T09:17:38.000Z",
+    "note": "L5 PR #467 OPEN May 9. L6 not yet submitted."
   },
   "aadyant-sood": {
     "name": "Aadyant Sood",
@@ -389,11 +393,12 @@
   },
   "touqeer-hamdani": {
     "name": "Touqeer Hamdani",
-    "level": 3,
+    "level": 6,
     "score": 12,
     "max": 13,
     "pct": 92,
-    "updated": "2026-04-20T13:50:17.938Z"
+    "updated": "2026-05-10T10:03:00.000Z",
+    "note": "L6 deployed: l6-factory-dashboard-touqeerhamdani.streamlit.app. NO PR submitted — told to submit via GitHub. Does not count until PR is in."
   },
   "srishti-gusain-(track-a)": {
     "name": "Srishti Gusain (Track A)",
@@ -414,12 +419,12 @@
   },
   "daksh-garg": {
     "name": "Daksh Garg",
-    "level": 4,
+    "level": 6,
     "score": 13,
     "max": 13,
     "pct": 100,
-    "updated": "2026-04-21T12:00:00.000Z",
-    "note": "Manual correction: L1+L2+L3+L4 all merged. All 5 tracks, security audit, threat model, A2A. Auto-scorer missed due to placeholder GitHub username. Most complete submission in cohort."
+    "updated": "2026-05-09T08:32:32.000Z",
+    "note": "L5+L6 combined PR #466 OPEN May 9. Previously L1-L4 all merged. Score pending rubric review."
   },
   "bharath-raju": {
     "name": "Bharath Raju",
@@ -479,12 +484,12 @@
   },
   "abhishek-sharma": {
     "name": "Abhishek Sharma",
-    "level": 3,
+    "level": 5,
     "score": 9,
     "max": 13,
     "pct": 69,
-    "updated": "2026-04-20T19:34:37.503Z",
-    "note": "Duplicate entry cleaned. Flag: PR #396 linked Jahanvi3005 repo — attribution unclear."
+    "updated": "2026-05-10T08:13:11.000Z",
+    "note": "L5 PR #474 OPEN May 10. No-show at interview (1/10). Flag: attribution unclear on earlier PR."
   },
   "sandeep-gunti": {
     "name": "Sandeep Gunti",
