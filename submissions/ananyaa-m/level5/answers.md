@@ -85,16 +85,23 @@ Vector search captures the semantic intent and scope of the project description,
 ## Q5. Your L6 Plan (20 pts)
 
 1. Node Labels & CSV Mappings:
-Project: factory_production.csv (project_id, project_number, project_name)
+Project: factory_production.csv (project_name)
 Station: factory_production.csv (station_code, station_name)
 Worker: factory_workers.csv (worker_id, name, role, type)
 Certification: factory_workers.csv (parsed from the comma-separated certifications column)
 Week: factory_capacity.csv (week string, total_capacity, total_planned, deficit)
+Product: factory_production.csv (product_type)
+BOP (Bill of Process): Structural/Concept node linking projects to standard process flowlines.
 
 2. Relationship Types & Creation Triggers:
 [:PRIMARY_STATION] & [:CAN_COVER]: Created from factory_workers.csv, mapping workers to their assigned and backup stations.
+[:HAS_CERT]: Created from factory_workers.csv, mapping workers to their specific qualifications.
+[:REQUIRES_CERT]: Maps Station nodes to the Certification nodes required to operate them safely.
+[:USES_PRODUCT]: Created from factory_production.csv, linking a project to the specific product type being built.
+[:BELONGS_TO_BOP]: Connects Project nodes to the overarching Bill of Process routing.
 [:PROCESSED_AT {planned_hours, actual_hours}]: Created from factory_production.csv, tracking project execution per station.
-[:UTILIZED_IN_WEEK {planned_hours, actual_hours}]: Created from factory_production.csv, linking Station loads to specific Weeks.
+[:LOGGED_IN_WEEK {planned_hours, actual_hours}]: Links Project loads directly to specific Week blocks.
+[:UTILIZED_IN_WEEK {planned_hours, actual_hours}]: Links Station loads to specific Week schedules for timeline tracking.
 
 3. 3 Streamlit Dashboard Panels and their Cypher queries:
 a. "Capacity Deficit Tracker" (Factory Load)- A time-series bar chart showing total factory capacity vs. planned demand per week, flagging weeks with a negative deficit in red.
