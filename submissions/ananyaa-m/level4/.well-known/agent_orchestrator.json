@@ -1,0 +1,44 @@
+{
+  "name": "LPI SMILE Orchestrator",
+  "description": "A senior architecture auditor that validates digital twin concepts against the SMILE framework. It delegates risk assessment to the Risk Analyst Agent and synthesizes the final Missing Reality Report.",
+  "url": "https://github.com/ananyaa05/ananyaa-personal-twin-agent",
+  "version": "1.0.0",
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "MCP-stdio",
+      "url": "local://python agent_orchestrator.py",
+      "comment": "Local subprocess. Requires Ollama running on localhost:11434."
+    }
+  ],
+  "skills": [
+    {
+      "id": "skill-architecture-audit",
+      "name": "Digital Twin Concept Auditing",
+      "description": "Expects a natural language user concept. Calls smile-overview and smile-phase-detail, parses Agent Cards to communicate with secondary agents, and outputs a strict XAI Missing Reality Report.",
+      "tags": ["architecture", "smile-framework", "orchestration"],
+      "examples": [
+        "I want to build a digital twin of Amity University's CSE lab",
+        "A digital twin for the Noida Expressway"
+      ]
+    }
+  ],
+  "authentication": {
+    "schemes": ["none"]
+  },
+  "provider": {
+    "organization": "Ananyaa M.",
+    "url": "https://github.com/ananyaa05"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["smile-overview", "smile-phase-detail"],
+    "llmProvider": "ollama",
+    "llmModel": "tinyllama",
+    "explainability": "Uses a three-tiered provenance system, enforcing LLM narrative citations and exposing raw MCP and A2A JSON payloads in the terminal trace."
+  }
+}
