@@ -1,0 +1,11 @@
+workerId,name,skillLevel,specialization,experience,currentLoad,efficiency,availability,hourlyCost,certifications
+W001,John Smith,4,Assembly,8.5,95.0,82.5,true,45.0,assembly,quality,safety
+W002,Jane Doe,5,Testing,12.0,75.0,91.2,true,55.0,testing,calibration,automation
+W003,Bob Johnson,3,Packaging,6.0,85.0,76.8,true,35.0,packaging,logistics
+W004,Alice Brown,4,Quality,10.0,90.0,88.5,true,50.0,quality,inspection,iso
+W005,Charlie Wilson,3,Maintenance,7.5,60.0,85.0,true,40.0,maintenance,electrical,mechanical
+W006,Diana Prince,5,Welding,15.0,88.0,92.3,true,60.0,welding,fabrication,safety
+W007,Eve Adams,4,Painting,9.0,72.0,81.5,true,42.0,painting,surface_preparation
+W008,Frank Miller,3,Assembly,5.5,78.0,84.7,true,38.0,assembly,lean_manufacturing
+W009,Grace Lee,4,Inspection,11.0,91.0,76.2,true,48.0,inspection,quality_control
+W010,Henry Ford,2,Logistics,4.0,55.0,89.4,true,32.0,logistics,warehouse_management
