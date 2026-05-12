@@ -17,70 +17,86 @@
   },
   "kailash-narayana-prasad": {
     "name": "Kailash Narayana Prasad",
-    "level": 3,
+    "level": 5,
     "score": 11,
     "max": 13,
     "pct": 85,
-    "updated": "2026-04-17T13:56:06.147Z"
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 #472: 48/100. Generic and formulaic. | L6 #479: 0/100. PR only modifies challenge spec.",
+    "l5_score": 48,
+    "l6_score": 0
   },
   "sania-gurung": {
     "name": "Sania Gurung",
-    "level": 3,
+    "level": 5,
     "score": 12,
     "max": 13,
     "pct": 92,
-    "updated": "2026-04-20T18:22:15.222Z"
+    "updated": "2026-05-09T10:47:15.000Z",
+    "note": "L5 PR #469 MERGED May 9. L6 not yet submitted. Score pending rubric review."
   },
   "shubham-kumar": {
     "name": "Shubham Kumar",
-    "level": 3,
-    "score": 12,
-    "max": 13,
-    "pct": 92,
-    "updated": "2026-04-19T21:41:57.944Z"
-  },
-  "harshit-kumar": {
-    "name": "Harshit Kumar",
-    "level": 4,
-    "score": 12,
-    "max": 13,
-    "pct": 92,
-    "updated": "2026-04-21T12:00:00.000Z",
-    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
-  },
-  "ananyaa-m": {
-    "name": "Ananyaa M",
-    "level": 3,
-    "score": 11,
-    "max": 13,
-    "pct": 85,
-    "updated": "2026-04-18T17:33:19.855Z"
-  },
-  "srishti-gusain": {
-    "name": "Srishti Gusain",
-    "level": 3,
-    "score": 9,
-    "max": 13,
-    "pct": 69,
-    "updated": "2026-04-17T06:00:00.000Z"
-  },
-  "varshit-pratap-singh-bhadauria": {
-    "name": "Varshit Pratap Singh Bhadauria",
-    "level": 4,
-    "score": 10,
-    "max": 13,
-    "pct": 77,
-    "updated": "2026-04-21T12:00:00.000Z",
-    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
-  },
-  "aadyant-sood": {
-    "name": "Aadyant Sood",
-    "level": 4,
+    "level": 6,
     "score": 13,
     "max": 13,
     "pct": 100,
-    "updated": "2026-04-21T12:00:00.000Z",
-    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
+    "updated": "2026-05-09T10:30:43.000Z",
+    "note": "L5 PR #468 MERGED May 9. L6 PR #471 MERGED May 9. First to complete both. Scores pending rubric review."
+  },
+  "harshit-kumar": {
+    "name": "Harshit Kumar",
+    "level": 6,
+    "score": 12,
+    "max": 13,
+    "pct": 92,
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 #470: 85/100. Full capacity table, root cause analysis. | L6 #473: 90/100. Polished UI, heatmap, SPOF, 6-check self-test.",
+    "l5_score": 85,
+    "l6_score": 90
+  },
+  "ananyaa-m": {
+    "name": "Ananyaa M",
+    "level": 6,
+    "score": 11,
+    "max": 13,
+    "pct": 85,
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L4 #464: 80%. L5 #465 OPEN. L6 #499: 75/100 (CORRECTED from 0 — full submission with 278-line app, 6 pages, deployed).",
+    "l6_score": 75,
+    "l4_score": 80
+  },
+  "srishti-gusain": {
+    "name": "Srishti Gusain",
+    "level": 5,
+    "score": 9,
+    "max": 13,
+    "pct": 69,
+    "updated": "2026-05-12T10:00:00.000Z",
+    "l5_score": 42,
+    "note": "L5 #481: 42/100. Thin. Scrum lead - technical depth needs work."
+  },
+  "varshit-pratap-singh-bhadauria": {
+    "name": "Varshit Pratap Singh Bhadauria",
+    "level": 6,
+    "score": 10,
+    "max": 13,
+    "pct": 77,
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 #467: 45/100. Meets minimums, ChatGPT text in README. | L6 #477: 52/100. All pages, missing imports, 2-check self-test.",
+    "l5_score": 45,
+    "l6_score": 52
+  },
+  "aadyant-sood": {
+    "name": "Aadyant Sood",
+    "level": 6,
+    "score": 13,
+    "max": 13,
+    "pct": 100,
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 #483: 62/100. Missing Q1, corrupted CSV data. | L6 #494: 68/100. All pages, Neo4j, MERGE. No SPOF flagging.",
+    "l5_score": 62,
+    "l6_score": 68
   },
   "jahanvi-gupta": {
     "name": "Jahanvi Gupta",
@@ -145,7 +161,9 @@
     "score": 6,
     "max": 13,
     "pct": 46,
-    "updated": "2026-04-19T19:31:57.552Z"
+    "updated": "2026-05-12T10:00:00.000Z",
+    "l4_score": 25,
+    "note": "L4 #460: 5/20 (25%). Broken, wrong directory, incomplete. Stays L3."
   },
   "peeyush-raj": {
     "name": "Peeyush Raj",
@@ -165,11 +183,13 @@
   },
   "anupaul-saikia": {
     "name": "Anupaul Saikia",
-    "level": 3,
+    "level": 5,
     "score": 8,
     "max": 13,
     "pct": 62,
-    "updated": "2026-04-20T08:13:51.567Z"
+    "updated": "2026-05-12T10:00:00.000Z",
+    "l5_score": 52,
+    "note": "L5 #492: 52/100. Inconsistent naming, Q3 no numbers."
   },
   "pranu-chandra": {
     "name": "Pranu Chandra",
@@ -221,20 +241,25 @@
   },
   "devika-hooda": {
     "name": "Devika Hooda",
-    "level": 3,
+    "level": 6,
     "score": 10,
     "max": 13,
     "pct": 77,
-    "updated": "2026-04-19T14:00:00.000Z"
+    "updated": "2026-05-12T10:00:00.000Z",
+    "l5_score": 60,
+    "note": "L5 #480: 60/100. Cites actual numbers Q3. | L6 #500: 72/100. All pages + self-test, Plotly, deployed.",
+    "l6_score": 72
   },
   "shourya-solanki": {
     "name": "Shourya Solanki",
-    "level": 4,
+    "level": 6,
     "score": 12,
     "max": 13,
     "pct": 92,
-    "updated": "2026-04-21T12:00:00.000Z",
-    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 #478: 72/100. Solid across all 5 questions. | L6 #489: 85/100. Strong, forecast bonus, MERGE + constraints.",
+    "l5_score": 72,
+    "l6_score": 85
   },
   "sanskriti": {
     "name": "Sanskriti",
@@ -247,12 +272,13 @@
   },
   "naman-anand": {
     "name": "Naman Anand",
-    "level": 3,
+    "level": 6,
     "score": 10,
     "max": 13,
     "pct": 77,
-    "updated": "2026-04-21T04:45:55.176Z",
-    "note": "L4 PR open (pending merge)."
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L6 #491: 82/100. Excellent, forecast bonus, SPOF flagging.",
+    "l6_score": 82
   },
   "vusala-akanksha": {
     "name": "Vusala Akanksha",
@@ -276,7 +302,9 @@
     "score": 11,
     "max": 13,
     "pct": 85,
-    "updated": "2026-04-20T11:52:52.810Z"
+    "updated": "2026-05-12T10:00:00.000Z",
+    "l6_score": 15,
+    "note": "L6 #497: 15/100. Code in wrong path. Stays at L3."
   },
   "rahul-bijarnia": {
     "name": "Rahul Bijarnia",
@@ -284,16 +312,19 @@
     "score": 11,
     "max": 13,
     "pct": 85,
-    "updated": "2026-04-20T11:48:29.042Z"
+    "updated": "2026-05-12T10:00:00.000Z",
+    "l6_score": 5,
+    "note": "L6 #482: 5/100. Flask hello world. Stays at L3."
   },
   "yash-maheshwari": {
     "name": "Yash Maheshwari",
-    "level": 3,
+    "level": 5,
     "score": 11,
     "max": 13,
     "pct": 85,
-    "updated": "2026-04-19T15:37:02.790Z",
-    "note": "L4 PR open (pending merge)."
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 #484: 70/100. Good WorkPackage model.",
+    "l5_score": 70
   },
   "ayush-sharma": {
     "name": "Ayush Sharma",
@@ -321,39 +352,46 @@
   },
   "abhinav-chaudhary": {
     "name": "Abhinav Chaudhary",
-    "level": 4,
+    "level": 5,
     "score": 11,
     "max": 13,
     "pct": 85,
-    "updated": "2026-04-21T12:00:00.000Z",
-    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 #501: 92/100. Exceptional.",
+    "l5_score": 92
   },
   "jaivardhan-singh": {
     "name": "Jaivardhan Singh",
-    "level": 4,
+    "level": 6,
     "score": 13,
     "max": 13,
     "pct": 100,
-    "updated": "2026-04-21T12:00:00.000Z",
-    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 #485: 95/100. OUTSTANDING. | L6 #485: 68/100 (was 88, -20 for .env + secrets.toml with real Neo4j creds). Must remove before merge.",
+    "l5_score": 95,
+    "l6_score": 68
   },
   "praveen-singh": {
     "name": "Praveen Singh",
-    "level": 3,
+    "level": 6,
     "score": 12,
     "max": 13,
     "pct": 92,
-    "updated": "2026-04-21T06:15:10.476Z",
-    "note": "L4 PR open (pending merge)."
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 #488: 55/100. Standard but Q3 lacks numbers. | L6 #488: 60/100. All pages, MERGE. env handling issues.",
+    "l5_score": 55,
+    "l6_score": 60
   },
   "aryan": {
     "name": "Aryan",
-    "level": 3,
+    "level": 6,
     "score": 12,
     "max": 13,
     "pct": 92,
-    "updated": "2026-04-20T16:33:18.045Z",
-    "note": "L4 PR open (pending merge)."
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 #487: 57/100. Generic. Similarity flag with #488. | L6 #487: 58/100. All pages. Similar to #488.",
+    "l5_score": 57,
+    "l6_score": 58
   },
   "level-2---farhan-ahmed-siddique": {
     "name": "level-2 - Farhan Ahmed Siddique",
@@ -389,11 +427,12 @@
   },
   "touqeer-hamdani": {
     "name": "Touqeer Hamdani",
-    "level": 3,
+    "level": 6,
     "score": 12,
     "max": 13,
     "pct": 92,
-    "updated": "2026-04-20T13:50:17.938Z"
+    "updated": "2026-05-10T10:03:00.000Z",
+    "note": "L6 deployed: l6-factory-dashboard-touqeerhamdani.streamlit.app. NO PR submitted \u00e2\u20ac\u201d told to submit via GitHub. Does not count until PR is in."
   },
   "srishti-gusain-(track-a)": {
     "name": "Srishti Gusain (Track A)",
@@ -418,8 +457,10 @@
     "score": 13,
     "max": 13,
     "pct": 100,
-    "updated": "2026-04-21T12:00:00.000Z",
-    "note": "Manual correction: L1+L2+L3+L4 all merged. All 5 tracks, security audit, threat model, A2A. Auto-scorer missed due to placeholder GitHub username. Most complete submission in cohort."
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 25/100, L6 15/100. FAIL - fabricated data. Reverted to L4.",
+    "l5_score": 25,
+    "l6_score": 15
   },
   "bharath-raju": {
     "name": "Bharath Raju",
@@ -431,11 +472,13 @@
   },
   "vansh-singhal": {
     "name": "Vansh Singhal",
-    "level": 3,
+    "level": 5,
     "score": 10,
     "max": 13,
     "pct": 77,
-    "updated": "2026-04-20T08:22:27.103Z"
+    "updated": "2026-05-12T10:00:00.000Z",
+    "l5_score": 58,
+    "note": "L5 #498: 58/100. Cross-copy suspected with #478."
   },
   "yashika-vemra": {
     "name": "Yashika Vemra",
@@ -447,11 +490,13 @@
   },
   "yashika-verma": {
     "name": "Yashika Verma",
-    "level": 3,
+    "level": 5,
     "score": 11,
     "max": 13,
     "pct": 85,
-    "updated": "2026-04-20T12:13:39.775Z"
+    "updated": "2026-05-12T10:00:00.000Z",
+    "l5_score": 58,
+    "note": "L5 #475: 58/100. Rich schema but Q3 lacks numbers."
   },
   "mohammad-zishan-noor": {
     "name": "Mohammad Zishan Noor",
@@ -479,12 +524,14 @@
   },
   "abhishek-sharma": {
     "name": "Abhishek Sharma",
-    "level": 3,
+    "level": 5,
     "score": 9,
     "max": 13,
     "pct": 69,
-    "updated": "2026-04-20T19:34:37.503Z",
-    "note": "Duplicate entry cleaned. Flag: PR #396 linked Jahanvi3005 repo — attribution unclear."
+    "updated": "2026-05-12T10:00:00.000Z",
+    "note": "L5 38/100, L6 0/100. SECURITY: committed .env with real Neo4j creds.",
+    "l5_score": 38,
+    "l6_score": 0
   },
   "sandeep-gunti": {
     "name": "Sandeep Gunti",

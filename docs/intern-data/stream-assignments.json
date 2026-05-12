@@ -1,0 +1,74 @@
+{
+  "program": "WINNIIO Intern Program May-June 2026",
+  "streams": {
+    "A": {
+      "name": "Boardy Clone",
+      "repo_owner": "LifeAtlas",
+      "repo_name": null,
+      "lead": null,
+      "customer": "Nicolas",
+      "interns": [
+        { "name": "Sanskriti", "github": "sanskriti", "lpi_level": 4 },
+        { "name": "Shubham Kumar", "github": "shubham-kumar", "lpi_level": 4 },
+        { "name": "Shourya Solanki", "github": "shourya-solanki", "lpi_level": 4 },
+        { "name": "Yash Maheshwari", "github": "yashm0910", "lpi_level": 3 },
+        { "name": "Praveen Singh", "github": "praveen-singh", "lpi_level": 3 },
+        { "name": "Aryan", "github": "aryan", "lpi_level": 3 },
+        { "name": "Ankit Kumar Singh", "github": "ankit-kumar-singh", "lpi_level": 3 },
+        { "name": "Jahanvi Gupta", "github": "Jahanvi3005", "lpi_level": 3 },
+        { "name": "Vansh Singhal", "github": "vansh_singhal", "lpi_level": 3 },
+        { "name": "Adil Islam", "github": "adil_islam", "lpi_level": 3 }
+      ]
+    },
+    "B": {
+      "name": "DataPro+ DealFlow",
+      "repo_owner": "LifeAtlas",
+      "repo_name": "datacenter-flow",
+      "backend_repo": "DataCenterBackend",
+      "lead": null,
+      "customer": "Josh Young",
+      "interns": [
+        { "name": "Daksh Garg", "github": "daksh-garg", "lpi_level": 4 },
+        { "name": "Abhinav Chaudhary", "github": "abhinav-chaudhary", "lpi_level": 4 },
+        { "name": "Varshit Pratap Singh Bhadauria", "github": "varshit-pratap-singh-bhadauria", "lpi_level": 4 },
+        { "name": "Touqeer Hamdani", "github": "Touqeer-Hamdani", "lpi_level": 3 },
+        { "name": "Aditi Mehta", "github": "aditi-mehta", "lpi_level": 3 },
+        { "name": "Ananyaa M", "github": "ananyaa-m", "lpi_level": 3 },
+        { "name": "Priyanshu Bhardwaj", "github": "Priyanshu-BHardwaj", "lpi_level": 3 },
+        { "name": "Rahul Bijarnia", "github": "rahul_bijarnia", "lpi_level": 3 },
+        { "name": "Khushi Garg", "github": "khushi-garg", "lpi_level": 3 },
+        { "name": "Lavanya Parashar", "github": "lavanya-parashar", "lpi_level": 3 },
+        { "name": "Saima Afroz", "github": "saima-afroz", "lpi_level": 3 },
+        { "name": "Sonal Yadav", "github": "sonal-yadav", "lpi_level": 3 },
+        { "name": "V Bharath Raju", "github": "bharath-raju", "lpi_level": 3 }
+      ]
+    },
+    "C": {
+      "name": "Industrial Twin Dashboard",
+      "repo_owner": "LifeAtlas",
+      "repo_name": "factory-twin-dashboard",
+      "branch": "main",
+      "lead": null,
+      "customer": "Nicolas (internal)",
+      "interns": [
+        { "name": "Aadyant Sood", "github": "aadyant-sood", "lpi_level": 4 },
+        { "name": "Jaivardhan Singh", "github": "jaivardhan-singh", "lpi_level": 4 },
+        { "name": "Harshit Kumar", "github": "harshit-kumar", "lpi_level": 4 },
+        { "name": "Kailash Narayana Prasad", "github": "kailash-narayana-prasad", "lpi_level": 3 },
+        { "name": "Sania Gurung", "github": "sania-gurung", "lpi_level": 3 },
+        { "name": "Yashika Verma", "github": "yashika-verma", "lpi_level": 3 },
+        { "name": "Naman Anand", "github": "naman-anand", "lpi_level": 3 },
+        { "name": "Dia Vats", "github": "Dia-vats", "lpi_level": 3 },
+        { "name": "Devika Hooda", "github": "devikahooda775", "lpi_level": 3 },
+        { "name": "Srishti Gusain", "github": "srishti-gusain", "lpi_level": 3 },
+        { "name": "Anupaul Saikia", "github": "anupaul-saikia", "lpi_level": 3 },
+        { "name": "Abishek Sharma", "github": "abhishek2006", "lpi_level": 3 }
+      ]
+    }
+  },
+  "tracking": {
+    "pr_deadline": "Friday before demo",
+    "scoring_cron": "Friday 14:00 IST (08:30 UTC)",
+    "metrics": ["prs_merged", "lines_changed", "reviews_given", "streak_weeks"]
+  }
+}
