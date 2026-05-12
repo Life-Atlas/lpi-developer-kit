@@ -1,4 +1,4 @@
-flask
 streamlit
+pandas
 neo4j
 python-dotenv
