@@ -1,0 +1,5 @@
+{
+  "name": "SMILE Agent",
+  "description": "Provides SMILE methodology data",
+  "skills": ["smile_overview"]
+}

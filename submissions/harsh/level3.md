@@ -1,30 +1,33 @@
-## Level 3 Submission
+# Level 3 Submission - Harsh Srivastava
 
-### Name
-Harsh Srivastava
+## Project: Life Twin AI Agent
 
-### Repo Link
-https://github.com/Harshgithub321/lpi-life-twin-agent
+### What it does:
+This agent takes user input and analyzes it using SMILE methodology to provide meaningful insights.
 
-### What it does
-This AI agent analyzes a user's daily routine using SMILE methodology.
+### Features:
+- Accepts user question
+- Uses SMILE methodology data
+- Uses insights from LPI tools
+- Generates AI response using local LLM (Ollama)
+- Shows sources used
 
-### Tools Used
+### LPI Tools Used:
 - smile_overview
 - get_insights
 
-### Features
-- Takes user input
-- Uses LPI tools
-- Provides analysis
-- Explainable AI
+### GitHub Repo:
+https://github.com/Harshgithub321/lpi-life-twin-agents
 
-### Output Screenshot
-(Add screenshot here)
+### Setup Instructions:
+1. Install dependencies
+2. Run ollama serve
+3. Run python agent.py
 
-### HOW_I_DID_IT
-1. Created repo
-2. Wrote agent code
-3. Connected LPI tools
-4. Used Ollama model
-5. Generated output
+### Explainability:
+The agent explains outputs using SMILE methodology and insights, making the reasoning clear.
+
+### Error Handling:
+- Handles empty input
+- Uses try-except blocks
+- Prevents crashes on invalid input

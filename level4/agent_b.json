@@ -1,0 +1,5 @@
+{
+  "name": "Insights Agent",
+  "description": "Provides insights using LPI",
+  "skills": ["get_insights"]
+}
