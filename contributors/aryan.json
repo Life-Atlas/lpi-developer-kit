@@ -1,0 +1,10 @@
+{
+  "name": "Aryan",
+  "github": "iamaryan07",
+  "program": "B.Tech CSE (Data Science)",
+  "campus": "Amity Noida",
+  "skills": ["python", "javascript", "java", "c++", "c", "langgraph", "smachine learning", "pytorch", "langchain", "tensorflow", "django", "django rest framework", "deep learning", "tableau", "selenium"],
+  "interests": ["agents", "NLP", "security"],
+  "track": "A: Agent Builders",
+  "my_twin": "If I had a personal digital twin, it would act as an intelligent agent that understands my goals, queries multiple knowledge systems, filters relevant insights, and continuously optimizes decisions—similar to how I built my LPI agent to combine methodology and real-world data for meaningful answers."
+}
