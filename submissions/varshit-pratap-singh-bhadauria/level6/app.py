@@ -108,7 +108,7 @@ elif page == "Self-Test":
 
     # 1. Check Projects (Min 8)
     df_proj = run_query("MATCH (n:Project) RETURN count(n) as count")
-    proj_count = df_proj['count'].iloc if not df_proj.empty else 0
+    proj_count = int(df_proj['count'].sum()) if not df_proj.empty else 0
     if proj_count >= 8:
         st.success(f"✅ Projects: {proj_count} (Min 8)")
     else:
@@ -116,7 +116,7 @@ elif page == "Self-Test":
 
     # 2. Check Products (Min 7)
     df_prod = run_query("MATCH (n:Product) RETURN count(n) as count")
-    prod_count = df_prod['count'].iloc if not df_prod.empty else 0
+    prod_count = int(df_prod['count'].sum()) if not df_prod.empty else 0
     if prod_count >= 7:
         st.success(f"✅ Products: {prod_count} (Min 7)")
     else:
@@ -124,7 +124,7 @@ elif page == "Self-Test":
 
     # 3. Check Stations (Min 9)
     df_stat = run_query("MATCH (n:Station) RETURN count(n) as count")
-    stat_count = df_stat['count'].iloc if not df_stat.empty else 0
+    stat_count = int(df_stat['count'].sum()) if not df_stat.empty else 0
     if stat_count >= 9:
         st.success(f"✅ Stations: {stat_count} (Min 9)")
     else:
@@ -132,7 +132,7 @@ elif page == "Self-Test":
 
     # 4. Check Workers (Min 13)
     df_work = run_query("MATCH (n:Worker) RETURN count(n) as count")
-    work_count = df_work['count'].iloc if not df_work.empty else 0
+    work_count = int(df_work['count'].sum()) if not df_work.empty else 0
     if work_count >= 13:
         st.success(f"✅ Workers: {work_count} (Min 13)")
     else:
@@ -140,7 +140,7 @@ elif page == "Self-Test":
 
     # 5. Check Weeks (Min 8)
     df_week = run_query("MATCH (n:Week) RETURN count(n) as count")
-    week_count = df_week['count'].iloc if not df_week.empty else 0
+    week_count = int(df_week['count'].sum()) if not df_week.empty else 0
     if week_count >= 8:
         st.success(f"✅ Weeks: {week_count} (Min 8)")
     else:
@@ -148,7 +148,7 @@ elif page == "Self-Test":
 
     # 6. Check Etapps (Min 2)
     df_etapp = run_query("MATCH (n:Etapp) RETURN count(n) as count")
-    etapp_count = df_etapp['count'].iloc if not df_etapp.empty else 0
+    etapp_count = int(df_etapp['count'].sum()) if not df_etapp.empty else 0
     if etapp_count >= 2:
         st.success(f"✅ Etapps: {etapp_count} (Min 2)")
     else:
