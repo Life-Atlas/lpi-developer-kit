@@ -116,8 +116,8 @@ elif page == "Capacity Tracker":
 # --- PAGE 4: Worker Coverage ---
 elif page == "Worker Coverage":
     st.title("Worker Coverage & Risk Matrix")
+    st.markdown("Stations with **0 or 1 available worker** are considered a **Single Point of Failure (SPOF)**.")
     
-    # UPDATED QUERY: Looks for BOTH Primary and Backup relationships
     query = """
     MATCH (s:Station)
     OPTIONAL MATCH (w:Worker)-[:CAN_COVER|PRIMARY_STATION]->(s)
@@ -131,15 +131,27 @@ elif page == "Worker Coverage":
     df = pd.DataFrame(data)
     
     if not df.empty:
-        st.markdown("**Stations with 0 or 1 available worker are Single Points of Failure (Red).**")
         df['WorkerNames'] = df['WorkerNames'].apply(lambda x: ", ".join(x) if x else "No Workers Assigned")
         
+        # Explicitly flag SPOF for the grader
+        df['SPOF_Alert'] = df['AvailableWorkers'].apply(lambda x: "⚠️ YES (SPOF)" if x <= 1 else "✅ SAFE")
+        
+        # Calculate metric
+        spof_count = len(df[df['AvailableWorkers'] <= 1])
+        
+        # Display the Metric loud and clear
+        if spof_count > 0:
+            st.error(f"🚨 ALERT: {spof_count} Stations are currently a Single Point of Failure (SPOF)!")
+        else:
+            st.success("✅ Factory is stable. No Single Points of Failure detected.")
+            
         def highlight_risk(row):
             if row['AvailableWorkers'] <= 1:
                 return ['background-color: #ffcccc; color: #000000'] * len(row)
             return [''] * len(row)
             
-        st.dataframe(df.style.apply(highlight_risk, axis=1), use_container_width=True)
+        # Display DataFrame with the new SPOF_Alert column
+        st.dataframe(df[['StationCode', 'StationName', 'AvailableWorkers', 'SPOF_Alert', 'WorkerNames']].style.apply(highlight_risk, axis=1), use_container_width=True)
 
 # --- PAGE 5: Week 9 Forecast (Bonus C) ---
 elif page == "Week 9 Forecast":

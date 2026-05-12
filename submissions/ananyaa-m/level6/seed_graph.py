@@ -15,12 +15,8 @@ def run_query(query, parameters=None):
     with driver.session() as session:
         session.run(query, parameters)
 
-def clear_database():
-    print("Wiping old database to prevent duplicates...")
-    run_query("MATCH (n) DETACH DELETE n")
-
 def create_constraints():
-    print("Creating constraints...")
+    print("Creating constraints for Idempotency...")
     queries = [
         "CREATE CONSTRAINT IF NOT EXISTS FOR (p:Project) REQUIRE p.name IS UNIQUE",
         "CREATE CONSTRAINT IF NOT EXISTS FOR (s:Station) REQUIRE s.code IS UNIQUE",
@@ -43,13 +39,12 @@ def clean_code(val):
     if v.endswith(".0"):
         v = v[:-2]
     try:
-        # This converts '011' -> '11'
         return str(int(v))
     except ValueError:
         return v.upper()
     
 def seed_database():
-    print("Loading CSV Data with Sanitization...")
+    print("Loading CSV Data safely using Idempotent MERGE...")
     
     # 1. Load Capacity
     df_cap = pd.read_csv('factory_capacity.csv')
@@ -71,7 +66,7 @@ def seed_database():
         
         run_query("MERGE (w:Worker {id: $wid}) SET w.name=$name, w.role=$role", 
                   {"wid": wid, "name": row['name'], "role": row['role']})
- 
+
         p_station = clean_code(row['primary_station'])
         if p_station and p_station != "ALL":
             run_query("""
@@ -90,9 +85,20 @@ def seed_database():
                     MERGE (w)-[:CAN_COVER]->(s)
                     """, {"wid": wid, "scode": b_code})
 
-    # 3. Load Production
+    # 3. Load Production (Aggregated for idempotency)
     df_prod = pd.read_csv('factory_production.csv').fillna("")
-    for _, row in df_prod.iterrows():
+    
+    # Ensure hours are numeric
+    df_prod['planned_hours'] = pd.to_numeric(df_prod['planned_hours'], errors='coerce').fillna(0)
+    df_prod['actual_hours'] = pd.to_numeric(df_prod['actual_hours'], errors='coerce').fillna(0)
+    
+    # Pre-aggregate data in Pandas so we can use a pure SET in Neo4j (True Idempotency)
+    agg_prod = df_prod.groupby(['project_name', 'station_code', 'station_name', 'product_type', 'week', 'etapp']).agg({
+        'planned_hours': 'sum',
+        'actual_hours': 'sum'
+    }).reset_index()
+
+    for _, row in agg_prod.iterrows():
         scode = clean_code(row['station_code'])
         if not scode:
             continue
@@ -113,29 +119,27 @@ def seed_database():
         MERGE (p)-[:BELONGS_TO_BOP]->(b)
         MERGE (s)-[:REQUIRES_CERT]->(c_req)
         
+        // Idempotent Setting of Aggregated Hours
         MERGE (p)-[r1:PROCESSED_AT]->(s)
-        ON CREATE SET r1.planned_hours = toFloat($plan), r1.actual_hours = toFloat($act)
-        ON MATCH SET r1.planned_hours = r1.planned_hours + toFloat($plan), r1.actual_hours = r1.actual_hours + toFloat($act)
+        SET r1.planned_hours = toFloat($plan), r1.actual_hours = toFloat($act)
         
         MERGE (p)-[r2:LOGGED_IN_WEEK]->(wk)
-        ON CREATE SET r2.planned_hours = toFloat($plan), r2.actual_hours = toFloat($act)
-        ON MATCH SET r2.planned_hours = r2.planned_hours + toFloat($plan), r2.actual_hours = r2.actual_hours + toFloat($act)
+        SET r2.planned_hours = toFloat($plan), r2.actual_hours = toFloat($act)
         
         MERGE (s)-[r3:UTILIZED_IN_WEEK]->(wk)
-        ON CREATE SET r3.planned_hours = toFloat($plan), r3.actual_hours = toFloat($act)
-        ON MATCH SET r3.planned_hours = r3.planned_hours + toFloat($plan), r3.actual_hours = r3.actual_hours + toFloat($act)
+        SET r3.planned_hours = toFloat($plan), r3.actual_hours = toFloat($act)
         """
         run_query(query_prod, {
             "proj_name": row['project_name'], "scode": scode, 
             "sname": row['station_name'], "ptype": row['product_type'],
             "plan": row['planned_hours'], "act": row['actual_hours'],
-            "week": str(row['week']), "etapp": str(row.get('etapp', 'Unknown'))
+            "week": str(row['week']), "etapp": str(row['etapp'])
         })
 
     print("Graph Database Seeded Successfully!")
 
 if __name__ == "__main__":
-    clear_database()
+    # Removed clear_database() to adhere to strict idempotent MERGE rules
     create_constraints()
     seed_database()
     driver.close()
