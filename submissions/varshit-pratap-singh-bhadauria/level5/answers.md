@@ -26,11 +26,9 @@ Here is the graph schema capturing the relationships between the factory entitie
 
 \*\*8 Relationship Types:\*\*
 
-1\. `(Project)-\[:PRODUCES {quantity, unit\_factor}]->(Product)` \*(Carries data properties)\*
-
-2\. `(Project)-\[:SCHEDULED\_AT {planned\_hours, actual\_hours}]->(Station)` \*(Carries data properties)\*
-
-3\. `(Week)-\[:HAS\_CAPACITY {total\_capacity, total\_planned, deficit}]->(Station)` \*(Carries data properties)\*
+1. (Project)-[:PRODUCES {quantity, unit_factor}]->(Product) 
+2. (Project)-[:SCHEDULED_AT {planned_hours, actual_hours}]->(Station) 
+3. (Week)-[:HAS_CAPACITY {total_capacity, total_planned, deficit}]->(Station)
 
 4\. `(Project)-\[:BELONGS\_TO]->(Etapp)`
 
@@ -108,19 +106,19 @@ RETURN w.name AS Backup\_Worker, p.project\_name AS Affected\_Project
 
 3\. Why the graph version is better: The graph version makes it immediately obvious how workers, stations, and projects are connected without requiring expensive mapping tables or complex JOIN logic. In Cypher, you visually draw the path (Worker -> Station <- Project).
 
-Q3. Spot the Bottleneck (20 pts)
+### Q3. Spot the Bottleneck (20 pts)
 
-1\. Identifying the overload: According to the capacity data, Weeks 1 and 2 have the largest capacity deficits (-132 and -125 hours). The production data shows the 011 FS IQB and 012 Förmontering IQB stations have highly concurrent schedules across almost all projects during these weeks, causing the massive bottleneck.
+1. Identifying the overload: According to the capacity data, Weeks 1 and 2 have the largest capacity deficits (-132 and -125 hours). The production data shows the 011 FS IQB and 012 Förmontering IQB stations have highly concurrent schedules across almost all projects during these weeks, causing the massive bottleneck.
 
-2\. Cypher Query:
+2. Cypher Query:
+```cypher
+MATCH (p:Project)-[r:SCHEDULED_AT]->(s:Station)
+WHERE r.actual_hours > (r.planned_hours * 1.10)
+RETURN s.station_name, collect(p.project_name) AS Over_Budget_Projects
+Modeling this alert: We can add a status: 'Bottleneck' property directly to the [:SCHEDULED_AT] relationship when actual hours exceed planned capacity, or create a dynamic (:Bottleneck) node linked to the specific (Station) and (Week).
+For example, in Week 1, the factory had a capacity deficit of -132 hours. A major bottleneck was Station 014 (Svets o montage), where multiple projects went over their scheduled time. Project P03 planned for 42.0 hours but actually took 48.0 hours, and Project P08 planned for 40.0 hours but actually took 44.0 hours.
 
-MATCH (p:Project)-\[r:SCHEDULED\_AT]->(s:Station)
 
-WHERE r.actual\_hours > (r.planned\_hours \* 1.10)
-
-RETURN s.station\_name, collect(p.project\_name) AS Over\_Budget\_Projects
-
-3\. Modeling this alert: We can add a status: 'Bottleneck' property directly to the \[:SCHEDULED\_AT] relationship when actual hours exceed planned capacity, or create a dynamic (:Bottleneck) node linked to the specific (Station) and (Week).
 
 Q4. Vector + Graph Hybrid (20 pts)
 
