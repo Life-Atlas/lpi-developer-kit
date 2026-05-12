@@ -73,47 +73,89 @@ RETURN w.name, p.name;
 
 ## Explanation
 
-The SQL version requires multiple JOIN operations, making the relationships harder to follow. In the graph version, the connections between workers, stations, and projects are directly visible through relationships, making traversal and dependency analysis much more intuitive.
+The SQL query technically retrieves the required information, but the operational dependency chain is difficult to reason about because the relationships are fragmented across multiple tables and JOIN conditions.
 
-Graphs make it easier to reason about operational impact because the relationships themselves become first-class entities instead of hidden join logic.
+In the graph model, the dependency becomes visually and logically direct:
 
----
+```cypher
+(:Worker)-[:CERTIFIED_FOR]->(:Station)<-[:USES_STATION]-(:Project)
+```
 
-# Q3. Spot the Bottleneck
+This makes it immediately obvious which workers can substitute for Per Gustafsson and which active projects depend on that station.
 
-## Projects/Stations Causing Overload
+In a real factory environment, this matters because Station 016 (Gjutning) may become a single point of failure if only one worker is certified for it. The graph structure exposes operational risk, staffing gaps, and downstream project impact much more naturally than relational tables.
 
-The overload occurs in stations where actual production hours consistently exceed planned hours, especially during weeks with capacity deficits shown in the capacity dataset.
+## Q3. Spot the Bottleneck
 
-Projects using overloaded stations contribute directly to bottlenecks because production demand exceeds available station capacity.
+Using `factory_capacity.csv`, several weeks showed clear production overloads where planned demand exceeded available factory capacity.
 
-## Cypher Query
+### Capacity Deficit Analysis
+
+| Week | Capacity | Planned Demand | Deficit |
+|------|----------|----------------|----------|
+| w1 | 480 | 612 | -132 |
+| w2 | 520 | 645 | -125 |
+| w4 | 500 | 550 | -50 |
+| w6 | 440 | 520 | -80 |
+| w7 | 520 | 600 | -80 |
+
+The largest overload occurred during **Week 1**, where demand exceeded available capacity by **132 hours**.
+
+### Projects and Stations Contributing to Overload
+
+Using `factory_production.csv`, the following projects and stations showed the highest variance between planned and actual production hours:
+
+| Project | Station | Planned Hours | Actual Hours | Variance |
+|---|---|---|---|---|
+| Sjukhus Linköping ET2 | FS IQB | 120 | 145 | +20.8% |
+| Bro E6 Halmstad | Svets o montage IQB | 88 | 101 | +14.7% |
+| Lagerhall Jönköping | Förmontering IQB | 95 | 110 | +15.8% |
+| Parking Helsingborg | Montering IQP | 76 | 88 | +15.7% |
+
+The repeated overloads at:
+- FS IQB
+- Förmontering IQB
+- Svets o montage IQB
+
+indicate these stations are critical production bottlenecks within the factory workflow.
+
+### Cypher Query
 
 ```cypher
 MATCH (p:Project)-[r:USES_STATION]->(s:Station)
-WHERE r.actual_hours > r.planned_hours * 1.1
-RETURN s.name AS station,
-       p.name AS project,
-       r.planned_hours,
-       r.actual_hours,
-       ((r.actual_hours - r.planned_hours) / r.planned_hours) * 100 AS variance_percent
-ORDER BY variance_percent DESC;
+WHERE r.actual_hours > r.planned_hours * 1.10
+RETURN 
+    p.name AS project,
+    s.name AS station,
+    r.planned_hours AS planned_hours,
+    r.actual_hours AS actual_hours,
+    ROUND(
+        ((r.actual_hours - r.planned_hours) / r.planned_hours) * 100,
+        2
+    ) AS variance_percent
+ORDER BY variance_percent DESC
 ```
 
-## Alert Modeling
+### Bottleneck Graph Modeling
 
-I would model bottlenecks using a dedicated `(:Bottleneck)` node connected to projects and stations.
+I modeled production overloads using a dedicated `(:Bottleneck)` node connected to:
+- affected projects
+- overloaded stations
+- impacted production weeks
 
-Example:
+Example graph structure:
 
 ```cypher
-(:Project)-[:CAUSES_ALERT]->(:Bottleneck)
-(:Station)-[:HAS_ALERT]->(:Bottleneck)
+(:Project)-[:HAS_BOTTLENECK]->(:Bottleneck)-[:AT_STATION]->(:Station)
 ```
 
-This allows bottlenecks to carry metadata such as severity, week, variance percentage, and status while remaining queryable as independent entities.
+The bottleneck node stores:
+- overload percentage
+- affected hours
+- severity level
+- week identifier
 
----
+This makes recurring operational problems easy to trace and visualize across the factory graph.
 
 # Q4. Vector + Graph Hybrid
 
@@ -149,13 +191,28 @@ ORDER BY score DESC;
 
 ## Why This Is Better
 
-Filtering only by product type ignores operational complexity and project similarity.
+Two projects may both involve steel beams, but still differ significantly in:
+- station utilization
+- production complexity
+- timeline pressure
+- welding intensity
+- workforce requirements
+- historical variance patterns
 
-The vector search finds semantically similar projects based on descriptions and requirements, while the graph filters ensure that operational constraints such as stations used and historical performance are also considered.
+A pure product-type filter would miss these operational similarities.
 
-This creates much more accurate project matching and planning support.
+Vector embeddings capture semantic context from project descriptions such as:
+- “hospital extension”
+- “tight deadline”
+- “large structural beams”
+- “high precision assembly”
 
----
+The graph layer then adds operational constraints:
+- which stations were used
+- which projects experienced overload
+- which production paths performed efficiently
+
+This hybrid approach is much more useful because it combines semantic similarity with real operational history instead of relying only on category matching.
 
 # Q5. My Level 6 Plan
 
@@ -222,18 +279,57 @@ Created when variance exceeds threshold.
 ## Streamlit Dashboard Panels
 
 ### 1. Station Load Heatmap
-Shows overload and utilization across weeks.
 
-### 2. Worker Coverage Matrix
-Shows which workers can substitute for absent workers at specific stations.
+This dashboard helps production planners identify which stations are approaching overload conditions across multiple weeks.
 
-### 3. Project Variance Dashboard
-Displays planned vs actual hours grouped by station and project.
+Instead of manually checking spreadsheets, managers can immediately detect:
+- overloaded stations
+- underutilized stations
+- recurring production pressure zones
 
-### 4. Bottleneck Alert Dashboard
-Highlights stations and projects exceeding safe operational thresholds.
+This is especially useful for balancing production schedules before bottlenecks propagate downstream.
 
 ---
+
+### 2. Worker Coverage Matrix
+
+This panel visualizes worker certifications and replacement coverage for each station.
+
+It helps identify:
+- single points of failure
+- understaffed stations
+- workers with rare certifications
+- possible backup assignments
+
+For example, if a worker responsible for Gjutning becomes unavailable, managers can immediately see which certified workers can replace them.
+
+---
+
+### 3. Project Variance Dashboard
+
+This dashboard compares planned production hours against actual execution hours grouped by project and station.
+
+It helps management identify:
+- projects consistently exceeding estimates
+- inefficient production stages
+- inaccurate planning assumptions
+- stations causing delivery delays
+
+The variance view also provides early warning signals before capacity deficits become critical.
+
+---
+
+### 4. Bottleneck Alert Dashboard
+
+This panel highlights stations and projects exceeding predefined overload thresholds.
+
+Instead of discovering delays after production issues occur, planners can proactively detect:
+- overload accumulation
+- recurring bottleneck patterns
+- capacity risks
+- operational instability
+
+The graph structure also allows tracing how a bottleneck at one station impacts dependent projects downstream.
 
 ## Cypher Queries for Panels
 
