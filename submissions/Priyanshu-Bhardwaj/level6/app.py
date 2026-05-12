@@ -11,7 +11,7 @@ load_dotenv()
 # Set page layout to wide
 st.set_page_config(page_title="Factory Graph Dashboard", layout="wide")
 
-# Connect to Neo4j (Safely handles both local .env and Streamlit Secrets)
+# Connect to Neo4j 
 @st.cache_resource
 def get_driver():
     try:
