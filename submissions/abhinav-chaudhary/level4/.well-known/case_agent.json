@@ -1,0 +1,11 @@
+{
+  "name": "Case Agent — Examples",
+  "version": "1.0",
+  "description": "Returns simple real-world examples based on the query",
+  "endpoint": "http://localhost:8002/cases",
+  "capabilities": [
+    "case_retrieval",
+    "example_matching"
+  ],
+  "auth": "bearer token"
+}

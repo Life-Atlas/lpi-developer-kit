@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "name": "Rahul's LPI Agent",
+  "description": "An AI agent that queries the LPI MCP server to answer questions about the SMILE methodology and digital twins. Returns explainable answers with source citations.",
+  "version": "1.0.0",
+  "author": "Rahul Bijarnia",
+  "capabilities": {
+    "skills": [
+      {
+        "name": "query_smile_methodology",
+        "description": "Queries the SMILE methodology overview and returns structured explanation",
+        "tool": "smile_overview"
+      },
+      {
+        "name": "search_knowledge_base",
+        "description": "Searches the LPI knowledge base for specific topics",
+        "tool": "query_knowledge"
+      },
+      {
+        "name": "get_case_studies",
+        "description": "Retrieves real world case studies from the LPI",
+        "tool": "get_case_studies"
+      }
+    ]
+  },
+  "input": {
+    "type": "text",
+    "description": "A natural language question about SMILE or digital twins"
+  },
+  "output": {
+    "type": "text",
+    "description": "An explainable answer citing which LPI tools provided which information"
+  },
+  "protocols": ["MCP"],
+  "contact": "rahulbijarnia007@gmail.com"
+}

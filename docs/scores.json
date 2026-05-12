@@ -10,10 +10,10 @@
   "aditi-mehta": {
     "name": "Aditi Mehta",
     "level": 3,
-    "score": 11,
+    "score": 12,
     "max": 13,
-    "pct": 85,
-    "updated": "2026-04-19T18:24:56.588Z"
+    "pct": 92,
+    "updated": "2026-04-20T20:17:03.666Z"
   },
   "kailash-narayana-prasad": {
     "name": "Kailash Narayana Prasad",
@@ -26,10 +26,10 @@
   "sania-gurung": {
     "name": "Sania Gurung",
     "level": 3,
-    "score": 11,
+    "score": 12,
     "max": 13,
-    "pct": 85,
-    "updated": "2026-04-17T08:21:01.550Z"
+    "pct": 92,
+    "updated": "2026-04-20T18:22:15.222Z"
   },
   "shubham-kumar": {
     "name": "Shubham Kumar",
@@ -41,11 +41,12 @@
   },
   "harshit-kumar": {
     "name": "Harshit Kumar",
-    "level": 3,
-    "score": 11,
+    "level": 4,
+    "score": 12,
     "max": 13,
-    "pct": 85,
-    "updated": "2026-04-20T02:02:10.208Z"
+    "pct": 92,
+    "updated": "2026-04-21T12:00:00.000Z",
+    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
   },
   "ananyaa-m": {
     "name": "Ananyaa M",
@@ -65,27 +66,30 @@
   },
   "varshit-pratap-singh-bhadauria": {
     "name": "Varshit Pratap Singh Bhadauria",
-    "level": 3,
-    "score": 9,
-    "max": 13,
-    "pct": 69,
-    "updated": "2026-04-17T13:45:45.236Z"
-  },
-  "aadyant-sood": {
-    "name": "Aadyant Sood",
-    "level": 3,
+    "level": 4,
     "score": 10,
     "max": 13,
     "pct": 77,
-    "updated": "2026-04-18T08:50:54.223Z"
+    "updated": "2026-04-21T12:00:00.000Z",
+    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
+  },
+  "aadyant-sood": {
+    "name": "Aadyant Sood",
+    "level": 4,
+    "score": 13,
+    "max": 13,
+    "pct": 100,
+    "updated": "2026-04-21T12:00:00.000Z",
+    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
   },
   "jahanvi-gupta": {
     "name": "Jahanvi Gupta",
     "level": 3,
-    "score": 8,
+    "score": 10,
     "max": 13,
-    "pct": 62,
-    "updated": "2026-04-17T06:00:00.000Z"
+    "pct": 77,
+    "updated": "2026-04-21T12:00:00.000Z",
+    "note": "Manual correction: PR #52 scored 9/11 (82%) with A2A agent card + security awareness. Later eval on different scorer version underscored."
   },
   "misha-arora": {
     "name": "Misha Arora",
@@ -167,14 +171,6 @@
     "pct": 62,
     "updated": "2026-04-20T08:13:51.567Z"
   },
-  "aman-gupta": {
-    "name": "Aman Gupta",
-    "level": 3,
-    "score": 3,
-    "max": 13,
-    "pct": 23,
-    "updated": "2026-04-17T06:00:00.000Z"
-  },
   "pranu-chandra": {
     "name": "Pranu Chandra",
     "level": 3,
@@ -213,7 +209,7 @@
     "score": 10,
     "max": 13,
     "pct": 77,
-    "updated": "2026-04-20T08:10:28.399Z"
+    "updated": "2026-04-20T15:01:01.663Z"
   },
   "priyanshu-bhardwaj": {
     "name": "Priyanshu Bhardwaj",
@@ -233,19 +229,21 @@
   },
   "shourya-solanki": {
     "name": "Shourya Solanki",
-    "level": 3,
-    "score": 11,
-    "max": 13,
-    "pct": 85,
-    "updated": "2026-04-19T14:00:00.000Z"
-  },
-  "sanskriti": {
-    "name": "Sanskriti",
-    "level": 3,
+    "level": 4,
     "score": 12,
     "max": 13,
     "pct": 92,
-    "updated": "2026-04-18T15:43:44.291Z"
+    "updated": "2026-04-21T12:00:00.000Z",
+    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
+  },
+  "sanskriti": {
+    "name": "Sanskriti",
+    "level": 4,
+    "score": 13,
+    "max": 13,
+    "pct": 100,
+    "updated": "2026-04-21T12:00:00.000Z",
+    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
   },
   "naman-anand": {
     "name": "Naman Anand",
@@ -253,7 +251,8 @@
     "score": 10,
     "max": 13,
     "pct": 77,
-    "updated": "2026-04-19T20:47:58.594Z"
+    "updated": "2026-04-21T04:45:55.176Z",
+    "note": "L4 PR open (pending merge)."
   },
   "vusala-akanksha": {
     "name": "Vusala Akanksha",
@@ -274,18 +273,18 @@
   "khushi-garg": {
     "name": "Khushi Garg",
     "level": 3,
-    "score": 10,
+    "score": 11,
     "max": 13,
-    "pct": 77,
-    "updated": "2026-04-19T07:49:19.847Z"
+    "pct": 85,
+    "updated": "2026-04-20T11:52:52.810Z"
   },
   "rahul-bijarnia": {
     "name": "Rahul Bijarnia",
     "level": 3,
-    "score": 9,
+    "score": 11,
     "max": 13,
-    "pct": 69,
-    "updated": "2026-04-20T10:50:12.168Z"
+    "pct": 85,
+    "updated": "2026-04-20T11:48:29.042Z"
   },
   "yash-maheshwari": {
     "name": "Yash Maheshwari",
@@ -293,7 +292,8 @@
     "score": 11,
     "max": 13,
     "pct": 85,
-    "updated": "2026-04-19T15:37:02.790Z"
+    "updated": "2026-04-19T15:37:02.790Z",
+    "note": "L4 PR open (pending merge)."
   },
   "ayush-sharma": {
     "name": "Ayush Sharma",
@@ -313,43 +313,47 @@
   },
   "aman-sharma": {
     "name": "Aman Sharma",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-18T21:49:13.504Z"
+    "level": 3,
+    "score": 7,
+    "max": 13,
+    "pct": 54,
+    "updated": "2026-04-20T14:41:25.679Z"
   },
   "abhinav-chaudhary": {
     "name": "Abhinav Chaudhary",
-    "level": 3,
-    "score": 10,
+    "level": 4,
+    "score": 11,
     "max": 13,
-    "pct": 77,
-    "updated": "2026-04-19T03:36:51.964Z"
+    "pct": 85,
+    "updated": "2026-04-21T12:00:00.000Z",
+    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
   },
   "jaivardhan-singh": {
     "name": "Jaivardhan Singh",
-    "level": 3,
-    "score": 10,
+    "level": 4,
+    "score": 13,
     "max": 13,
-    "pct": 77,
-    "updated": "2026-04-20T03:25:14.371Z"
+    "pct": 100,
+    "updated": "2026-04-21T12:00:00.000Z",
+    "note": "Level 4 submission merged. Score adjusted +1 for L4 completion."
   },
   "praveen-singh": {
     "name": "Praveen Singh",
     "level": 3,
-    "score": 10,
+    "score": 12,
     "max": 13,
-    "pct": 77,
-    "updated": "2026-04-19T18:52:05.015Z"
+    "pct": 92,
+    "updated": "2026-04-21T06:15:10.476Z",
+    "note": "L4 PR open (pending merge)."
   },
   "aryan": {
     "name": "Aryan",
     "level": 3,
-    "score": 10,
+    "score": 12,
     "max": 13,
-    "pct": 77,
-    "updated": "2026-04-20T11:08:54.661Z"
+    "pct": 92,
+    "updated": "2026-04-20T16:33:18.045Z",
+    "note": "L4 PR open (pending merge)."
   },
   "level-2---farhan-ahmed-siddique": {
     "name": "level-2 - Farhan Ahmed Siddique",
@@ -361,11 +365,11 @@
   },
   "adil-islam": {
     "name": "Adil Islam",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-20T11:09:11.072Z"
+    "level": 3,
+    "score": 10,
+    "max": 13,
+    "pct": 77,
+    "updated": "2026-04-20T11:38:57.929Z"
   },
   "dia-vats": {
     "name": "Dia Vats",
@@ -385,11 +389,11 @@
   },
   "touqeer-hamdani": {
     "name": "Touqeer Hamdani",
-    "level": 2,
-    "score": 5,
-    "max": 5,
-    "pct": 100,
-    "updated": "2026-04-19T19:26:16.405Z"
+    "level": 3,
+    "score": 12,
+    "max": 13,
+    "pct": 92,
+    "updated": "2026-04-20T13:50:17.938Z"
   },
   "srishti-gusain-(track-a)": {
     "name": "Srishti Gusain (Track A)",
@@ -400,36 +404,22 @@
     "updated": "2026-04-19T19:45:14.490Z"
   },
   "aman-gupta-(updated)": {
-    "name": "Aman Gupta (updated)",
+    "name": "Aman Gupta",
     "level": 3,
     "score": 9,
     "max": 13,
     "pct": 69,
-    "updated": "2026-04-19T20:02:48.632Z"
-  },
-  "gunti-sandeep": {
-    "name": "Gunti Sandeep",
-    "level": 3,
-    "score": 7,
-    "max": 13,
-    "pct": 54,
-    "updated": "2026-04-20T01:07:25.485Z"
+    "updated": "2026-04-19T20:02:48.632Z",
+    "note": "Updated submission. Original scored 3/13, resubmitted and improved to 9/13."
   },
   "daksh-garg": {
     "name": "Daksh Garg",
-    "level": 3,
-    "score": 11,
+    "level": 4,
+    "score": 13,
     "max": 13,
-    "pct": 85,
-    "note": "Manual score - evaluator missed due to placeholder github username. L2+L3+L4 submitted with agent, security audit, threat model, A2A."
-  },
-  "level-3-:-abhishek-sharma": {
-    "name": "Level-3 : Abhishek Sharma",
-    "level": 3,
-    "score": 9,
-    "max": 13,
-    "pct": 69,
-    "updated": "2026-04-20T04:40:11.466Z"
+    "pct": 100,
+    "updated": "2026-04-21T12:00:00.000Z",
+    "note": "Manual correction: L1+L2+L3+L4 all merged. All 5 tracks, security audit, threat model, A2A. Auto-scorer missed due to placeholder GitHub username. Most complete submission in cohort."
   },
   "bharath-raju": {
     "name": "Bharath Raju",
@@ -458,9 +448,58 @@
   "yashika-verma": {
     "name": "Yashika Verma",
     "level": 3,
-    "score": 7,
+    "score": 11,
     "max": 13,
-    "pct": 54,
-    "updated": "2026-04-20T11:08:46.569Z"
+    "pct": 85,
+    "updated": "2026-04-20T12:13:39.775Z"
+  },
+  "mohammad-zishan-noor": {
+    "name": "Mohammad Zishan Noor",
+    "level": 3,
+    "score": 6,
+    "max": 13,
+    "pct": 46,
+    "updated": "2026-04-20T14:01:08.103Z"
+  },
+  "saima-afroz": {
+    "name": "Saima Afroz",
+    "level": 3,
+    "score": 10,
+    "max": 13,
+    "pct": 77,
+    "updated": "2026-04-20T17:07:07.099Z"
+  },
+  "yash-vardhan": {
+    "name": "Yash Vardhan",
+    "level": 3,
+    "score": 2,
+    "max": 13,
+    "pct": 15,
+    "updated": "2026-04-20T16:52:11.298Z"
+  },
+  "abhishek-sharma": {
+    "name": "Abhishek Sharma",
+    "level": 3,
+    "score": 9,
+    "max": 13,
+    "pct": 69,
+    "updated": "2026-04-20T19:34:37.503Z",
+    "note": "Duplicate entry cleaned. Flag: PR #396 linked Jahanvi3005 repo — attribution unclear."
+  },
+  "sandeep-gunti": {
+    "name": "Sandeep Gunti",
+    "level": 3,
+    "score": 9,
+    "max": 13,
+    "pct": 69,
+    "updated": "2026-04-30T05:27:45.560Z"
+  },
+  "ritheeshwar-k": {
+    "name": "Ritheeshwar K",
+    "level": 3,
+    "score": 6,
+    "max": 13,
+    "pct": 46,
+    "updated": "2026-04-22T12:29:29.619Z"
   }
 }

@@ -1,0 +1,19 @@
+{
+  "mesh_name": "LPI Secure Agent Mesh",
+  "agents": [
+    {
+      "agent_id": "agent_a_smile_expert",
+      "name": "SMILE Methodology Analyzer",
+      "description": "Analyzes user requests against the SMILE digital twin framework.",
+      "capabilities": ["smile_methodology_analysis"],
+      "protocols": ["mcp-stdio-v1", "a2a-discovery-v1"]
+    },
+    {
+      "agent_id": "agent_b_researcher",
+      "name": "Case Study & Knowledge Researcher",
+      "description": "Retrieves real-world case studies for digital twin implementations.",
+      "capabilities": ["case_study_retrieval", "knowledge_querying"],
+      "protocols": ["mcp-stdio-v1", "a2a-discovery-v1"]
+    }
+  ]
+}
