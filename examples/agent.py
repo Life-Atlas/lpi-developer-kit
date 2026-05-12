@@ -29,7 +29,7 @@ _REPO_ROOT = _os.path.abspath(_os.path.join(_os.path.dirname(__file__), ".."))
 LPI_SERVER_CMD = ["node", _os.path.join(_REPO_ROOT, "dist", "src", "index.js")]
 LPI_SERVER_CWD = _REPO_ROOT  # always resolves to repo root regardless of where you run from
 OLLAMA_URL = "http://localhost:11434/api/generate"
-OLLAMA_MODEL = "qwen2.5:1.5b"
+OLLAMA_MODEL = "qwen2.5:0.5b"
 
 
 def call_mcp_tool(process, tool_name: str, arguments: dict) -> str:

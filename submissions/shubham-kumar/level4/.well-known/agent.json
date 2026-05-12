@@ -1,0 +1,44 @@
+{
+  "name": "Secure Agent Mesh — SMILE Planner + Devil's Advocate",
+  "description": "A two-agent system where Agent A builds a constraint-aware SMILE implementation plan and Agent B independently critiques it using real case studies. The orchestrator enforces A2A discovery, schema validation between agents, and multi-layer security. Neither agent produces a useful result alone — the value comes from the adversarial collaboration.",
+  "url": "https://github.com/kshubham090/lpi-developer-kit/tree/master/submissions/shubham-kumar/level4",
+  "version": "1.0.0",
+  "defaultInputModes": ["application/json"],
+  "defaultOutputModes": ["application/json", "text/plain"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "subprocess-stdio",
+      "entrypoint": "python orchestrator.py",
+      "comment": "Orchestrator reads planner.json and validator.json for agent discovery, then chains agents via subprocess pipes with schema validation at every boundary."
+    }
+  ],
+  "agents": [
+    {
+      "id": "planner",
+      "cardPath": "../planner.json",
+      "role": "Builds a phased SMILE implementation roadmap from LPI methodology data"
+    },
+    {
+      "id": "validator",
+      "cardPath": "../validator.json",
+      "role": "Critiques the plan against real case studies — finds what will fail before you act on it"
+    }
+  ],
+  "security": {
+    "inputSanitization": "Regex-based injection filter on all user inputs before any agent is invoked",
+    "interAgentValidation": "JSON schema check on plan payload before passing from Agent A to Agent B",
+    "revalidation": "Agent B re-sanitizes all string fields from the plan even when received from Agent A",
+    "dosProtection": "500-char input cap, 180s LLM timeout, 300s subprocess timeout"
+  },
+  "authentication": {
+    "schemes": ["none"]
+  },
+  "provider": {
+    "organization": "Shubham Kumar",
+    "url": "https://github.com/kshubham090"
+  }
+}

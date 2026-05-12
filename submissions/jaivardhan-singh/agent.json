@@ -1,0 +1,7 @@
+{
+  "agent_id": "smile_knowledge_agent",
+  "name": "SMILE Methodology Agent",
+  "description": "An autonomous AI agent that connects to the LPI MCP server to query SMILE methodology tools.",
+  "capabilities": ["query_knowledge", "get_insights"],
+  "protocols": ["mcp-stdio-v1", "a2a-discovery-v1"]
+}

@@ -1,0 +1,85 @@
+{
+  "name": "SMILE Roadmap Synthesiser",
+  "description": "Receives a ReadinessReport from the Readiness Analyst and generates a gap-targeted SMILE implementation roadmap. Calls smile_overview, smile_phase_detail (x2), and get_methodology_step to produce a phase-sequenced action plan where every phase explicitly states which readiness gap it addresses and cites the LPI methodology source.",
+  "url": "local://python roadmap_agent.py",
+  "version": "1.0.0",
+  "defaultInputModes": ["application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "stdio-json",
+      "url": "local://python submissions/sania-gurung/level4/roadmap_agent.py",
+      "comment": "Send ReadinessReport JSON to stdin. Requires npm run build and ollama serve."
+    }
+  ],
+  "inputSchema": {
+    "type": "object",
+    "description": "ReadinessReport — output schema of the Digital Twin Readiness Analyst",
+    "required": ["schema_version", "request_id", "project", "readiness_dimensions",
+                 "overall_readiness_score", "top_gaps", "recommended_starting_phase", "tools_used"]
+  },
+  "outputSchema": {
+    "type": "object",
+    "required": ["schema_version", "request_id", "gap_addressed", "phases",
+                 "first_week_actions", "tools_used"],
+    "properties": {
+      "schema_version": { "type": "string" },
+      "request_id": { "type": "string" },
+      "gap_addressed": { "type": "array", "items": { "type": "string" } },
+      "phases": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "required": ["phase_slug", "phase_name", "priority", "addresses_gap",
+                       "immediate_actions", "evidence_source"],
+          "properties": {
+            "phase_slug": { "type": "string" },
+            "phase_name": { "type": "string" },
+            "priority": { "type": "integer" },
+            "addresses_gap": { "type": "string" },
+            "duration": { "type": "string" },
+            "immediate_actions": { "type": "array", "items": { "type": "string" } },
+            "evidence_source": { "type": "string" }
+          }
+        }
+      },
+      "first_week_actions": { "type": "array", "items": { "type": "string" } },
+      "tools_used": { "type": "array" }
+    }
+  },
+  "skills": [
+    {
+      "id": "smile-roadmap-synthesis",
+      "name": "Gap-Targeted SMILE Roadmap",
+      "description": "Reads a ReadinessReport, identifies the 2 highest-severity gaps, selects the most relevant SMILE phases to close those gaps, deep-dives each via smile_phase_detail, and returns a concrete roadmap where every phase names the gap it targets. Provides first-week action checklist.",
+      "tags": ["roadmap", "SMILE", "gap-targeting", "methodology", "A2A", "LPI"],
+      "examples": [
+        "Generate a SMILE roadmap for a project with low data maturity and poor stakeholder alignment",
+        "What SMILE phases should I prioritise for a solo ML engineer with no data pipeline?"
+      ]
+    }
+  ],
+  "security": {
+    "inputValidation": "ReadinessReport schema validated as first operation before any LPI calls.",
+    "injectionPrevention": "All string fields from ReadinessReport re-sanitized before LLM use.",
+    "zeroTrust": "Agent B validates independently — bypassing the orchestrator does not bypass security."
+  },
+  "authentication": { "schemes": ["none"] },
+  "provider": {
+    "organization": "Sania Gurung",
+    "url": "https://github.com/SANIAGRG"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["smile_overview", "smile_phase_detail", "get_methodology_step"],
+    "llmProvider": "ollama",
+    "llmModel": "qwen2.5:5b",
+    "explainability": "Each roadmap phase includes evidence_source naming the smile_phase_detail call that grounded the activities. tools_used array records exact calls with char counts. request_id from upstream report is preserved for full trace.",
+    "meshPartner": "readiness-agent (readiness_agent.json)",
+    "toolSplitRationale": "Agent B uses only smile methodology tools (theory/prescription). It has no access to case studies or knowledge search — it only knows SMILE phases. Combined with Agent A, together they produce: specific gaps + targeted phase prescriptions."
+  }
+}

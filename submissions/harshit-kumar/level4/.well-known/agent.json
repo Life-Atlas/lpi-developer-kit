@@ -1,0 +1,74 @@
+{
+  "name": "Secure Agent Mesh — Harshit Kumar",
+  "description": "A two-agent A2A mesh for querying Life Progress Indicators via the SMILE methodology. Agent A (client, port 5001) validates and routes user queries; Agent B (server, port 5002) executes LPI tools (smile_overview, query_knowledge) and returns structured answers with provenance. Includes prompt-injection defence, rate limiting, subprocess timeout, and output whitelisting.",
+  "url": "https://github.com/hrk0503/lpi-developer-kit",
+  "version": "1.0.0",
+  "defaultInputModes": ["text/plain", "application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "HTTP-REST",
+      "url": "http://localhost:5001/query",
+      "comment": "POST { query: string } — entry-point for Agent A. Requires Ollama running on localhost:11434."
+    },
+    {
+      "protocolBinding": "HTTP-REST",
+      "url": "http://localhost:5002/query",
+      "comment": "POST { query: string, from_agent: 'agent_a' } — Agent B specialist endpoint."
+    }
+  ],
+  "skills": [
+    {
+      "id": "smile-overview",
+      "name": "SMILE Overview",
+      "description": "Accepts a natural-language question about the SMILE framework and returns a structured overview covering Social, Meaning, Interests, Livelihoods, and Environment dimensions with associated LPI indicators. Input: free-text query (max 512 chars). Output: JSON with dimension, summary, lpi_indicators.",
+      "tags": ["lpi", "smile", "wellbeing", "indicators"],
+      "examples": [
+        "What does the Social dimension of SMILE measure?",
+        "Give me an overview of the SMILE framework for urban communities."
+      ]
+    },
+    {
+      "id": "query-knowledge",
+      "name": "LPI Knowledge Query",
+      "description": "Queries the LPI knowledge base for detailed indicator data. Returns answer, sources, and a confidence score. Input: free-text query (max 512 chars). Output: JSON with answer, sources, confidence.",
+      "tags": ["lpi", "knowledge", "indicators", "fintech"],
+      "examples": [
+        "Which LPI indicators are most relevant to financial resilience?",
+        "How does the LPI score housing security?"
+      ]
+    }
+  ],
+  "authentication": {
+    "schemes": ["none"],
+    "comment": "Localhost-only deployment. Caller identity is verified via the from_agent field."
+  },
+  "provider": {
+    "organization": "Harshit Kumar",
+    "url": "https://github.com/hrk0503"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["smile_overview", "query_knowledge"],
+    "llmProvider": "ollama",
+    "llmModel": "qwen2.5:1.5b",
+    "explainability": "Every response includes a provenance array. Each entry records the tool name, the exact args passed, a sanitised response snippet (first 400 chars), elapsed time, and the model used. This gives a complete call chain from user query to final answer."
+  },
+  "agents": {
+    "agent_a": {
+      "role": "client",
+      "port": 5001,
+      "responsibilities": ["A2A discovery", "input validation", "rate limiting", "prompt-injection guard", "output whitelisting"],
+      "file": "agent_a.py"
+    },
+    "agent_b": {
+      "role": "server",
+      "port": 5002,
+      "responsibilities": ["LPI tool execution", "ollama integration", "caller verification", "output sanitisation"],
+      "file": "agent_b.py"
+    }
+  }
+}

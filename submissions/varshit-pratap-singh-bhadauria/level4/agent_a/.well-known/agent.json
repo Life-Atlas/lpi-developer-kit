@@ -1,0 +1,14 @@
+{
+  "name": "Coordinator Agent",
+  "description": "Accepts user input, sanitizes it against prompt injection and DoS, and coordinates with specialized agents to formulate a comprehensive response.",
+  "type": "coordinator",
+  "skills": [
+    "orchestration",
+    "input_validation",
+    "executive_summarization"
+  ],
+  "contact": {
+    "protocol": "local_process",
+    "endpoint": "./agent_a.py"
+  }
+}

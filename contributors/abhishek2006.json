@@ -3,8 +3,8 @@
   "github": "Abhishek2006-Sharma",
   "program": "B.Tech CSE",
   "campus": "Amity Noida",
-  "skills": ["python", "java"],
-  "interests": ["AI", "agents", "security"],
-  "track": "A: Agent Builders",
+  "skills": ["Python", "Streamlit", "Plotly", "Neo4j"],
+  "interests": ["AI agents", "automation", "data dashboards"],
+  "track": "A: Agent Builder",
   "my_twin": "My digital twin would help me stay consistent, track my focus, and improve my learning every day."
 }

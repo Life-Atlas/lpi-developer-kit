@@ -49,6 +49,20 @@ async function main() {
     { name: "get_case_studies", args: { query: "smart buildings" } },
     { name: "get_insights", args: { scenario: "personal health digital twin", tier: "free" } },
     { name: "get_methodology_step", args: { phase: "concurrent-engineering" } },
+    // Invalid input
+{ name: "query_knowledge", args: { query: "!!!!!!!" } },
+
+// Long input (DoS style)
+{ name: "query_knowledge", args: { query: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" } },
+
+// SQL injection attempt
+{ name: "query_knowledge", args: { query: "' OR 1=1 --" } },
+
+// Script injection attempt
+{ name: "query_knowledge", args: { query: "<script>alert(1)</script>" } },
+
+// Empty input
+{ name: "query_knowledge", args: { query: "" } },
   ];
 
   let passed = 0;
