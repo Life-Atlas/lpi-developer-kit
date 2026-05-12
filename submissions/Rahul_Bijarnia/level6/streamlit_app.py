@@ -1,16 +1,11 @@
 import streamlit as st
 import pandas as pd
 from neo4j import GraphDatabase
-from dotenv import load_dotenv
-import os
 
-# Load environment variables
-load_dotenv()
-
-# Neo4j connection details
-URI = os.getenv("NEO4J_URI")
-USERNAME = os.getenv("NEO4J_USER")
-PASSWORD = os.getenv("NEO4J_PASSWORD")
+# Streamlit Cloud Secrets
+URI = st.secrets["NEO4J_URI"]
+USERNAME = st.secrets["NEO4J_USER"]
+PASSWORD = st.secrets["NEO4J_PASSWORD"]
 
 # Neo4j Driver
 driver = GraphDatabase.driver(
@@ -19,7 +14,7 @@ driver = GraphDatabase.driver(
 )
 
 # Load CSV files
-workers_df = pd.read_csv("data/factory_workers (1).csv")
+workers_df = pd.read_csv("data/factory_workers.csv")
 
 # Page title
 st.title("Level 6 Neo4j Factory Dashboard")
