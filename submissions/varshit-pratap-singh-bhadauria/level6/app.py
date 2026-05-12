@@ -101,23 +101,55 @@ elif page == "Worker Coverage":
         st.markdown("**Stations in RED have only 1 certified worker (Single Point of Failure)!**")
         st.dataframe(df.style.map(highlight_spof, subset=['Worker_Count']))
 
-# --- Page 5: Self-Test (Mandatory) ---
-elif page == "Self-Test":
-    st.title("Self-Test")
+### --- Page 5: Self-Test (Mandatory) ---
+elif page == "Self-Test": 
+    st.title("Self-Test") 
     st.markdown("Running automated checks...")
-    
-    # Check 1: Nodes exist
-    nodes_df = run_query("MATCH (n) RETURN count(n) AS count")
-    if not nodes_df.empty and nodes_df['count'].sum() > 0:
-        st.success("✅ Graph is populated with nodes")
+
+    # 1. Check Projects (Min 8)
+    df_proj = run_query("MATCH (n:Project) RETURN count(n) as count")
+    proj_count = df_proj['count'].iloc if not df_proj.empty else 0
+    if proj_count >= 8:
+        st.success(f"✅ Projects: {proj_count} (Min 8)")
     else:
-        st.error("❌ Graph is empty")
-        
-    # Check 2: Relationships exist
-    rels_df = run_query("MATCH ()-[r]->() RETURN count(r) AS count")
-    if not rels_df.empty and rels_df['count'].sum() > 100:
-        st.success("✅ Graph has correct number of relationships")
+        st.error(f"❌ Projects: {proj_count} (Min 8)")
+
+    # 2. Check Products (Min 7)
+    df_prod = run_query("MATCH (n:Product) RETURN count(n) as count")
+    prod_count = df_prod['count'].iloc if not df_prod.empty else 0
+    if prod_count >= 7:
+        st.success(f"✅ Products: {prod_count} (Min 7)")
     else:
-        st.error("❌ Missing relationships")
-        
-    st.balloons()
+        st.error(f"❌ Products: {prod_count} (Min 7)")
+
+    # 3. Check Stations (Min 9)
+    df_stat = run_query("MATCH (n:Station) RETURN count(n) as count")
+    stat_count = df_stat['count'].iloc if not df_stat.empty else 0
+    if stat_count >= 9:
+        st.success(f"✅ Stations: {stat_count} (Min 9)")
+    else:
+        st.error(f"❌ Stations: {stat_count} (Min 9)")
+
+    # 4. Check Workers (Min 13)
+    df_work = run_query("MATCH (n:Worker) RETURN count(n) as count")
+    work_count = df_work['count'].iloc if not df_work.empty else 0
+    if work_count >= 13:
+        st.success(f"✅ Workers: {work_count} (Min 13)")
+    else:
+        st.error(f"❌ Workers: {work_count} (Min 13)")
+
+    # 5. Check Weeks (Min 8)
+    df_week = run_query("MATCH (n:Week) RETURN count(n) as count")
+    week_count = df_week['count'].iloc if not df_week.empty else 0
+    if week_count >= 8:
+        st.success(f"✅ Weeks: {week_count} (Min 8)")
+    else:
+        st.error(f"❌ Weeks: {week_count} (Min 8)")
+
+    # 6. Check Etapps (Min 2)
+    df_etapp = run_query("MATCH (n:Etapp) RETURN count(n) as count")
+    etapp_count = df_etapp['count'].iloc if not df_etapp.empty else 0
+    if etapp_count >= 2:
+        st.success(f"✅ Etapps: {etapp_count} (Min 2)")
+    else:
+        st.error(f"❌ Etapps: {etapp_count} (Min 2)")
