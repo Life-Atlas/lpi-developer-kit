@@ -1,0 +1,22 @@
+{
+  "name": "smile_agent",
+  "description": "Analyzes user problems using SMILE methodology with LPI tools and explainable AI",
+  "version": "1.0.0",
+  "endpoint": "http://localhost:8000/analyze",
+  "capabilities": [
+    {
+      "id": "analyze_problem",
+      "name": "Analyze Personal Problem",
+      "description": "Analyze productivity, stress, or focus problems using SMILE methodology",
+      "input": "text",
+      "output": "structured_analysis"
+    }
+  ],
+  "security": {
+    "rate_limiting": true,
+    "input_validation": true,
+    "output_sanitization": true
+  },
+  "protocols": ["A2A", "HTTP/JSON"],
+  "dependencies": ["LPI MCP Server", "Ollama"]
+}

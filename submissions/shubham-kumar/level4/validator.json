@@ -1,0 +1,99 @@
+{
+  "name": "Devil's Advocate Validator",
+  "description": "Receives a SMILE implementation plan from Agent A and critically evaluates it using real case study evidence from the LPI. Queries get_case_studies and get_insights to find where similar implementations succeeded or failed. Outputs a typed JSON critique with risk score, phase-level findings, red flags, and a concrete recommendation. Every finding cites its LPI source. Part of the Level 4 Secure Agent Mesh.",
+  "url": "local://python validator.py",
+  "version": "1.0.0",
+  "defaultInputModes": ["application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "stdio-json",
+      "url": "local://python submissions/shubham-kumar/level4/validator.py",
+      "comment": "Send plan JSON (from planner.py) to stdin, receive critique JSON on stdout. Requires: npm run build, ollama serve."
+    }
+  ],
+  "inputSchema": {
+    "type": "object",
+    "description": "Must be a valid plan produced by the SMILE Implementation Planner agent.",
+    "required": ["project", "phases", "tools_used"],
+    "properties": {
+      "project": {
+        "type": "object",
+        "required": ["industry", "usecase", "constraints"]
+      },
+      "phases": {
+        "type": "array",
+        "minItems": 1
+      },
+      "tools_used": {
+        "type": "array"
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "required": ["verdict", "risk_score", "critiques", "tools_used"],
+    "properties": {
+      "verdict": {
+        "type": "string",
+        "enum": ["proceed", "proceed_with_caution", "reconsider"]
+      },
+      "risk_score": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 10
+      },
+      "critiques": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "phase": {"type": "string"},
+            "risk_level": {"type": "string", "enum": ["low", "medium", "high"]},
+            "finding": {"type": "string"},
+            "evidence_source": {"type": "string"}
+          }
+        }
+      },
+      "validated_phases": {"type": "array", "items": {"type": "string"}},
+      "red_flags": {"type": "array", "items": {"type": "string"}},
+      "recommendation": {"type": "string"},
+      "tools_used": {"type": "array"}
+    }
+  },
+  "skills": [
+    {
+      "id": "devils-advocate-validation",
+      "name": "Devil's Advocate Plan Validator",
+      "description": "Critically evaluates a SMILE implementation plan using LPI case study evidence and scenario insights. Returns risk score (1-10), phase-level critiques with evidence sources, red flags, validated phases, and a concrete recommendation. Designed to be chained after the SMILE Implementation Planner.",
+      "tags": ["validation", "risk-assessment", "SMILE", "case-studies", "devil's-advocate", "A2A"],
+      "examples": [
+        "Validate a healthcare digital twin plan with a 3-month timeline",
+        "Critique a manufacturing predictive maintenance SMILE plan",
+        "Challenge assumptions in a smart building energy optimization plan"
+      ]
+    }
+  ],
+  "security": {
+    "inputValidation": "Schema validation on incoming plan — rejects malformed or unexpected payloads before processing.",
+    "injectionPrevention": "String fields from plan are re-sanitized before use in LPI queries.",
+    "outputSchema": "Critique schema validated before returning to orchestrator."
+  },
+  "authentication": {
+    "schemes": ["none"]
+  },
+  "provider": {
+    "organization": "Shubham Kumar",
+    "url": "https://github.com/kshubham090"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["get_case_studies", "get_insights"],
+    "llmProvider": "ollama",
+    "role": "validator",
+    "meshPartner": "planner-agent (planner.json)"
+  }
+}

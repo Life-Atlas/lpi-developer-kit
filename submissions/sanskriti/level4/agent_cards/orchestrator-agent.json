@@ -1,0 +1,44 @@
+{
+  "name": "orchestrator-agent",
+  "description": "Discovers specialist agents via A2A Agent Cards, calls them with structured JSON envelopes, and fuses their outputs into a single recommendation.",
+  "url": "http://127.0.0.1:8100/.well-known/agent.json",
+  "version": "1.0.0",
+  "defaultInputModes": ["application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "HTTP+JSON",
+      "url": "http://127.0.0.1:8100/recommend",
+      "comment": "Public endpoint for recommendation requests."
+    }
+  ],
+  "skills": [
+    {
+      "id": "cross-agent-fusion",
+      "name": "Cross-Agent Recommendation",
+      "description": "Takes a user question, queries SMILE and case-study specialists, and returns merged actions with traceable evidence.",
+      "tags": ["a2a", "orchestration", "recommendation"],
+      "examples": [
+        "How should a healthcare startup begin a digital twin rollout?",
+        "Give me an implementation strategy for smart manufacturing twins."
+      ]
+    }
+  ],
+  "authentication": {
+    "schemes": ["apiKeyHeader"]
+  },
+  "provider": {
+    "organization": "Sanskriti",
+    "url": "https://github.com/smiling-sanskriti/lpi-developer-kit"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["smile_overview", "query_knowledge", "get_case_studies"],
+    "llmProvider": "none",
+    "llmModel": "none",
+    "explainability": "Returns specialist evidence snippets and tool provenance in structured response fields."
+  }
+}

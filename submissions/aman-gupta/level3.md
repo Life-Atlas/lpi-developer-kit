@@ -1,64 +1,57 @@
 # Level 3 Submission - Aman Gupta
 
 ## Project Name
-SMILE Career Guide Agent
+SMILE Career Agent
 
-## About the Project
-I created a Python project that helps users generate a simple career growth plan using the SMILE methodology.
+## GitHub Repository
+https://github.com/AmanGupta3995377/smile-career-agent
 
-The program asks the user for:
-- Name
-- Career Goal
-- Current Level
+## Project Overview
+I built a real AI agent that accepts a user question, connects to the LPI MCP server, queries multiple LPI tools, and generates a helpful explainable response using a local LLM through Ollama.
 
-Based on the inputs, it gives a personalized roadmap with practical steps for improvement.
+This project was created to demonstrate practical use of tool-calling, local AI models, and explainable outputs.
 
-## Features
-- Takes user input
-- Gives personalized guidance
-- Uses beginner/intermediate/advanced logic
-- Suggests useful actions
-- Saves result in `output.txt`
-- Mentions tools used
+## What the Agent Does
+- Accepts user input
+- Connects to the LPI server
+- Calls multiple LPI tools
+- Uses returned knowledge to generate answers
+- Shows which tools were used
+- Gives explainable responses
 
-## Tools Referenced
+## LPI Tools Used
 1. smile_overview
-2. get_insights
+2. query_knowledge
+3. get_insights
+
+## Technologies Used
+- Python
+- Node.js
+- Ollama
+- Requests library
 
 ## How to Run
 
 ```bash
-python submissions/aman-gupta/level3_agent.py
+python agent.py
 ```
 
+## Example Question
 
-## Example Input 
-Name: Aman Gupta
-Career Goal: Software Engineer
-Level: Beginner
-
-## Example Output
-
-The program generates a career roadmap with steps such as understanding current skills, making a plan, building projects, and improving regularly.
+How can I start using SMILE?
 
 ## Explainability
 
-The roadmap is generated based on the user's current level. Beginners receive advice focused on fundamentals and regular practice. Intermediate users receive advice focused on projects and consistency. Advanced users receive advice focused on specialization, leadership, and higher growth.
+The final answer is generated using responses from LPI tools. The program clearly lists which tools were used so the user can trace where the information came from.
+
+The linked repository has also been updated with stronger error handling and clearer source tracing based on reviewer feedback.
 
 ## What I Learned
 
-I learned how to build an interactive Python project, use conditions, take user input, save files, and create a beginner-friendly agent project.
+I learned how real AI agents connect with tools, how subprocess communication works, how to use Ollama with Python, and how to build explainable AI systems.
 
 ## Future Improvements
-- Add more career options
-- Improve design and formatting
-- Save multiple user reports
-- Add more personalized suggestions
-
-
-## GitHub Repository
-https://github.com/AmanGupta3995377/lpi-developer-kit
-
-## Error Handling
-If the user enters an unexpected level, the program still provides guidance by default. The user can run the program again with correct input.
-
+- Better UI
+- More tool integrations
+- Save chat history
+- Better personalization
