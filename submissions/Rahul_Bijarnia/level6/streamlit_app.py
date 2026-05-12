@@ -14,7 +14,8 @@ driver = GraphDatabase.driver(
 )
 
 # Load CSV files
-workers_df = pd.read_csv("data/factory_workers.csv")
+import os
+workers_df = pd.read_csv(os.path.join(os.path.dirname(__file__), "data", "factory_workers.csv"))
 
 # Page title
 st.title("Level 6 Neo4j Factory Dashboard")
