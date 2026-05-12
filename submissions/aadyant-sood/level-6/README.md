@@ -99,7 +99,7 @@ streamlit run app.py
 ## Deployment
 
 Live Dashboard:  
-https://lpi-developer-kit-dwxwr5ucn5qfjrzyddsefm.streamlit.app/
+https://lpi-developer-kit-exok2achm8rvscbqwf4gyc.streamlit.app/
 
 ---
 
