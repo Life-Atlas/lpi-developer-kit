@@ -1,0 +1,51 @@
+{
+  "name": "Case Study Analyst",
+  "description": "Retrieves and synthesises relevant case studies from the LPI knowledge base for operational and manufacturing problems. Accepts structured sub-queries from orchestrating agents (like the SMILE Specialist), maps identified SMILE phases to real-world implementations, and returns structured JSON evidence including success metrics, patterns, and implementation lessons. Designed to complement methodology agents — not a standalone answer generator.",
+  "url": "http://localhost:8002",
+  "version": "1.0.0",
+  "defaultInputModes": ["application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "HTTP-REST",
+      "url": "http://localhost:8002/task",
+      "method": "POST",
+      "comment": "Accepts {query: string, smile_phases: list, domain: string}. Returns {case_studies, patterns, metrics}."
+    },
+    {
+      "protocolBinding": "A2A-discovery",
+      "url": "http://localhost:8002/.well-known/agent.json",
+      "comment": "This card. Agent A discovers Agent B here on startup."
+    }
+  ],
+  "skills": [
+    {
+      "id": "case_study_retrieval",
+      "name": "Case Study Retrieval",
+      "description": "Queries LPI (query_knowledge + get_insights) for case studies matching the domain and SMILE phases provided by Agent A. Returns structured JSON: {case_studies: [{title, summary, outcome}], patterns: [string], metrics: {success_rate, avg_improvement}}.",
+      "tags": ["case-studies", "evidence", "manufacturing", "smile"],
+      "examples": [
+        "Find case studies of steel manufacturers who applied SMILE Scan and Model phases.",
+        "What evidence exists for SMILE improving on-time delivery in fabrication?",
+        "Show me manufacturing digital twin case studies with measurable outcomes."
+      ]
+    }
+  ],
+  "authentication": {
+    "schemes": ["none"]
+  },
+  "provider": {
+    "organization": "Adil Islam",
+    "url": "https://github.com/Adilislam0"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["query_knowledge", "get_insights"],
+    "llmProvider": "ollama",
+    "llmModel": "qwen2.5:0.5b",
+    "explainability": "Response includes SOURCES block showing which LPI tool produced which evidence. Output is always structured JSON — never freeform text — so Agent A can safely parse and merge it."
+  }
+}
