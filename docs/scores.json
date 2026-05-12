@@ -57,13 +57,13 @@
   },
   "ananyaa-m": {
     "name": "Ananyaa M",
-    "level": 5,
+    "level": 6,
     "score": 11,
     "max": 13,
     "pct": 85,
     "updated": "2026-05-12T10:00:00.000Z",
-    "note": "L4 #464: 80% approved. L5 #465 OPEN. L6 #499: 0/100 (no code).",
-    "l6_score": 0,
+    "note": "L4 #464: 80%. L5 #465 OPEN. L6 #499: 75/100 (CORRECTED from 0 — full submission with 278-line app, 6 pages, deployed).",
+    "l6_score": 75,
     "l4_score": 80
   },
   "srishti-gusain": {
@@ -367,9 +367,9 @@
     "max": 13,
     "pct": 100,
     "updated": "2026-05-12T10:00:00.000Z",
-    "note": "L5 #485: 95/100. OUTSTANDING. | L6 #485: 88/100. Exceptional, bottleneck alerts, 6-check self-test.",
+    "note": "L5 #485: 95/100. OUTSTANDING. | L6 #485: 68/100 (was 88, -20 for .env + secrets.toml with real Neo4j creds). Must remove before merge.",
     "l5_score": 95,
-    "l6_score": 88
+    "l6_score": 68
   },
   "praveen-singh": {
     "name": "Praveen Singh",
