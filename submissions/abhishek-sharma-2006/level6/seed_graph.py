@@ -1,54 +1,18 @@
-from neo4j import GraphDatabase
-from dotenv import load_dotenv
-import os
+import pandas as pd
 
-load_dotenv()
+print("Reading CSV files...")
 
-URI = os.getenv("NEO4J_URI")
-USER = os.getenv("NEO4J_USER")
-PASSWORD = os.getenv("NEO4J_PASSWORD")
+production_df = pd.read_csv("factory_production.csv")
+capacity_df = pd.read_csv("factory_capacity.csv")
+workers_df = pd.read_csv("factory_workers.csv")
 
-driver = GraphDatabase.driver(URI, auth=(USER, PASSWORD))
+print("Factory Production Data")
+print(production_df.head())
 
-with driver.session() as session:
+print("\nFactory Capacity Data")
+print(capacity_df.head())
 
-    # Projects
-    for i in range(1, 9):
-        session.run("""
-        MERGE (p:Project {id:$id})
-        SET p.name=$name
-        """, id=i, name=f"Project {i}")
+print("\nFactory Workers Data")
+print(workers_df.head())
 
-    # Stations
-    for i in range(1, 10):
-        session.run("""
-        MERGE (s:Station {id:$id})
-        SET s.name=$name
-        """, id=i, name=f"Station {i}")
-
-    # Workers
-    for i in range(1, 14):
-        session.run("""
-        MERGE (w:Worker {id:$id})
-        SET w.name=$name
-        """, id=i, name=f"Worker {i}")
-
-    # Weeks
-    for i in range(1, 9):
-        session.run("""
-        MERGE (wk:Week {id:$id})
-        """, id=i)
-
-    # Relationships
-    for i in range(1, 9):
-        session.run("""
-        MATCH (p:Project {id:$pid})
-        MATCH (s:Station {id:$sid})
-        MERGE (p)-[r:SCHEDULED_AT]->(s)
-        SET r.planned_hours=100,
-            r.actual_hours=120
-        """, pid=i, sid=(i % 9) + 1)
-
-print("Graph Created Successfully!")
-
-driver.close()
+print("\nCSV files loaded successfully!")
