@@ -17,7 +17,7 @@ driver = GraphDatabase.driver(
 )
 
 # Load CSV
-workers = pd.read_csv("data/factory_workers (1).csv")
+workers = pd.read_csv("data/factory_workers.csv")
 
 # Create Worker + Station + Relationship
 def create_worker_graph(tx, worker):
