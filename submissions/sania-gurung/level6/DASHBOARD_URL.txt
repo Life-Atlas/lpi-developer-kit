@@ -1,1 +1,1 @@
-https://your-app-name.streamlit.app
+https://lifeatlassanial6.streamlit.app/
