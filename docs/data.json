@@ -1,6 +1,36 @@
 {
   "contributors": [
     {
+      "name": "Khushi Garg",
+      "github": "g-khushi",
+      "skills": [
+        "Java",
+        "Python",
+        "C",
+        "C++ (Basic)",
+        "SQL",
+        "NumPy",
+        "Pandas",
+        "TensorFlow",
+        "HTML",
+        "CSS",
+        "MongoDB",
+        "DSA",
+        "OOP",
+        "DBMS",
+        "Operating Systems"
+      ],
+      "interests": [
+        "Artificial Intelligence & Machine Learning",
+        "AI-based Real-world Applications",
+        "Natural Language Processing (NLP)",
+        "Web Development",
+        "Data Analysis & Insights"
+      ],
+      "track": "A: Agent Builders",
+      "level": 3
+    },
+    {
       "name": "Abhishek Verma",
       "github": "https://github.com/abhishekverma2323",
       "skills": [
@@ -123,6 +153,59 @@
         "Intelligent Systems & Automation"
       ],
       "track": "E: QA & Security",
+      "level": 1
+    },
+    {
+      "name": "Vansh Singhal",
+      "github": "vansh09-singhal",
+      "skills": [
+        "Python",
+        "C++",
+        "SQL",
+        "LangChain",
+        "LLMs",
+        "Machine Learning",
+        "NLP",
+        "Streamlit",
+        "Data Cleaning",
+        "Data Preprocessing"
+      ],
+      "interests": [
+        "agent workflows",
+        "retrieval-augmented generation",
+        "data analytics",
+        "system scalability",
+        "evaluation and feedback loops",
+        "prompt engineering"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
+      "name": "Varshit Pratap Singh Bhadauria",
+      "github": "temporalzone",
+      "skills": [
+        "python",
+        "java",
+        "javascript",
+        "react",
+        "django",
+        "flask",
+        "rest-apis",
+        "sqlite",
+        "mysql",
+        "git",
+        "dsa",
+        "jwt-auth"
+      ],
+      "interests": [
+        "agents",
+        "AI",
+        "api-integration",
+        "backend",
+        "automation"
+      ],
+      "track": "A: Agent Builders",
       "level": 1
     },
     {
