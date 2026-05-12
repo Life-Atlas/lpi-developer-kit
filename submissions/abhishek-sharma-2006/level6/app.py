@@ -11,9 +11,17 @@ st.set_page_config(
 # LOAD CSV FILES
 # ---------------------------------------------------
 
-production_df = pd.read_csv("factory_production.csv")
-capacity_df = pd.read_csv("factory_capacity.csv")
-workers_df = pd.read_csv("factory_workers.csv")
+production_df = pd.read_csv(
+    "submissions/abhishek-sharma-2006/level6/factory_production.csv"
+)
+
+capacity_df = pd.read_csv(
+    "submissions/abhishek-sharma-2006/level6/factory_capacity.csv"
+)
+
+workers_df = pd.read_csv(
+    "submissions/abhishek-sharma-2006/level6/factory_workers.csv"
+)
 
 # ---------------------------------------------------
 # TITLE
