@@ -136,6 +136,43 @@
       "score_pct": 92
     },
     {
+      "name": "Sania Gurung",
+      "github": "SANIAGRG",
+      "skills": [
+        "machine-learning",
+        "opencv",
+        "pytorch",
+        "sql",
+        "data-preprocessing",
+        "tensorflow",
+        "neural-networks",
+        "java",
+        "deep-learning",
+        "scikit-learn",
+        "computer-vision",
+        "pandas",
+        "ollama",
+        "python",
+        "nlp",
+        "numpy",
+        "llm",
+        "object-detection",
+        "keras",
+        "data-science"
+      ],
+      "interests": [
+        "agents",
+        "NLP",
+        "AI-pipelines",
+        "LLMs"
+      ],
+      "track": "A: Agent Builders",
+      "level": 4,
+      "score": 12,
+      "score_max": 13,
+      "score_pct": 92
+    },
+    {
       "name": "Shourya Solanki",
       "github": "Shourya3113",
       "skills": [
@@ -180,7 +217,11 @@
         "sql",
         "mcp",
         "a2a-protocol",
-        "ollama"
+        "ollama",
+        "neo4j",
+        "cypher",
+        "streamlit",
+        "knowledge-graphs"
       ],
       "interests": [
         "agents",
@@ -337,43 +378,6 @@
         "NLP",
         "3D",
         "security"
-      ],
-      "track": "A: Agent Builders",
-      "level": 3,
-      "score": 12,
-      "score_max": 13,
-      "score_pct": 92
-    },
-    {
-      "name": "Sania Gurung",
-      "github": "SANIAGRG",
-      "skills": [
-        "machine-learning",
-        "opencv",
-        "pytorch",
-        "sql",
-        "data-preprocessing",
-        "tensorflow",
-        "neural-networks",
-        "java",
-        "deep-learning",
-        "scikit-learn",
-        "computer-vision",
-        "pandas",
-        "ollama",
-        "python",
-        "nlp",
-        "numpy",
-        "llm",
-        "object-detection",
-        "keras",
-        "data-science"
-      ],
-      "interests": [
-        "agents",
-        "NLP",
-        "AI-pipelines",
-        "LLMs"
       ],
       "track": "A: Agent Builders",
       "level": 3,
@@ -1227,6 +1231,29 @@
       "score_pct": 46
     },
     {
+      "name": "Ritheeshwar K",
+      "github": "Ritheeshwar",
+      "skills": [
+        "Python",
+        "Langchain",
+        "Pytorch",
+        "LangGraph",
+        "Finetuning",
+        "FlaskAPI"
+      ],
+      "interests": [
+        "AI Agents",
+        "Computer Vision",
+        "Multimodal AI",
+        "Full-Stack Development"
+      ],
+      "track": "A: Agent Builders",
+      "level": 3,
+      "score": 6,
+      "score_max": 13,
+      "score_pct": 46
+    },
+    {
       "name": "Vusala Akanksha",
       "github": "Chutki319239",
       "skills": [
@@ -1691,26 +1718,6 @@
         "NLP",
         "AI",
         "web dev"
-      ],
-      "track": "A: Agent Builders",
-      "level": 1
-    },
-    {
-      "name": "Ritheeshwar K",
-      "github": "Ritheeshwar",
-      "skills": [
-        "Python",
-        "Langchain",
-        "Pytorch",
-        "LangGraph",
-        "Finetuning",
-        "FlaskAPI"
-      ],
-      "interests": [
-        "AI Agents",
-        "Computer Vision",
-        "Multimodal AI",
-        "Full-Stack Development"
       ],
       "track": "A: Agent Builders",
       "level": 1

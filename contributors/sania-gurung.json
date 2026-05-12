@@ -6,5 +6,5 @@
   "skills": ["machine-learning", "opencv", "pytorch", "sql", "data-preprocessing", "tensorflow", "neural-networks", "java", "deep-learning", "scikit-learn", "computer-vision", "pandas", "ollama", "python", "nlp", "numpy", "llm", "object-detection", "keras", "data-science"],
   "interests": ["agents", "NLP", "AI-pipelines","LLMs"],
   "track": "A: Agent Builders",
-  "my_twin": "I'd have it monitor my focus and energy levels throughout the day and map them against my sleep quality, meals, and the kind of tasks I was working on — because some days my code just flows and other days everything feels off, and I can never pinpoint the reason. I'd want it to predict when I'm most error-prone so I can shift my review sessions to when my mind is actually sharp."
+  "my_twin": "I'd track the gap between when I sit down to work and when I actually start — because some days I open my laptop and I'm writing code within minutes, and other days I spend an hour rearranging tabs and convincing myself to begin. I suspect it has something to do with how the previous day ended, whether I finished something or left it half-done, but I've never had the data to confirm it. I want to know if that pattern is real, and if it is, I want to catch it before I waste another morning."
 }
