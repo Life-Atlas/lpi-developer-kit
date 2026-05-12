@@ -1,0 +1,44 @@
+{
+  "name": "case-agent",
+  "description": "Specialist that grounds recommendations in cross-industry case studies and topic-specific knowledge.",
+  "url": "http://127.0.0.1:8102/.well-known/agent.json",
+  "version": "1.0.0",
+  "defaultInputModes": ["application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "HTTP+JSON",
+      "url": "http://127.0.0.1:8102/a2a/query",
+      "comment": "Authenticated specialist endpoint for orchestrator calls only."
+    }
+  ],
+  "skills": [
+    {
+      "id": "case-analysis",
+      "name": "Case Study Analysis",
+      "description": "Accepts a question, calls get_case_studies and query_knowledge, and returns practical, case-grounded highlights.",
+      "tags": ["case-studies", "benchmarking", "lpi"],
+      "examples": [
+        "What can we learn from real twins before launching one?",
+        "Which industries have useful digital twin patterns for logistics?"
+      ]
+    }
+  ],
+  "authentication": {
+    "schemes": ["apiKeyHeader"]
+  },
+  "provider": {
+    "organization": "Sanskriti",
+    "url": "https://github.com/smiling-sanskriti/lpi-developer-kit"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["get_case_studies", "query_knowledge"],
+    "llmProvider": "none",
+    "llmModel": "none",
+    "explainability": "Returns explicit evidence excerpts per tool in JSON."
+  }
+}
