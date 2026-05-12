@@ -472,7 +472,7 @@ if page == "project_overview":
                 "variance_pct":   "Variance %",
             })
             .style
-            .applymap(_colour_variance, subset=["Variance %"])
+            .map(_colour_variance, subset=["Variance %"])
             .format({"Planned h": "{:.1f}", "Actual h": "{:.1f}", "Variance %": "{:+.1f}"})
         )
         st.dataframe(styled, use_container_width=True, hide_index=True)
@@ -645,7 +645,7 @@ elif page == "station_load":
                         "variance_pct":  "Variance %",
                     })
                     .style
-                    .applymap(_red, subset=["Variance %"])
+                    .map(_red, subset=["Variance %"])
                     .format({"Planned h": "{:.1f}", "Actual h": "{:.1f}", "Variance %": "{:+.1f}"})
                 )
                 st.dataframe(styled_ov, use_container_width=True, hide_index=True)
@@ -778,7 +778,7 @@ elif page == "capacity_tracker":
                     "deficit":        "Deficit h",
                 })
                 .style
-                .applymap(_cap_colour, subset=["Deficit h"])
+                .map(_cap_colour, subset=["Deficit h"])
             )
             st.dataframe(styled_cap, use_container_width=True, hide_index=True)
 
@@ -862,7 +862,7 @@ elif page == "worker_coverage":
                     "coverage_depth":  "Depth",
                 })
                 .style
-                .applymap(_cov_depth, subset=["Depth"])
+                .map(_cov_depth, subset=["Depth"])
             )
             st.dataframe(styled_cov, use_container_width=True, hide_index=True)
 
