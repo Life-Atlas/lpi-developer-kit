@@ -299,8 +299,10 @@
         "python",
         "pytorch",
         "flask",
+        "tensorflow",
         "postgresql",
         "react",
+        "streamlit",
         "Java",
         "Git"
       ],
@@ -899,16 +901,15 @@
       "name": "Abhishek Sharma",
       "github": "Abhishek2006-Sharma",
       "skills": [
-        "Git",
-        "CLI",
-        "LLM basics",
-        "Ollama",
-        "LPI Sandbox"
+        "Python",
+        "Streamlit",
+        "Plotly",
+        "Neo4j"
       ],
       "interests": [
         "AI agents",
         "automation",
-        "tool-based systems"
+        "data dashboards"
       ],
       "track": "A: Agent Builder",
       "level": 3,
