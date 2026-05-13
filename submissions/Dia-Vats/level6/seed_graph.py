@@ -28,9 +28,9 @@ NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "password")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-PRODUCTION_CSV = os.path.join(BASE_DIR, "factory_production.csv")
-WORKERS_CSV    = os.path.join(BASE_DIR, "factory_workers.csv")
-CAPACITY_CSV   = os.path.join(BASE_DIR, "factory_capacity.csv")
+PRODUCTION_CSV = os.path.join(BASE_DIR, "data", "factory_production.csv")
+WORKERS_CSV    = os.path.join(BASE_DIR, "data", "factory_workers.csv")
+CAPACITY_CSV   = os.path.join(BASE_DIR, "data", "factory_capacity.csv")
 
 # Production flow order (exactly as specified)
 STATION_FLOW = [
