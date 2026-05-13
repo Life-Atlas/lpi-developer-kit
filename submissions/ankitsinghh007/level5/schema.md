@@ -89,4 +89,4 @@ graph TD
 | HAS_CAPACITY | 8 | one per week |
 | TRIGGERED_AT | ~4 | bottleneck nodes |
 | **TOTAL** | **~193** | |
-```
+
