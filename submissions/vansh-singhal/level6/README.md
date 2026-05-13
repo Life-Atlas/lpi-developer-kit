@@ -159,4 +159,4 @@ Change your URI scheme in `.env` from `neo4j+s://` to `neo4j+ssc://` to skip cer
 Make sure your virtual environment is activated before running any commands.
 
 **`KeyError` on secrets in `app.py`**
-When running locally, the app falls back to `.env`. Make sure `.env` exists and is filled in correctly.
+When run in locally, the app falls back to `.env`. Make sure `.env` exists and is filled in correctly.
