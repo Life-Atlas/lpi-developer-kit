@@ -100,25 +100,25 @@ The graph query directly follows operational relationships between workers, cert
 
 ## 1. Main Bottleneck Areas
 
-From the capacity data:
+From `factory_capacity.csv`:
 
-- Week 1 deficit: `-132 hours`
-- Week 2 deficit: `-125 hours`
+- Week `w1` deficit: `-132 hours`
+- Week `w2` deficit: `-125 hours`
+- Week `w4` deficit: `-50 hours`
 
-### Main overload contributors
+From `factory_production.csv`, the stations with the most frequent overruns (`actual_hours > planned_hours by 10%`) are:
 
-| Station | Issue |
-|---|---|
-| 011 – FS IQB | Extremely high actual hours across multiple projects |
-| 014 – Svets o montage | Frequent overruns above planned hours |
-| 016 – Gjutning | Only one primary worker and repeated over-capacity usage |
+| Station | Overrun Cases | Avg Variance |
+|---|---|---|
+| SB B/F-hall | 4 | 13.2% |
+| Gjutning | 3 | 17.6% |
+| Montering IQP | 3 | 11.7% |
 
-### Projects contributing most
+### Projects contributing most to overload
 
-- P05 – Sjukhus Linköping
-- P03 – Lagerhall Jönköping
-
-Stations where `actual_hours > planned_hours` by more than 10% were identified as bottlenecks.
+- P02 — Sjukhus Linköping
+- P05 — Datacenter Malmö
+- P07 — Lagerhall Jönköping
 
 ---
 
@@ -129,12 +129,18 @@ MATCH (p:Project)-[r:RUNS_ON]->(s:Station)
 
 WHERE r.actual_hours > r.planned_hours * 1.10
 
-RETURN s.station_name AS station,
+RETURN
+s.station_name AS station,
 
 collect({
     project: p.project_name,
     planned: r.planned_hours,
-    actual: r.actual_hours
+    actual: r.actual_hours,
+    variance_pct:
+    round(
+        ((r.actual_hours-r.planned_hours)
+        /r.planned_hours)*100,2
+    )
 }) AS overruns,
 
 count(*) AS total_overruns
@@ -146,9 +152,9 @@ ORDER BY total_overruns DESC
 
 This query:
 
-- checks where actual hours exceed planned hours by more than 10%,
-- groups overloaded projects by station,
-- and identifies stations causing repeated production bottlenecks.
+- detects projects exceeding planned hours by more than 10%,
+- groups overloads by station,
+- and highlights recurring bottleneck stations.
 
 ---
 
@@ -159,7 +165,9 @@ This query:
 Use a relationship property:
 
 ```text
-PROCESSED_AT {
+RUNS_ON {
+    planned_hours,
+    actual_hours,
     variance_pct,
     alert: true
 }
@@ -167,7 +175,7 @@ PROCESSED_AT {
 
 ### Why?
 
-The bottleneck is tied to a specific production event, not a completely separate entity. Using relationship properties keeps the overload information directly connected to the station-processing activity and makes bottleneck detection easier during graph traversal.
+The overload belongs to a specific production activity between a project and station. Keeping bottleneck data on the relationship makes variance analysis and alert traversal simpler and more efficient.
 
 ---
 
@@ -190,8 +198,6 @@ Embed project descriptions containing:
 "450 meters of IQB beams for hospital extension in Linköping, tight delivery timeline, high welding workload"
 ```
 
-This allows semantic similarity matching between new and past projects.
-
 ---
 
 ## 2. Hybrid Query
@@ -199,19 +205,20 @@ This allows semantic similarity matching between new and past projects.
 ```cypher
 -- Vector similarity + graph filtering --
 
-MATCH (p:Project)
+CALL db.index.vector.queryNodes(
+    'project_embeddings',
+    5,
+    $new_project_embedding
+)
+YIELD node, score
 
-WHERE vector.similarity(
-p.embedding,
-$new_project_embedding
-) > 0.85
-
-MATCH (p)-[r:RUNS_ON]->(s:Station)
+MATCH (node)-[r:RUNS_ON]->(s:Station)
 
 WHERE r.actual_hours <= r.planned_hours * 1.05
 
 RETURN
-p.project_name AS similar_project,
+node.project_name AS similar_project,
+score,
 
 collect(DISTINCT s.station_name) AS stations_used,
 
@@ -220,7 +227,7 @@ avg(
 /r.planned_hours
 ) AS variance
 
-ORDER BY variance ASC
+ORDER BY score DESC
 ```
 
 ### Explanation
