@@ -1,0 +1,1 @@
+deployment_url = https://yxkujty9fukjuacyugndqd.streamlit.app/
