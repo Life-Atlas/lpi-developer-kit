@@ -1,0 +1,60 @@
+{
+  "name": "SMILE Methodology Specialist",
+  "description": "Analyzes factory and operational problems through the SMILE framework (Scan, Model, Implement, Learn, Evolve). Queries the LPI knowledge base for methodology context, identifies which SMILE phases apply to a given problem, and orchestrates a combined recommendation by delegating case-study evidence retrieval to the Case Study Analyst agent. Returns a structured JSON recommendation with methodology steps and supporting evidence.",
+  "url": "http://localhost:8001",
+  "version": "1.0.0",
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "HTTP-REST",
+      "url": "http://localhost:8001/task",
+      "method": "POST",
+      "comment": "Accepts {query: string}. Returns structured recommendation JSON."
+    },
+    {
+      "protocolBinding": "A2A-discovery",
+      "url": "http://localhost:8001/.well-known/agent.json",
+      "comment": "This card. Agent B discovers Agent A here."
+    }
+  ],
+  "skills": [
+    {
+      "id": "smile_analysis",
+      "name": "SMILE Framework Analysis",
+      "description": "Takes a factory/operational problem description, fetches SMILE methodology from LPI (smile_overview + query_knowledge), identifies the most relevant SMILE phases, then queries Agent B for case study evidence. Returns {methodology, phases, evidence, recommendation}.",
+      "tags": ["smile", "methodology", "knowledge-graph", "manufacturing"],
+      "examples": [
+        "Our Gjutning station is 15% over budget. Apply SMILE methodology.",
+        "Station 014 keeps missing planned hours. What SMILE phases apply?",
+        "How do we improve on-time delivery using SMILE for steel fabrication?"
+      ]
+    },
+    {
+      "id": "agent_orchestration",
+      "name": "Multi-Agent Orchestration",
+      "description": "Discovers Agent B via A2A card at http://localhost:8002/.well-known/agent.json, sends a structured sub-query, and merges the case study response with the SMILE analysis into a unified recommendation neither agent could produce alone.",
+      "tags": ["a2a", "orchestration", "multi-agent"],
+      "examples": [
+        "Combine SMILE methodology with relevant case study evidence for this problem."
+      ]
+    }
+  ],
+  "authentication": {
+    "schemes": ["none"]
+  },
+  "provider": {
+    "organization": "Adil Islam",
+    "url": "https://github.com/Adilislam0"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["smile_overview", "query_knowledge"],
+    "llmProvider": "ollama",
+    "llmModel": "qwen2.5:0.5b",
+    "explainability": "Every response includes SOURCES block citing which LPI tool provided which part of the answer. Agent B's contribution is labelled separately. All LLM calls are bounded to 300 tokens and 120s timeout."
+  }
+}
