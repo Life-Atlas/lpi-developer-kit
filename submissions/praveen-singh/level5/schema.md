@@ -3,87 +3,36 @@
 ```mermaid
 graph TD
 
-%% =========================
-%% TOP LAYER
-%% =========================
+    PROJECT[Project]
+    PRODUCT[Product]
+    STATION[Station]
+    WORKER[Worker]
+    WEEK[Week]
+    SKILL[Skill]
+    JOBTYPE[JobType]
+    WEEKLYLOAD[WeeklyLoad]
 
-Project[Project]
+    PROJECT -->|BUILDS| PRODUCT
+    PROJECT -->|RUNS_DURING| WEEK
+    PROJECT -->|FLOWS_THROUGH| STATION
 
-%% =========================
-%% LEFT SIDE
-%% =========================
+    PROJECT -->|WORKLOAD| STATION
 
-Product[Product]
-Week[Week]
+    WORKER -->|ASSIGNED_TO| STATION
+    WORKER -->|BACKUP_FOR| STATION
 
-Project -->|PRODUCES| Product
-Project -->|RUNS_IN| Week
+    WORKER -->|HAS_SKILL| SKILL
+    WORKER -->|HAS_JOB| JOBTYPE
 
-%% =========================
-%% CENTER
-%% =========================
-
-Station[Station]
-
-Project -->|USES_STATION| Station
-
-Project -->|PROCESSED_AT| Station
-
-%% RELATIONSHIP PROPERTIES NOTE
-ProcessedProps["PROCESSED_AT Properties:
-- planned_hours
-- actual_hours
-- completed_units
-- week"]
-
-Project -.-> ProcessedProps
-ProcessedProps -.-> Station
-
-%% =========================
-%% RIGHT SIDE
-%% =========================
-
-Worker[Worker]
-Role[Role]
-Certification[Certification]
-
-Worker -->|PRIMARY_AT| Station
-
-Worker -->|CAN_COVER| Station
-
-CoverProps["CAN_COVER Properties:
-- coverage_priority
-- skill_level"]
-
-Worker -.-> CoverProps
-CoverProps -.-> Station
-
-Worker -->|HAS_ROLE| Role
-
-Worker -->|CERTIFIED_IN| Certification
-
-%% =========================
-%% BOTTOM
-%% =========================
-
-CapacityWeek[CapacityWeek]
-
-Station -->|HAS_CAPACITY| CapacityWeek
-
-CapacityProps["HAS_CAPACITY Properties:
-- total_capacity
-- total_planned
-- deficit"]
-
-Station -.-> CapacityProps
-CapacityProps -.-> CapacityWeek
+    STATION -->|WEEKLY_STATUS| WEEKLYLOAD
 ```
+
 ---
 
 # Node Labels
 
-## 1. Project
-Represents factory production projects.
+## Project
+Represents customer production projects handled by the factory.
 
 ### Properties
 - project_id
@@ -92,19 +41,19 @@ Represents factory production projects.
 
 ---
 
-## 2. Product
-Represents manufactured product types.
+## Product
+Represents the type of structural product being manufactured.
 
 ### Properties
 - product_type
-- unit
 - quantity
+- unit
 - unit_factor
 
 ---
 
-## 3. Station
-Represents factory production stations.
+## Station
+Represents production stations inside the factory workflow.
 
 ### Properties
 - station_code
@@ -112,46 +61,45 @@ Represents factory production stations.
 
 ---
 
-## 4. Worker
-Represents factory workers/operators.
+## Worker
+Represents factory workers and operators.
 
 ### Properties
 - worker_id
 - worker_name
-- worker_type
 - hours_per_week
+- worker_type
 
 ---
 
-## 5. Week
-Represents production weeks.
+## Week
+Represents production planning weeks.
 
 ### Properties
 - week_id
 
 ---
 
-## 6. Certification
-Represents worker certifications.
+## Skill
+Represents certifications and technical worker capabilities.
 
 ### Properties
-- certification_name
+- skill_name
 
 ---
 
-## 7. Role
-Represents worker roles.
+## JobType
+Represents worker responsibility category.
 
 ### Properties
 - role_name
 
 ---
 
-## 8. CapacityWeek
-Represents weekly station capacity analysis.
+## WeeklyLoad
+Represents weekly factory load and capacity conditions.
 
 ### Properties
-- week
 - total_capacity
 - total_planned
 - deficit
@@ -160,22 +108,25 @@ Represents weekly station capacity analysis.
 
 # Relationship Types
 
-## 1. (:Project)-[:PRODUCES]->(:Product)
-A project produces a specific product type.
+## (:Project)-[:BUILDS]->(:Product)
+
+Connects projects to the products being manufactured.
 
 ---
 
-## 2. (:Project)-[:USES_STATION]->(:Station)
-A project uses a production station.
+## (:Project)-[:RUNS_DURING]->(:Week)
+
+Tracks which production weeks a project is active.
 
 ---
 
-## 3. (:Project)-[:RUNS_IN]->(:Week)
-A project runs during a specific production week.
+## (:Project)-[:FLOWS_THROUGH]->(:Station)
+
+Represents station routing inside the production process.
 
 ---
 
-## 4. (:Project)-[:PROCESSED_AT]->(:Station)
+## (:Project)-[:WORKLOAD]->(:Station)
 
 ### Relationship Properties
 - planned_hours
@@ -183,58 +134,65 @@ A project runs during a specific production week.
 - completed_units
 - week
 
-Tracks production workload and variance at stations.
+Stores operational production metrics directly on relationships.
 
 ---
 
-## 5. (:Worker)-[:PRIMARY_AT]->(:Station)
-Represents the worker’s primary station assignment.
+## (:Worker)-[:ASSIGNED_TO]->(:Station)
+
+Represents primary worker allocation.
 
 ---
 
-## 6. (:Worker)-[:CAN_COVER]->(:Station)
+## (:Worker)-[:BACKUP_FOR]->(:Station)
 
 ### Relationship Properties
-- coverage_priority
-- skill_level
+- priority
+- efficiency
 
-Represents backup station coverage capability.
-
----
-
-## 7. (:Worker)-[:HAS_ROLE]->(:Role)
-Represents worker job role.
+Represents worker backup coverage capability for staffing gaps.
 
 ---
 
-## 8. (:Worker)-[:CERTIFIED_IN]->(:Certification)
-Represents worker certifications.
+## (:Worker)-[:HAS_SKILL]->(:Skill)
+
+Tracks technical certifications and qualifications.
 
 ---
 
-## 9. (:Station)-[:HAS_CAPACITY]->(:CapacityWeek)
+## (:Worker)-[:HAS_JOB]->(:JobType)
+
+Represents worker role category inside the factory.
+
+---
+
+## (:Station)-[:WEEKLY_STATUS]->(:WeeklyLoad)
 
 ### Relationship Properties
-- total_capacity
-- total_planned
+- capacity
+- planned
 - deficit
 
-Tracks station overload and capacity deficit.
+Tracks overload conditions and weekly station pressure.
 
 ---
 
-# Why This Schema Fits the Dataset
+# Why I Designed the Graph This Way
 
-This graph structure models the core factory workflow:
+The dataset models production flow across multiple factory stations over several weeks.
 
-- Projects are processed through production stations
-- Workers operate and cover stations
-- Stations experience varying workload and capacity pressure
-- Production variance is captured directly on relationships
-- Worker coverage and bottleneck analysis become easy to query
+Instead of treating the data as isolated tables, I modeled the graph around operational movement through the factory.
 
-The schema is optimized for:
-- bottleneck detection
-- worker replacement analysis
-- project variance tracking
-- hybrid graph + vector search in Level 6
+This structure makes it easier to:
+
+- identify overloaded stations
+- trace which projects created bottlenecks
+- analyze production variance
+- check backup worker coverage
+- monitor weekly capacity pressure
+
+I separated workers, skills, and station assignments because staffing flexibility is a critical operational problem in manufacturing systems.
+
+One design decision I made was storing production variance directly on relationships instead of creating separate variance nodes. This simplifies Cypher aggregation queries and improves dashboard performance for bottleneck analysis.
+
+The schema is also designed to support future hybrid graph + vector search workflows in Level 6.
