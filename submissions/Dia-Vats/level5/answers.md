@@ -1,5 +1,5 @@
 # Level 5 — Graph Thinking  
-### DIA Vats
+### Dia Vats
 
 ---
 
