@@ -1,0 +1,11 @@
+stationId,name,type,capacity,currentLoad,status,efficiency,location,downtime
+ST001,Assembly Station Alpha,ASSEMBLY,50,92.5,ACTIVE,78.5,Floor A,5.2
+ST002,Testing Station Beta,TESTING,30,78.0,ACTIVE,85.2,Floor B,3.1
+ST003,Packaging Station Gamma,PACKAGING,100,65.5,ACTIVE,92.1,Floor C,2.8
+ST004,Quality Control Delta,QUALITY,20,88.0,ACTIVE,79.8,Floor A,4.5
+ST005,Maintenance Station Epsilon,MAINTENANCE,10,45.0,ACTIVE,88.9,Floor B,8.2
+ST006,Welding Station Zeta,WELDING,25,95.0,ACTIVE,72.3,Floor C,6.7
+ST007,Painting Station Eta,PAINTING,15,82.0,ACTIVE,81.5,Floor A,4.2
+ST008,Assembly Station Theta,ASSEMBLY,45,68.0,ACTIVE,84.7,Floor B,3.9
+ST009,Inspection Station Iota,INSPECTION,12,91.0,ACTIVE,76.2,Floor C,5.8
+ST010,Logistics Station Kappa,LOGISTICS,80,55.0,ACTIVE,89.4,Floor A,2.1
