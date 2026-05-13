@@ -723,20 +723,16 @@
       "github": "Adilislam0",
       "skills": [
         "Python",
-        "PyYorch",
-        "RAG",
-        "FAISS",
-        "LangChain",
-        "NLP"
+        "Streamlit",
+        "Plotly",
+        "Neo4j"
       ],
       "interests": [
-        "agents",
-        "NLP",
-        "RAG",
-        "evaluation",
-        "LLMs"
+        "AI agents",
+        "automation",
+        "data dashboards"
       ],
-      "track": "A: Agent Builders ",
+      "track": "A: Agent Builder",
       "level": 3,
       "score": 10,
       "score_max": 13,
