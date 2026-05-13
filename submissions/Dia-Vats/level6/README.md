@@ -1,110 +1,107 @@
-# Swedish Steel Factory — Neo4j Production Dashboard
-**Author: Dia Vats**
+# Steel Factory Production Dashboard
+**Dia Vats | Level 6 - LifeAtlas LPI Developer Kit**
+**Live: https://diavats-l6.streamlit.app**
 
-A production-ready Streamlit + Neo4j dashboard for a Swedish steel fabrication factory, built on a fully normalised graph schema with 9 node labels, 11 relationship types, and 7 interactive dashboard pages.
+---
+
+## What I Built
+
+The raw data was 3 CSVs describing a Swedish steel factory - 8 projects, 9 stations, 14 workers, 8 weeks. I turned it into a Neo4j knowledge graph and built a 7-page Streamlit dashboard on top of it.
+
+The point wasn't to build a chart on top of a spreadsheet. The graph models actual operational dependencies - which work orders flow through which stations, which workers can cover which stations if someone's out, and where downstream risk accumulates when a station overruns. The dashboard surfaces that reasoning directly.
+
+I also completed 2 bonus pages (Bonus B — Factory Floor, Bonus C — Forecast).
+
+**Graph stats: 148 nodes, 446 relationships, 9 labels, 12 relationship types.**
+
+---
+
+## Graph Schema
+
+**Nodes:** Project, WorkOrder, Station, Product, Week, Worker, Certification, CapacitySnapshot, Etapp
+
+**Relationships:** HAS_WORKORDER, AT_STATION, PRODUCES, SCHEDULED_IN, HAS_CAPACITY, ASSIGNED_TO, CAN_COVER, CERTIFIED_IN, REQUIRES, FEEDS_INTO, FOLLOWS, IN_ETAPP
+
+A few things worth noting:
+
+- WorkOrder is the core unit - one node per row in the production CSV. It sits between Project and Station and carries planned hours, actual hours, variance %, and bottleneck flag.
+- FEEDS_INTO chains stations in physical flow order (011 → 012 → ... → 021). This lets you trace downstream impact from any overrunning station.
+- FOLLOWS links the same project-station pair across consecutive weeks so you can traverse time without aggregating in every query.
+- Bottleneck rule: `actual_hours > planned_hours × 1.1`
+- WorkOrder ID format: `P01_011_w1_IQB`
+
+---
+
+## Dashboard Pages
+
+**Page 1 - Project Overview**
+KPI cards, grouped bar chart (planned vs actual per project), variance table with red highlights where variance exceeds 10%.
+
+**Page 2 - Station Load**
+Plotly heatmap, stations vs weeks, coloured green/yellow/red by variance. Station 016 shows up clearly as the recurring problem.
+
+**Page 3 - Capacity Tracker**
+Weekly capacity vs planned demand. Deficit weeks in red. Calls out that 5 of 8 weeks run over capacity, worst at -132 hours in week 1.
+
+**Page 4 - Worker Coverage**
+Shows who covers which station and flags single points of failure. Station 016 is marked CRITICAL — Victor Elm is the only backup for Per Hansen, and 4 projects run through that station.
+
+**Page 5 - Factory Floor (Bonus B)**
+Scatter-based floor plan with stations on a physical grid, coloured by load severity. Hover shows active projects and overload %.
+
+**Page 6 - Forecast (Bonus C)**
+Linear extrapolation from weeks 1–8 per station, projecting week 9. Shows which stations are trending toward overload.
+
+**Page 7 - Self-Test**
+6 automated Neo4j checks, scored out of 20. Runs on every page load.
 
 ---
 
 ## Project Structure
 
 ```
-l6_dashboard/
-├── app.py                    # Main Streamlit entry point (7-page sidebar nav)
-├── db.py                     # Shared Neo4j driver (secrets → .env fallback)
-├── seed_graph.py             # Graph seeder — run once before the dashboard
+submissions/Dia-Vats/level6/
+├── app.py
+├── db.py
+├── seed_graph.py
 ├── requirements.txt
-├── .env.example              # Local env template
-├── .streamlit/
-│   └── secrets.toml.example  # Streamlit Cloud secrets template
+├── .env.example
+├── DASHBOARD_URL.txt
+├── README.md
+├── data/
+│   ├── factory_production.csv
+│   ├── factory_workers.csv
+│   └── factory_capacity.csv
 ├── pages_impl/
-│   ├── page1_overview.py     # Project Overview
-│   ├── page2_station.py      # Station Load Heatmap
-│   ├── page3_capacity.py     # Capacity Tracker
-│   ├── page4_workers.py      # Worker Coverage + SPOF
-│   ├── page5_floor.py        # Factory Floor (Bonus B)
-│   ├── page6_forecast.py     # Forecast (Bonus C)
-│   └── page7_selftest.py     # Self-Test (20 pts)
-└── README.md
+│   ├── page1_overview.py
+│   ├── page2_station.py
+│   ├── page3_capacity.py
+│   ├── page4_workers.py
+│   ├── page5_floor.py
+│   ├── page6_forecast.py
+│   └── page7_selftest.py
+└── .streamlit/
+    └── secrets.toml.example
 ```
-
-Copy the three CSV files into this folder alongside `seed_graph.py`:
-- `factory_production.csv`
-- `factory_workers.csv`
-- `factory_capacity.csv`
 
 ---
 
-## Setup
+## Running It
 
-### 1. Install dependencies
 ```bash
 pip install -r requirements.txt
-```
-
-### 2. Configure Neo4j credentials
-
-**Local (`.env`):**
-```bash
-cp .env.example .env
-# Edit .env with your actual Neo4j URI, user, password
-```
-
-**Streamlit Cloud (`.streamlit/secrets.toml`):**
-```bash
-cp .streamlit/secrets.toml.example .streamlit/secrets.toml
-# Edit secrets.toml with your credentials
-```
-
-### 3. Seed the graph
-```bash
 python seed_graph.py
-```
-This is safe to re-run — uses `MERGE` everywhere. Expected output includes node and relationship counts.
-
-### 4. Launch the dashboard
-```bash
 streamlit run app.py
 ```
 
----
+For Streamlit Cloud, add credentials under Settings > Secrets:
+```toml
+NEO4J_URI = "neo4j+s://your-instance.databases.neo4j.io"
+NEO4J_USER = "your-username"
+NEO4J_PASSWORD = "your-password"
+```
 
-## Dashboard Pages
-
-| Page | Description |
-|------|-------------|
-| 🗂️ Project Overview | Grouped bar chart, KPI cards, variance table (red if > 10%) |
-| 🔥 Station Load | Plotly heatmap stations × weeks, green/yellow/red scale |
-| ⚡ Capacity Tracker | Capacity vs demand bar chart, deficit weeks in red, insight text |
-| 👷 Worker Coverage | SPOF detection, expandable station cards, downstream risk via FEEDS_INTO |
-| 🏭 Factory Floor | Scatter-based floor plan, stations coloured by load severity |
-| 📈 Forecast | Linear extrapolation to week 9, star markers, risk summary |
-| ✅ Self-Test | 6 automated checks, 20-point score, runs on every load |
-
----
-
-## Graph Schema
-
-**9 Node Labels:** `Project`, `WorkOrder`, `Station`, `Product`, `Week`, `Worker`, `Certification`, `CapacitySnapshot`, `Etapp`
-
-**11 Relationship Types:** `HAS_WORKORDER`, `AT_STATION`, `PRODUCES`, `SCHEDULED_IN`, `HAS_CAPACITY`, `ASSIGNED_TO`, `CAN_COVER`, `CERTIFIED_IN`, `REQUIRES`, `FEEDS_INTO`, `FOLLOWS`
-
-**WorkOrder ID format:** `{project_id}_{station_code}_{week}_{product_type}` e.g. `P01_011_w1_IQB`
-
-**Bottleneck rule:** `is_bottleneck = True` when `actual_hours > planned_hours × 1.1`
-
----
-
-## Self-Test Scoring
-
-| Check | Points | Criteria |
-|-------|--------|----------|
-| 1 | 3 | Neo4j connection alive |
-| 2 | 3 | Node count ≥ 50 |
-| 3 | 3 | Relationship count ≥ 100 |
-| 4 | 3 | 6+ distinct node labels |
-| 5 | 3 | 8+ distinct relationship types |
-| 6 | 5 | Bottleneck query returns results |
-| **Total** | **20** | |
+`seed_graph.py` uses MERGE everywhere — safe to re-run without duplicating data.
 
 ---
 
