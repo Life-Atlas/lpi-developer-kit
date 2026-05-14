@@ -301,9 +301,9 @@ def page_project_overview():
     ).round(1)
     df["label"] = df["project_id"] + "  " + df["project_name"]
 
-    over   = int((df["variance_pct"] > 10).sum())
-    avg_v  = df["variance_pct"].mean()
-    sign   = "+" if avg_v >= 0 else ""
+    over  = int((df["variance_pct"] > 10).sum())
+    avg_v = df["variance_pct"].mean()
+    sign  = "+" if avg_v >= 0 else ""
 
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Active Projects",   len(df))
@@ -313,22 +313,46 @@ def page_project_overview():
     c3.metric("Average Variance",  f"{sign}{avg_v:.1f}%")
     c4.metric("Units Completed",   f"{int(df['total_units'].sum()):,}")
 
-    section_label("Hours — planned vs actual by project")
-    fig = go.Figure()
-    fig.add_bar(x=df["label"], y=df["total_planned"], name="Planned",
-                marker_color=BLUE, marker_line_width=0)
-    fig.add_bar(x=df["label"], y=df["total_actual"], name="Actual",
-                marker_color=RED, marker_line_width=0)
-    fig.update_layout(
-        _base_layout(
-            barmode="group",
-            yaxis_title="Hours",
-            xaxis=dict(showgrid=False, linecolor="#e2e8f0",
-                       tickangle=-14, tickfont=dict(size=10)),
-        )
-    )
-    show_chart(fig, 400)
+    # ── Hours side-by-side with product breakdown ──────────────────────────────
+    ch_l, ch_r = st.columns(2)
 
+    with ch_l:
+        section_label("Planned vs actual hours by project")
+        fig = go.Figure()
+        fig.add_bar(x=df["label"], y=df["total_planned"], name="Planned",
+                    marker_color=BLUE, marker_line_width=0)
+        fig.add_bar(x=df["label"], y=df["total_actual"], name="Actual",
+                    marker_color=RED, marker_line_width=0)
+        fig.update_layout(_base_layout(
+            barmode="group", yaxis_title="Hours",
+            xaxis=dict(showgrid=False, linecolor="#e2e8f0",
+                       tickangle=-20, tickfont=dict(size=9)),
+        ))
+        show_chart(fig, 380)
+
+    with ch_r:
+        section_label("Actual hours by product type per project")
+        prod_rows = query("""
+            MATCH (p:Project)-[:HAS_ENTRY]->(pe:ProductionEntry)-[:FOR_PRODUCT]->(pr:Product)
+            RETURN p.project_id         AS project_id,
+                   pr.product_type      AS product_type,
+                   sum(pe.actual_hours) AS actual_hours
+            ORDER BY p.project_id, pr.product_type
+        """)
+        if prod_rows:
+            pdf = pd.DataFrame(prod_rows)
+            fig_prod = px.bar(
+                pdf, x="project_id", y="actual_hours", color="product_type",
+                barmode="stack",
+                color_discrete_sequence=px.colors.qualitative.Set2,
+            )
+            fig_prod.update_layout(_base_layout(
+                yaxis_title="Actual hours", xaxis_title="Project",
+                xaxis=dict(showgrid=False, linecolor="#e2e8f0", tickfont=dict(size=10)),
+            ))
+            show_chart(fig_prod, 380)
+
+    # ── Project detail table ───────────────────────────────────────────────────
     section_label("Project detail")
     df["products"] = df["products"].apply(lambda x: ", ".join(sorted(x)) if x else "—")
     display = df[["project_id", "project_name", "etapp",
@@ -348,6 +372,47 @@ def page_project_overview():
         width="stretch", hide_index=True,
     )
 
+    # ── Weekly drill-down for selected project ─────────────────────────────────
+    section_label("Weekly performance drill-down")
+    proj_ids = sorted(df["project_id"].tolist()) if not df.empty else []
+    sel_proj = st.selectbox("Select project:", proj_ids, key="po_proj_sel")
+    week_rows = query("""
+        MATCH (p:Project {project_id: $pid})-[:HAS_ENTRY]->(pe:ProductionEntry)
+        MATCH (pe)-[:IN_WEEK]->(w:Week)
+        RETURN w.week_id               AS week,
+               sum(pe.planned_hours)   AS planned,
+               sum(pe.actual_hours)    AS actual,
+               sum(pe.completed_units) AS units
+        ORDER BY w.week_id
+    """, {"pid": sel_proj})
+    if week_rows:
+        wdf = pd.DataFrame(week_rows)
+        wdf["efficiency"] = (
+            wdf["planned"] / wdf["actual"].replace(0, float("nan")) * 100
+        ).round(1)
+        fig_wk = go.Figure()
+        fig_wk.add_bar(x=wdf["week"], y=wdf["planned"], name="Planned",
+                       marker_color=BLUE, marker_line_width=0, opacity=0.85)
+        fig_wk.add_bar(x=wdf["week"], y=wdf["actual"], name="Actual",
+                       marker_color=RED, marker_line_width=0, opacity=0.85)
+        fig_wk.add_scatter(
+            x=wdf["week"], y=wdf["efficiency"],
+            mode="lines+markers", name="Efficiency %",
+            yaxis="y2",
+            line=dict(color=AMBER, width=2, dash="dot"),
+            marker=dict(size=7, color=AMBER, line=dict(width=2, color="#fff")),
+        )
+        fig_wk.update_layout(_base_layout(
+            barmode="group", xaxis_title="Week",
+            yaxis=dict(title="Hours", gridcolor="#f1f5f9",
+                       linecolor="#e2e8f0", tickfont=dict(size=11)),
+            yaxis2=dict(title="Efficiency %", overlaying="y", side="right",
+                        showgrid=False, tickfont=dict(size=11),
+                        tickcolor="#e2e8f0", linecolor="#e2e8f0",
+                        range=[50, 150]),
+        ))
+        show_chart(fig_wk, 340)
+
 
 # ── Page 2 — Station Load ─────────────────────────────────────────────────────
 
@@ -355,7 +420,7 @@ def page_station_load():
     page_title(
         "Station Load",
         "Variance heatmap across all production stations by week. "
-        "Red cells indicate actual hours exceeded the plan by more than 10%.",
+        "Red cells indicate actual hours exceeded the plan.",
     )
 
     rows = query("""
@@ -370,22 +435,29 @@ def page_station_load():
     """)
     df = pd.DataFrame(rows)
     df["variance_pct"] = ((df["actual"] - df["planned"]) / df["planned"] * 100).round(1)
-    df["station"] = df["code"] + "  " + df["name"]
+    df["excess"]       = (df["actual"] - df["planned"]).clip(lower=0)
+    df["station"]      = df["code"] + "  " + df["name"]
 
-    worst     = df.loc[df["variance_pct"].idxmax()]
+    worst      = df.loc[df["variance_pct"].idxmax()]
     overloaded = int((df.groupby("station")["variance_pct"].mean() > 0).sum())
+    total_excess = df["excess"].sum()
 
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Stations Tracked", df["station"].nunique())
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Stations Tracked",  df["station"].nunique())
     c2.metric("Stations Over Plan", overloaded,
               delta=f"{overloaded} stations", delta_color="inverse" if overloaded else "off")
     c3.metric("Worst Single Overrun",
               f"+{worst['variance_pct']}%",
               delta=f"{worst['code']} — {worst['week']}",
               delta_color="inverse")
+    c4.metric("Total Excess Hours", f"{total_excess:.0f} hrs",
+              delta="across all stations & weeks", delta_color="inverse")
 
+    # ── Variance heatmap ───────────────────────────────────────────────────────
     section_label("Variance heatmap — station by week")
-    pivot = df.pivot(index="station", columns="week", values="variance_pct").fillna(0)
+    pivot = df.pivot_table(
+        index="station", columns="week", values="variance_pct", aggfunc="mean"
+    ).fillna(0)
     fig = px.imshow(
         pivot,
         color_continuous_scale=["#22c55e", "#f59e0b", "#ef4444"],
@@ -393,10 +465,9 @@ def page_station_load():
         text_auto=".1f",
         aspect="auto",
     )
-    fig.update_coloraxes(colorbar_title="Variance %",
-                         colorbar_tickfont=dict(size=10))
+    fig.update_coloraxes(colorbar_title="Variance %", colorbar_tickfont=dict(size=10))
     fig.update_layout(
-        height=480,
+        height=400,
         font=dict(family="-apple-system, sans-serif", size=11),
         plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
         margin=dict(t=16, b=40, l=8, r=64),
@@ -405,21 +476,92 @@ def page_station_load():
     )
     st.plotly_chart(fig, width="stretch")
 
-    section_label("Station drill-down")
-    stations = sorted(df["station"].unique().tolist())
-    selected = st.selectbox("Select a station:", stations)
-    sub = df[df["station"] == selected].sort_values("week")
+    # ── Drill-down left, overrun leaderboard right ─────────────────────────────
+    dd_l, dd_r = st.columns([3, 2])
 
-    fig2 = go.Figure()
-    fig2.add_bar(x=sub["week"], y=sub["planned"], name="Planned",
-                 marker_color=BLUE, marker_line_width=0)
-    fig2.add_bar(x=sub["week"], y=sub["actual"], name="Actual",
-                 marker_color=RED, marker_line_width=0)
-    fig2.update_layout(_base_layout(
-        barmode="group", yaxis_title="Hours", xaxis_title="Week",
-        title=f"{selected.strip()} — weekly hours",
-    ))
-    show_chart(fig2, 320)
+    with dd_l:
+        section_label("Station weekly drill-down")
+        stations = sorted(df["station"].unique().tolist())
+        selected = st.selectbox("Select a station:", stations)
+        sub = df[df["station"] == selected].sort_values("week")
+        fig2 = go.Figure()
+        fig2.add_bar(x=sub["week"], y=sub["planned"], name="Planned",
+                     marker_color=BLUE, marker_line_width=0)
+        fig2.add_bar(x=sub["week"], y=sub["actual"], name="Actual",
+                     marker_color=RED, marker_line_width=0)
+        # variance % line on secondary axis
+        fig2.add_scatter(
+            x=sub["week"], y=sub["variance_pct"],
+            mode="lines+markers", name="Variance %",
+            yaxis="y2",
+            line=dict(color=AMBER, width=2, dash="dot"),
+            marker=dict(size=6, color=AMBER, line=dict(width=2, color="#fff")),
+        )
+        fig2.update_layout(_base_layout(
+            barmode="group", xaxis_title="Week",
+            yaxis=dict(title="Hours", gridcolor="#f1f5f9",
+                       linecolor="#e2e8f0", tickfont=dict(size=11)),
+            yaxis2=dict(title="Variance %", overlaying="y", side="right",
+                        showgrid=False, tickfont=dict(size=11),
+                        tickcolor="#e2e8f0", linecolor="#e2e8f0"),
+        ))
+        show_chart(fig2, 320)
+
+    with dd_r:
+        section_label("Cumulative excess hours — all weeks")
+        overrun_df = (
+            df.groupby("station", as_index=False)["excess"]
+            .sum()
+            .sort_values("excess", ascending=False)
+        )
+        fig_or = go.Figure()
+        fig_or.add_bar(
+            x=overrun_df["excess"].round(1),
+            y=overrun_df["station"],
+            orientation="h",
+            marker_color=[RED if v > 0 else GREEN for v in overrun_df["excess"]],
+            marker_line_width=0,
+            text=overrun_df["excess"].apply(
+                lambda v: f"+{v:.0f} h" if v > 0 else "on plan"
+            ),
+            textposition="outside",
+            textfont=dict(size=10, color="#374151"),
+        )
+        fig_or.update_layout(_base_layout(
+            xaxis_title="Excess hours",
+            xaxis=dict(showgrid=True, gridcolor="#f1f5f9", linecolor="#e2e8f0",
+                       tickfont=dict(size=10)),
+            yaxis=dict(showgrid=False, linecolor="#e2e8f0", tickfont=dict(size=9),
+                       autorange="reversed"),
+            showlegend=False,
+        ))
+        show_chart(fig_or, 320)
+
+    # ── Projects driving overload at selected station ──────────────────────────
+    section_label(f"Projects contributing overload — {selected.strip()}")
+    proj_contrib = query("""
+        MATCH (pe:ProductionEntry)-[:AT_STATION]->(s:Station)
+        WHERE s.station_name = $sname
+        MATCH (p:Project)-[:HAS_ENTRY]->(pe)
+        WHERE pe.actual_hours > pe.planned_hours
+        RETURN p.project_id   AS project_id,
+               p.project_name AS project_name,
+               round(sum(pe.actual_hours - pe.planned_hours), 1) AS excess_hours,
+               round(sum(pe.actual_hours), 1)                    AS actual_hours,
+               round(sum(pe.planned_hours), 1)                   AS planned_hours
+        ORDER BY excess_hours DESC
+    """, {"sname": selected.split("  ", 1)[-1] if "  " in selected else selected})
+    if proj_contrib:
+        cdf = pd.DataFrame(proj_contrib)
+        cdf.columns = ["ID", "Project", "Excess hrs", "Actual hrs", "Planned hrs"]
+        def _exc_style(v):
+            return "color:#dc2626; font-weight:600" if v > 0 else "color:#16a34a"
+        st.dataframe(
+            cdf.style.map(_exc_style, subset=["Excess hrs"]),
+            width="stretch", hide_index=True,
+        )
+    else:
+        st.caption("No project overruns recorded at this station.")
 
 
 # ── Page 3 — Capacity Tracker ─────────────────────────────────────────────────
@@ -443,20 +585,27 @@ def page_capacity_tracker():
         ORDER BY w.week_id
     """)
     df = pd.DataFrame(rows)
+    df_sorted = df.sort_values("week").copy()
+    df_sorted["demand_delta"] = df_sorted["planned"].diff().fillna(0).round(1)
+    cap_safe = df["capacity"].replace(0, float("nan"))
+    df["overtime_pct"] = (df["overtime_hours"] / cap_safe * 100).round(1)
+    df["hired_pct"]    = (df["hired_hours"]    / cap_safe * 100).round(1)
 
     deficit_weeks  = int((df["deficit"] < 0).sum())
     worst_deficit  = int(df["deficit"].min())
     total_overtime = int(df["overtime_hours"].sum())
-    surplus_weeks  = int((df["deficit"] >= 0).sum())
+    avg_ot_dep     = df["overtime_pct"].mean()
 
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Deficit Weeks", deficit_weeks,
               delta=f"out of {len(df)} weeks",
               delta_color="inverse" if deficit_weeks else "off")
-    c2.metric("Worst Deficit",   f"{worst_deficit} hrs", delta_color="inverse")
-    c3.metric("Total Overtime",  f"{total_overtime} hrs")
-    c4.metric("Surplus Weeks",   surplus_weeks)
+    c2.metric("Worst Deficit",        f"{worst_deficit} hrs", delta_color="inverse")
+    c3.metric("Total Overtime",       f"{total_overtime} hrs")
+    c4.metric("Avg Overtime Dependency", f"{avg_ot_dep:.1f}%",
+              delta="of capacity per week")
 
+    # ── Capacity vs demand — full width ───────────────────────────────────────
     section_label("Capacity vs demand by week")
     fig = go.Figure()
     fig.add_scatter(
@@ -480,9 +629,50 @@ def page_capacity_tracker():
             annotation_position="top left",
         )
     fig.update_layout(_base_layout(yaxis_title="Hours", xaxis_title="Week"))
-    show_chart(fig, 400)
+    show_chart(fig, 380)
 
-    section_label("Capacity breakdown by workforce type")
+    # ── Contingent labour dependency  |  WoW demand delta ─────────────────────
+    ca_l, ca_r = st.columns(2)
+
+    with ca_l:
+        section_label("Contingent labour dependency % by week")
+        fig_ot = go.Figure()
+        fig_ot.add_bar(x=df["week"], y=df["overtime_pct"],
+                       name="Overtime %", marker_color=AMBER, marker_line_width=0)
+        fig_ot.add_bar(x=df["week"], y=df["hired_pct"],
+                       name="Hired staff %", marker_color=PURPLE, marker_line_width=0)
+        fig_ot.update_layout(_base_layout(
+            barmode="group", yaxis_title="% of total capacity", xaxis_title="Week",
+        ))
+        show_chart(fig_ot, 300)
+
+    with ca_r:
+        section_label("Week-over-week demand change")
+        delta_colors = df_sorted["demand_delta"].apply(
+            lambda v: RED if v > 0 else (GREEN if v < 0 else "#94a3b8")
+        ).tolist()
+        fig_delta = go.Figure()
+        fig_delta.add_bar(
+            x=df_sorted["week"],
+            y=df_sorted["demand_delta"],
+            marker_color=delta_colors,
+            marker_line_width=0,
+            text=df_sorted["demand_delta"].apply(
+                lambda v: f"+{v:.0f}h" if v > 0 else (f"{v:.0f}h" if v < 0 else "—")
+            ),
+            textposition="outside",
+            textfont=dict(size=10),
+        )
+        fig_delta.add_hline(y=0, line_color="#e2e8f0", line_width=1)
+        fig_delta.update_layout(_base_layout(
+            yaxis_title="Hour change vs prior week",
+            xaxis_title="Week",
+            showlegend=False,
+        ))
+        show_chart(fig_delta, 300)
+
+    # ── Workforce breakdown — full width ───────────────────────────────────────
+    section_label("Workforce composition by week")
     fig2 = go.Figure()
     fig2.add_bar(x=df["week"], y=df["own_hours"],
                  name="Permanent staff", marker_color=BLUE, marker_line_width=0)
@@ -501,9 +691,8 @@ def page_capacity_tracker():
 def page_worker_coverage():
     page_title(
         "Worker Coverage",
-        "Which workers are qualified to operate each station. "
-        "A station with only one certified operator is a single point of failure — "
-        "if that person is absent, production stops.",
+        "Operator qualification map across all production stations. "
+        "Stations with one or fewer certified operators are flagged as single points of failure.",
     )
 
     rows = query("""
@@ -527,42 +716,80 @@ def page_worker_coverage():
     spof_n    = int(df["is_spof"].sum())
     covered_n = int((df["coverage_count"] >= 2).sum())
     avg_cover = df["coverage_count"].mean()
+    max_cover = int(df["coverage_count"].max())
 
-    c1, c2, c3 = st.columns(3)
+    c1, c2, c3, c4 = st.columns(4)
     c1.metric("Single Points of Failure", spof_n,
               delta=f"{spof_n} stations at risk",
               delta_color="inverse" if spof_n else "off")
     c2.metric("Adequately Covered", covered_n,
-              delta=f"{covered_n} stations with 2+ operators")
+              delta=f"stations with 2+ operators")
     c3.metric("Average Coverage", f"{avg_cover:.1f}",
               delta="operators per station")
+    c4.metric("Best-Covered Station", f"{max_cover} operators",
+              delta=df.loc[df["coverage_count"].idxmax(), "name"])
 
-    section_label("Operator count by station")
-    df_sorted = df.sort_values("coverage_count")
-    colors = [RED if v else GREEN for v in df_sorted["is_spof"]]
-    fig = go.Figure()
-    fig.add_bar(
-        x=df_sorted["name"],
-        y=df_sorted["coverage_count"],
-        marker_color=colors,
-        marker_line_width=0,
-        text=df_sorted["coverage_count"],
-        textposition="outside",
-        textfont=dict(size=11, color="#374151"),
-    )
-    fig.update_layout(_base_layout(
-        yaxis=dict(
-            gridcolor="#f1f5f9", linecolor="#e2e8f0",
-            tickfont=dict(size=11), range=[0, df["coverage_count"].max() + 2],
-            title="Qualified operators",
-        ),
-        xaxis=dict(showgrid=False, linecolor="#e2e8f0",
-                   tickangle=-14, tickfont=dict(size=10), title="Station"),
-        showlegend=False,
-    ))
-    show_chart(fig, 360)
+    # ── Coverage bar  |  Worker-station matrix ────────────────────────────────
+    cv_l, cv_r = st.columns([2, 3])
 
-    section_label("Coverage detail")
+    with cv_l:
+        section_label("Qualified operators per station")
+        df_srt = df.sort_values("coverage_count")
+        fig = go.Figure()
+        fig.add_bar(
+            x=df_srt["coverage_count"],
+            y=df_srt["name"],
+            orientation="h",
+            marker_color=[RED if v else GREEN for v in df_srt["is_spof"]],
+            marker_line_width=0,
+            text=df_srt["coverage_count"],
+            textposition="outside",
+            textfont=dict(size=11, color="#374151"),
+        )
+        fig.update_layout(_base_layout(
+            xaxis=dict(showgrid=True, gridcolor="#f1f5f9", linecolor="#e2e8f0",
+                       tickfont=dict(size=11), title="Operators",
+                       range=[0, df["coverage_count"].max() + 2]),
+            yaxis=dict(showgrid=False, linecolor="#e2e8f0", tickfont=dict(size=10)),
+            showlegend=False,
+        ))
+        show_chart(fig, 420)
+
+    with cv_r:
+        section_label("Worker — station qualification matrix")
+        matrix_rows = query("""
+            MATCH (w:Worker)
+            OPTIONAL MATCH (w)-[:CAN_COVER]->(s:Station)
+            RETURN w.name AS worker, collect(DISTINCT s.station_name) AS stations
+            ORDER BY w.name
+        """)
+        if matrix_rows:
+            mdf = pd.DataFrame(matrix_rows)
+            # unique station names — avoids duplicate-column error from non-unique codes
+            all_stn = sorted(df["name"].drop_duplicates().tolist())
+            for sn in all_stn:
+                mdf[sn] = mdf["stations"].apply(lambda lst: 1 if sn in lst else 0)
+            matrix = mdf.set_index("worker")[all_stn]
+            fig_mx = px.imshow(
+                matrix,
+                color_continuous_scale=[[0, "#f8fafc"], [1, BLUE]],
+                text_auto=False,
+                aspect="auto",
+            )
+            fig_mx.update_coloraxes(showscale=False)
+            fig_mx.update_layout(
+                height=420,
+                font=dict(family="-apple-system, sans-serif", size=11),
+                plot_bgcolor="#ffffff", paper_bgcolor="#ffffff",
+                margin=dict(t=24, b=8, l=8, r=8),
+                xaxis=dict(title="", side="top", tickfont=dict(size=9),
+                           tickangle=-35),
+                yaxis=dict(title="", tickfont=dict(size=10)),
+            )
+            st.plotly_chart(fig_mx, width="stretch")
+
+    # ── Coverage detail table ──────────────────────────────────────────────────
+    section_label("Station coverage detail")
     display = df.copy()
     display["coverers"] = display["coverers"].apply(
         lambda x: ", ".join(x) if x else "None assigned"
@@ -587,6 +814,45 @@ def page_worker_coverage():
         display.style.apply(_row_bg, axis=1).map(_status_style, subset=["Status"]),
         width="stretch", hide_index=True,
     )
+
+    # ── Absence cascade risk ───────────────────────────────────────────────────
+    section_label("Absence cascade risk — select a worker to see affected projects")
+    worker_names = sorted(set(mdf["worker"].tolist())) if matrix_rows else []
+    sel_worker   = st.selectbox("Worker:", worker_names, key="wc_worker_sel")
+    risk_rows = query("""
+        MATCH (w:Worker {name: $wname})-[:PRIMARY_AT|CAN_COVER]->(s:Station)
+        MATCH (pe:ProductionEntry)-[:AT_STATION]->(s)
+        MATCH (p:Project)-[:HAS_ENTRY]->(pe)
+        RETURN DISTINCT
+               p.project_id                     AS project_id,
+               p.project_name                   AS project_name,
+               collect(DISTINCT s.station_name) AS at_risk_stations,
+               round(sum(pe.planned_hours), 1)  AS hours_at_risk
+        ORDER BY hours_at_risk DESC
+    """, {"wname": sel_worker})
+    if risk_rows:
+        rdf = pd.DataFrame(risk_rows)
+        rdf["at_risk_stations"] = rdf["at_risk_stations"].apply(
+            lambda x: ", ".join(sorted(x))
+        )
+        rdf.columns = ["ID", "Project", "Stations Affected", "Planned hrs at Risk"]
+
+        def _risk_style(v):
+            if v > 200: return "color:#dc2626; font-weight:600"
+            if v > 100: return "color:#d97706"
+            return "color:#374151"
+
+        st.dataframe(
+            rdf.style.map(_risk_style, subset=["Planned hrs at Risk"]),
+            width="stretch", hide_index=True,
+        )
+        total_risk = rdf["Planned hrs at Risk"].sum()
+        st.caption(
+            f"If **{sel_worker}** is absent, {len(rdf)} project(s) face operator gaps — "
+            f"{total_risk:.0f} planned hours are exposed across the stations above."
+        )
+    else:
+        st.caption(f"{sel_worker} is not the primary or cover operator at any station.")
 
 
 # ── Page 5 — Self-Test ────────────────────────────────────────────────────────
@@ -690,32 +956,7 @@ PAGES = {
 }
 
 
-def check_password():
-    if st.session_state.get("authenticated"):
-        return True
-    st.markdown("## Factory Intelligence")
-    st.caption("Enter your access password to continue.")
-    pwd = st.text_input("Password", type="password", placeholder="Enter password")
-    if st.button("Enter", type="primary"):
-        expected = ""
-        try:
-            expected = st.secrets["APP_PASSWORD"]
-        except Exception:
-            import os
-            from dotenv import load_dotenv
-            load_dotenv()
-            expected = os.getenv("APP_PASSWORD", "")
-        if pwd == expected:
-            st.session_state.authenticated = True
-            st.rerun()
-        else:
-            st.error("Incorrect password.")
-    st.stop()
-
-
 def main():
-    check_password()
-
     with st.sidebar:
         st.markdown("### Factory Intelligence")
         st.caption("VSAB Steel Fabrication  \n8 projects · 9 stations · 13 workers")

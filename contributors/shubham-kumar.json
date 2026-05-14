@@ -14,5 +14,5 @@
     "L5": "completed",
     "L6": "completed"
   },
-  "my_twin": "If I had a personal digital twin, it would track every decision I make under uncertainty — because I'm building Symbiote-X, a neuro-symbolic AI governance architecture for drones and autonomous systems where AI that hallucinates its way into bad decisions can cost lives, and I want to know whether the guardrails I'm designing for machines actually hold for the human running them. It would also map how I move between abstraction layers — from a Neo4j graph schema to a Streamlit dashboard to a pitch deck — because that context-switching is where most of my errors hide."
+  "my_twin": "My twin would log every decision I make under uncertainty and check it against the same guardrails I'm building into Symbiote-X — a neuro-symbolic governance layer for drones and autonomous systems, where a hallucinated decision can cost lives. If the rails don't hold for the human running the system, they won't hold for the machine either. It would also track how I jump between abstraction layers — graph schema, dashboard, pitch deck — because that's where my errors actually hide."
 }
