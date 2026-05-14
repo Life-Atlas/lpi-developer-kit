@@ -1,0 +1,57 @@
+{
+  "name": "Infrastructure Architect",
+  "description": "Designs home network digital twin architectures using edge-native principles. Specializes in IoT device segmentation, zero-trust network configurations, and edge deployment topologies. Queries the LPI for implementation knowledge, case studies, and scenario-specific insights.",
+  "url": "https://github.com/Naman-Playz/lpi-developer-kit",
+  "version": "1.0.0",
+  "defaultInputModes": ["application/json"],
+  "defaultOutputModes": ["application/json"],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "securityHardening": true,
+    "structuredDataExchange": true
+  },
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "MCP-stdio",
+      "url": "local://python secure_mesh.py --agent architect",
+      "comment": "Runs as a hardened subprocess within the secure mesh orchestrator."
+    }
+  ],
+  "skills": [
+    {
+      "id": "network-design",
+      "name": "Home Network Digital Twin Design",
+      "description": "Designs a segmented home network digital twin architecture. Returns a structured blueprint with device zones, firewall rules, edge compute placement, and data flow diagrams. Uses LPI tools: query_knowledge, get_insights, get_case_studies.",
+      "tags": ["network", "design", "digital-twin", "IoT", "edge"],
+      "examples": [
+        "Design a home network digital twin with IoT device isolation",
+        "Create an edge-native deployment plan for a smart home"
+      ]
+    },
+    {
+      "id": "edge-deployment",
+      "name": "Edge-Native Deployment Planning",
+      "description": "Plans edge-native deployments with encrypted data transit, local processing, and cloud failover. Returns deployment topology, resource requirements, and latency estimates. Uses LPI tools: get_insights, query_knowledge.",
+      "tags": ["edge", "deployment", "infrastructure", "cloud"],
+      "examples": [
+        "Plan edge deployment for a home network monitoring system",
+        "Design failover topology for an IoT gateway"
+      ]
+    }
+  ],
+  "authentication": {
+    "schemes": ["bearer"],
+    "description": "Requires a mesh-internal HMAC-signed token for all inter-agent communications."
+  },
+  "provider": {
+    "organization": "Naman Anand",
+    "url": "https://github.com/Naman-Playz"
+  },
+  "_lpiMetadata": {
+    "lpiToolsUsed": ["query_knowledge", "get_insights", "get_case_studies"],
+    "llmProvider": "ollama",
+    "llmModel": "qwen2.5:1.5b",
+    "explainability": "Every design recommendation cites the specific LPI knowledge entries, case studies, and insights that informed it. The provenance chain: User Request → Agent Card Discovery → LPI Tool Call → Knowledge Entry → Design Decision → Blueprint."
+  }
+}
