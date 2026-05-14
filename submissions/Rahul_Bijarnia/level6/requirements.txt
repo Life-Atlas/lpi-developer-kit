@@ -1,4 +1,7 @@
 streamlit
 pandas
+plotly
 neo4j
 python-dotenv
+numpy
+scipy
