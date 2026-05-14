@@ -29,6 +29,7 @@ HAS_CAPACITY	Week → Capacity
 OVERLOADED_AT	Project → Station
 
 That already gives 8 relationships.
+
 Q2 — SQL vs Cypher
 
 You need:
@@ -58,6 +59,7 @@ Explanation
 Write:
 
 The graph query directly shows how workers, stations, and projects connect. In SQL, multiple joins hide the relationships and make traversal harder to understand. Cypher naturally represents the real-world factory structure.
+
 Q3 — Bottleneck Analysis
 
 You need:
@@ -79,6 +81,7 @@ Bottleneck Modeling
 Write:
 
 I would model bottlenecks using a (:Bottleneck) node connected to overloaded stations and projects. This allows historical tracking of overload patterns and easier querying for recurring production issues.
+
 Q4 — Vector + Graph Hybrid
 What to Embed
 
@@ -96,6 +99,7 @@ RETURN p.name, s.name;
 Then explain vector search separately:
 
 First, embeddings find semantically similar projects using free-text descriptions. Then graph filtering ensures the matched projects used similar stations and maintained low variance.
+
 Q5 — L6 Blueprint
 
 This is extremely important.
