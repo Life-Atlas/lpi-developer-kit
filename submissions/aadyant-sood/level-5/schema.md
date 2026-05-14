@@ -1,6 +1,6 @@
 # Factory Knowledge Graph Schema
 
-> Swedish steel fabrication production planning knowledge graph  
+> Swedish steel fabrication production planning knowledge graph.
 > Stack: Neo4j AuraDB · Python · Streamlit
 
 ```mermaid

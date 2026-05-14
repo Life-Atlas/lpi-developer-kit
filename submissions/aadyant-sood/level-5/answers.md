@@ -30,7 +30,7 @@ This factory production system is highly interconnected: projects produce differ
 - `HAS_CERTIFICATION`
 - `HAS_CAPACITY {deficit, overtime}`
 
-This schema captures both operational production flow and workforce planning while keeping the graph practical for analytics, scheduling, and dashboard queries.
+This schema captures both operational production flow and workforce planning while keeping the graph practical for analytics, scheduling, and dashboard queries
 
 ---
 
