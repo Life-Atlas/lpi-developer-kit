@@ -1,259 +1,94 @@
-# Level 6 - Neo4j Flask & Streamlit Integration Project
+# Level 6 — Factory Graph Dashboard
 
-## Overview
+A Neo4j knowledge graph + Streamlit dashboard for a Swedish steel fabrication company managing 8 projects across 9 production stations.
 
-This project demonstrates the integration of a Neo4j AuraDB database with Python Flask and Streamlit applications.  
-The application connects to Neo4j using environment variables stored securely in a `.env` file.
-
-The project includes:
-- Neo4j AuraDB connection
-- Flask web application
-- Streamlit integration
-- Environment variable configuration
-- CSV dataset handling
-- Graph database connectivity verification
+**Deployed URL:** *(add your Streamlit Cloud URL here and in `DASHBOARD_URL.txt`)*
 
 ---
 
-## Tech Stack
+## Quick Start (Local)
 
-- Python 3.14
-- Flask
-- Streamlit
-- Neo4j AuraDB
-- Neo4j Python Driver
-- dotenv
-
----
-
-## Project Structure
-
-```text
-level6/
-│
-├── app.py
-├── streamlit_app.py
-├── deployment_url.txt
-├── seed_graph.py
-├── requirements.txt
-├── README.md
-├── How-I-Did-It.md
-├── .env.example
-├── .gitignore
-│
-└── data/
-    ├── factory_capacity.csv
-    ├── factory_production.csv
-    └── factory_workers.csv 
-```
-
----
-
-## Installation
-
-### 1. Clone Repository
-
+### 1. Clone & install
 ```bash
-git clone <your-repository-url>
-cd lpi-developer-kit/submissions/Rahul\ Bijarnia/level6
-```
-
----
-
-### 2. Install Dependencies
-
-```bash
+git clone <your-repo-url>
+cd level6
+python -m venv venv
+source venv/bin/activate       # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Or install manually:
-
+### 2. Set up credentials
 ```bash
-pip install flask streamlit neo4j python-dotenv pandas
+cp .env.example .env
+# Edit .env — add your Neo4j URI, user, password
 ```
 
----
-
-## Neo4j AuraDB Setup
-
-1. Create a Neo4j AuraDB Free instance
-2. Open Developer Hub
-3. Select Python connection
-4. Copy:
-   - URI
-   - Username
-   - Password
-
----
-
-## Configure Environment Variables
-
-Create a `.env` file inside the `level6` folder.
-
-Example:
-
-```env
-NEO4J_URI=neo4j+s://your-instance.databases.neo4j.io
-NEO4J_USER=your_username
-NEO4J_PASSWORD=your_password
-```
-
----
-
-## Verify Neo4j Connection
-
-Run:
-
+### 3. Seed the graph (run once)
 ```bash
 python seed_graph.py
 ```
+This reads the 3 CSV files and populates Neo4j via `MERGE` (idempotent — safe to re-run).
 
-Expected Output:
-
-```text
-Connected Successfully
-```
-
----
-
-## Run Flask Application
-
-Run:
-
-```bash
-python app.py
-```
-
-Expected Output:
-
-```text
-Running on http://127.0.0.1:5050
-```
-
-Open the URL in browser.
-
----
-
-## Run Streamlit Application
-
-Run:
-
+### 4. Run the dashboard
 ```bash
 streamlit run app.py
 ```
+Open http://localhost:8501
 
-Expected Output:
+---
 
-```text
-Local URL: http://localhost:8501
+## Streamlit Cloud Deployment
+
+1. Push this folder to a GitHub repo
+2. Go to [share.streamlit.io](https://share.streamlit.io) → New app → point at `app.py`
+3. Under **Settings → Secrets**, add:
+```toml
+NEO4J_URI = "neo4j+s://xxxx.databases.neo4j.io"
+NEO4J_USER = "neo4j"
+NEO4J_PASSWORD = "your-password"
 ```
-
-Open the Streamlit URL in browser.
+4. Deploy. Save the URL in `DASHBOARD_URL.txt`.
 
 ---
 
-## Application Output
+## Graph Schema
 
-The application displays:
+**Nodes:** Project, Product, Station, Worker, Week, Etapp, CapacityRecord
 
-```text
-Level 6 Neo4j App Running Successfully!
+**Relationships:**
+- `(Project)-[:SCHEDULED_AT {week, planned_hours, actual_hours, variance_pct}]->(Station)`
+- `(Project)-[:PRODUCES {quantity, unit_factor}]->(Product)`
+- `(Project)-[:IN_ETAPP]->(Etapp)`
+- `(Worker)-[:WORKS_AT]->(Station)`
+- `(Worker)-[:CAN_COVER]->(Station)`
+- `(Week)-[:HAS_CAPACITY {total_capacity, deficit}]->(CapacityRecord)`
+- `(Week)-[:NEXT_WEEK]->(Week)`
+
+---
+
+## Dashboard Pages
+
+| Page | What it shows |
+|------|--------------|
+| 📊 Project Overview | All 8 projects, planned vs actual hours, variance %, products involved |
+| ⚙️ Station Load | Interactive bar chart + heatmap of hours per station/week; overloaded stations highlighted |
+| 📅 Capacity Tracker | Stacked bar: own/hired/overtime vs demand; deficit weeks in red |
+| 👷 Worker Coverage | Worker × Station matrix; SPOF stations flagged |
+| 🧪 Self-Test | 6 auto-checks against live Neo4j; shows score out of 20 |
+
+---
+
+## Files
+
 ```
-
----
-
-## Deployment
-
-Deployment details are available inside:
-
-```text
-deployment_url.txt
+level6/
+├── seed_graph.py        # CSV → Neo4j (idempotent, MERGE-based)
+├── app.py               # Streamlit dashboard (5 pages)
+├── requirements.txt
+├── .env.example         # Credential template (no real creds)
+├── factory_production.csv
+├── factory_workers.csv
+├── factory_capacity.csv
+├── README.md
+└── DASHBOARD_URL.txt    # One line: https://your-app.streamlit.app
 ```
-
-Local deployment used during development:
-
-```text
-http://127.0.0.1:5050
-```
-
----
-
-## Features
-
-- Secure Neo4j connection using `.env`
-- Flask integration
-- Streamlit integration
-- Neo4j AuraDB connectivity verification
-- Environment variable handling
-- Local development server
-
----
-
-## Challenges Faced
-
-- Neo4j authentication failure
-- Incorrect environment variable names
-- Flask port permission issue
-- VS Code `.env` loading issue
-
----
-
-## Solutions Implemented
-
-- Corrected `.env` variable names
-- Enabled `python.terminal.useEnvFile`
-- Restarted VS Code terminal
-- Changed Flask port to `5050`
-
----
-
-## Requirements File
-
-Example `requirements.txt`:
-
-```text
-flask
-streamlit
-neo4j
-python-dotenv
-pandas
-```
-
----
-
-## Future Improvements
-
-- Add graph visualization dashboard
-- Add Neo4j query interface
-- Deploy application to cloud platform
-- Add authentication system
-- Add real-time analytics dashboard
-
----
-
-## Screenshots
-
-Screenshots included:
-- Neo4j AuraDB connection
-- Flask server running
-- Browser output
-- VS Code setup
-- Successful connectivity verification
-
----
-
-## Final Status
-
-Project completed successfully with:
-- Neo4j AuraDB integration
-- Flask application
-- Streamlit support
-- Environment variable configuration
-- Database connectivity verification
-- Documentation and setup guide
-
----
-
-## Author
-
-Rahul Bijarnia 
