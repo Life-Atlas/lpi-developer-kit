@@ -1,0 +1,5 @@
+streamlit==1.37.0
+neo4j==5.22.0
+python-dotenv==1.0.0
+pandas==2.2.0
+plotly==5.18.0
