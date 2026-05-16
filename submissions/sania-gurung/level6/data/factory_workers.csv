@@ -1,0 +1,15 @@
+worker_id,name,role,primary_station,can_cover_stations,certifications,hours_per_week,type
+W01,Erik Lindberg,Operator,011,"011,012","MIG/MAG,TIG,ISO 9606",40,permanent
+W02,Anna Berg,Operator,011,"011,014","MIG/MAG,TIG",40,permanent
+W03,Lars Jensen,Operator,012,"012,013","Surface treatment,CE marking",40,permanent
+W04,Maria Stone,Operator,013,"013","Blasting,Surface protection",40,permanent
+W05,Johan Peters,Operator,014,"014,015","Hydraulics,Mechanics,Crane",40,permanent
+W06,Karen Nilsen,Inspector,015,"015","SIS,SS-EN 1090,NDT",40,permanent
+W07,Per Hansen,Operator,016,"016,017","Casting,Formwork",40,permanent
+W08,Sofia Arden,Operator,017,"017","Surface treatment,Spray painting",40,permanent
+W09,Magnus Stone,Operator,018,"018,019","Sheet metal,Assembly",40,permanent
+W10,Elin Frank,Operator,019,"019,018","Assembly,Welding",32,permanent
+W11,Victor Elm,Foreman,all,"011,012,013,014,015,016,017,018,019,021","Leadership,CE,ISO 9001",45,permanent
+W12,Lena Dale,Quality Manager,015,"015","ISO 9001,SS-EN 1090,Audit",40,permanent
+W13,Ahmed Hassan,Operator,011,"011","MIG/MAG",40,hired
+W14,Petra Steen,Operator,012,"012,013","Surface treatment",40,hired
