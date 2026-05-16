@@ -6,11 +6,16 @@ import numpy as np
 from neo4j import GraphDatabase
 from dotenv import load_dotenv
 
-load_dotenv()
-
-URI = os.getenv("NEO4J_URI")
-USER = os.getenv("NEO4J_USER")
-PASSWORD = os.getenv("NEO4J_PASSWORD")
+# Support both local .env and Streamlit Cloud secrets
+try:
+    URI = st.secrets["NEO4J_URI"]
+    USER = st.secrets["NEO4J_USER"]
+    PASSWORD = st.secrets["NEO4J_PASSWORD"]
+except:
+    load_dotenv()
+    URI = os.getenv("NEO4J_URI")
+    USER = os.getenv("NEO4J_USER")
+    PASSWORD = os.getenv("NEO4J_PASSWORD")
 
 @st.cache_resource
 def get_driver():
