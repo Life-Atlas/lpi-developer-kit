@@ -14,5 +14,17 @@
     "L5": "completed",
     "L6": "completed"
   },
-  "my_twin": "My twin would log every decision I make under uncertainty and check it against the same guardrails I'm building into Symbiote-X — a neuro-symbolic governance layer for drones and autonomous systems, where a hallucinated decision can cost lives. If the rails don't hold for the human running the system, they won't hold for the machine either. It would also track how I jump between abstraction layers — graph schema, dashboard, pitch deck — because that's where my errors actually hide."
+  "my_twin": "My twin would log every decision I make under uncertainty and check it against the same guardrails I'm building into Symbiote-X — a neuro-symbolic governance layer for drones and autonomous systems, where a hallucinated decision can cost lives. If the rails don't hold for the human running the system, they won't hold for the machine either. It would also track how I jump between abstraction layers — graph schema, dashboard, pitch deck — because that's where my errors actually hide.",
+  "assignments": [
+    {
+      "title": "AXON Networks — Multi-Agent Telecom AI",
+      "folder": "assignments/axon-networks",
+      "description": "Deep research into AXON Networks' product architecture including NEURA platform, digital twin infrastructure, and OaaS model. Covers geopolitical implications of the AXON–Cassava Technologies pan-African partnership, cybersecurity vulnerabilities in closed-loop autonomous AI on live broadband infrastructure, and architectural tradeoffs between proprietary vs open-source agent frameworks like LangChain and AutoGen."
+    },
+    {
+      "title": "AI Agents — Taxonomy and Ontologies",
+      "folder": "assignments/AI AGENTS-taxonomy and ontologies",
+      "description": "Structured research into classification and formal modeling of multi-agent AI systems. Covers framework analysis (LangChain, LangGraph, CrewAI, AutoGen) from first principles including failure modes, multi-dimensional taxonomy with autonomy levels L1–L5, complete ontology mapping of agent relationships (memory, tools, environment, audit, governance), physical AI deployment gaps for embodied systems, and cybersecurity vulnerabilities specific to multi-agent architectures."
+    }
+  ]
 }
